@@ -1,5 +1,8 @@
 package team13.pulsbes.serviceimpl;
 
+import org.springframework.stereotype.Service;
+import team13.pulsbes.services.StudentService;
+
 import java.util.ArrayList;
 import java.util.logging.Logger;
 
@@ -10,7 +13,7 @@ import team13.pulsbes.entities.Student;
 
 import team13.pulsbes.services.StudentService;
 import team13.pulsbes.repositories.StudentRepository;
-
+@Service
 public class StudentServiceImpl implements StudentService{
 
     @Autowired
