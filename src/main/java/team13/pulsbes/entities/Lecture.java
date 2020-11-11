@@ -25,8 +25,6 @@ public class Lecture {
 
     private String SubjectName;
 
-    private String TeacherId;
-
     private String LectureType;
     //theory or exercitation
 
@@ -34,7 +32,9 @@ public class Lecture {
 
     private Integer AvailableSeat;
 
-    private Integer TotalSeat;
+    private Integer BookedSeat;
+
+    private String RoomName;
 
     @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinTable(name="lecture_students", joinColumns = @JoinColumn(name="lecture_id"),
@@ -48,14 +48,8 @@ public class Lecture {
     @JoinColumn (name = "course_id")
     private Course course;
 
-    @OneToMany (mappedBy = "lecture_id")
-    private List <Book> prenotazioni;
-    {
-        prenotazioni = new ArrayList<>();
-    }
-
-
-
-
+    @ManyToOne
+    @JoinColumn (name = "teacher_id")
+    private Teacher teacher;
 
 }

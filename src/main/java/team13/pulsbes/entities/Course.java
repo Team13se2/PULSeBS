@@ -17,21 +17,20 @@ public class Course {
 
    @Id
 
-   private String CourseId;
+   private String Id;
 
    private String name;
 
-   @OneToMany (mappedBy = "course_id")
+   @ManyToOne
+   @JoinColumn (name = "teacher_id")
+   private Teacher teacher;
+
+   @OneToMany (mappedBy = "course")
    List <Student> students;
    {
       students = new ArrayList<>();
    }
 
-   @ManyToMany (mappedBy = "courses")
-   List <Subject> subjects;
-   {
-      subjects = new ArrayList<>();
-   }
 
 
 }

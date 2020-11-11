@@ -27,11 +27,6 @@ public class Student {
     @JoinColumn (name = "course_id")
     private Course course;
 
-    @OneToMany (mappedBy = "student_id")
-    List <Book> prenotazioni;
-    {
-        prenotazioni = new ArrayList<>();
-    }
 
     public void setCourse (Course course1) {
 

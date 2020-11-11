@@ -15,9 +15,9 @@ public interface TeamService {
 
 boolean addLecture (LectureDTO lecture);
 
-List<LectureDTO> getAllLecturesByDay (String day, String courseId);
-
 boolean addBook (LectureDTO lecture);
+
+
 
 
 

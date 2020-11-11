@@ -1,4 +1,4 @@
-package team13.pulsbes.entities;
+package team13.pulsbes.exception;
 
 import team13.pulsbes.services.TeamServiceException;
 
