@@ -36,7 +36,7 @@ public class StudentServiceImpl implements StudentService{
     @Override
     public String bookLecture (String lectureId) {
 
-        Student currentStudent = new Student("s123456", "Mario", "Pino");        
+        Student currentStudent = new Student("s123456", "Mario", "Pino");
         Lecture lectureSelected = lectureList.stream().filter(lecture -> lectureId.equals(lecture.getId())).findAny().orElse(null);
         
         if (lectureSelected != null) {
