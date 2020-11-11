@@ -3,6 +3,7 @@ package team13.pulsbes.entities;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import team13.pulsbes.exception.InvalidCourseException;
 
 import javax.persistence.*;
@@ -14,7 +15,6 @@ import java.util.List;
 @Data
 @Entity
 public class Student {
-
     @Id
     private String Id;
 
@@ -24,20 +24,27 @@ public class Student {
 
     private String Email;
 
-    private List<Course> courses = new ArrayList<Course>();
+    @ManyToMany(cascade = {CascadeType.PERSIST,CascadeType.MERGE})
+    @JoinTable(name = "courses_students",joinColumns = @JoinColumn(name = "course_id"),
+    inverseJoinColumns = @JoinColumn(name = "student_id"))
+    private List<Course> courses;
+    {
+        courses = new ArrayList<>();
+
+    }
+
+    //private List<Course> courses = new ArrayList<Course>();
 
 	public void addCourse(Course c) throws InvalidCourseException {
     	if(c==null) {
     		throw new InvalidCourseException("Invalid Course");
     	}
-    	
-    	courses.add(c);
+
     }
     public void removeCourse(Course c) throws InvalidCourseException {
     	if(c==null) {
     		throw new InvalidCourseException("Invalid Course");
     	}
-    	courses.remove(c);
     }
 
 	public String getId() {
@@ -80,13 +87,7 @@ public class Student {
 	}
 
 
-	public List<Course> getCourses() {
-		return courses;
-	}
-
-
 	public void setCourses(List<Course> courses) {
-		this.courses = courses;
 	}
 
 	
