@@ -33,7 +33,12 @@ public class Student {
 
     }
 
-    //private List<Course> courses = new ArrayList<Course>();
+	public Student( String Id, String Name, String Surname) {
+		super();
+		this.Id = Id;
+		this.Name = Name;
+		this.Surname = Surname;
+	}
 
 	public void addCourse(Course c) throws InvalidCourseException {
     	if(c==null) {
