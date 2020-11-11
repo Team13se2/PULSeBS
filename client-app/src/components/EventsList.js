@@ -46,7 +46,7 @@ const EventsList = (props) => {
               <Col sm={12}>
               
               <div className="row col-14  d-flex justify-content-center">
-                <span className="h2 font-weight-bold mb-5">Teaching Portal</span>
+                <span className="h2 font-weight-bold mb-5">Portal - Student section</span>
             </div>
             
             
@@ -56,7 +56,7 @@ const EventsList = (props) => {
               
             <Row>
               <Col sm={12}>
-                <h3>Booked Lessons</h3>
+                <h3>Booked Lectures</h3>
               </Col>
             </Row>
             <Table responsive striped bordered hover>
@@ -82,7 +82,7 @@ const EventsList = (props) => {
                         <td>lesson.location}</td>
                       
                         <td>
-                            <button type="button" className="btn btn-danger" onClick={handleShow}>
+                            <button type="button" className="btn btn-outline-danger" onClick={handleShow}>
                                 Unbook
                             </button>
                         </td>
@@ -122,7 +122,7 @@ const EventsList = (props) => {
                         <td>lesson.teacher}</td>
                         <td>lesson.location}</td>
                         <td>
-                            <button type="button" className="btn btn-success" data-toggle="modal" data-target="#bookModal">
+                            <button type="button" className="btn btn-outline-success" data-toggle="modal" data-target="#bookModal">
                                 Book
                             </button>
                         </td>
