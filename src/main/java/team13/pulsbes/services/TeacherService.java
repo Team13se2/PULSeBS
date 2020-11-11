@@ -10,6 +10,6 @@ import team13.pulsbes.exception.InvalidTeacherException;
 
 public interface TeacherService {
 	
-	Integer getStudentsAttending(LectureDTO l) throws InvalidTeacherException;
+	Integer getNumberStudentsAttending(LectureDTO l) throws InvalidTeacherException;
 	void mailForNumber(TeacherDTO tDto);
 }

@@ -12,7 +12,7 @@ import team13.pulsbes.services.TeacherService;
 public class TeacherServiceImpl implements TeacherService{
 
 	@Override
-	public Integer getStudentsAttending(LectureDTO l) throws InvalidTeacherException{
+	public Integer getNumberStudentsAttending(LectureDTO l) throws InvalidTeacherException{
 		if (l == null) {
 			throw new InvalidTeacherException("Lecture can't be null");
 		}
