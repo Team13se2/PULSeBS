@@ -3,6 +3,7 @@ package team13.pulsbes.entities;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import team13.pulsbes.exception.InvalidCourseException;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -23,31 +24,70 @@ public class Student {
 
     private String Email;
 
-    @ManyToOne
-    @JoinColumn (name = "course_id")
-    private Course course;
+    private List<Course> courses = new ArrayList<Course>();
 
-    @OneToMany (mappedBy = "student_id")
-    List <Book> prenotazioni;
-    {
-        prenotazioni = new ArrayList<>();
+	public void addCourse(Course c) throws InvalidCourseException {
+    	if(c==null) {
+    		throw new InvalidCourseException("Invalid Course");
+    	}
+    	
+    	courses.add(c);
+    }
+    public void removeCourse(Course c) throws InvalidCourseException {
+    	if(c==null) {
+    		throw new InvalidCourseException("Invalid Course");
+    	}
+    	courses.remove(c);
     }
 
-    public void setCourse (Course course1) {
+	public String getId() {
+		return Id;
+	}
 
-        if (this.course == null) {
-            course1.getStudents().add(this);
-            this.course = course1;
-            return;
-        }
-       if (course1 == null)
-           this.course.getStudents().remove(this);
-       else {
-           this.course.getStudents().remove(this);
-           course1.getStudents().add(this);
-       }
-        this.course = course1;
 
-    }
+	public void setId(String id) {
+		Id = id;
+	}
 
+
+	public String getName() {
+		return Name;
+	}
+
+
+	public void setName(String name) {
+		Name = name;
+	}
+
+
+	public String getSurname() {
+		return Surname;
+	}
+
+
+	public void setSurname(String surname) {
+		Surname = surname;
+	}
+
+
+	public String getEmail() {
+		return Email;
+	}
+
+
+	public void setEmail(String email) {
+		Email = email;
+	}
+
+
+	public List<Course> getCourses() {
+		return courses;
+	}
+
+
+	public void setCourses(List<Course> courses) {
+		this.courses = courses;
+	}
+
+	
 }

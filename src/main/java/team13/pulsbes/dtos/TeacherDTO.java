@@ -12,6 +12,10 @@ public class TeacherDTO
 
     private String name;
 
-    private String TeacherId;
+    private String surname;
+
+    private String Email;
+
+
 
 }

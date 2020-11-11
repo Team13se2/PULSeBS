@@ -3,6 +3,7 @@ package team13.pulsbes.entities;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import team13.pulsbes.exception.InvalidStudentException;
 import team13.pulsbes.model.Date;
 
 import javax.persistence.*;
@@ -25,8 +26,6 @@ public class Lecture {
 
     private String SubjectName;
 
-    private String TeacherId;
-
     private String LectureType;
     //theory or exercitation
 
@@ -34,7 +33,9 @@ public class Lecture {
 
     private Integer AvailableSeat;
 
-    private Integer TotalSeat;
+    private Integer BookedSeat;
+
+    private String RoomName;
 
     @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinTable(name="lecture_students", joinColumns = @JoinColumn(name="lecture_id"),
@@ -48,14 +49,118 @@ public class Lecture {
     @JoinColumn (name = "course_id")
     private Course course;
 
-    @OneToMany (mappedBy = "lecture_id")
-    private List <Book> prenotazioni;
-    {
-        prenotazioni = new ArrayList<>();
+    @ManyToOne
+    @JoinColumn (name = "teacher_id")
+    private Teacher teacher;
+
+	public void addStudentAttending(Student s) throws InvalidStudentException {
+    	if(s==null) {
+    		throw new InvalidStudentException("Invalid Student");
+    	}
+    	students.add(s);
     }
+    public void removeStudentAttending(Student s)throws InvalidStudentException {
+    	if(s==null) {
+    		throw new InvalidStudentException("Invalid Student");
+    	}
+    	students.remove(s);
+    }
+    
+	public String getId() {
+		return Id;
+	}
 
+	public void setId(String id) {
+		Id = id;
+	}
 
+	public Date getStartTime() {
+		return StartTime;
+	}
 
+	public void setStartTime(Date startTime) {
+		StartTime = startTime;
+	}
 
+	public Date getEndTime() {
+		return EndTime;
+	}
 
+	public void setEndTime(Date endTime) {
+		EndTime = endTime;
+	}
+
+	public String getSubjectName() {
+		return SubjectName;
+	}
+
+	public void setSubjectName(String subjectName) {
+		SubjectName = subjectName;
+	}
+
+	public String getLectureType() {
+		return LectureType;
+	}
+
+	public void setLectureType(String lectureType) {
+		LectureType = lectureType;
+	}
+
+	public String getSurnameString() {
+		return SurnameString;
+	}
+
+	public void setSurnameString(String surnameString) {
+		SurnameString = surnameString;
+	}
+
+	public Integer getAvailableSeat() {
+		return AvailableSeat;
+	}
+
+	public void setAvailableSeat(Integer availableSeat) {
+		AvailableSeat = availableSeat;
+	}
+
+	public Integer getBookedSeat() {
+		return BookedSeat;
+	}
+
+	public void setBookedSeat(Integer bookedSeat) {
+		BookedSeat = bookedSeat;
+	}
+
+	public String getRoomName() {
+		return RoomName;
+	}
+
+	public void setRoomName(String roomName) {
+		RoomName = roomName;
+	}
+
+	public List<Student> getStudents() {
+		return students;
+	}
+
+	public void setStudents(List<Student> students) {
+		this.students = students;
+	}
+
+	public Course getCourse() {
+		return course;
+	}
+
+	public void setCourse(Course course) {
+		this.course = course;
+	}
+
+	public Teacher getTeacher() {
+		return teacher;
+	}
+
+	public void setTeacher(Teacher teacher) {
+		this.teacher = teacher;
+	}
+    
+    
 }
