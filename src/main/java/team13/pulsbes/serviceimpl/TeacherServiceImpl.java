@@ -20,9 +20,17 @@ public class TeacherServiceImpl implements TeacherService{
 	}
 
 	@Override
+	public List<Lecture> getAllLectures(TeacherDTO tDTO) throws InvalidTeacherException {
+		if(tDTO == null) {
+			throw new InvalidTeacherException("Teacher can't be null");
+		}
+		return tDTO.getLectures();
+	}
+	@Override
 	public void mailForNumber(TeacherDTO tDto) {
 		
 		
 	}
+
 	
 }
