@@ -38,7 +38,14 @@ public class Student {
     		throw new InvalidCourseException("Invalid Course");
     	}
     	courses.remove(c);
-    }
+	}
+	
+	public Student( String Id, String Name, String Surname) {
+		super();
+		this.Id = Id;
+		this.Name = Name;
+		this.Surname = Surname;
+	}
 
 	public String getId() {
 		return Id;

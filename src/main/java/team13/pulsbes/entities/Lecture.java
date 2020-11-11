@@ -64,7 +64,14 @@ public class Lecture {
     		throw new InvalidStudentException("Invalid Student");
     	}
     	students.remove(s);
-    }
+	}
+	
+	public Lecture( String Id, Integer AvailableSeat, Integer BookedSeat) {
+		super();
+		this.Id = Id;
+		this.AvailableSeat = AvailableSeat;
+		this.BookedSeat = BookedSeat;
+	}
     
 	public String getId() {
 		return Id;
