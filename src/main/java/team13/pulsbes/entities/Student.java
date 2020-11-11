@@ -45,7 +45,8 @@ public class Student {
     	if(c==null) {
     		throw new InvalidCourseException("Invalid Course");
     	}
-    }
+    	courses.remove(c);
+	}
 
 	public String getId() {
 		return Id;
