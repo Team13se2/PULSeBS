@@ -24,4 +24,6 @@ public class LectureDTO {
     private Integer AvailableSeat;
 
     private Integer TotalSeat;
+
+    private String RoomName;
 }
