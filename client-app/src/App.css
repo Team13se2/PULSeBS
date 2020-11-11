@@ -1,5 +1,32 @@
+
+
 .App {
   text-align: center;
+  font-family: Century Gothic, CenturyGothic, AppleGothic, sans-serif;
+  background-color:rgb(41, 54, 71);
+  min-height: 100%
+}
+
+#navbo{
+  margin-bottom: 50px;
+}
+
+#loginnnni{
+  
+  padding:50px;
+  border-radius: 15px;
+  border: 1px solid #ffffff;
+  box-shadow: 5px 5px 5px #141c24cc;
+  
+}
+
+#pagine{
+  background-color: #ffffff;
+  padding:50px;
+  border-radius: 15px;
+  border: 1px solid #ffffff;
+  box-shadow: 10px 10px 10px  #141c24cc;
+  margin-bottom:60px;
 }
 
 .App-logo {
