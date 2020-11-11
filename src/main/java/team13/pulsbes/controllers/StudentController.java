@@ -4,7 +4,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import team13.pulsbes.services.TeamService;
+
+import team13.pulsbes.services.StudentService;
+
 
 @RestController
 @RequestMapping("/API/students")
@@ -12,7 +14,7 @@ import team13.pulsbes.services.TeamService;
 public class StudentController {
 
     @Autowired
-    TeamService ts;
+    StudentService ts;
 
 
 
