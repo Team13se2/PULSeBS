@@ -33,7 +33,7 @@ public class Lecture {
 
     private Integer AvailableSeat;
 
-    private Integer BookedSeat;
+    private Integer TotalSeat;
 
     private String RoomName;
 
@@ -66,11 +66,11 @@ public class Lecture {
     	students.remove(s);
 	}
 	
-	public Lecture( String Id, Integer AvailableSeat, Integer BookedSeat) {
+	public Lecture( String Id, Integer AvailableSeat, Integer TotalSeat) {
 		super();
 		this.Id = Id;
 		this.AvailableSeat = AvailableSeat;
-		this.BookedSeat = BookedSeat;
+		this.TotalSeat = TotalSeat;
 	}
     
 	public String getId() {
@@ -129,12 +129,12 @@ public class Lecture {
 		AvailableSeat = availableSeat;
 	}
 
-	public Integer getBookedSeat() {
-		return BookedSeat;
+	public Integer getTotalSeat() {
+		return TotalSeat;
 	}
 
-	public void setBookedSeat(Integer bookedSeat) {
-		BookedSeat = bookedSeat;
+	public void setTotalSeat(Integer totalSeat) {
+		TotalSeat = totalSeat;
 	}
 
 	public String getRoomName() {
