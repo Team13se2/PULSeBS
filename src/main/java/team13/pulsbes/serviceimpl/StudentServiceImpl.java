@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.logging.Logger;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import team13.pulsbes.entities.Lecture;
 import team13.pulsbes.entities.Student;
@@ -11,7 +12,7 @@ import team13.pulsbes.exception.InvalidLectureException;
 
 import team13.pulsbes.services.StudentService;
 import team13.pulsbes.repositories.StudentRepository;
-
+@Service
 public class StudentServiceImpl implements StudentService{
 
     @Autowired
