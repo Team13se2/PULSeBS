@@ -22,6 +22,18 @@ public class Teacher {
     private String Email;
 
 
+    @OneToMany (mappedBy = "teacher")
+    List<Lecture> lectures;
+    {
+        lectures = new ArrayList<>();
+    }
+    
+    @OneToMany (mappedBy = "teacher")
+    List <Course> courses;
+    {
+        courses = new ArrayList<>();
+    }
+
 	public String getId() {
 		return id;
 	}
