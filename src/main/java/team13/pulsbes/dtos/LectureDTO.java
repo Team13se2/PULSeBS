@@ -35,6 +35,21 @@ public class LectureDTO {
     {
         students = new ArrayList<>();
     }
+    
+    
+    
+	public LectureDTO(String id, Date startTime, Date endTime, String lectureType, String surnameString,
+			Integer availableSeat, Integer totalSeat, String roomName) {
+		super();
+		Id = id;
+		StartTime = startTime;
+		EndTime = endTime;
+		LectureType = lectureType;
+		SurnameString = surnameString;
+		AvailableSeat = availableSeat;
+		TotalSeat = totalSeat;
+		RoomName = roomName;
+	}
 	public String getId() {
 		return Id;
 	}

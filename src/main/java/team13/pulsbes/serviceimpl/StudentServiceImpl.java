@@ -1,5 +1,8 @@
 package team13.pulsbes.serviceimpl;
 
+import org.springframework.stereotype.Service;
+import team13.pulsbes.services.StudentService;
+
 import java.util.ArrayList;
 import java.util.logging.Logger;
 
@@ -10,7 +13,7 @@ import team13.pulsbes.entities.Student;
 
 import team13.pulsbes.services.StudentService;
 import team13.pulsbes.repositories.StudentRepository;
-
+@Service
 public class StudentServiceImpl implements StudentService{
 
     @Autowired
@@ -33,7 +36,7 @@ public class StudentServiceImpl implements StudentService{
     @Override
     public String bookLecture (String lectureId) {
 
-        Student currentStudent = new Student("s123456", "Mario", "Pino");        
+        Student currentStudent = new Student("s123456", "Mario", "Pino");
         Lecture lectureSelected = lectureList.stream().filter(lecture -> lectureId.equals(lecture.getId())).findAny().orElse(null);
         
         if (lectureSelected != null) {

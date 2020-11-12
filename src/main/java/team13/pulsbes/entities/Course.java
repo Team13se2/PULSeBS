@@ -26,23 +26,18 @@ public class Course {
    @JoinColumn (name = "teacher_id")
    private Teacher teacher;
 
-   @OneToMany (mappedBy = "course")
-   List <Student> students;
-   {
-      students = new ArrayList<>();
-   }
-   
+   @ManyToMany(mappedBy = "courses")
+   private List<Student> students = new ArrayList<>();
+
 	public void newStudentEnrolled(Student s) throws InvalidStudentException {
 		if(s==null) {
 			throw new InvalidStudentException("Invalid Student");
 		}
-		students.add(s);
 	}
 	public void studentRemove(Student s) throws InvalidStudentException {
 		if(s==null) {
 			throw new InvalidStudentException("Invalid Student");
 		}
-		students.remove(s);
 	}
 	public String getId() {
 		return Id;
@@ -62,14 +57,6 @@ public class Course {
 	public void setTeacher(Teacher teacher) {
 		this.teacher = teacher;
 	}
-	public List<Student> getStudents() {
-		return students;
-	}
-	public void setStudents(List<Student> students) {
-		this.students = students;
-	}
-
-   
 
 }
 
