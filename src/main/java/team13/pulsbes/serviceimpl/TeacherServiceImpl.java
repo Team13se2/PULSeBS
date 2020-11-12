@@ -12,6 +12,9 @@ import java.util.List;
 
 @Service
 public class TeacherServiceImpl implements TeacherService{
+	
+	
+	
 	@Override
 	public Integer getNumberStudentsAttending(LectureDTO l) throws InvalidTeacherException{
 		if (l == null) {
@@ -25,13 +28,15 @@ public class TeacherServiceImpl implements TeacherService{
 		if(tDTO == null) {
 			throw new InvalidTeacherException("Teacher can't be null");
 		}
-		return tDTO.getLectures();
+		
+		
+		return null;
 	}
+	
 	@Override
 	public void mailForNumber(TeacherDTO tDto) {
 		
 		
 	}
 
-	
 }

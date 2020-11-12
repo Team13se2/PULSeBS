@@ -35,6 +35,7 @@ public class LectureDTO {
     {
         students = new ArrayList<>();
     }
+    
 	public String getId() {
 		return Id;
 	}
