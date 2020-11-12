@@ -6,4 +6,4 @@ RUN apt-get install -y nodejs
 RUN apt-get install -y npm
 
 CMD ["/bin/bash", "./mvnw spring-boot:run"]
-CMD ["/bin/bash", "cat ./Dockerfile"]
+CMD ["/bin/bash", "ls -al"]
