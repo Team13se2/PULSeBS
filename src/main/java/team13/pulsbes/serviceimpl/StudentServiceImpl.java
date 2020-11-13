@@ -19,7 +19,7 @@ public class StudentServiceImpl implements StudentService{
     StudentRepository studentRepository;
     
     String bookingSuccess = "The lecture was corrrectly booked";    
-    String bookingFailure = "The lecture has no more available seats, retry later";
+    String bookingFailure = "The lecture has no more available seats, you will receive a mail if a spot opens up";
 
     Logger log = Logger.getLogger("StudentServiceImpl");
     
@@ -42,6 +42,10 @@ public class StudentServiceImpl implements StudentService{
 
             throw new InvalidLectureException("Lecture can't be null"); 
 
+        }
+
+        if (!currentStudent.getCourses().contains(lectureSelected.getCourse())) {
+            return ("You are not enrolled in this course, unable to book a seat");
         }
 
         Integer availableSeats = lectureSelected.getAvailableSeat();
