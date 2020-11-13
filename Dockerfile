@@ -8,6 +8,6 @@ RUN apt-get install -y maven
 RUN apt-get install -y git
 RUN git clone https://github.com/Team13se2/PULSeBS.git
 
-EXPOSE 8081
+EXPOSE 8081/tcp
 
 CMD cd PULSeBS; mvn spring-boot:run
