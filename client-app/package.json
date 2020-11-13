@@ -2,6 +2,7 @@
   "name": "client-app",
   "version": "0.1.0",
   "proxy": "http://localhost:8081/",
+  "secure": false,
   "private": true,
   "dependencies": {
     "@testing-library/jest-dom": "^5.11.5",

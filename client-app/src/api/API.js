@@ -1,7 +1,4 @@
-const baseURL = "/api";
-
-const API = {} ;
-export default API;
+const baseURL = "";
 
 async function userLogin(email, psw, type) {
     return new Promise((resolve, reject) => {
@@ -25,3 +22,6 @@ async function userLogin(email, psw, type) {
         }).catch((err) => { reject({ errors: [{ param: "Server", msg: "Cannot communicate" }] }) }); // connection errors
     });
 }
+
+const API = {userLogin} ;
+export default API;
