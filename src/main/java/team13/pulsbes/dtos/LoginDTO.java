@@ -3,14 +3,24 @@ package team13.pulsbes.dtos;
 public class LoginDTO {
 	
 	private String email;
+	private String id;
+	private String name;
+	private String surname;
+	private Boolean teacher;
+	private String token;
 	
-	private String psw;
-
-	
-	public LoginDTO(String email, String psw) {
+	public LoginDTO(String email, String id, String name, String surname,Boolean teacher, String token) {
 		super();
 		this.email = email;
-		this.psw = psw;
+		this.id = id;
+		this.name = name;
+		this.surname = surname;
+		this.teacher = teacher;
+		this.token = token;
+	}
+
+	public LoginDTO() {
+		// TODO Auto-generated constructor stub
 	}
 
 	public String getEmail() {
@@ -21,13 +31,46 @@ public class LoginDTO {
 		this.email = email;
 	}
 
-	public String getPsw() {
-		return psw;
+	public String getId() {
+		return id;
 	}
 
-	public void setPsw(String psw) {
-		this.psw = psw;
+	public void setId(String id) {
+		this.id = id;
 	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getSurname() {
+		return surname;
+	}
+
+	public void setSurname(String surname) {
+		this.surname = surname;
+	}
+
+	public Boolean getTeacher() {
+		return teacher;
+	}
+
+	public void setTeacher(Boolean teacher) {
+		this.teacher = teacher;
+	}
+
+	public String getToken() {
+		return token;
+	}
+
+	public void setToken(String token) {
+		this.token = token;
+	}
+	
 	
 	
 }

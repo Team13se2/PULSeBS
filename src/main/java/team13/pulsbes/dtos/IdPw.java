@@ -6,9 +6,12 @@ public class IdPw {
 	
 	private String psw;
 
-	public IdPw(String email, String psw) {
+	private Boolean teacher;
+	
+	public IdPw(String email, String psw, Boolean teacher) {
 		this.email = email;
 		this.psw = psw;
+		this.teacher = teacher;
 	}
 
 	public String getEmail() {
@@ -25,6 +28,14 @@ public class IdPw {
 
 	public void setPsw(String psw) {
 		this.psw = psw;
+	}
+
+	public Boolean getTeacher() {
+		return teacher;
+	}
+
+	public void setTeacher(Boolean teacher) {
+		this.teacher = teacher;
 	}
 	
 }

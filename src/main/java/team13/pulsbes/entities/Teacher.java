@@ -82,5 +82,25 @@ public class Teacher {
 	public void setPsw(String psw) {
 		this.psw = psw;
 	}
+
+
+	public List<Lecture> getLectures() {
+		return lectures;
+	}
+
+
+	public void setLectures(List<Lecture> lectures) {
+		this.lectures = lectures;
+	}
+
+
+	public List<Course> getCourses() {
+		return courses;
+	}
+
+
+	public void setCourses(List<Course> courses) {
+		this.courses = courses;
+	}
 	
 }
