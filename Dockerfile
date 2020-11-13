@@ -5,5 +5,6 @@ RUN apt-get install -y openjdk-11-jdk
 RUN apt-get install -y nodejs
 RUN apt-get install -y npm
 RUN apt-get install -y mvn
+EXPOSE 8081
 
 CMD ls; mvn spring-boot:run
