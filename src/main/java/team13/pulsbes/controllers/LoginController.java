@@ -1,6 +1,7 @@
 package team13.pulsbes.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -19,13 +20,14 @@ public class LoginController {
 	LoginService loginService;
 	
 	@RequestMapping(value = Constants.LOGIN, method = RequestMethod.POST)	
-	public LoginDTO login(IdPw idpw)  {
+	public LoginDTO login(@RequestBody IdPw idpw)  {
 		try {
 			return loginService.login(idpw);
 		} catch (WrongCredentialsException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-			return null;
+			LoginDTO loginDTO = new LoginDTO();
+			return loginDTO;
 		}
 	}
 }
