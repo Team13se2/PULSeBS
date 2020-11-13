@@ -4,6 +4,10 @@ RUN apt-get update
 RUN apt-get install -y openjdk-11-jdk
 RUN apt-get install -y nodejs
 RUN apt-get install -y npm
+RUN apt-get install -y maven
+RUN apt-get install -y git
+RUN git clone https://github.com/Team13se2/PULSeBS.git
 
-CMD ["/bin/bash", "./mvnw spring-boot:run"]
-CMD ["/bin/bash", "ls -al"]
+EXPOSE 8081/tcp
+
+CMD cd PULSeBS; mvn spring-boot:run

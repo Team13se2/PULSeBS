@@ -26,34 +26,27 @@ public class LoginService {
 
 	public LoginDTO login(IdPw idpw) throws WrongCredentialsException {
 		LoginDTO login = null;
-		
 		List<Student> students = new ArrayList<>();
 		List<Teacher> teachers = new ArrayList<>();
-		
-		students = studentRepository.findAll();
-		teachers = teacherRepository.findAll();
 		if(!idpw.getTeacher()) {
-			for(Student s : students) {
-				if(s.getEmail() == idpw.getEmail() && s.getPsw() == idpw.getPsw()) {
-					
+			for(Student s : studentRepository.findAll()) {
+				if(s.getEmail().equals(idpw.getEmail()) && s.getPsw().equals(idpw.getPsw())) {
 					login = loginConverter(s,null);
-					
+					break;
 				}
 			}
 		}
 		else if(idpw.getTeacher()) {
-			for (Teacher t : teachers) {
-				if(t.getEmail()==idpw.getEmail() && t.getPsw() == idpw.getPsw()) {
+			for (Teacher t : teacherRepository.findAll()) {
+				if(t.getEmail().equals(idpw.getEmail()) && t.getPsw().equals(idpw.getPsw())) {
 					login = loginConverter(null,t);
-					
+					break;
 				}
 			}
 		}
-		
 		if(login == null) {
 			throw new WrongCredentialsException("Wrong Credentials");
 		}
-		
 		return login;
 	}
 	
@@ -69,13 +62,14 @@ public class LoginService {
 			login.setTeacher(false);
 			login.setToken("token");
 			return login;
+		}else {
+			login.setEmail(t.getEmail());
+			login.setId(t.getId());
+			login.setName(t.getName());
+			login.setSurname(t.getSurname());
+			login.setTeacher(true);
+			login.setToken("token");		//(LUCA) secondo me setToken deve essere impostato con l'id del teacher:
 		}
-		login.setEmail(t.getEmail());
-		login.setId(t.getId());
-		login.setName(t.getName());
-		login.setSurname(t.getSurname());
-		login.setTeacher(true);
-		login.setToken("token");
 		return login;
 	}
 }
