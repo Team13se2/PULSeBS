@@ -1,11 +1,15 @@
 package team13.pulsbes.serviceimpl;
 
+import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import team13.pulsbes.dtos.LectureDTO;
 import team13.pulsbes.dtos.TeacherDTO;
 import team13.pulsbes.entities.Lecture;
+import team13.pulsbes.entities.Teacher;
 import team13.pulsbes.exception.InvalidLectureException;
 import team13.pulsbes.exception.InvalidTeacherException;
+import team13.pulsbes.repositories.TeacherRepository;
 import team13.pulsbes.services.TeacherService;
 import team13.pulsbes.services.TeacherService;
 
@@ -14,7 +18,10 @@ import java.util.List;
 @Service
 public class TeacherServiceImpl implements TeacherService{
 	
-	
+	@Autowired
+	TeacherRepository teacherRepository;
+	@Autowired 
+	ModelMapper modelMapper;
 	
 	@Override
 	public Integer getNumberStudentsAttending(LectureDTO l) throws InvalidLectureException{
@@ -36,8 +43,9 @@ public class TeacherServiceImpl implements TeacherService{
 			throw new InvalidTeacherException("Teacher can't be null");
 		}
 		
-		
-		return null;
+		Teacher t = teacherRepository.getOne(tDTO.getId());
+			
+		return t.getLectures();
 	}
 	
 	@Override

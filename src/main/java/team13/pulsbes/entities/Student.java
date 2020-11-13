@@ -24,6 +24,7 @@ public class Student {
 
     private String Email;
 
+    private String psw;
     @ManyToMany(cascade = {CascadeType.PERSIST,CascadeType.MERGE})
     @JoinTable(name = "courses_students",joinColumns = @JoinColumn(name = "course_id"),
     inverseJoinColumns = @JoinColumn(name = "student_id"))
@@ -94,6 +95,14 @@ public class Student {
 
 
 	public void setCourses(List<Course> courses) {
+	}
+
+	public String getPsw() {
+		return psw;
+	}
+
+	public void setPsw(String psw) {
+		this.psw = psw;
 	}
 
 	
