@@ -23,5 +23,22 @@ async function userLogin(email, psw, type) {
     });
 }
 
-const API = {userLogin} ;
+async function userLogout(username, password) {
+    return new Promise((resolve, reject) => {
+        fetch(baseURL + '/login/logout', {
+            method: 'POST',
+        }).then((response) => {
+            if (response.ok) {
+                resolve(null);
+            } else {
+                // analyze the cause of error
+                response.json()
+                    .then((obj) => { reject(obj); }) // error msg in the response body
+                    .catch((err) => { reject({ errors: [{ param: "Application", msg: "Cannot parse server response" }] }) }); // something else
+            }
+        });
+    });
+}
+
+const API = {userLogin,userLogout} ;
 export default API;
