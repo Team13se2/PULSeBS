@@ -33,11 +33,13 @@ public class Course {
 		if(s==null) {
 			throw new InvalidStudentException("Invalid Student");
 		}
+		students.add(s);
 	}
 	public void studentRemove(Student s) throws InvalidStudentException {
 		if(s==null) {
 			throw new InvalidStudentException("Invalid Student");
 		}
+		students.remove(s);
 	}
 	public String getId() {
 		return Id;

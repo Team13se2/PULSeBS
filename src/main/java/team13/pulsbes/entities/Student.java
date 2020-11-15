@@ -44,7 +44,8 @@ public class Student {
 	public void addCourse(Course c) throws InvalidCourseException {
     	if(c==null) {
     		throw new InvalidCourseException("Invalid Course");
-    	}
+		}
+		courses.add(c);
 
     }
     public void removeCourse(Course c) throws InvalidCourseException {
@@ -91,6 +92,10 @@ public class Student {
 
 	public void setEmail(String email) {
 		Email = email;
+	}
+
+	public List<Course> getCourses() {
+		return courses;
 	}
 
 
