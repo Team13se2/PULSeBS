@@ -53,6 +53,8 @@ public class LoginController {
 		// create a cookie
 		Cookie cookieUsername = new Cookie("username", null);
 		Cookie cookieId = new Cookie("id", null);
+		cookieUsername.setPath("/");
+		cookieId.setPath("/");
 		cookieUsername.setMaxAge(0);
 		cookieId.setMaxAge(0);
 		//add cookie to response

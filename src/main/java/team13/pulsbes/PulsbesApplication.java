@@ -53,7 +53,7 @@ public class PulsbesApplication {
 		 return mailSender;
 	 }
 
-	/*@Bean
+	@Bean
 	CommandLineRunner runner (NotificationService notificationService, StudentService studentService) {
 		return new CommandLineRunner() {
 			@Autowired
@@ -62,46 +62,15 @@ public class PulsbesApplication {
  			@Autowired
 			LectureRepository lectureRepository;
 
+ 			@Autowired
+			TeacherRepository teacherRepository;
 			@Override
 			public void run(String... args) throws Exception {
 
-
-
-				Lecture lecture = Lecture.builder()
-						.Id("0")
-						.StartTime(null)
-						.EndTime(null)
-						.SubjectName("SE2")
-						.LectureType(null)
-						.AvailableSeat(null)
-						.RoomName(null)
-						.TotalSeat(null)
-						.SurnameString(null)
-						.build();
-
-               lectureRepository.save(lecture);
-               lectureRepository.flush();
-
-				Student s = Student.builder()
-						.Id("s123")
-						.Email("matteopellegrino.fn@gmail.com")
-						.Name("gianni")
-						.Surname("sperti")
-						.psw(null)
-						.build();
-
-				studentRepository.save(s);
-				studentRepository.flush();
-
-				studentService.bookLecture("0","s123");
-
-				notificationService.sendMessage("matteopellegrino.fn@gmail.com","prova","prova stronzo");
-
-                System.out.println("Ciao");
 			}
 		};
 	}
-*/
+
 	public static void main(String[] args) {
 		SpringApplication.run(PulsbesApplication.class, args);
 	}

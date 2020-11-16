@@ -20,10 +20,10 @@ public class TeacherController {
 	@Autowired
 	TeacherService teacherService;
 	
-	@RequestMapping(value = Constants.GET_NUMBER_STUDENTS_ATTENDING,method = RequestMethod.POST)
-	public Integer getNumberStudentsAttending(@RequestBody LectureDTO lDto) throws InvalidLectureException {		
+	@RequestMapping(value = Constants.GET_NUMBER_STUDENTS_ATTENDING,method = RequestMethod.GET)
+	public Integer getNumberStudentsAttending(@RequestParam("lecture_id") String id) throws InvalidLectureException {
 		try {
-			return teacherService.getNumberStudentsAttending(lDto);
+			return teacherService.getNumberStudentsAttending(id);
 		} catch (InvalidLectureException e) {
 			
 			System.out.println(e.getMessage());
@@ -31,7 +31,7 @@ public class TeacherController {
 		}
 	}
 	@RequestMapping(value = Constants.GET_ALL_LECTURES, method = RequestMethod.GET)
-	public List<Lecture> getAllLectures(@CookieValue(value = "username") String username,@CookieValue(value = "id") String id) throws InvalidTeacherException{
+	public List<LectureDTO> getAllLectures(@CookieValue(value = "username") String username,@CookieValue(value = "id") String id) throws InvalidTeacherException{
 		try {
 			return teacherService.getAllLectures(id);
 		} catch (InvalidTeacherException e) {

@@ -1,3 +1,5 @@
+import LectureDTO from "../entity/LectureDTO";
+
 const baseURL = "";
 
 async function userLogin(email, psw, type) {
@@ -46,14 +48,25 @@ async function getAllLectures(){
     const response = await fetch(baseURL + url);
     const lecturesJSON = await response.json();
     if(response.ok){
-        //return tasksJson.map((t) => Task.from(t));
-        //return tasksJson.map((t) => new Task(t.id,t.description,t.important, t.privateTask,t.deadline,t.project, t.completed, t.user));
-        return null;
+        return lecturesJSON.map((l) => new LectureDTO(l.id,l.availableSeat,l.startTime,l.endTime,l.lectureType,l.surnameString,l.totalSeat,l.roomName));
     } else {
         let err = {status: response.status, errObj:lecturesJSON};
         throw err;  // An object with the error coming from the server
     }
 }
 
-const API = {userLogin,userLogout,getAllLectures} ;
+async function getNumberStudentsAttending(lecture_id){
+    let url = "/teacher/getNumberStudentsAttending"+"?lecture_id="+lecture_id;
+
+    const response = await fetch(baseURL + url);
+    const nrStudents = await response.json();
+    if(response.ok){
+        return nrStudents;
+    } else {
+        let err = {status: response.status, errObj:nrStudents};
+        throw err;  // An object with the error coming from the server
+    }
+}
+
+const API = {userLogin,userLogout,getAllLectures,getNumberStudentsAttending} ;
 export default API;
