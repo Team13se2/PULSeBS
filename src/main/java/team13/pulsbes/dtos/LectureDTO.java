@@ -31,10 +31,7 @@ public class LectureDTO {
     private Integer TotalSeat;
 
     private String RoomName;
-    private List<Student> students;
-    {
-        students = new ArrayList<>();
-    }
+
     
     
     
@@ -50,6 +47,8 @@ public class LectureDTO {
 		TotalSeat = totalSeat;
 		RoomName = roomName;
 	}
+
+	public LectureDTO(){}
 	public String getId() {
 		return Id;
 	}
@@ -97,12 +96,6 @@ public class LectureDTO {
 	}
 	public void setRoomName(String roomName) {
 		RoomName = roomName;
-	}
-	public List<Student> getStudents() {
-		return students;
-	}
-	public void setStudents(List<Student> students) {
-		this.students = students;
 	}
     
 }
