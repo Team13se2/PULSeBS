@@ -21,6 +21,7 @@ public class NotificationServiceImpl implements NotificationService {
         message.setTo(address);
         message.setSubject(subject);
         message.setText(body);
+        emailSender.send(message);
 
     }
 }
