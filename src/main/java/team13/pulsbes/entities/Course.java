@@ -11,9 +11,12 @@ import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
-
+@AllArgsConstructor
+@NoArgsConstructor
 @Data
 @Entity
+@Builder
+
 public class Course {
 
    @Id

@@ -2,15 +2,21 @@ package team13.pulsbes;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Primary;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
+import team13.pulsbes.entities.Lecture;
+import team13.pulsbes.entities.Student;
 import team13.pulsbes.repositories.CourseRepository;
+import team13.pulsbes.repositories.LectureRepository;
 import team13.pulsbes.repositories.StudentRepository;
 import team13.pulsbes.repositories.TeacherRepository;
+import team13.pulsbes.services.NotificationService;
+import team13.pulsbes.services.StudentService;
 
 import javax.annotation.PostConstruct;
 import java.sql.Connection;
@@ -25,6 +31,7 @@ public class PulsbesApplication {
 	 ModelMapper modelMapper() {
 	 	return new ModelMapper();
 	 }
+
 
 
 	 @Primary
@@ -46,6 +53,55 @@ public class PulsbesApplication {
 		 return mailSender;
 	 }
 
+	/*@Bean
+	CommandLineRunner runner (NotificationService notificationService, StudentService studentService) {
+		return new CommandLineRunner() {
+			@Autowired
+			StudentRepository studentRepository;
+
+ 			@Autowired
+			LectureRepository lectureRepository;
+
+			@Override
+			public void run(String... args) throws Exception {
+
+
+
+				Lecture lecture = Lecture.builder()
+						.Id("0")
+						.StartTime(null)
+						.EndTime(null)
+						.SubjectName("SE2")
+						.LectureType(null)
+						.AvailableSeat(null)
+						.RoomName(null)
+						.TotalSeat(null)
+						.SurnameString(null)
+						.build();
+
+               lectureRepository.save(lecture);
+               lectureRepository.flush();
+
+				Student s = Student.builder()
+						.Id("s123")
+						.Email("matteopellegrino.fn@gmail.com")
+						.Name("gianni")
+						.Surname("sperti")
+						.psw(null)
+						.build();
+
+				studentRepository.save(s);
+				studentRepository.flush();
+
+				studentService.bookLecture("0","s123");
+
+				notificationService.sendMessage("matteopellegrino.fn@gmail.com","prova","prova stronzo");
+
+                System.out.println("Ciao");
+			}
+		};
+	}
+*/
 	public static void main(String[] args) {
 		SpringApplication.run(PulsbesApplication.class, args);
 	}
