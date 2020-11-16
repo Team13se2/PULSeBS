@@ -17,9 +17,12 @@ public class StudentServiceImpl implements StudentService{
 
     @Autowired
     StudentRepository studentRepository;
+
+    @Autowired
+    NotificationServiceImpl notificationService;
     
     String bookingSuccess = "The lecture was corrrectly booked";    
-    String bookingFailure = "The lecture has no more available seats, retry later";
+    String bookingFailure = "The lecture has no more available seats, you will receive a mail if a spot opens up";
 
     Logger log = Logger.getLogger("StudentServiceImpl");
     
@@ -44,6 +47,10 @@ public class StudentServiceImpl implements StudentService{
 
         }
 
+        if (!currentStudent.getCourses().contains(lectureSelected.getCourse())) {
+            return ("You are not enrolled in this course, unable to book a seat");
+        }
+
         Integer availableSeats = lectureSelected.getAvailableSeat();
 
         if (availableSeats>0) {
@@ -51,7 +58,9 @@ public class StudentServiceImpl implements StudentService{
             try {lectureSelected.addStudentAttending(currentStudent);} catch (Exception e) {log.throwing(this.getClass().getName(), "addStudentAttending", e);}
 
             lectureSelected.setAvailableSeat(availableSeats - 1);
-            
+
+            notificationService.sendMessage(currentStudent.getEmail(),"Booking confirmation","Booking succeed for " + lectureSelected.getSubjectName() + ".");
+
             return (bookingSuccess);
         }
         else {
