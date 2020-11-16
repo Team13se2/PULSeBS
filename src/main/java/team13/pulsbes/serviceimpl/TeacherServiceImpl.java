@@ -29,9 +29,6 @@ public class TeacherServiceImpl implements TeacherService{
 		if (l == null) {
 			throw new InvalidLectureException("Lecture can't be null");
 		}
-		if(l.getStudents()==null) {
-			throw new InvalidLectureException("Lecture can't be null");
-		}
 		
 		System.out.println(l.getStudents().size());
 		return l.getStudents().size();
