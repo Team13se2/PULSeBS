@@ -1,6 +1,7 @@
 package team13.pulsbes.entities;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import team13.pulsbes.exception.InvalidStudentException;
@@ -15,6 +16,8 @@ import java.util.List;
 @NoArgsConstructor
 @Data
 @Entity
+@Builder
+
 public class Lecture {
 
     @Id

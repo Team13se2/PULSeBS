@@ -10,6 +10,7 @@ import team13.pulsbes.entities.Lecture;
 import team13.pulsbes.entities.Student;
 import team13.pulsbes.exception.InvalidLectureException;
 
+import team13.pulsbes.repositories.LectureRepository;
 import team13.pulsbes.services.StudentService;
 import team13.pulsbes.repositories.StudentRepository;
 @Service
@@ -19,27 +20,21 @@ public class StudentServiceImpl implements StudentService{
     StudentRepository studentRepository;
 
     @Autowired
+    LectureRepository lectureRepository;
+
+    @Autowired
     NotificationServiceImpl notificationService;
     
     String bookingSuccess = "The lecture was corrrectly booked";    
     String bookingFailure = "The lecture has no more available seats, you will receive a mail if a spot opens up";
 
     Logger log = Logger.getLogger("StudentServiceImpl");
-    
-    ArrayList<Lecture> lectureList = new ArrayList<>();
-
-    public StudentServiceImpl(){
-
-		lectureList.add(0,new Lecture("analisi", 300, 0));
-
-    }
-    
 
     @Override
-    public String bookLecture (String lectureId) throws InvalidLectureException{
+    public String bookLecture (String lectureId, String StudentId ) throws InvalidLectureException{
 
-        Student currentStudent = new Student("s123456", "Mario", "Pino");        
-        Lecture lectureSelected = lectureList.stream().filter(lecture -> lectureId.equals(lecture.getId())).findAny().orElse(null);
+        Student currentStudent = studentRepository.getOne(StudentId);
+        Lecture lectureSelected = lectureRepository.getOne(lectureId);
         
         if (lectureSelected == null) {
 
