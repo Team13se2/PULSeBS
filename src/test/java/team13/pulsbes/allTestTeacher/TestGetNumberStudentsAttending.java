@@ -31,4 +31,9 @@ class TestGetNumberStudentsAttending {
 		
 	}
 
+	@Test
+	void testGetNumberStudentsAttending2() throws InvalidTeacherException, InvalidStudentException, InvalidLectureException {
+		assertThrows(InvalidLectureException.class, () -> teacherService.getNumberStudentsAttending(null));
+	}
+
 }
