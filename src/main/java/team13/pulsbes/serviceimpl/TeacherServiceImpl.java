@@ -38,13 +38,11 @@ public class TeacherServiceImpl implements TeacherService{
 	}
 
 	@Override
-	public List<Lecture> getAllLectures(TeacherDTO tDTO) throws InvalidTeacherException {
-		if(tDTO == null) {
+	public List<Lecture> getAllLectures(String id) throws InvalidTeacherException {
+		if(id.equals(-1)) {
 			throw new InvalidTeacherException("Teacher can't be null");
 		}
-		
-		Teacher t = teacherRepository.getOne(tDTO.getId());
-			
+		Teacher t = teacherRepository.getOne(id);
 		return t.getLectures();
 	}
 	

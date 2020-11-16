@@ -51,7 +51,14 @@ class App extends React.Component {
         });
     }
 
+    getAllLectures = () =>{
+        API.getAllLectures().then(() =>{
+            console.log("andata");
+        })
+    }
+
     componentDidMount() {
+        this.getAllLectures();
         //this.login("teacher@gmail.com", "psw", "teacher");
         //this.logout();
         // check if the user is authenticated

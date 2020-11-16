@@ -88,7 +88,6 @@ public class Teacher {
 		return lectures;
 	}
 
-
 	public void setLectures(List<Lecture> lectures) {
 		this.lectures = lectures;
 	}

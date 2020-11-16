@@ -40,5 +40,20 @@ async function userLogout(username, password) {
     });
 }
 
-const API = {userLogin,userLogout} ;
+async function getAllLectures(){
+    let url = "/teacher/getAllLectures";
+
+    const response = await fetch(baseURL + url);
+    const lecturesJSON = await response.json();
+    if(response.ok){
+        //return tasksJson.map((t) => Task.from(t));
+        //return tasksJson.map((t) => new Task(t.id,t.description,t.important, t.privateTask,t.deadline,t.project, t.completed, t.user));
+        return null;
+    } else {
+        let err = {status: response.status, errObj:lecturesJSON};
+        throw err;  // An object with the error coming from the server
+    }
+}
+
+const API = {userLogin,userLogout,getAllLectures} ;
 export default API;

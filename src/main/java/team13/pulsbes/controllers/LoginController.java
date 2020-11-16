@@ -26,6 +26,8 @@ public class LoginController {
 			if(!log.getId().equals("-1")){
 				Cookie cookieUsername = new Cookie("username", log.getEmail());
 				Cookie cookieId = new Cookie("id", log.getId());
+				cookieUsername.setPath("/");
+				cookieId.setPath("/");
 				cookieUsername.setMaxAge(3600*7);
 				cookieId.setMaxAge(3600*7);
 				//add cookie to response
