@@ -33,23 +33,22 @@ public class StudentServiceImpl implements StudentService{
     @Override
     public String bookLecture (String lectureId, String StudentId ) throws InvalidLectureException{
 
+        System.out.println("entrato");
+
         Student currentStudent = studentRepository.getOne(StudentId);
         Lecture lectureSelected = lectureRepository.getOne(lectureId);
         
         if (lectureSelected == null) {
-
+            System.out.println("primo if");
             throw new InvalidLectureException("Lecture can't be null"); 
 
         }
 
-        if (!currentStudent.getCourses().contains(lectureSelected.getCourse())) {
-            return ("You are not enrolled in this course, unable to book a seat");
-        }
 
         Integer availableSeats = lectureSelected.getAvailableSeat();
 
         if (availableSeats>0) {
-
+            System.out.println("terzo if");
             try {lectureSelected.addStudentAttending(currentStudent);} catch (Exception e) {log.throwing(this.getClass().getName(), "addStudentAttending", e);}
 
             lectureSelected.setAvailableSeat(availableSeats - 1);
