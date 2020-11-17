@@ -13,6 +13,7 @@ import team13.pulsbes.exception.InvalidLectureException;
 import team13.pulsbes.repositories.LectureRepository;
 import team13.pulsbes.services.StudentService;
 import team13.pulsbes.repositories.StudentRepository;
+import team13.pulsbes.repositories.TeacherRepository;
 @Service
 public class StudentServiceImpl implements StudentService{
 
@@ -25,6 +26,16 @@ public class StudentServiceImpl implements StudentService{
     @Autowired
     NotificationServiceImpl notificationService;
     
+    public void addStudentRepo (StudentRepository sr) {
+		this.studentRepository = sr;
+	}
+	public void addLectureRepo(LectureRepository lr) {
+		this.lectureRepository = lr;
+	}
+    public void addNotificationService(NotificationServiceImpl ns) {
+    	this.notificationService = ns;
+    }
+	
     String bookingSuccess = "The lecture was corrrectly booked";    
     String bookingFailure = "The lecture has no more available seats, you will receive a mail if a spot opens up";
 

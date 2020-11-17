@@ -21,6 +21,8 @@ public class LectureDTO {
     private Date StartTime;
 
     private Date EndTime;
+    
+    private String SubjectName;
 
     private String LectureType;
 
@@ -33,21 +35,6 @@ public class LectureDTO {
     private String RoomName;
 
     
-    
-    
-	public LectureDTO(String id, Date startTime, Date endTime, String lectureType, String surnameString,
-			Integer availableSeat, Integer totalSeat, String roomName) {
-		super();
-		Id = id;
-		StartTime = startTime;
-		EndTime = endTime;
-		LectureType = lectureType;
-		SurnameString = surnameString;
-		AvailableSeat = availableSeat;
-		TotalSeat = totalSeat;
-		RoomName = roomName;
-	}
-
 	public LectureDTO(){}
 	public String getId() {
 		return Id;
@@ -96,6 +83,12 @@ public class LectureDTO {
 	}
 	public void setRoomName(String roomName) {
 		RoomName = roomName;
+	}
+	public String getSubjectName() {
+		return SubjectName;
+	}
+	public void setSubjectName(String subjectName) {
+		SubjectName = subjectName;
 	}
     
 }
