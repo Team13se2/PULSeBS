@@ -13,5 +13,4 @@ public interface TeacherService {
 	
 	Integer getNumberStudentsAttending(String id) throws InvalidLectureException;
 	List<LectureDTO> getAllLectures(String id) throws InvalidTeacherException;
-	void mailForNumber(TeacherDTO tDto);
 }

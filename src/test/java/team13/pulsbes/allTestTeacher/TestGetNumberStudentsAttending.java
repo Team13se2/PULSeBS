@@ -23,7 +23,7 @@ class TestGetNumberStudentsAttending {
 	@Test
 	void testGetNumberStudentsAttending() throws InvalidTeacherException, InvalidStudentException, InvalidLectureException {
 		Lecture l = new Lecture("1",10,0);
-		LectureDTO lDto = new LectureDTO("1",new Date(),new Date(),"type","surname",10,100,"Aula 10");
+		LectureDTO lDto = new LectureDTO();
 		Student s = new Student("s201101","Lorenzo","Lanari");
 		l.addStudentAttending(s);
 		//lDto.setStudents(l.getStudents());

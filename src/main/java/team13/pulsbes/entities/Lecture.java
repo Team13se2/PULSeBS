@@ -10,6 +10,7 @@ import team13.pulsbes.model.Date;
 import javax.persistence.*;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 @AllArgsConstructor
@@ -21,11 +22,11 @@ import java.util.List;
 public class Lecture {
 
     @Id
-    private String Id;
-
-    private Date StartTime;
-
-    private Date EndTime;
+    private String Id;    
+    
+    private java.util.Date StartTime;
+    
+    private java.util.Date EndTime;
 
     private String SubjectName;
 
@@ -56,6 +57,8 @@ public class Lecture {
     @JoinColumn (name = "teacher_id")
     private Teacher teacher;
 
+    public Lecture() {}
+    
 	public void addStudentAttending(Student s) throws InvalidStudentException {
     	if(s==null) {
     		throw new InvalidStudentException("Invalid Student");
@@ -84,19 +87,19 @@ public class Lecture {
 		Id = id;
 	}
 
-	public Date getStartTime() {
+	public java.util.Date getStartTime() {
 		return StartTime;
 	}
 
-	public void setStartTime(Date startTime) {
+	public void setStartTime(java.util.Date startTime) {
 		StartTime = startTime;
 	}
 
-	public Date getEndTime() {
+	public java.util.Date getEndTime() {
 		return EndTime;
 	}
 
-	public void setEndTime(Date endTime) {
+	public void setEndTime(java.util.Date endTime) {
 		EndTime = endTime;
 	}
 
