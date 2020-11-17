@@ -11,6 +11,9 @@ import {Calendar, momentLocalizer} from "react-big-calendar";
 import moment from "moment";
 import {AuthContext} from './auth/AuthContext';
 
+import Cookies from 'js-cookie';
+
+
 import "react-big-calendar/lib/css/react-big-calendar.css";
 import API from './api/API';
 
@@ -47,7 +50,7 @@ class App extends React.Component {
     // Add a logout method
     logout = () => {
         API.userLogout().then(() => {
-            this.setState({authUser: null, authErr: null, tasks: null});
+            this.setState({authUser: null, authErr: null});
         });
     }
 
@@ -63,7 +66,17 @@ class App extends React.Component {
         })
     }
 
+    isAuthenticated = () =>{
+        const id = Cookies.get("id");
+        const username = Cookies.get("username");
+        if(id !== undefined && username !== undefined){
+            const user = {id:id,username:username};
+            this.setState({authUser: user});
+        }
+    }
+
     componentDidMount() {
+        this.isAuthenticated();
         //this.getNumberStudentsAttending(2);
         //this.getAllLectures();
         //this.login("teacher@gmail.com", "psw", "teacher");
