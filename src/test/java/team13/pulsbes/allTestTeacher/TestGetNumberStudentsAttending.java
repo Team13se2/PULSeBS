@@ -25,7 +25,8 @@ class TestGetNumberStudentsAttending {
 		lectureRepository = mock(LectureRepository.class);
 		teacherService = new TeacherServiceImpl();
 		teacherService.addLectureRepo(lectureRepository);
-		l = new Lecture("1",10,0);
+		//l = new Lecture("1",10,0);
+		l = new Lecture();
 		Student s = new Student("s201101","Lorenzo","Lanari");
 		try {
 			l.addStudentAttending(s);

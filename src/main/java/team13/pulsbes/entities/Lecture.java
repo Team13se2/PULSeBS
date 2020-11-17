@@ -72,12 +72,12 @@ public class Lecture {
     	students.remove(s);
 	}
 	
-	public Lecture( String Id, Integer AvailableSeat, Integer TotalSeat) {
-		super();
-		this.Id = Id;
-		this.AvailableSeat = AvailableSeat;
-		this.TotalSeat = TotalSeat;
-	}
+//	public Lecture( String Id, Integer AvailableSeat, Integer TotalSeat) {
+//		super();
+//		this.Id = Id;
+//		this.AvailableSeat = AvailableSeat;
+//		this.TotalSeat = TotalSeat;
+//	}
     
 	public String getId() {
 		return Id;

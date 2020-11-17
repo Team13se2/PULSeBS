@@ -31,6 +31,7 @@ class TestBookLecture {
 		studentService = new StudentServiceImpl();
 		studentService.addLectureRepo(lr);
 		studentService.addStudentRepo(sr);
+		studentService.addNotificationService(notificationService);
 	}
 	
 	@Test
@@ -55,7 +56,7 @@ class TestBookLecture {
 		when(lr.getOne(any())).thenReturn(l);
 		when(sr.getOne(any())).thenReturn(s);
 		doNothing().when(notificationService).sendMessage(isA(String.class), isA(String.class), isA(String.class));
-	
+		//when(notificationService.sendMessage(anyString(), anyString(), anyString())).thenReturn(true);
 		assertEquals(bookingSuccess,studentService.bookLecture("1", "2"));
 	}
 	

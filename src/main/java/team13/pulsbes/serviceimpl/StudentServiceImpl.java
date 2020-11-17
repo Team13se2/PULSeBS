@@ -32,7 +32,10 @@ public class StudentServiceImpl implements StudentService{
 	public void addLectureRepo(LectureRepository lr) {
 		this.lectureRepository = lr;
 	}
-    
+    public void addNotificationService(NotificationServiceImpl ns) {
+    	this.notificationService = ns;
+    }
+	
     String bookingSuccess = "The lecture was corrrectly booked";    
     String bookingFailure = "The lecture has no more available seats, you will receive a mail if a spot opens up";
 

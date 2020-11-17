@@ -74,26 +74,27 @@ public class PulsbesApplication {
  			
 			@Override
 			public void run(String... args) throws Exception {
-				Lecture l = new Lecture("3", 10, 100);
-				Teacher teacher = new Teacher();
-				teacher.setId("3");
-				teacher.setEmail("lanarig@gmail.com");
-				officerService.addTeacher(teacher);
-				team13.pulsbes.model.Date startTime = new team13.pulsbes.model.Date();
-				//startTime.set(2020, 11, 17, 10, 33, 0);
-				startTime.setYear(120);
-				startTime.setMonth(10);
-				startTime.setDay(17);
-				startTime.setHour(13);
-				startTime.setMinutes(10);
-				l.setStartTime(startTime);
-				System.out.println(startTime.toString());
-				
-				l.setTeacher(teacher);
-				
-				
-				
-				officerService.addLecture(l);
+//				Lecture l = new Lecture();
+//				l.setId("3"); l.setAvailableSeat(10); l.setTotalSeat(100);
+//				Teacher teacher = new Teacher();
+//				teacher.setId("3");
+//				teacher.setEmail("lanarig@gmail.com");
+//				officerService.addTeacher(teacher);
+//				team13.pulsbes.model.Date startTime = new team13.pulsbes.model.Date();
+//				//startTime.set(2020, 11, 17, 10, 33, 0);
+//				startTime.setYear(120);
+//				startTime.setMonth(10);
+//				startTime.setDay(17);
+//				startTime.setHour(13);
+//				startTime.setMinutes(10);
+//				l.setStartTime(startTime);
+//				System.out.println(startTime.toString());
+//				
+//				l.setTeacher(teacher);
+//				
+//				
+//				
+//				officerService.addLecture(l);
 				//studentService.bookLecture("0","s123");					
 			}
 		};

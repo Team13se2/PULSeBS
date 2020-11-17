@@ -34,7 +34,8 @@ public class TestGetAllLectures {
 	public void setUp() {
 		teacherRepository = mock(TeacherRepository.class);
 		modelMapper = mock(ModelMapper.class);
-		Lecture l = new Lecture("analisi", 10, 50);
+		//Lecture l = new Lecture("analisi", 10, 50);
+		Lecture l = new Lecture();
 		LectureDTO lDto = new LectureDTO ();
 		lectures.add(l);
 		t.setLectures(lectures);

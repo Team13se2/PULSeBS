@@ -62,7 +62,13 @@ public class Course {
 	public void setTeacher(Teacher teacher) {
 		this.teacher = teacher;
 	}
-
+	public List<Student> getStudents() {
+		return students;
+	}
+	public void setStudents(List<Student> students) {
+		this.students = students;
+	}
+	
 }
 
 
