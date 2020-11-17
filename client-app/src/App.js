@@ -1,24 +1,25 @@
 import './App.css';
-import Header from './components/Header';
+
 import LoginForm from './components/LoginForm';
 import EventsList from './components/EventsList';
 import TeacherPage from './components/TeacherPage';
 import React from 'react';
 import {BrowserRouter as Router, Switch, Route} from "react-router-dom";
-import Col from "react-bootstrap/Col";
-import Row from "react-bootstrap/Row";
-import {Calendar, momentLocalizer} from "react-big-calendar";
 import moment from "moment";
 import {AuthContext} from './auth/AuthContext';
-
 import "react-big-calendar/lib/css/react-big-calendar.css";
 import API from './api/API';
 
 
-const localizer = momentLocalizer(moment);
-
 class App extends React.Component {
 
+    constructor(props) {
+        super(props);
+        this.state = {
+            
+        };
+    }
+    
     state = {
         events: [
             {
@@ -35,6 +36,7 @@ class App extends React.Component {
 
     // Add a login method
     login = (email, password, type) => {
+        console.log(email+ password+ type);
         API.userLogin(email, password, type).then((user) => {
             this.setState({authUser: user})
         }).catch((errorObj) => {
@@ -51,23 +53,15 @@ class App extends React.Component {
         });
     }
 
-    getAllLectures = () =>{
-        API.getAllLectures().then((lecture) =>{
-            this.setState({lecture: lecture});
-        })
-    }
+    
 
-    getNumberStudentsAttending = (lecture_id) =>{
-        API.getNumberStudentsAttending(lecture_id).then((nrStudents) =>{
-            this.setState({nrStudents: nrStudents});
-        })
-    }
+    
 
     componentDidMount() {
         //this.getNumberStudentsAttending(2);
-        //this.getAllLectures();
-        //this.login("teacher@gmail.com", "psw", "teacher");
-        //this.logout();
+       //this.getAllLectures();
+       //this.login("teacher@gmail.com", "psw", "teacher");
+       // this.logout();
         // check if the user is authenticated
         /*API.isAuthenticated().then(
         (user) => {
@@ -97,7 +91,8 @@ class App extends React.Component {
                                     exact={true}>
                                     <LoginForm login={
                                         this.login
-                                    }/>
+                                    }
+                                    logout={ this.logout}/>
                                 </Route>
 
                                 <Route path="/student"
@@ -107,30 +102,9 @@ class App extends React.Component {
                                 </Route>
 
                                 <Route path="/teacher"
-                                    exact={true}>
+                                    exact={true}
+                                    logout={ this.logout}>
                                     <TeacherPage/>
-
-
-                                    <div id="pagine">
-                                        <Row>
-                                            <Col sm={12}>
-                                                <h3 className="mb-5">Personal Calendar</h3>
-                                            </Col>
-                                        </Row>
-                                        <Calendar localizer={localizer}
-                                            defaultDate={
-                                                new Date()
-                                            }
-                                            defaultView="month"
-                                            events={
-                                                this.state.events
-                                            }
-                                            style={
-                                                {height: "60vh"}
-                                            }/>
-                                    </div>
-
-
                                 </Route>
                             </Switch>
                         </div>
