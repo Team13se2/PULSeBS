@@ -34,12 +34,15 @@ public class TeacherServiceImpl implements TeacherService{
 	public void addRepo (TeacherRepository tr) {
 		this.teacherRepository = tr;
 	}
+	public void addLectureRepo(LectureRepository lr) {
+		this.lectureRepository = lr;
+	}
 	public void addMM (ModelMapper mm) {
 		this.modelMapper = mm;
 	}
 	@Override
 	public Integer getNumberStudentsAttending(String id) throws InvalidLectureException{
-		if (id == null) {
+		if (id == "-1") {
 			throw new InvalidLectureException("Lecture can't be null");
 		}
 		return lectureRepository.getOne(id).getStudents().size();
