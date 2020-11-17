@@ -79,21 +79,21 @@ public class PulsbesApplication {
 				teacher.setId("3");
 				teacher.setEmail("lanarig@gmail.com");
 				officerService.addTeacher(teacher);
-				Date startTime = new Date();
+				team13.pulsbes.model.Date startTime = new team13.pulsbes.model.Date();
 				//startTime.set(2020, 11, 17, 10, 33, 0);
 				startTime.setYear(120);
 				startTime.setMonth(10);
-				startTime.setDate(17);
-				startTime.setHours(11);
-				startTime.setMinutes(44);
-				startTime.setSeconds(0);
-				System.out.println(startTime.toString());
+				startTime.setDay(17);
+				startTime.setHour(13);
+				startTime.setMinutes(10);
 				l.setStartTime(startTime);
+				System.out.println(startTime.toString());
+				
 				l.setTeacher(teacher);
 				
-				teacherService.getAllLectures("1");
 				
-				//officerService.addLecture(l);
+				
+				officerService.addLecture(l);
 				//studentService.bookLecture("0","s123");					
 			}
 		};

@@ -31,7 +31,13 @@ public class OfficerService {
 	public void addLecture(Lecture l) {
 		lectureRepository.save(l);
 		Timer timer = new Timer();
-		Date notificationTime = l.getStartTime();
+		Date notificationTime = new Date();
+		notificationTime.setYear(l.getStartTime().getYear());
+		notificationTime.setMonth(l.getStartTime().getMonth());
+		notificationTime.setDate(l.getStartTime().getDay());
+		notificationTime.setHours(l.getStartTime().getHour());
+		notificationTime.setMinutes(l.getStartTime().getMinutes());
+		notificationTime.setSeconds(0);
 		notificationTime.setHours(notificationTime.getHours()-1);
 		
 		//notificationTime.add(Calendar.HOUR_OF_DAY, -1);

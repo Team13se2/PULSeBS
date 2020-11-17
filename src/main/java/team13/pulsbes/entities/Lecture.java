@@ -24,9 +24,9 @@ public class Lecture {
     @Id
     private String Id;    
     
-    private java.util.Date StartTime;
+    private Date StartTime;
     
-    private java.util.Date EndTime;
+    private Date EndTime;
 
     private String SubjectName;
 
@@ -87,19 +87,19 @@ public class Lecture {
 		Id = id;
 	}
 
-	public java.util.Date getStartTime() {
+	public Date getStartTime() {
 		return StartTime;
 	}
 
-	public void setStartTime(java.util.Date startTime) {
+	public void setStartTime(Date startTime) {
 		StartTime = startTime;
 	}
 
-	public java.util.Date getEndTime() {
+	public Date getEndTime() {
 		return EndTime;
 	}
 
-	public void setEndTime(java.util.Date endTime) {
+	public void setEndTime(Date endTime) {
 		EndTime = endTime;
 	}
 
