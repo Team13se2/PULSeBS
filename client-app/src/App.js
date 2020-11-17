@@ -54,10 +54,18 @@ class App extends React.Component {
     }
 
     
-
+    isAuthenticated = () =>{
+        const id = Cookies.get("id");
+        const username = Cookies.get("username");
+        if(id !== undefined && username !== undefined){
+            const user = {id:id,username:username};
+            this.setState({authUser: user});
+        }
+    }
     
 
     componentDidMount() {
+        this.isAuthenticated();
         //this.getNumberStudentsAttending(2);
        //this.getAllLectures();
        //this.login("teacher@gmail.com", "psw", "teacher");
