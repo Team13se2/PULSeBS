@@ -42,7 +42,7 @@ public class TeacherServiceImpl implements TeacherService{
 	}
 	@Override
 	public Integer getNumberStudentsAttending(String id) throws InvalidLectureException{
-		if (id == "-1") {
+		if (id.equals("-1")) {
 			throw new InvalidLectureException("Lecture can't be null");
 		}
 		return lectureRepository.getOne(id).getStudents().size();
