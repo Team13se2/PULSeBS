@@ -57,7 +57,6 @@ public class Lecture {
     @JoinColumn (name = "teacher_id")
     private Teacher teacher;
 
-    public Lecture() {}
     
 	public void addStudentAttending(Student s) throws InvalidStudentException {
     	if(s==null) {
