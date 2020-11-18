@@ -10,52 +10,62 @@ import team13.pulsbes.entities.Lecture;
 import team13.pulsbes.entities.Student;
 import team13.pulsbes.exception.InvalidLectureException;
 
+import team13.pulsbes.repositories.LectureRepository;
 import team13.pulsbes.services.StudentService;
 import team13.pulsbes.repositories.StudentRepository;
+import team13.pulsbes.repositories.TeacherRepository;
 @Service
 public class StudentServiceImpl implements StudentService{
 
     @Autowired
     StudentRepository studentRepository;
+
+    @Autowired
+    LectureRepository lectureRepository;
+
+    @Autowired
+    NotificationServiceImpl notificationService;
     
+    public void addStudentRepo (StudentRepository sr) {
+		this.studentRepository = sr;
+	}
+	public void addLectureRepo(LectureRepository lr) {
+		this.lectureRepository = lr;
+	}
+    public void addNotificationService(NotificationServiceImpl ns) {
+    	this.notificationService = ns;
+    }
+	
     String bookingSuccess = "The lecture was corrrectly booked";    
     String bookingFailure = "The lecture has no more available seats, you will receive a mail if a spot opens up";
 
     Logger log = Logger.getLogger("StudentServiceImpl");
-    
-    ArrayList<Lecture> lectureList = new ArrayList<>();
-
-    public StudentServiceImpl(){
-
-		lectureList.add(0,new Lecture("analisi", 300, 0));
-
-    }
-    
 
     @Override
-    public String bookLecture (String lectureId) throws InvalidLectureException{
+    public String bookLecture (String lectureId, String StudentId ) throws InvalidLectureException{
 
-        Student currentStudent = new Student("s123456", "Mario", "Pino");        
-        Lecture lectureSelected = lectureList.stream().filter(lecture -> lectureId.equals(lecture.getId())).findAny().orElse(null);
+        System.out.println("entrato");
+
+        Student currentStudent = studentRepository.getOne(StudentId);
+        Lecture lectureSelected = lectureRepository.getOne(lectureId);
         
         if (lectureSelected == null) {
-
+            System.out.println("primo if");
             throw new InvalidLectureException("Lecture can't be null"); 
 
         }
 
-        if (!currentStudent.getCourses().contains(lectureSelected.getCourse())) {
-            return ("You are not enrolled in this course, unable to book a seat");
-        }
 
         Integer availableSeats = lectureSelected.getAvailableSeat();
 
         if (availableSeats>0) {
-
+            System.out.println("terzo if");
             try {lectureSelected.addStudentAttending(currentStudent);} catch (Exception e) {log.throwing(this.getClass().getName(), "addStudentAttending", e);}
 
             lectureSelected.setAvailableSeat(availableSeats - 1);
-            
+
+            notificationService.sendMessage(currentStudent.getEmail(),"Booking confirmation","Booking succeed for " + lectureSelected.getSubjectName() + ".");
+
             return (bookingSuccess);
         }
         else {

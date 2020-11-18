@@ -1,23 +1,26 @@
 import './App.css';
-import Header from './components/Header';
+
 import LoginForm from './components/LoginForm';
 import EventsList from './components/EventsList';
 import TeacherPage from './components/TeacherPage';
 import React from 'react';
 import {BrowserRouter as Router, Switch, Route} from "react-router-dom";
-import Col from "react-bootstrap/Col";
-import Row from "react-bootstrap/Row";
-import {Calendar, momentLocalizer} from "react-big-calendar";
 import moment from "moment";
-
+import {AuthContext} from './auth/AuthContext';
 import "react-big-calendar/lib/css/react-big-calendar.css";
 import API from './api/API';
+import Cookies from 'js-cookie';
 
-
-const localizer = momentLocalizer(moment);
 
 class App extends React.Component {
 
+    constructor(props) {
+        super(props);
+        this.state = {
+            
+        };
+    }
+    
     state = {
         events: [
             {
@@ -33,74 +36,90 @@ class App extends React.Component {
     };
 
     // Add a login method
-  login = (email, password,type) => {
-    API.userLogin(email, password,type).then(
-      (user) => { 
-        console.log(user);
-      }
-    ).catch(
-      (errorObj) => {
-        const err0 = errorObj.errors[0];
-        this.setState({authErr: err0});
-      }
-    );
-  }
+    login = (email, password, type) => {
+        console.log(email+ password+ type);
+        API.userLogin(email, password, type).then((user) => {
+            this.setState({authUser: user})
+        }).catch((errorObj) => {
+            const err0 = errorObj.errors[0];
+            this.setState({authErr: err0});
+        });
+    }
+
+
+    // Add a logout method
+    logout = () => {
+        API.userLogout().then(() => {
+            this.setState({authUser: null, authErr: null, tasks: null});
+        });
+    }
+
+    
+    isAuthenticated = () =>{
+        const id = Cookies.get("id");
+        const username = Cookies.get("username");
+        if(id !== undefined && username !== undefined){
+            const user = {id:id,username:username};
+            this.setState({authUser: user});
+        }
+    }
+    
 
     componentDidMount() {
-      this.login("teacher@gmail.com","psw","st");
-      console.log("component did mount");
+        this.isAuthenticated();
+        //this.getNumberStudentsAttending(2);
+       //this.getAllLectures();
+       //this.login("teacher@gmail.com", "psw", "teacher");
+       // this.logout();
+        // check if the user is authenticated
+        /*API.isAuthenticated().then(
+        (user) => {
+          this.setState({authUser: user});
+        }
+      ).catch((err) => { 
+        this.setState({authErr: err.errorObj});
+        this.props.history.push("/login");
+      });*/
     };
 
-    render() {
-
-
+    render() { // compose value prop as object with user object and logout method
+        const value = {
+            authUser: this.state.authUser,
+            authErr: this.state.authErr,
+            loginUser: this.login,
+            logoutUser: this.logout
+        }
         return (
-            <Router>
-                <div className="App">
+            <AuthContext.Provider value={value}>
+                <Router>
+                    <div className="App">
 
-                    <div className="container d-flex align-items-center flex-column">
-                        <Switch>
-                            <Route path="/login"
-                                exact={true}>
-                                <LoginForm login={this.login}/>
-                            </Route>
+                        <div className="container d-flex align-items-center flex-column">
+                            <Switch>
+                                <Route path="/login"
+                                    exact={true}>
+                                    <LoginForm login={
+                                        this.login
+                                    }
+                                    logout={ this.logout}/>
+                                </Route>
 
-                            <Route path="/student"
-                                exact={true}>
+                                <Route path="/student"
+                                    exact={true}>
 
-                                <EventsList/>
-                            </Route>
+                                    <EventsList/>
+                                </Route>
 
-                            <Route path="/teacher"
-                                exact={true}>
-                                <TeacherPage/>
-
-
-                                <div id="pagine">
-                                    <Row>
-                                        <Col sm={12}>
-                                            <h3 className="mb-5">Personal Calendar</h3>
-                                        </Col>
-                                    </Row>
-                                    <Calendar localizer={localizer}
-                                        defaultDate={
-                                            new Date()
-                                        }
-                                        defaultView="month"
-                                        events={
-                                            this.state.events
-                                        }
-                                        style={
-                                            {height: "60vh"}
-                                        }/>
-                                </div>
-
-
-                            </Route>
-                        </Switch>
+                                <Route path="/teacher"
+                                    exact={true}
+                                    logout={ this.logout}>
+                                    <TeacherPage/>
+                                </Route>
+                            </Switch>
+                        </div>
                     </div>
-                </div>
-            </Router>
+                </Router>
+            </AuthContext.Provider>
         );
     }
 }

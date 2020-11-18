@@ -1,6 +1,7 @@
 package team13.pulsbes.entities;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import team13.pulsbes.exception.InvalidStudentException;
@@ -9,19 +10,22 @@ import team13.pulsbes.model.Date;
 import javax.persistence.*;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
 @Entity
+@Builder
+
 public class Lecture {
 
     @Id
-    private String Id;
-
+    private String Id;    
+    
     private Date StartTime;
-
+    
     private Date EndTime;
 
     private String SubjectName;
@@ -53,6 +57,7 @@ public class Lecture {
     @JoinColumn (name = "teacher_id")
     private Teacher teacher;
 
+    
 	public void addStudentAttending(Student s) throws InvalidStudentException {
     	if(s==null) {
     		throw new InvalidStudentException("Invalid Student");
@@ -66,12 +71,12 @@ public class Lecture {
     	students.remove(s);
 	}
 	
-	public Lecture( String Id, Integer AvailableSeat, Integer TotalSeat) {
-		super();
-		this.Id = Id;
-		this.AvailableSeat = AvailableSeat;
-		this.TotalSeat = TotalSeat;
-	}
+//	public Lecture( String Id, Integer AvailableSeat, Integer TotalSeat) {
+//		super();
+//		this.Id = Id;
+//		this.AvailableSeat = AvailableSeat;
+//		this.TotalSeat = TotalSeat;
+//	}
     
 	public String getId() {
 		return Id;

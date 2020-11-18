@@ -11,7 +11,6 @@ import team13.pulsbes.exception.InvalidTeacherException;
 
 public interface TeacherService {
 	
-	Integer getNumberStudentsAttending(LectureDTO l) throws InvalidLectureException;
-	List<Lecture> getAllLectures(TeacherDTO tDTO) throws InvalidTeacherException;
-	void mailForNumber(TeacherDTO tDto);
+	Integer getNumberStudentsAttending(String id) throws InvalidLectureException;
+	List<LectureDTO> getAllLectures(String id) throws InvalidTeacherException;
 }
