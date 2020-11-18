@@ -3,7 +3,6 @@ package team13.pulsbes.allTestTeacher;
 import static org.junit.jupiter.api.Assertions.*;
 
 import static org.mockito.Mockito.*;
-import java.util.Date;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import team13.pulsbes.entities.Lecture;

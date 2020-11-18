@@ -11,6 +11,7 @@ import team13.pulsbes.dtos.LoginDTO;
 import team13.pulsbes.entities.Student;
 import team13.pulsbes.entities.Teacher;
 import team13.pulsbes.exception.WrongCredentialsException;
+import team13.pulsbes.repositories.LectureRepository;
 import team13.pulsbes.repositories.StudentRepository;
 import team13.pulsbes.repositories.TeacherRepository;
 
@@ -23,11 +24,15 @@ public class LoginService {
 	@Autowired
 	StudentRepository studentRepository;
 	
+	 public void addStudentRepo (StudentRepository sr) {
+			this.studentRepository = sr;
+		}
+		public void addTeacherRepo(TeacherRepository lr) {
+			this.teacherRepository = lr;
+		}
 
 	public LoginDTO login(IdPw idpw) throws WrongCredentialsException {
 		LoginDTO login = null;
-		List<Student> students = new ArrayList<>();
-		List<Teacher> teachers = new ArrayList<>();
 		if(!idpw.getTeacher()) {
 			for(Student s : studentRepository.findAll()) {
 				if(s.getEmail().equals(idpw.getEmail()) && s.getPsw().equals(idpw.getPsw())) {
