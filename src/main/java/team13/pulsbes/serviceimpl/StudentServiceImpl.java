@@ -21,7 +21,6 @@ import java.util.stream.Collectors;
 import team13.pulsbes.repositories.LectureRepository;
 import team13.pulsbes.services.StudentService;
 import team13.pulsbes.repositories.StudentRepository;
-import team13.pulsbes.repositories.TeacherRepository;
 @Service
 public class StudentServiceImpl implements StudentService{
 
@@ -58,30 +57,30 @@ public class StudentServiceImpl implements StudentService{
         System.out.println("entrato");
 
         Student currentStudent = studentRepository.getOne(StudentId);
-        Lecture lectureSelected = lectureRepository.getOne(lectureId);
+        Optional<Lecture> lectureSelected = lectureRepository.findById(lectureId);
         
-        if (lectureSelected == null) {
+        if (!lectureSelected.isPresent()) {
             System.out.println("primo if");
-            throw new InvalidLectureException("Lecture can't be null"); 
-
+            throw new InvalidLectureException("Lecture can't be null");
         }
 
 
-        Integer availableSeats = lectureSelected.getAvailableSeat();
+        Integer availableSeats = lectureSelected.get().getAvailableSeat();
 
         if (availableSeats>0) {
             System.out.println("terzo if");
-            try {lectureSelected.addStudentAttending(currentStudent);} catch (Exception e) {log.throwing(this.getClass().getName(), "addStudentAttending", e);}
+            try {lectureSelected.get().addStudentAttending(currentStudent);} catch (Exception e) {log.throwing(this.getClass().getName(), "addStudentAttending", e);}
 
-            lectureSelected.setAvailableSeat(availableSeats - 1);
+            lectureSelected.get().setAvailableSeat(availableSeats - 1);
 
-            notificationService.sendMessage(currentStudent.getEmail(),"Booking confirmation","Booking succeed for " + lectureSelected.getSubjectName() + ".");
+            notificationService.sendMessage(currentStudent.getEmail(),"Booking confirmation","Booking succeed for " + lectureSelected.get().getSubjectName() + ".");
 
             return (bookingSuccess);
         }
         else {
             return (bookingFailure);
         }
+
 
         
     }
