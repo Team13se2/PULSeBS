@@ -2,14 +2,20 @@ package team13.pulsbes.serviceimpl;
 
 import java.util.ArrayList;
 import java.util.Optional;
+import java.util.List;
 import java.util.logging.Logger;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import team13.pulsbes.dtos.LectureDTO;
 import team13.pulsbes.entities.Lecture;
+import team13.pulsbes.entities.Course;
 import team13.pulsbes.entities.Student;
 import team13.pulsbes.exception.InvalidLectureException;
+import team13.pulsbes.exception.InvalidStudentException;
+import java.util.Objects;
+import java.util.stream.Collectors;
 
 import team13.pulsbes.repositories.LectureRepository;
 import team13.pulsbes.services.StudentService;
@@ -48,23 +54,24 @@ public class StudentServiceImpl implements StudentService{
         System.out.println("entrato");
 
         Student currentStudent = studentRepository.getOne(StudentId);
-        Optional<Lecture> lectureSelected = lectureRepository.findById(lectureId);
+        Lecture lectureSelected = lectureRepository.getOne(lectureId);
         
-        if (!lectureSelected.isPresent()) {
+        if (lectureSelected == null) {
             System.out.println("primo if");
-            throw new InvalidLectureException("Lecture can't be null");
+            throw new InvalidLectureException("Lecture can't be null"); 
+
         }
 
 
-        Integer availableSeats = lectureSelected.get().getAvailableSeat();
+        Integer availableSeats = lectureSelected.getAvailableSeat();
 
         if (availableSeats>0) {
             System.out.println("terzo if");
-            try {lectureSelected.get().addStudentAttending(currentStudent);} catch (Exception e) {log.throwing(this.getClass().getName(), "addStudentAttending", e);}
+            try {lectureSelected.addStudentAttending(currentStudent);} catch (Exception e) {log.throwing(this.getClass().getName(), "addStudentAttending", e);}
 
-            lectureSelected.get().setAvailableSeat(availableSeats - 1);
+            lectureSelected.setAvailableSeat(availableSeats - 1);
 
-            notificationService.sendMessage(currentStudent.getEmail(),"Booking confirmation","Booking succeed for " + lectureSelected.get().getSubjectName() + ".");
+            notificationService.sendMessage(currentStudent.getEmail(),"Booking confirmation","Booking succeed for " + lectureSelected.getSubjectName() + ".");
 
             return (bookingSuccess);
         }
@@ -75,29 +82,26 @@ public class StudentServiceImpl implements StudentService{
         
     }
 
-    /*
     @Override
-    public String bookLecture (LectureDTO lDTO) throws InvalidLectureException{
-
-        Student currentStudent = new Student("s123456", "Mario", "Pino");        
-        
-        if (lDTO == null) {
-
-            throw new InvalidLectureException("Lecture can't be null");            
-
+	public List<LectureDTO> getAllLectures(String id) throws InvalidStudentException {
+		if(id.equals("-1")) {
+			throw new InvalidStudentException("Student can't be null");
         }
-                
-        Integer availableSeats = lDTO.getAvailableSeat();
+        
+        List<Course> listCourse = studentRepository.getOne(id).getCourses();
+        List<Lecture> listLecture = new ArrayList<>();
 
-        try {lectureSelected.addStudentAttending(currentStudent);} catch (Exception e) {log.throwing(this.getClass().getName(), "addStudentAttending", e);}
 
-                lectureSelected.setBookedSeat(bookedSeats + 1);
-                return (bookingSuccess);
-            }
-            else {
-                return (bookingFailure);
-            }
-    }
-    */
+        for(Course tmpCourse : listCourse) {
+            listLecture.addAll(tmpCourse.getLectures());
+         }
+
+		return  listLecture
+				.stream()
+				.filter(Objects::nonNull)
+				.map(l -> modelMapper.map(l,LectureDTO.class))
+				.collect(Collectors.toList());
+	}
+
 
 }
