@@ -4,6 +4,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import team13.pulsbes.dtos.LectureDTO;
+import team13.pulsbes.dtos.StudentDTO;
 import team13.pulsbes.dtos.TeacherDTO;
 import team13.pulsbes.entities.Lecture;
 import team13.pulsbes.entities.Teacher;
@@ -58,6 +59,19 @@ public class TeacherServiceImpl implements TeacherService{
 				.stream()
 				.filter(Objects::nonNull)
 				.map(l -> modelMapper.map(l,LectureDTO.class))
+				.collect(Collectors.toList());
+	}
+
+	@Override
+	public List<StudentDTO> getStudentList(String id) throws InvalidLectureException {
+		if(id.equals("-1")) {
+			throw new InvalidLectureException("Lecture can't be null");
+		}
+		return  lectureRepository.getOne(id)
+				.getStudents()
+				.stream()
+				.filter(Objects::nonNull)
+				.map(l -> modelMapper.map(l,StudentDTO.class))
 				.collect(Collectors.toList());
 	}
 }
