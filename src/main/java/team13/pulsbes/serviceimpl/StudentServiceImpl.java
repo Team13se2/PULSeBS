@@ -7,6 +7,7 @@ import java.util.logging.Logger;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.modelmapper.ModelMapper;
 
 import team13.pulsbes.dtos.LectureDTO;
 import team13.pulsbes.entities.Lecture;
@@ -29,6 +30,9 @@ public class StudentServiceImpl implements StudentService{
 
     @Autowired
     LectureRepository lectureRepository;
+
+    @Autowired 
+	ModelMapper modelMapper;
 
     @Autowired
     NotificationServiceImpl notificationService;
