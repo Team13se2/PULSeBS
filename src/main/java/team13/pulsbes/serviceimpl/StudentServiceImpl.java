@@ -1,6 +1,7 @@
 package team13.pulsbes.serviceimpl;
 
 import java.util.ArrayList;
+import java.util.Optional;
 import java.util.logging.Logger;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,24 +48,23 @@ public class StudentServiceImpl implements StudentService{
         System.out.println("entrato");
 
         Student currentStudent = studentRepository.getOne(StudentId);
-        Lecture lectureSelected = lectureRepository.getOne(lectureId);
+        Optional<Lecture> lectureSelected = lectureRepository.findById(lectureId);
         
-        if (lectureSelected == null) {
+        if (!lectureSelected.isPresent()) {
             System.out.println("primo if");
-            throw new InvalidLectureException("Lecture can't be null"); 
-
+            throw new InvalidLectureException("Lecture can't be null");
         }
 
 
-        Integer availableSeats = lectureSelected.getAvailableSeat();
+        Integer availableSeats = lectureSelected.get().getAvailableSeat();
 
         if (availableSeats>0) {
             System.out.println("terzo if");
-            try {lectureSelected.addStudentAttending(currentStudent);} catch (Exception e) {log.throwing(this.getClass().getName(), "addStudentAttending", e);}
+            try {lectureSelected.get().addStudentAttending(currentStudent);} catch (Exception e) {log.throwing(this.getClass().getName(), "addStudentAttending", e);}
 
-            lectureSelected.setAvailableSeat(availableSeats - 1);
+            lectureSelected.get().setAvailableSeat(availableSeats - 1);
 
-            notificationService.sendMessage(currentStudent.getEmail(),"Booking confirmation","Booking succeed for " + lectureSelected.getSubjectName() + ".");
+            notificationService.sendMessage(currentStudent.getEmail(),"Booking confirmation","Booking succeed for " + lectureSelected.get().getSubjectName() + ".");
 
             return (bookingSuccess);
         }
