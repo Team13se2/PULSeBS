@@ -45,7 +45,9 @@ public class StudentServiceImpl implements StudentService{
     public void addNotificationService(NotificationServiceImpl ns) {
     	this.notificationService = ns;
     }
-	
+	public void addModelMapper(ModelMapper mm) {
+		this.modelMapper = mm;
+	}
 
     Logger log = Logger.getLogger("StudentServiceImpl");
 

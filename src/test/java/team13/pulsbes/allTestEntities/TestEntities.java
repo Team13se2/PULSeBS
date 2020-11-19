@@ -7,8 +7,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.jupiter.api.Test;
-
-import team13.pulsbes.dtos.CourseDTO;
 import team13.pulsbes.entities.Course;
 import team13.pulsbes.entities.Lecture;
 import team13.pulsbes.entities.Student;
@@ -34,6 +32,8 @@ class TestEntities {
 		assertEquals(1, c.getStudents().size());
 		c.studentRemove(s);
 		assertEquals(0, c.getStudents().size());
+		c.setStudents(students);
+		assertEquals(students, c.getStudents());
 	}
 	@Test
 	void testCourseExceptions() {
@@ -42,11 +42,12 @@ class TestEntities {
 		assertThrows(InvalidStudentException.class,() -> c.studentRemove(null));
 	}
 	@Test
-	void testLecture() throws ParseException {
+	void testLecture() throws ParseException, InvalidStudentException {
 		Lecture l = new Lecture();
 		List<Student> students = new ArrayList<>(); 
 		Course c = new Course();
 		Teacher t = new Teacher();
+		Student s = new Student("1",	"name","surname");
 		l.setId("1");
 		l.setStartTime(null);
 		l.setEndTime(null);
@@ -63,6 +64,7 @@ class TestEntities {
 		l.getStartTime2();
 		l.addEndTime(120, 1, 10 , 10, 12);
 		
+		
 		assertEquals(l.getId(),"1");
 		assertEquals(l.getLectureType(),"lab");
 		assertEquals(l.getSurnameString(),"test");
@@ -72,6 +74,11 @@ class TestEntities {
 		assertEquals(l.getStudents(),students);
 		assertEquals(l.getCourse(), c);
 		assertEquals(l.getTeacher(), t);
+		assertEquals(l.getStartTime(),l.getStartTime());
+		assertEquals(l.getEndTime(),l.getEndTime());
+		l.addStudentAttending(s);
+		l.removeStudentAttending(s);
+		assertEquals(0, l.getStudents().size());
 	}
 	@Test
 	void testLectureExceptions() {
@@ -80,7 +87,7 @@ class TestEntities {
 		assertThrows(InvalidStudentException.class, () -> l.removeStudentAttending(null));
 	}
 	@Test
-	void testStudent() {
+	void testStudent() throws InvalidCourseException {
 		Student s = new Student("1","test","testsur");
 		List<Course> courses = new ArrayList<>(); 
 		s.setEmail("email");
@@ -90,6 +97,10 @@ class TestEntities {
 		assertEquals("testsur", s.getSurname());
 		assertEquals("email", s.getEmail());
 		assertEquals(s.getCourses(), courses);
+		Course c = new Course();
+		s.addCourse(c);
+		s.removeCourse(c);
+		assertEquals(0,s.getCourses().size());
 	}
 	@Test
 	void testStudentExceptions() {
