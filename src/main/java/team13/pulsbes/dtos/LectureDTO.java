@@ -18,9 +18,9 @@ public class LectureDTO {
     @Id
     private String Id;
 
-    private Date startTime;
+    private String startTime;
 
-    private Date endTime;
+    private String endTime;
     
     private String subjectName;
 
@@ -34,6 +34,8 @@ public class LectureDTO {
 
     private String roomName;
 
+    private Integer nrStudents;
+
     
 	public LectureDTO(){}
 	public String getId() {
@@ -42,16 +44,16 @@ public class LectureDTO {
 	public void setId(String id) {
 		this.Id = id;
 	}
-	public Date getStartTime() {
+	public String getStartTime() {
 		return startTime;
 	}
-	public void setStartTime(Date startTime) {
+	public void setStartTime(String startTime) {
 		this.startTime = startTime;
 	}
-	public Date getEndTime() {
+	public String getEndTime() {
 		return endTime;
 	}
-	public void setEndTime(Date endTime) {
+	public void setEndTime(String endTime) {
 		this.endTime = endTime;
 	}
 	public String getLectureType() {
@@ -90,5 +92,10 @@ public class LectureDTO {
 	public void setSubjectName(String subjectName) {
 		this.subjectName = subjectName;
 	}
-    
+    public Integer getNrStudents(){
+		return nrStudents;
+	}
+	public void setNrStudents(Integer nrStudents){
+		this.nrStudents = nrStudents;
+	}
 }

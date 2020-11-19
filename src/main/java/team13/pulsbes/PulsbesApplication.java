@@ -154,9 +154,7 @@ public class PulsbesApplication {
 	}
 	@PostConstruct
 	public void setupDbWithData() throws SQLException {
-
 		Connection conn = DriverManager.getConnection("jdbc:h2:file:./data/seats", "sa", "password");
 		conn.close();
 	}
-
 }
