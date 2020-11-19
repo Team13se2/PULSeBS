@@ -22,18 +22,7 @@ class StudentPage extends React.Component {
 
   }
   componentDidMount(){
-    
-    //console.log(this.state.lectures);
-    //this.getBookedLectures(0);
-    //this.getAllLectures();
-    //console.log(this.state.nrStudents);
-  }
-
-  logout = () => {
-    API.userLogout().then(() => {
-        this.setState({authUser: null, authErr: null, tasks: null});
-        <Redirect to="/login"></Redirect>
-    });
+    console.log("here");
   }
 
   getAllLectures = () =>{
@@ -68,8 +57,8 @@ class StudentPage extends React.Component {
 
       {(context) => (
         <>
-        {context.authErr && <Redirect to="/login"></Redirect>}
-          
+          {context.authUser === null ? <Redirect to="/login"/> : ""}
+          {context.authUser === undefined? <Redirect to="/login"/> : ""}
         <Modal show={this.state.show} handleClose={this.hideModal} >
      
           <Modal.Body>
@@ -183,9 +172,7 @@ class StudentPage extends React.Component {
               </Table>
             }
            
-           <Nav.Link as={NavLink} to="/login"  > 
-              <button  type="button" className="btn btn-secondary mt-5" onClick={() => { context.logoutUser(); }}>Logout
-              </button> 
+           <Nav.Link as={NavLink} to="/" onClick={() => this.props.logout()}><Button>Logout</Button>
             </Nav.Link>
               
           </div>

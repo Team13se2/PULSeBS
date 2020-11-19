@@ -56,7 +56,8 @@ render(){
 
       {(context) => (
         <>
-          {context.authErr && <Redirect to="/login"></Redirect>}
+          {context.authUser === null ? <Redirect to="/login"/> : ""}
+          {context.authUser === undefined? <Redirect to="/login"/> : ""}
           <Modal show={this.state.show} handleClose={this.hideModal} >
                       <Modal.Body>
                           <Modal.Header closeButton>
