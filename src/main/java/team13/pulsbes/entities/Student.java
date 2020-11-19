@@ -36,6 +36,9 @@ public class Student {
 
     }
 
+    @ManyToMany (mappedBy = "students")
+	List <Lecture> lectures;
+
 	public Student( String Id, String Name, String Surname) {
 		super();
 		this.Id = Id;
