@@ -31,7 +31,7 @@ public class TeacherController {
 			return 0;
 		}
 	}
-	@RequestMapping(value = Constants.GET_ALL_LECTURES, method = RequestMethod.GET)
+	@RequestMapping(value = Constants.GET_ALL_LECTURES_T, method = RequestMethod.GET)
 	public List<LectureDTO> getAllLectures(@CookieValue(value = "username") String username,@CookieValue(value = "id") String id) throws InvalidTeacherException{
 		try {
 			return teacherService.getAllLectures(id);
