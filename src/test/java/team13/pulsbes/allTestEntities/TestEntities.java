@@ -2,6 +2,7 @@ package team13.pulsbes.allTestEntities;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -41,7 +42,7 @@ class TestEntities {
 		assertThrows(InvalidStudentException.class,() -> c.studentRemove(null));
 	}
 	@Test
-	void testLecture() {
+	void testLecture() throws ParseException {
 		Lecture l = new Lecture();
 		List<Student> students = new ArrayList<>(); 
 		Course c = new Course();
@@ -58,9 +59,11 @@ class TestEntities {
 		l.setStudents(students);
 		l.setCourse(c);
 		l.setTeacher(t);
+		l.addStartTime(120, 10, 10, 10, 10);
+		l.getStartTime2();
+		l.addEndTime(120, 1, 10 , 10, 12);
+		
 		assertEquals(l.getId(),"1");
-		assertNull(l.getStartTime());
-		assertNull(l.getEndTime());
 		assertEquals(l.getLectureType(),"lab");
 		assertEquals(l.getSurnameString(),"test");
 		assertEquals(l.getAvailableSeat(),10);

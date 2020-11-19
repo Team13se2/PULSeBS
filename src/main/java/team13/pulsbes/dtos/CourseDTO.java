@@ -4,7 +4,7 @@ import lombok.Data;
 
 import javax.persistence.Id;
 
-@Data
+
 public class CourseDTO {
 
     @Id

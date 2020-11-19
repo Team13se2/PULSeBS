@@ -13,21 +13,20 @@ import java.util.List;
 
 @AllArgsConstructor
 @NoArgsConstructor
-@Data
 @Entity
 @Builder
 
 public class Student {
     @Id
-    private String id;
+    private String Id;
 
-    private String name;
+    private String Name;
 
-    private String surname;
+    private String Surname;
 
-    private String email;
+    private String Email;
 
-    private String psw;
+    private String Psw;
     @ManyToMany(cascade = {CascadeType.PERSIST,CascadeType.MERGE})
     @JoinTable(name = "courses_students",joinColumns = @JoinColumn(name = "course_id"),
     inverseJoinColumns = @JoinColumn(name = "student_id"))
@@ -39,9 +38,9 @@ public class Student {
 
 	public Student( String Id, String Name, String Surname) {
 		super();
-		this.id = Id;
-		this.name = Name;
-		this.surname = Surname;
+		this.Id = Id;
+		this.Name = Name;
+		this.Surname = Surname;
 	}
 
 	public void addCourse(Course c) throws InvalidCourseException {
@@ -59,42 +58,42 @@ public class Student {
 	}
 
 	public String getId() {
-		return id;
+		return Id;
 	}
 
 
 	public void setId(String id) {
-		this.id = id;
+		this.Id = id;
 	}
 
 
 	public String getName() {
-		return name;
+		return Name;
 	}
 
 
 	public void setName(String name) {
-		this.name = name;
+		this.Name = name;
 	}
 
 
 	public String getSurname() {
-		return surname;
+		return Surname;
 	}
 
 
 	public void setSurname(String surname) {
-		this.surname = surname;
+		this.Surname = surname;
 	}
 
 
 	public String getEmail() {
-		return email;
+		return Email;
 	}
 
 
 	public void setEmail(String email) {
-		this.email = email;
+		this.Email = email;
 	}
 
 	public List<Course> getCourses() {
@@ -106,11 +105,11 @@ public class Student {
 	}
 
 	public String getPsw() {
-		return psw;
+		return Psw;
 	}
 
 	public void setPsw(String psw) {
-		this.psw = psw;
+		this.Psw = psw;
 	}
 
 	
