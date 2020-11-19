@@ -1327,3 +1327,13 @@ insert into lecture (available_seat, end_time, lecture_type, room_name, subject_
 	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
 	at java.base/java.lang.reflect.Method.invoke(Method.java:567)
 	at org.springframework.boot.devtools.restart.RestartLauncher.run(RestartLauncher.java:49)
+2020-11-19 11:47:45 jdbc[14]: exception
+org.h2.jdbc.JdbcSQLDataException: Value too long for column "START_TIME VARBINARY(255)": "X'616365643030303537333732303031393734363536313664333133333265373037353663373336323635373332653664366636343635366332653434363137... (476)"; SQL statement:
+UPDATE "PUBLIC"."LECTURE" SET "ID"=? ,"AVAILABLE_SEAT"=? ,"END_TIME"=? ,"LECTURE_TYPE"=? ,"ROOM_NAME"=? ,"START_TIME"=? ,"SUBJECT_NAME"=? ,"SURNAME_STRING"=? ,"TOTAL_SEAT"=? ,"COURSE_ID"=? ,"TEACHER_ID"=?  WHERE "ID"=? [22001-200]
+2020-11-19 11:47:45 jdbc[14]: exception
+org.h2.jdbc.JdbcSQLDataException: Value too long for column "START_TIME VARBINARY(255)": "X'616365643030303537333732303031393734363536313664333133333265373037353663373336323635373332653664366636343635366332653434363137... (476)"; SQL statement:
+UPDATE "PUBLIC"."LECTURE" SET "ID"=? ,"AVAILABLE_SEAT"=? ,"END_TIME"=? ,"LECTURE_TYPE"=? ,"ROOM_NAME"=? ,"START_TIME"=? ,"SUBJECT_NAME"=? ,"SURNAME_STRING"=? ,"TOTAL_SEAT"=? ,"COURSE_ID"=? ,"TEACHER_ID"=?  WHERE "ID"=? [22001-200]
+2020-11-19 12:13:39 jdbc[14]: exception
+org.h2.jdbc.JdbcSQLDataException: Value too long for column "START_TIME VARCHAR(30)": "STRINGDECODE('\ufffd\ufffd\u0000\u0005sr\u0000\u0019team13.pulsbes.model.Date.y\ufffd\u0001\ufffds\u0013\\\u0002\u0000\u0005L\u0... (236)"; SQL statement:
+ALTER TABLE LECTURE 
+ALTER COLUMN START_TIME varchar(30) [22001-200]

@@ -10,7 +10,7 @@ import moment from "moment";
 import {AuthContext} from './auth/AuthContext';
 import "react-big-calendar/lib/css/react-big-calendar.css";
 import API from './api/API';
-import Cookies from 'js-cookie';
+import Cookies from 'js-cookie';    
 
 
 class App extends React.Component {

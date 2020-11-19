@@ -14,14 +14,14 @@ import team13.pulsbes.utils.Constants;
 
 
 @RestController
-@RequestMapping("/API/students")
+@RequestMapping("/student")
 
 public class StudentController {
 
     @Autowired
     StudentService studentService;
 
-    @RequestMapping(value = Constants.GET_ALL_LECTURES_S, method = RequestMethod.GET)
+    @RequestMapping(value = Constants.GET_ALL_LECTURES, method = RequestMethod.GET)
 	public List<LectureDTO> getAllLectures(@CookieValue(value = "username") String username,@CookieValue(value = "id") String id) throws InvalidStudentException{
 		try {
 			return studentService.getAllLectures(id);
@@ -39,7 +39,4 @@ public class StudentController {
 			return null;
 		}
 	}
-
-
-
 }
