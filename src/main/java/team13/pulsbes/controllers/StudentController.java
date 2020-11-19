@@ -29,6 +29,15 @@ public class StudentController {
 			System.out.println(e.getMessage());
 			return null;
 		}
+    }
+    @RequestMapping(value = Constants.BOOK_LECTURE, method = RequestMethod.GET)
+	public String bookLecture (@RequestParam("lecture_id") String l_id, @CookieValue(value = "username") String username,@CookieValue(value = "id") String s_id ) throws InvalidLectureException, InvalidStudentException{
+		try {
+			return studentService.bookLecture(l_id, s_id);
+		} catch (InvalidStudentException | InvalidLectureException e) {
+			System.out.println(e.getMessage());
+			return null;
+		}
 	}
 
 

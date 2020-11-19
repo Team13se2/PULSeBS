@@ -9,7 +9,7 @@ import team13.pulsbes.exception.InvalidStudentException;
 
 public interface StudentService {
 
-    String bookLecture (String lectureId,String StudentId) throws InvalidLectureException;
+    String bookLecture (String lectureId,String StudentId) throws InvalidLectureException, InvalidStudentException;
     List<LectureDTO> getAllLectures(String id) throws InvalidStudentException;
 
 }
