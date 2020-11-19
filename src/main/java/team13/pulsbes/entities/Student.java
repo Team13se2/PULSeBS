@@ -36,6 +36,9 @@ public class Student {
 
     }
 
+    @ManyToMany (mappedBy = "students")
+	List <Lecture> bookedLectures = new ArrayList<>();
+
 	public Student( String Id, String Name, String Surname) {
 		super();
 		this.Id = Id;
@@ -43,6 +46,7 @@ public class Student {
 		this.Surname = Surname;
 	}
 
+	public Student() {}
 	public void addCourse(Course c) throws InvalidCourseException {
     	if(c==null) {
     		throw new InvalidCourseException("Invalid Course");
@@ -57,6 +61,14 @@ public class Student {
     	courses.remove(c);
 	}
 
+    public void addBookLecture(Lecture l) {
+    	bookedLectures.add(l);
+    }
+    
+    public void removeBookedLecture(Lecture l) {
+    	bookedLectures.remove(l);
+    }
+    
 	public String getId() {
 		return Id;
 	}
@@ -110,6 +122,14 @@ public class Student {
 
 	public void setPsw(String psw) {
 		this.Psw = psw;
+	}
+
+	public List<Lecture> getBookedLectures() {
+		return bookedLectures;
+	}
+
+	public void setBookedLectures(List<Lecture> bookedLectures) {
+		this.bookedLectures = bookedLectures;
 	}
 
 	
