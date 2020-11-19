@@ -4,6 +4,7 @@ public interface Constants {
 	static final String GET_NUMBER_STUDENTS_ATTENDING = "/getNumberStudentsAttending";
 	static final String GET_STUDENT_LIST = "/getStudentList";
 	static final String GET_ALL_LECTURES = "/getAllLectures";
+	static final String GET_BOOKED_LECTURES = "/getBookedLectures";
 	static final String BOOK_LECTURE = "/bookLecture";
 	static final String LOGIN = "/login";
 }
