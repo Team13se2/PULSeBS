@@ -22,25 +22,21 @@ class StudentPage extends React.Component {
 
   }
   componentDidMount(){
-    console.log("here");
-  }
+    this.getAllLectures();
+    this.getBookedLectures();
+  };
 
   getAllLectures = () =>{
-    API.getAllLectures().then((lecture) =>{
+    API.getAllLecturesStudent().then((lecture) =>{
         this.setState({lectures: lecture});
     })
-  }
+  };
 
-  getBookedLectures = (studentId) =>{
-   /* API.getBookedLectures(studentId).then((lecture) =>{
-        this.setState({lectures: lecture});
-    })*/
-  }
-  getNotBookedLectures = (studentId) =>{
-    /*API.getBookedLectures(studentId).then((lecture) =>{
-        this.setState({lectures: lecture});
-    })*/
-  }
+  getBookedLectures = () =>{
+    API.getBookedLectures().then((lecture) =>{
+        this.setState({bookedLectures: lecture});
+    })
+  };
   
   showModal = () => {
     this.setState({ show: true });
@@ -48,6 +44,14 @@ class StudentPage extends React.Component {
   
   hideModal = () => {
     this.setState({ show: false });
+  };
+
+  bookLecture = (lecture_id) =>{
+    API.bookLecture(lecture_id).then((response) =>{
+      let l = this.state.lectures.filter((l =>l.id !== lecture_id));
+      this.setState({lectures: l});
+      this.getBookedLectures();
+    })
   };
   
   render(){
@@ -99,27 +103,40 @@ class StudentPage extends React.Component {
               <Table responsive striped bordered hover>
                   <thead>
                     <tr>
-                      <th>Course</th>
-                      <th>Date</th>
-                      <th>Teacher</th>
-                      <th>Location</th>
+                      <th>id</th>
+                      <th>startTime</th>
+                      <th>endTime</th>
+                      <th>subjectName</th>
+                      <th>lectureType</th>
+                      <th>surnameString</th>
+                      <th>availableSeat</th>
+                      <th>totalSeat</th>
+                      <th>roomName</th>
                       <th> </th>
+                      
                     </tr>
                   </thead>
 
                   <tbody>
-                    {this.state.bookedLectures.length > 0 &&
+                  {this.state.bookedLectures.length > 0 &&
                       this.state.bookedLectures.map((lecture, index) => (
                         <tr>
+                          <td>{lecture.id}</td>
+                          <td>{lecture.startTime}</td>
+                          <td>{lecture.endTime}</td>                          
                           <td>{lecture.subjectName}</td>
-                          <td>{lecture.date}</td>                          
-                          <td>{lecture.surnameString}</td>
+                          <td>{lecture.lectureType}</td>
+                          <td>{lecture.surnameString}</td>                          
+                          <td>{lecture.availableSeat}</td>
+                          <td>{lecture.totalSeat}</td>
                           <td>{lecture.roomName}</td>
                           <td>
                               <button type="button" className="btn btn-outline-danger" onClick={this.showModal}>
-                                  Unbook
+                                  Remove
                               </button>
                           </td>
+                          
+
                         </tr>
                     ))}
                   </tbody>
@@ -133,33 +150,40 @@ class StudentPage extends React.Component {
               </Col>
             </Row>
 
-            {this.state.notBookedLectures.length === 0 && <h4>There aren't lectures to book</h4>}
-            {this.state.notBookedLectures.length > 0 && 
+            {this.state.lectures === 0 && <h4>There aren't lectures to book</h4>}
+            {this.state.lectures ? this.state.lectures.length > 0 && 
               <Table responsive striped bordered hover>
                   <thead>
                     <tr>
-                      <th>Id</th>
-                      <th>Course</th>
-                      <th>Date</th>
-                      <th>Teacher</th>
-                      <th>Location</th>
+                      <th>id</th>
+                      <th>startTime</th>
+                      <th>endTime</th>
+                      <th>subjectName</th>
+                      <th>lectureType</th>
+                      <th>surnameString</th>
+                      <th>availableSeat</th>
+                      <th>totalSeat</th>
+                      <th>roomName</th>
                       <th> </th>
                       
                     </tr>
                   </thead>
 
                   <tbody>
-                  {this.state.notBookedLectures.length > 0 &&
-                      this.state.notBookedLectures.map((lecture, index) => (
+                  {this.state.lectures.length > 0 &&
+                      this.state.lectures.map((lecture, index) => (
                         <tr>
                           <td>{lecture.id}</td>
+                          <td>{lecture.startTime}</td>
+                          <td>{lecture.endTime}</td>                          
                           <td>{lecture.subjectName}</td>
-                          <td>{lecture.date}</td>                          
-                          <td>{lecture.surnameString}</td>
+                          <td>{lecture.lectureType}</td>
+                          <td>{lecture.surnameString}</td>                          
+                          <td>{lecture.availableSeat}</td>
+                          <td>{lecture.totalSeat}</td>
                           <td>{lecture.roomName}</td>
-                        
                           <td>
-                              <button type="button" className="btn btn-outline-success" onClick={this.showModal}>
+                              <button type="button" className="btn btn-outline-success" onClick={() => this.bookLecture(lecture.id)}>
                                   Book a seat
                               </button>
                           </td>
@@ -170,7 +194,7 @@ class StudentPage extends React.Component {
                   </tbody>
                   
               </Table>
-            }
+            : ""}
            
            <Nav.Link as={NavLink} to="/" onClick={() => this.props.logout()}><Button>Logout</Button>
             </Nav.Link>
