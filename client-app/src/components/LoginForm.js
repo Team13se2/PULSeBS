@@ -87,9 +87,21 @@ class LoginForm extends React.Component {
                                 />
                             </Form.Group>
 
-                            <Form.Group controlId="psw"
-                            value={this.state.type}
-                            onChange={(ev) => this.onChangeType(ev)}>
+                            
+                            <Form.Group 
+                              check
+                              type="radio"
+                              controlId="type"
+                              onChange={(ev) => this.onChangeType(ev)}
+                              required>
+                            <div>
+                              <input type="radio" name="type" value="student" checked={this.state.type === "student"} defaultChecked /> Student
+                              <br></br>
+                              <input type="radio" name="type" value="teacher" checked={this.state.type === "teacher"}/> Teacher
+                              
+                            </div>
+                               
+                            </Form.Group>
                                
                             
                             </Form.Group>
