@@ -5,12 +5,14 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import team13.pulsbes.exception.InvalidStudentException;
-import team13.pulsbes.model.Date;
 
 import javax.persistence.*;
+
+import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 @AllArgsConstructor
@@ -24,9 +26,9 @@ public class Lecture {
     @Id
     private String Id;    
     
-    private Date StartTime;
+    private String startTime;
     
-    private Date EndTime;
+    private String endTime;
 
     private String SubjectName;
 
@@ -49,8 +51,8 @@ public class Lecture {
         students = new ArrayList<>();
     }
 
-    @ManyToOne
-    @JoinColumn (name = "course_id")
+    @ManyToOne(cascade = {CascadeType.ALL})
+    @JoinColumn(name = "course_id")
     private Course course;
 
     @ManyToOne
@@ -77,7 +79,52 @@ public class Lecture {
 //		this.AvailableSeat = AvailableSeat;
 //		this.TotalSeat = TotalSeat;
 //	}
-    
+    public void addStartTime(int year, int month, int day, int hour, int minutes) {
+    	Date notificationTime = new Date();
+		notificationTime.setYear(year);
+		notificationTime.setMonth(month);
+		notificationTime.setDate(day);
+		notificationTime.setHours(hour);
+		notificationTime.setMinutes(minutes);
+		notificationTime.setSeconds(0);
+		notificationTime.setHours(notificationTime.getHours()-1);
+		
+		DateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd hh:mm");
+        String strDate = dateFormat.format(notificationTime);
+        
+		startTime = strDate;
+    }
+    public Date getStartTime2() throws ParseException{
+    	Date notificationTime = new Date();
+    	DateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd hh:mm");
+    	//SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
+    	
+    	notificationTime = dateFormat.parse(startTime);
+    	return notificationTime;
+    }
+    public void addEndTime(int year, int month, int day, int hour, int minutes) {
+    	Date notificationTime = new Date();
+		notificationTime.setYear(year);
+		notificationTime.setMonth(month);
+		notificationTime.setDate(day);
+		notificationTime.setHours(hour);
+		notificationTime.setMinutes(minutes);
+		notificationTime.setSeconds(0);
+		notificationTime.setHours(notificationTime.getHours()-1);
+		
+		DateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd hh:mm");
+        String strDate = dateFormat.format(notificationTime);
+        
+		startTime = strDate;
+    }
+    public Date getEndTime2() throws ParseException {
+    	Date notificationTime = new Date();
+    	DateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd hh:mm");
+    	//SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
+    	
+    	notificationTime = dateFormat.parse(endTime);
+    	return notificationTime;
+    }
 	public String getId() {
 		return Id;
 	}
@@ -86,20 +133,20 @@ public class Lecture {
 		Id = id;
 	}
 
-	public Date getStartTime() {
-		return StartTime;
+	public String getStartTime() {
+		return startTime;
 	}
 
-	public void setStartTime(Date startTime) {
-		StartTime = startTime;
+	public void setStartTime(String startTime) {
+		startTime = startTime;
 	}
 
-	public Date getEndTime() {
-		return EndTime;
+	public String getEndTime() {
+		return endTime;
 	}
 
-	public void setEndTime(Date endTime) {
-		EndTime = endTime;
+	public void setEndTime(String endTime) {
+		endTime = endTime;
 	}
 
 	public String getSubjectName() {

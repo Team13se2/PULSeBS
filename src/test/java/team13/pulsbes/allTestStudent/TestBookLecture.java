@@ -43,7 +43,7 @@ class TestBookLecture {
 		assertThrows(InvalidLectureException.class, ()-> studentService.bookLecture("1", "2"));
 	}
 	@Test
-	void testBookLecture2() throws InvalidLectureException, InvalidStudentException {
+	void testBookLecture2() throws InvalidLectureException,InvalidStudentException {
 		Lecture l = new Lecture();
 		l.setAvailableSeat(0);
 		Optional<Lecture> ol = Optional.of(l);
@@ -51,7 +51,7 @@ class TestBookLecture {
 		assertEquals(bookingFailure,studentService.bookLecture("1", "2"));
 	}
 	@Test
-	void testBookLecture3() throws InvalidLectureException, InvalidStudentException {
+	void testBookLecture3() throws InvalidLectureException,InvalidStudentException {
 		Lecture l = new Lecture();
 		l.setAvailableSeat(1);
 		Student s = new Student("1","test","test");
@@ -61,7 +61,6 @@ class TestBookLecture {
 		when(lr.findById(any())).thenReturn(ol);
 		when(sr.getOne(any())).thenReturn(s);
 		doNothing().when(notificationService).sendMessage(isA(String.class), isA(String.class), isA(String.class));
-		//when(notificationService.sendMessage(anyString(), anyString(), anyString())).thenReturn(true);
 		assertEquals(bookingSuccess,studentService.bookLecture("1", "2"));
 	}
 	
