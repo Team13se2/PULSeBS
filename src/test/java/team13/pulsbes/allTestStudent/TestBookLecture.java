@@ -10,6 +10,7 @@ import static org.mockito.Mockito.*;
 import team13.pulsbes.entities.Lecture;
 import team13.pulsbes.entities.Student;
 import team13.pulsbes.exception.InvalidLectureException;
+import team13.pulsbes.exception.InvalidStudentException;
 import team13.pulsbes.repositories.LectureRepository;
 import team13.pulsbes.repositories.StudentRepository;
 import team13.pulsbes.serviceimpl.NotificationServiceImpl;
@@ -40,14 +41,14 @@ class TestBookLecture {
 		assertThrows(InvalidLectureException.class, ()-> studentService.bookLecture("1", "2"));
 	}
 	@Test
-	void testBookLecture2() throws InvalidLectureException {
+	void testBookLecture2() throws InvalidLectureException, InvalidStudentException {
 		Lecture l = new Lecture();
 		l.setAvailableSeat(0);
 		when(lr.getOne(any())).thenReturn(l);
 		assertEquals(bookingFailure,studentService.bookLecture("1", "2"));
 	}
 	@Test
-	void testBookLecture3() throws InvalidLectureException {
+	void testBookLecture3() throws InvalidLectureException, InvalidStudentException {
 		Lecture l = new Lecture();
 		l.setAvailableSeat(1);
 		Student s = new Student("1","test","test");
