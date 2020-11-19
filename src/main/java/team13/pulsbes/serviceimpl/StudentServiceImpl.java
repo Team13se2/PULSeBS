@@ -76,7 +76,7 @@ public class StudentServiceImpl implements StudentService{
             try {
                 System.out.println("1 try");
                 lectureSelected.get().addStudentAttending(currentStudent);
-
+                
             }
             catch (Exception e)
 
@@ -85,7 +85,7 @@ public class StudentServiceImpl implements StudentService{
                 log.throwing(this.getClass().getName(), "addStudentAttending", e);}
 
             lectureSelected.get().setAvailableSeat(availableSeats - 1);
-
+            lectureRepository.save(lectureSelected.get());
             notificationService.sendMessage("lanarig@gmail.com","Booking confirmation","Booking succeed for " + lectureSelected.get().getSubjectName() + ".");
 
             return ("The lecture was correctly booked");
@@ -107,7 +107,7 @@ public class StudentServiceImpl implements StudentService{
         List<Course> listCourse = studentRepository.getOne(id).getCourses();
         List<Lecture> listLecture = new ArrayList<>();
 
-
+        
         for(Course tmpCourse : listCourse) {
             listLecture.addAll(tmpCourse.getLectures());
          }

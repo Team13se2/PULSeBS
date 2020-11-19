@@ -19,7 +19,7 @@ import team13.pulsbes.exception.InvalidStudentException;
 import team13.pulsbes.repositories.LectureRepository;
 import team13.pulsbes.serviceimpl.TeacherServiceImpl;
 
-class GetStudentList {
+class TestGetStudentList {
 	
 	LectureRepository lectureRepository;
 	TeacherServiceImpl teacherService;

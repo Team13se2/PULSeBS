@@ -46,6 +46,7 @@ public class Student {
 		this.Surname = Surname;
 	}
 
+	public Student() {}
 	public void addCourse(Course c) throws InvalidCourseException {
     	if(c==null) {
     		throw new InvalidCourseException("Invalid Course");
