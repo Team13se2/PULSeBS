@@ -84,6 +84,7 @@ class LoginForm extends React.Component {
                             <Form.Group controlId="type" required>
                               <Form.Check type="radio" name="type" value="student" label="Student" onChange={(event) => this.onChangeType(event)} required />
                               <Form.Check type="radio" name="type" value="teacher" label="Teacher" onChange={(event) => this.onChangeType(event)}/>
+
                             </Form.Group>
 
                             <Button className="btn btn-secondary" type="submit">

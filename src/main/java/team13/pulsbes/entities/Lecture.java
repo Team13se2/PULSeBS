@@ -12,6 +12,7 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -78,47 +79,38 @@ public class Lecture {
 //		this.AvailableSeat = AvailableSeat;
 //		this.TotalSeat = TotalSeat;
 //	}
-    public void addStartTime(int year, int month, int day, int hour, int minutes) {
-    	Date notificationTime = new Date();
-		notificationTime.setYear(year);
-		notificationTime.setMonth(month);
-		notificationTime.setDate(day);
-		notificationTime.setHours(hour);
-		notificationTime.setMinutes(minutes);
-		notificationTime.setSeconds(0);
-		notificationTime.setHours(notificationTime.getHours()-1);
+    public void addStartTime(Integer year, Integer month, Integer day, Integer hour, Integer minutes) {
+
+		Calendar c = Calendar.getInstance();
 		
-		DateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd hh:mm");
-        String strDate = dateFormat.format(notificationTime);
+		c.set(year, month, day, hour, minutes, 0);
+		
+		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+		System.out.println(c.getTime().toString());
+        String strDate = dateFormat.format(c.getTime());
         
 		startTime = strDate;
     }
     public Date getStartTime2() throws ParseException{
     	Date notificationTime = new Date();
-    	DateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd hh:mm");
-    	//SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
+    	DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
     	
     	notificationTime = dateFormat.parse(startTime);
     	return notificationTime;
     }
     public void addEndTime(int year, int month, int day, int hour, int minutes) {
-    	Date notificationTime = new Date();
-		notificationTime.setYear(year);
-		notificationTime.setMonth(month);
-		notificationTime.setDate(day);
-		notificationTime.setHours(hour);
-		notificationTime.setMinutes(minutes);
-		notificationTime.setSeconds(0);
-		notificationTime.setHours(notificationTime.getHours()-1);
+    	Calendar c = Calendar.getInstance();
 		
-		DateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd hh:mm");
-        String strDate = dateFormat.format(notificationTime);
+		c.set(year, month, day, hour, minutes, 0);
+		
+		DateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd HH:mm");
+        String strDate = dateFormat.format(c.getTime());
         
-		startTime = strDate;
+		endTime = strDate;
     }
     public Date getEndTime2() throws ParseException {
     	Date notificationTime = new Date();
-    	DateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd hh:mm");
+    	DateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd HH:mm");
     	//SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
     	
     	notificationTime = dateFormat.parse(endTime);

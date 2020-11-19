@@ -39,4 +39,14 @@ public class StudentController {
 			return null;
 		}
 	}
+    @RequestMapping(value = Constants.GET_BOOKED_LECTURES, method = RequestMethod.GET)
+    public List<LectureDTO> getBookedLectures(@CookieValue(value = "username") String username,@CookieValue(value = "id") String id){
+    	try {
+			return studentService.getBookedLectures(id);
+		} catch (InvalidStudentException e) {
+			// TODO Auto-generated catch block
+			System.out.println(e.getMessage());
+			return null;
+		}
+    }
 }
