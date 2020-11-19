@@ -24,24 +24,24 @@ import java.util.List;
 public class Lecture {
 
     @Id
-    private String Id;    
+    private String id;    
     
     private String startTime;
     
     private String endTime;
 
-    private String SubjectName;
+    private String subjectName;
 
-    private String LectureType;
+    private String lectureType;
     //theory or exercitation
 
-    private String SurnameString;
+    private String surnameString;
 
-    private Integer AvailableSeat;
+    private Integer availableSeat;
 
-    private Integer TotalSeat;
+    private Integer totalSeat;
 
-    private String RoomName;
+    private String roomName;
 
     @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinTable(name="lecture_students", joinColumns = @JoinColumn(name="lecture_id"),
@@ -126,11 +126,11 @@ public class Lecture {
     	return notificationTime;
     }
 	public String getId() {
-		return Id;
+		return id;
 	}
 
 	public void setId(String id) {
-		Id = id;
+		this.id = id;
 	}
 
 	public String getStartTime() {
@@ -138,7 +138,7 @@ public class Lecture {
 	}
 
 	public void setStartTime(String startTime) {
-		startTime = startTime;
+		this.startTime = startTime;
 	}
 
 	public String getEndTime() {
@@ -146,55 +146,55 @@ public class Lecture {
 	}
 
 	public void setEndTime(String endTime) {
-		endTime = endTime;
+		this.endTime = endTime;
 	}
 
 	public String getSubjectName() {
-		return SubjectName;
+		return subjectName;
 	}
 
 	public void setSubjectName(String subjectName) {
-		SubjectName = subjectName;
+		this.subjectName = subjectName;
 	}
 
 	public String getLectureType() {
-		return LectureType;
+		return lectureType;
 	}
 
 	public void setLectureType(String lectureType) {
-		LectureType = lectureType;
+		this.lectureType = lectureType;
 	}
 
 	public String getSurnameString() {
-		return SurnameString;
+		return surnameString;
 	}
 
 	public void setSurnameString(String surnameString) {
-		SurnameString = surnameString;
+		this.surnameString = surnameString;
 	}
 
 	public Integer getAvailableSeat() {
-		return AvailableSeat;
+		return availableSeat;
 	}
 
 	public void setAvailableSeat(Integer availableSeat) {
-		AvailableSeat = availableSeat;
+		this.availableSeat = availableSeat;
 	}
 
 	public Integer getTotalSeat() {
-		return TotalSeat;
+		return totalSeat;
 	}
 
 	public void setTotalSeat(Integer totalSeat) {
-		TotalSeat = totalSeat;
+		this.totalSeat = totalSeat;
 	}
 
 	public String getRoomName() {
-		return RoomName;
+		return roomName;
 	}
 
 	public void setRoomName(String roomName) {
-		RoomName = roomName;
+		this.roomName = roomName;
 	}
 
 	public List<Student> getStudents() {
