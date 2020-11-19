@@ -14,21 +14,20 @@ import java.util.List;
 
 @AllArgsConstructor
 @NoArgsConstructor
-@Data
 @Entity
 @Builder
 
 public class Teacher {
 
     @Id
-    private String id;
-    private String name;
+    private String Id;
+    private String Name;
 
-    private String surname;
+    private String Surname;
 
-    private String email;
+    private String Email;
 
-    private String psw;
+    private String Psw;
     @OneToMany (mappedBy = "teacher")
     List<Lecture> lectures;
     {
@@ -42,52 +41,52 @@ public class Teacher {
     }
 
 	public String getId() {
-		return id;
+		return Id;
 	}
 
 
 	public void setId(String id) {
-		this.id = id;
+		this.Id = id;
 	}
 
 
 	public String getName() {
-		return name;
+		return Name;
 	}
 
 
 	public void setName(String name) {
-		this.name = name;
+		this.Name = name;
 	}
 
 
 	public String getSurname() {
-		return surname;
+		return Surname;
 	}
 
 
 	public void setSurname(String surname) {
-		this.surname = surname;
+		this.Surname = surname;
 	}
 
 
 	public String getEmail() {
-		return email;
+		return Email;
 	}
 
 
 	public void setEmail(String email) {
-		this.email = email;
+		this.Email = email;
 	}
 
 
 	public String getPsw() {
-		return psw;
+		return Psw;
 	}
 
 
 	public void setPsw(String psw) {
-		this.psw = psw;
+		this.Psw = psw;
 	}
 
 

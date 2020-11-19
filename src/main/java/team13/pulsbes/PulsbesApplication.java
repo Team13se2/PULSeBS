@@ -76,12 +76,12 @@ public class PulsbesApplication {
  			
 			@Override
 			public void run(String... args) throws Exception {
-				Lecture l = new Lecture();
-				l.setId("3"); l.setAvailableSeat(10); l.setTotalSeat(100);
-				Teacher teacher = new Teacher();
-				teacher.setId("3");
-				teacher.setEmail("lanarig@gmail.com");
-				officerService.addTeacher(teacher);
+//				Lecture l = new Lecture();
+//				l.setId("3"); l.setAvailableSeat(10); l.setTotalSeat(100);
+//				Teacher teacher = new Teacher();
+//				teacher.setId("3");
+//				teacher.setEmail("lanarig@gmail.com");
+//				officerService.addTeacher(teacher);
 //				Date startTime = new Date();
 //				startTime.setYear(120);
 //				startTime.setMonth(10);
@@ -90,12 +90,12 @@ public class PulsbesApplication {
 //				startTime.setMinutes(10);
 //				l.setStartTime(startTime);
 //				System.out.println(startTime.toString());
-				l.addStartTime(120, 10, 19, 11,	13 );
-				l.setTeacher(teacher);
+//				l.addStartTime(120, 10, 19, 11,	13 );
+//				l.setTeacher(teacher);
 //				
 //				
 //				
-				officerService.addLecture(l);
+//				officerService.addLecture(l);
 
 //				Lecture l1 = new Lecture();
 //				Teacher teacher = new Teacher();

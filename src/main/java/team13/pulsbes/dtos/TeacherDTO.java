@@ -10,17 +10,17 @@ import java.util.List;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
-@Data
+
 public class TeacherDTO
 {
     @Id
-    private String id;
+    private String Id;
 
-    private String name;
+    private String Name;
 
-    private String surname;
+    private String Surname;
 
-    private String email;
+    private String Email;
 
     List<Lecture> lectures;
     {
@@ -32,28 +32,28 @@ public class TeacherDTO
         courses = new ArrayList<>();
     }
 	public String getId() {
-		return id;
+		return Id;
 	}
 	public void setId(String id) {
-		this.id = id;
+		this.Id = id;
 	}
 	public String getName() {
-		return name;
+		return Name;
 	}
 	public void setName(String name) {
-		this.name = name;
+		this.Name = name;
 	}
 	public String getSurname() {
-		return surname;
+		return Surname;
 	}
 	public void setSurname(String surname) {
-		this.surname = surname;
+		this.Surname = surname;
 	}
 	public String getEmail() {
-		return email;
+		return Email;
 	}
 	public void setEmail(String email) {
-		this.email = email;
+		this.Email = email;
 	}
 	public List<Lecture> getLectures() {
 		return lectures;
