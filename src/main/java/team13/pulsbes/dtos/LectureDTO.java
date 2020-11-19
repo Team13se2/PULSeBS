@@ -16,79 +16,79 @@ import java.util.List;
 public class LectureDTO {
 
     @Id
-    private String Id;
+    private String id;
 
-    private Date StartTime;
+    private Date startTime;
 
-    private Date EndTime;
+    private Date endTime;
     
-    private String SubjectName;
+    private String subjectName;
 
-    private String LectureType;
+    private String lectureType;
 
-    private String SurnameString;
+    private String surnameString;
 
-    private Integer AvailableSeat;
+    private Integer availableSeat;
 
-    private Integer TotalSeat;
+    private Integer totalSeat;
 
-    private String RoomName;
+    private String roomName;
 
     
 	public LectureDTO(){}
 	public String getId() {
-		return Id;
+		return id;
 	}
 	public void setId(String id) {
-		Id = id;
+		this.id = id;
 	}
 	public Date getStartTime() {
-		return StartTime;
+		return startTime;
 	}
 	public void setStartTime(Date startTime) {
-		StartTime = startTime;
+		this.startTime = startTime;
 	}
 	public Date getEndTime() {
-		return EndTime;
+		return endTime;
 	}
 	public void setEndTime(Date endTime) {
-		EndTime = endTime;
+		this.endTime = endTime;
 	}
 	public String getLectureType() {
-		return LectureType;
+		return lectureType;
 	}
 	public void setLectureType(String lectureType) {
-		LectureType = lectureType;
+		this.lectureType = lectureType;
 	}
 	public String getSurnameString() {
-		return SurnameString;
+		return surnameString;
 	}
 	public void setSurnameString(String surnameString) {
-		SurnameString = surnameString;
+		this.surnameString = surnameString;
 	}
 	public Integer getAvailableSeat() {
-		return AvailableSeat;
+		return availableSeat;
 	}
 	public void setAvailableSeat(Integer availableSeat) {
-		AvailableSeat = availableSeat;
+		this.availableSeat = availableSeat;
 	}
 	public Integer getTotalSeat() {
-		return TotalSeat;
+		return totalSeat;
 	}
 	public void setTotalSeat(Integer totalSeat) {
-		TotalSeat = totalSeat;
+		this.totalSeat = totalSeat;
 	}
 	public String getRoomName() {
-		return RoomName;
+		return roomName;
 	}
 	public void setRoomName(String roomName) {
-		RoomName = roomName;
+		this.roomName = roomName;
 	}
 	public String getSubjectName() {
-		return SubjectName;
+		return subjectName;
 	}
 	public void setSubjectName(String subjectName) {
-		SubjectName = subjectName;
+		this.subjectName = subjectName;
 	}
     
 }
