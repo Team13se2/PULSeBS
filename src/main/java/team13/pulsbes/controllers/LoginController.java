@@ -32,15 +32,19 @@ public class LoginController {
 				/*cookieUsername.setSecure(true);
 				cookieUsername.setHttpOnly(true);*/
 				Cookie cookieId = new Cookie("id", log.getId());
+				Cookie cookieType = new Cookie("type", log.getTeacher() ? "teacher" : "student");
 				//cookieId.setSecure(true);
 				//cookieId.setHttpOnly(true);
 				cookieUsername.setPath("/");
+				cookieType.setPath("/");
 				cookieId.setPath("/");
 				cookieUsername.setMaxAge(3600*7);
+				cookieType.setMaxAge(3600*7);
 				cookieId.setMaxAge(3600*7);
 				//add cookie to response
 				response.addCookie(cookieUsername);
 				response.addCookie(cookieId);
+				response.addCookie(cookieType);
 			}
 			return log;
 		} catch (WrongCredentialsException e) {
@@ -64,14 +68,18 @@ public class LoginController {
 		/*cookieUsername.setSecure(true);
 		cookieUsername.setHttpOnly(true);*/
 		Cookie cookieId = new Cookie("id", null);
+		Cookie cookieType = new Cookie("type", null);
 		/*cookieId.setSecure(true);
 		cookieId.setHttpOnly(true);*/
 		cookieUsername.setPath("/");
 		cookieId.setPath("/");
 		cookieUsername.setMaxAge(0);
 		cookieId.setMaxAge(0);
+		cookieType.setPath("/");
+		cookieType.setMaxAge(0);
 		//add cookie to response
 		response.addCookie(cookieId);
 		response.addCookie(cookieUsername);
+		response.addCookie(cookieType);
 	}
 }

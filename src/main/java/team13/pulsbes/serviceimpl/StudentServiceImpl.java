@@ -88,7 +88,7 @@ public class StudentServiceImpl implements StudentService{
             currentStudent.addBookLecture(lectureSelected.get());
             studentRepository.save(currentStudent);
             lectureRepository.save(lectureSelected.get());
-            notificationService.sendMessage("lanarig@gmail.com","Booking confirmation","Booking succeed for " + lectureSelected.get().getSubjectName() + ".");
+            notificationService.sendMessage(currentStudent.getEmail(),"Booking confirmation","Booking succeed for " + lectureSelected.get().getSubjectName() + ".");
 
             return ("The lecture was correctly booked");
         }
