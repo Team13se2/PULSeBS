@@ -7,9 +7,12 @@ import org.junit.jupiter.api.Test;
 
 import static org.mockito.Mockito.*;
 
+import java.util.Optional;
+
 import team13.pulsbes.entities.Lecture;
 import team13.pulsbes.entities.Student;
 import team13.pulsbes.exception.InvalidLectureException;
+import team13.pulsbes.exception.InvalidStudentException;
 import team13.pulsbes.repositories.LectureRepository;
 import team13.pulsbes.repositories.StudentRepository;
 import team13.pulsbes.serviceimpl.NotificationServiceImpl;
@@ -40,23 +43,24 @@ class TestBookLecture {
 		assertThrows(InvalidLectureException.class, ()-> studentService.bookLecture("1", "2"));
 	}
 	@Test
-	void testBookLecture2() throws InvalidLectureException {
+	void testBookLecture2() throws InvalidLectureException,InvalidStudentException {
 		Lecture l = new Lecture();
 		l.setAvailableSeat(0);
-		when(lr.getOne(any())).thenReturn(l);
+		Optional<Lecture> ol = Optional.of(l);
+		when(lr.findById(any())).thenReturn(ol);
 		assertEquals(bookingFailure,studentService.bookLecture("1", "2"));
 	}
 	@Test
-	void testBookLecture3() throws InvalidLectureException {
+	void testBookLecture3() throws InvalidLectureException,InvalidStudentException {
 		Lecture l = new Lecture();
 		l.setAvailableSeat(1);
 		Student s = new Student("1","test","test");
 		s.setEmail("fake@gmail.com");
-		l.setSubjectName("test");
-		when(lr.getOne(any())).thenReturn(l);
+		l.setSubjectName("test");		
+		Optional<Lecture> ol = Optional.of(l);
+		when(lr.findById(any())).thenReturn(ol);
 		when(sr.getOne(any())).thenReturn(s);
 		doNothing().when(notificationService).sendMessage(isA(String.class), isA(String.class), isA(String.class));
-		//when(notificationService.sendMessage(anyString(), anyString(), anyString())).thenReturn(true);
 		assertEquals(bookingSuccess,studentService.bookLecture("1", "2"));
 	}
 	

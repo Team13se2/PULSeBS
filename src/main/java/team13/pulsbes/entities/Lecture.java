@@ -5,12 +5,14 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import team13.pulsbes.exception.InvalidStudentException;
-import team13.pulsbes.model.Date;
 
 import javax.persistence.*;
+
+import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 @AllArgsConstructor
@@ -22,24 +24,24 @@ import java.util.List;
 public class Lecture {
 
     @Id
-    private String Id;    
+    private String id;    
     
-    private Date StartTime;
+    private String startTime;
     
-    private Date EndTime;
+    private String endTime;
 
-    private String SubjectName;
+    private String subjectName;
 
-    private String LectureType;
+    private String lectureType;
     //theory or exercitation
 
-    private String SurnameString;
+    private String surnameString;
 
-    private Integer AvailableSeat;
+    private Integer availableSeat;
 
-    private Integer TotalSeat;
+    private Integer totalSeat;
 
-    private String RoomName;
+    private String roomName;
 
     @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinTable(name="lecture_students", joinColumns = @JoinColumn(name="lecture_id"),
@@ -49,8 +51,8 @@ public class Lecture {
         students = new ArrayList<>();
     }
 
-    @ManyToOne
-    @JoinColumn (name = "course_id")
+    @ManyToOne(cascade = {CascadeType.ALL})
+    @JoinColumn(name = "course_id")
     private Course course;
 
     @ManyToOne
@@ -77,77 +79,122 @@ public class Lecture {
 //		this.AvailableSeat = AvailableSeat;
 //		this.TotalSeat = TotalSeat;
 //	}
-    
+    public void addStartTime(int year, int month, int day, int hour, int minutes) {
+    	Date notificationTime = new Date();
+		notificationTime.setYear(year);
+		notificationTime.setMonth(month);
+		notificationTime.setDate(day);
+		notificationTime.setHours(hour);
+		notificationTime.setMinutes(minutes);
+		notificationTime.setSeconds(0);
+		notificationTime.setHours(notificationTime.getHours()-1);
+		
+		DateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd hh:mm");
+        String strDate = dateFormat.format(notificationTime);
+        
+		startTime = strDate;
+    }
+    public Date getStartTime2() throws ParseException{
+    	Date notificationTime = new Date();
+    	DateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd hh:mm");
+    	//SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
+    	
+    	notificationTime = dateFormat.parse(startTime);
+    	return notificationTime;
+    }
+    public void addEndTime(int year, int month, int day, int hour, int minutes) {
+    	Date notificationTime = new Date();
+		notificationTime.setYear(year);
+		notificationTime.setMonth(month);
+		notificationTime.setDate(day);
+		notificationTime.setHours(hour);
+		notificationTime.setMinutes(minutes);
+		notificationTime.setSeconds(0);
+		notificationTime.setHours(notificationTime.getHours()-1);
+		
+		DateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd hh:mm");
+        String strDate = dateFormat.format(notificationTime);
+        
+		startTime = strDate;
+    }
+    public Date getEndTime2() throws ParseException {
+    	Date notificationTime = new Date();
+    	DateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd hh:mm");
+    	//SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
+    	
+    	notificationTime = dateFormat.parse(endTime);
+    	return notificationTime;
+    }
 	public String getId() {
-		return Id;
+		return id;
 	}
 
 	public void setId(String id) {
-		Id = id;
+		this.id = id;
 	}
 
-	public Date getStartTime() {
-		return StartTime;
+	public String getStartTime() {
+		return startTime;
 	}
 
-	public void setStartTime(Date startTime) {
-		StartTime = startTime;
+	public void setStartTime(String startTime) {
+		this.startTime = startTime;
 	}
 
-	public Date getEndTime() {
-		return EndTime;
+	public String getEndTime() {
+		return endTime;
 	}
 
-	public void setEndTime(Date endTime) {
-		EndTime = endTime;
+	public void setEndTime(String endTime) {
+		this.endTime = endTime;
 	}
 
 	public String getSubjectName() {
-		return SubjectName;
+		return subjectName;
 	}
 
 	public void setSubjectName(String subjectName) {
-		SubjectName = subjectName;
+		this.subjectName = subjectName;
 	}
 
 	public String getLectureType() {
-		return LectureType;
+		return lectureType;
 	}
 
 	public void setLectureType(String lectureType) {
-		LectureType = lectureType;
+		this.lectureType = lectureType;
 	}
 
 	public String getSurnameString() {
-		return SurnameString;
+		return surnameString;
 	}
 
 	public void setSurnameString(String surnameString) {
-		SurnameString = surnameString;
+		this.surnameString = surnameString;
 	}
 
 	public Integer getAvailableSeat() {
-		return AvailableSeat;
+		return availableSeat;
 	}
 
 	public void setAvailableSeat(Integer availableSeat) {
-		AvailableSeat = availableSeat;
+		this.availableSeat = availableSeat;
 	}
 
 	public Integer getTotalSeat() {
-		return TotalSeat;
+		return totalSeat;
 	}
 
 	public void setTotalSeat(Integer totalSeat) {
-		TotalSeat = totalSeat;
+		this.totalSeat = totalSeat;
 	}
 
 	public String getRoomName() {
-		return RoomName;
+		return roomName;
 	}
 
 	public void setRoomName(String roomName) {
-		RoomName = roomName;
+		this.roomName = roomName;
 	}
 
 	public List<Student> getStudents() {

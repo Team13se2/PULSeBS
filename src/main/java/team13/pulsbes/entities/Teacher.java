@@ -26,7 +26,7 @@ public class Teacher {
 
     private String surname;
 
-    private String Email;
+    private String email;
 
     private String psw;
     @OneToMany (mappedBy = "teacher")
@@ -72,12 +72,12 @@ public class Teacher {
 
 
 	public String getEmail() {
-		return Email;
+		return email;
 	}
 
 
 	public void setEmail(String email) {
-		Email = email;
+		this.email = email;
 	}
 
 

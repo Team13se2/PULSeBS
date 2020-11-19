@@ -46,15 +46,17 @@ public class StudentServiceImpl implements StudentService{
     	this.notificationService = ns;
     }
 	
-    String bookingSuccess = "The lecture was corrrectly booked";    
-    String bookingFailure = "The lecture has no more available seats, you will receive a mail if a spot opens up";
 
     Logger log = Logger.getLogger("StudentServiceImpl");
 
     @Override
-    public String bookLecture (String lectureId, String StudentId ) throws InvalidLectureException{
+    public String bookLecture (String lectureId, String StudentId ) throws InvalidLectureException, InvalidStudentException{
 
         System.out.println("entrato");
+
+        if(StudentId.equals("-1")) {
+			throw new InvalidStudentException("Student can't be null");
+        }
 
         Student currentStudent = studentRepository.getOne(StudentId);
         Optional<Lecture> lectureSelected = lectureRepository.findById(lectureId);
@@ -75,10 +77,10 @@ public class StudentServiceImpl implements StudentService{
 
             notificationService.sendMessage(currentStudent.getEmail(),"Booking confirmation","Booking succeed for " + lectureSelected.get().getSubjectName() + ".");
 
-            return (bookingSuccess);
+            return ("The lecture was corrrectly booked");
         }
         else {
-            return (bookingFailure);
+            return ("The lecture has no more available seats, you will receive a mail if a spot opens up");
         }
 
 
