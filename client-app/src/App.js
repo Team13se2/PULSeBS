@@ -2,6 +2,7 @@ import './App.css';
 
 import LoginForm from './components/LoginForm';
 import EventsList from './components/EventsList';
+import StudentPage from './components/StudentPage';
 import TeacherPage from './components/TeacherPage';
 import React from 'react';
 import {BrowserRouter as Router, Switch, Route} from "react-router-dom";
@@ -107,7 +108,7 @@ class App extends React.Component {
                                 <Route path="/student"
                                     exact={true}>
 
-                                    <EventsList/>
+                                    <StudentPage/>
                                 </Route>
 
                                 <Route path="/teacher"
