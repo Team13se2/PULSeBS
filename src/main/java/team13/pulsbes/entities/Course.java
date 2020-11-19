@@ -32,7 +32,7 @@ public class Course {
    @ManyToMany(mappedBy = "courses")
    private List<Student> students = new ArrayList<>();
 
-   @OneToMany (mappedBy = "courses")
+   @OneToMany (mappedBy = "course")
     List<Lecture> lectures;
     {
         lectures = new ArrayList<>();
