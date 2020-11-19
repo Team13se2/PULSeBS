@@ -14,13 +14,13 @@ import javax.persistence.OneToMany;
 public class TeacherDTO
 {
     @Id
-    private String Id;
+    private String id;
 
     private String name;
 
     private String surname;
 
-    private String Email;
+    private String email;
 
     List<Lecture> lectures;
     {
@@ -32,10 +32,10 @@ public class TeacherDTO
         courses = new ArrayList<>();
     }
 	public String getId() {
-		return Id;
+		return id;
 	}
 	public void setId(String id) {
-		Id = id;
+		this.id = id;
 	}
 	public String getName() {
 		return name;
@@ -50,10 +50,10 @@ public class TeacherDTO
 		this.surname = surname;
 	}
 	public String getEmail() {
-		return Email;
+		return email;
 	}
 	public void setEmail(String email) {
-		Email = email;
+		this.email = email;
 	}
 	public List<Lecture> getLectures() {
 		return lectures;
