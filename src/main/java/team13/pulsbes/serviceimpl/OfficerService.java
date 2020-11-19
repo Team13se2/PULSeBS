@@ -1,5 +1,6 @@
 package team13.pulsbes.serviceimpl;
 
+import java.text.ParseException;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Timer;
@@ -28,20 +29,18 @@ public class OfficerService {
 		teacherRepository.save(t);
 	}
 	
-	public void addLecture(Lecture l) {
+	public void addLecture(Lecture l) throws ParseException {
 		lectureRepository.save(l);
 		Timer timer = new Timer();
-		Date notificationTime = new Date();
-		notificationTime.setYear(l.getStartTime().getYear());
-		notificationTime.setMonth(l.getStartTime().getMonth());
-		notificationTime.setDate(l.getStartTime().getDay());
-		notificationTime.setHours(l.getStartTime().getHour());
-		notificationTime.setMinutes(l.getStartTime().getMinutes());
-		notificationTime.setSeconds(0);
-		notificationTime.setHours(notificationTime.getHours()-1);
 		
-		//notificationTime.add(Calendar.HOUR_OF_DAY, -1);
-		
+//		notificationTime.setYear(l.getStartTime().getYear());
+//		notificationTime.setMonth(l.getStartTime().getMonth());
+//		notificationTime.setDate(l.getStartTime().getDay());
+//		notificationTime.setHours(l.getStartTime().getHour());
+//		notificationTime.setMinutes(l.getStartTime().getMinutes());
+//		notificationTime.setSeconds(0);
+//		notificationTime.setHours(notificationTime.getHours()-1);
+				
 		timer.schedule(new TimerTask() {
 			@Override
 		    public void run() {
@@ -49,7 +48,7 @@ public class OfficerService {
 		        //setEmail(emailContent, subject);
 				notificationService.sendMessage(l.getTeacher().getEmail(), "Students attending lecture", "Number of students attending the lecture is " + l.getStudents().size());
 		    }
-			}, notificationTime);
+			}, l.getStartTime2());
 		}
 	
 }
