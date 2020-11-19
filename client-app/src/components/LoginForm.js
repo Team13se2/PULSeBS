@@ -29,6 +29,15 @@ class LoginForm extends React.Component {
         onLogin(this.state.email, this.state.psw, "teacher");
         this.setState({ submitted: true });
       };
+
+      nuovaPagina(type) {
+        const utenteAutenticato = type;
+        if (utenteAutenticato=="student") {
+          return <Redirect to="/student"/>; 
+        }  else
+        return <Redirect to="/teacher"/>;
+      }
+
     render(){
       
         return(
@@ -37,7 +46,8 @@ class LoginForm extends React.Component {
             {(context) => (
             <>
             {context.authErr && <Redirect to="/login"></Redirect>}
-            {context.authUser && <Redirect to="/teacher"/>}
+            {context.authUser && this.nuovaPagina(this.state.type)}
+             
             
             <Container fluid>
                 <Row>
