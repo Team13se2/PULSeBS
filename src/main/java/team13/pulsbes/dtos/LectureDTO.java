@@ -12,11 +12,11 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-@Data
+
 public class LectureDTO {
 
     @Id
-    private String id;
+    private String Id;
 
     private Date startTime;
 
@@ -37,10 +37,10 @@ public class LectureDTO {
     
 	public LectureDTO(){}
 	public String getId() {
-		return id;
+		return Id;
 	}
 	public void setId(String id) {
-		this.id = id;
+		this.Id = id;
 	}
 	public Date getStartTime() {
 		return startTime;
