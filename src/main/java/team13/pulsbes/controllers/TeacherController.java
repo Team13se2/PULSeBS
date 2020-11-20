@@ -31,11 +31,16 @@ public class TeacherController {
 			return 0;
 		}
 	}
-	@RequestMapping(value = Constants.GET_ALL_LECTURES_T, method = RequestMethod.GET)
+	@RequestMapping(value = Constants.GET_ALL_LECTURES, method = RequestMethod.GET)
 	public List<LectureDTO> getAllLectures(@CookieValue(value = "username") String username,@CookieValue(value = "id") String id) throws InvalidTeacherException{
 		try {
-			return teacherService.getAllLectures(id);
-		} catch (InvalidTeacherException e) {
+			List<LectureDTO> l = teacherService.getAllLectures(id);
+			for(int i=0;i<l.size();i++){
+				Integer nr = teacherService.getNumberStudentsAttending(l.get(i).getId());
+				l.get(i).setNrStudents(nr);
+			}
+			return l;
+		} catch (InvalidTeacherException | InvalidLectureException e) {
 			System.out.println(e.getMessage());
 			return null;
 		}

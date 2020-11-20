@@ -18,29 +18,18 @@ class TeacherPage extends React.Component {
     this.state = {
       id:[],
         lectures: [],
-        nrStudents:[],
         show: false
     };
-
   }
 
   componentDidMount(){
-    
     this.getAllLectures();
-    console.log(this.state.lectures);
-    this.getNumberStudentsAttending(0);
-    console.log(this.state.nrStudents);
   }
 
   getAllLectures = () =>{
     API.getAllLectures().then((lecture) =>{
         this.setState({lectures: lecture});
     })
-}
-getNumberStudentsAttending = (lecture_id) =>{
-  API.getNumberStudentsAttending(lecture_id).then((nrStudents) =>{
-      this.setState({nrStudents: nrStudents});
-  })
 }
 
 logout = () => {
@@ -50,8 +39,8 @@ logout = () => {
 }
 
 
-showModal = () => {
-  this.setState({ show: true });
+showModal = (lectureIndex) => {
+  this.setState({ show: true , lectureIndex: lectureIndex});
 };
 
 hideModal = () => {
@@ -67,14 +56,15 @@ render(){
 
       {(context) => (
         <>
-          {context.authErr && <Redirect to="/login"></Redirect>}
+          {context.authUser === null ? <Redirect to="/login"/> : ""}
+          {context.authUser === undefined? <Redirect to="/login"/> : ""}
           <Modal show={this.state.show} handleClose={this.hideModal} >
                       <Modal.Body>
                           <Modal.Header closeButton>
                         <Modal.Title>Students List</Modal.Title>
                       </Modal.Header> 
                       
-                      {this.state.nrStudents === 0 && <p> None booked this lecture yet. </p>}
+                      {this.state.lectureIndex !== undefined && this.state.lectures[this.state.lectureIndex].nrStudents === 0 && <p> None booked this lecture yet. </p>}
                       {this.state.nrStudents > 0 &&
                       <Table responsive striped bordered hover>
 
@@ -126,7 +116,7 @@ render(){
                       <th>Id</th>
                       <th>Course</th>
                       <th>Date</th>
-                      <th>Time</th>
+              {/*<th>Time</th>*/}
 
                       <th>Teacher</th>
                       <th>Location</th>
@@ -140,18 +130,18 @@ render(){
                       this.state.lectures.map((lecture, index) => (
                         <tr key={index + 1}>
                           <td>{lecture.id}</td>
-                          <td>{lecture.course}</td>
-                          <td>{lecture.date}</td>
+                          <td>{lecture.subjectName}</td>
+                          {/*<td>{lecture.date}</td>*/}
                           <td>{lecture.startTime}</td>
                         
                           <td>{lecture.surnameString}</td>
                           <td>{lecture.roomName }</td>
                           
-                          <td>{this.state.nrStudents}</td>
+                          <td>{lecture.nrStudents}</td>
                           
                           <td>
                             <button  type="button" className="btn btn-outline-success mt-5" 
-                                  onClick={this.showModal}
+                                  onClick={() => this.showModal(index)}
                                   id={lecture.id}> Students
                             </button> 
                           </td>

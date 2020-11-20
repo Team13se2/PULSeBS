@@ -11,7 +11,7 @@ import { AuthContext } from "../auth/AuthContext";
 class LoginForm extends React.Component {
     constructor(props) {
         super(props);
-        this.state = { email: "teacher@gmail.com", psw: "psw", submitted: false };
+        this.state = { email: "", psw: "", submitted: false };
       }
     
       onChangeEmail = (event) => {
@@ -26,10 +26,17 @@ class LoginForm extends React.Component {
       };
       handleSubmit = (event, onLogin) => {
         event.preventDefault();
-        onLogin(this.state.email, this.state.psw, this.state.type);
+        onLogin(this.state.email, this.state.psw, "teacher");
         this.setState({ submitted: true });
       };
 
+      nuovaPagina(type) {
+        const utenteAutenticato = type;
+        if (utenteAutenticato=="student") {
+          return <Redirect to="/student"/>; 
+        }  else
+        return <Redirect to="/teacher"/>;
+      }
 
     render(){
       
@@ -38,9 +45,8 @@ class LoginForm extends React.Component {
               
             {(context) => (
             <>
-            {/*context.authErr && <Redirect to="/login"></Redirect>*/}
-            {context.authUser === null ? <Redirect to="/login"/> : ""}
-            
+            {context.authErr && <Redirect to="/login"></Redirect>}
+            {context.authUser && this.nuovaPagina(this.state.type)}
              
             
             <Container fluid>
@@ -81,12 +87,12 @@ class LoginForm extends React.Component {
                                 />
                             </Form.Group>
 
-                            <Form.Group controlId="type" required>
-                              <Form.Check type="radio" name="type" value="student" label="Student" onChange={(event) => this.onChangeType(event)} required />
-                              <Form.Check type="radio" name="type" value="teacher" label="Teacher" onChange={(event) => this.onChangeType(event)}/>
-
+                            <Form.Group controlId="psw"
+                            value={this.state.type}
+                            onChange={(ev) => this.onChangeType(ev)}>
+                               
+                            
                             </Form.Group>
-
                             <Button className="btn btn-secondary" type="submit">
                                 Login
                             </Button>

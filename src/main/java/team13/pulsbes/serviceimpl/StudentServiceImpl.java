@@ -73,13 +73,24 @@ public class StudentServiceImpl implements StudentService{
 
         if (availableSeats>0) {
             System.out.println("terzo if");
-            try {lectureSelected.get().addStudentAttending(currentStudent);} catch (Exception e) {log.throwing(this.getClass().getName(), "addStudentAttending", e);}
+            try {
+                System.out.println("1 try");
+                lectureSelected.get().addStudentAttending(currentStudent);
+                
+            }
+            catch (Exception e)
+
+            {
+                System.out.println("1 catch");
+                log.throwing(this.getClass().getName(), "addStudentAttending", e);}
 
             lectureSelected.get().setAvailableSeat(availableSeats - 1);
-
+            currentStudent.addBookLecture(lectureSelected.get());
+            studentRepository.save(currentStudent);
+            lectureRepository.save(lectureSelected.get());
             notificationService.sendMessage(currentStudent.getEmail(),"Booking confirmation","Booking succeed for " + lectureSelected.get().getSubjectName() + ".");
 
-            return ("The lecture was corrrectly booked");
+            return ("The lecture was correctly booked");
         }
         else {
             return ("The lecture has no more available seats, you will receive a mail if a spot opens up");
@@ -95,20 +106,39 @@ public class StudentServiceImpl implements StudentService{
 			throw new InvalidStudentException("Student can't be null");
         }
         
+		if(!studentRepository.existsById(id))
+    		throw new InvalidStudentException("Student not found");
+		
         List<Course> listCourse = studentRepository.getOne(id).getCourses();
         List<Lecture> listLecture = new ArrayList<>();
 
-
-        for(Course tmpCourse : listCourse) {
-            listLecture.addAll(tmpCourse.getLectures());
+        
+        for(Course tmpCourse : listCourse) {            
+        	listLecture.addAll(tmpCourse.getLectures());
          }
 
 		return  listLecture
 				.stream()
-				.filter(Objects::nonNull)
+				.filter(x -> !studentRepository.getOne(id).getBookedLectures().contains(x))
 				.map(l -> modelMapper.map(l,LectureDTO.class))
 				.collect(Collectors.toList());
 	}
-
+    
+    @Override
+    public List<LectureDTO> getBookedLectures(String id) throws InvalidStudentException{
+    	if(id.equals("-1")) {
+			throw new InvalidStudentException("Student can't be null");
+        }
+    	if(!studentRepository.existsById(id))
+    		throw new InvalidStudentException("Student not found");
+    	
+    	
+    	return studentRepository.getOne(id)
+    			.getBookedLectures()
+    			.stream()
+    			.filter(Objects::nonNull)
+    			.map(l -> modelMapper.map(l,LectureDTO.class))
+				.collect(Collectors.toList());
+    }
 
 }
