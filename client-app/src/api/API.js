@@ -1,6 +1,24 @@
 import LectureDTO from "../entity/LectureDTO";
+import Cookies from 'js-cookie';
 
 const baseURL = "";
+
+async function isAuthenticated(){
+    const id = Cookies.get("id");
+    const username = Cookies.get("username");
+    const type = Cookies.get("type");
+    if (id !== undefined && username !== undefined && type !== undefined) {
+        const user = {
+            id: id,
+            username: username,
+            type: type
+        };
+        return user;
+    }else{
+        let err = {status: "authentication Error", errObj:"Authentication Error!"};
+        throw err;  // An object with the error coming from the server
+    }
+}
 
 async function userLogin(email, psw, type) {
     return new Promise((resolve, reject) => {
@@ -9,7 +27,7 @@ async function userLogin(email, psw, type) {
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({email: email, psw: psw, teacher: type == "teacher" ? 1 : 0}),
+            body: JSON.stringify({email: email, psw: psw, teacher: type === "teacher" ? 1 : 0}),
         }).then((response) => {
             if (response.ok) {
                 response.json().then((user) => {
@@ -87,7 +105,7 @@ async function getStudentList(lecture_id){
     }
 }
 
-async function getAllLecturesStudent(){
+async function getNoBookedLectures(){
     let url = "/student/getAllLectures";
 
     const response = await fetch(baseURL + url);
@@ -131,5 +149,5 @@ async function bookLecture(lecture_id){
     return true; 
 }
 
-const API = {userLogin,userLogout,getAllLectures,getNumberStudentsAttending,getStudentList,getAllLecturesStudent,getBookedLectures,bookLecture} ;
+const API = {isAuthenticated,userLogin,userLogout,getAllLectures,getNumberStudentsAttending,getStudentList,getNoBookedLectures,getBookedLectures,bookLecture} ;
 export default API;
