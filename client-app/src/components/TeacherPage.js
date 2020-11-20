@@ -29,8 +29,6 @@ class TeacherPage extends React.Component {
   getAllLectures = () =>{
     API.getAllLectures().then((lecture) =>{
         this.setState({lectures: lecture});
-    }).catch((err) =>{
-      console.log(err);
     })
 }
 

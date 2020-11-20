@@ -14,7 +14,9 @@ class StudentPage extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+        studentId: [],
         bookedLectures:[],
+        notBookedLectures: [],
         show: false
     };
 
@@ -27,16 +29,12 @@ class StudentPage extends React.Component {
   getAllLectures = () =>{
     API.getAllLecturesStudent().then((lecture) =>{
         this.setState({lectures: lecture});
-    }).catch((err) =>{
-      console.log(err);
     })
   };
 
   getBookedLectures = () =>{
     API.getBookedLectures().then((lecture) =>{
         this.setState({bookedLectures: lecture});
-    }).catch((err) =>{
-      console.log(err);
     })
   };
   
@@ -63,8 +61,8 @@ class StudentPage extends React.Component {
 
       {(context) => (
         <>
-          {/*context.authUser === null ? <Redirect to="/login"/> : ""}
-          {context.authUser === undefined? <Redirect to="/login"/> : ""*/}
+          {context.authUser === null ? <Redirect to="/login"/> : ""}
+          {context.authUser === undefined? <Redirect to="/login"/> : ""}
         <Modal show={this.state.show} handleClose={this.hideModal} >
      
           <Modal.Body>
