@@ -19,7 +19,6 @@ class App extends React.Component {
     constructor(props) {
         super(props);
         this.state = {};
-        this.isAuthenticated();
     }
 
     // Add a login method
@@ -29,13 +28,14 @@ class App extends React.Component {
             if (user.id == -1) {
                 this.setState({authUser: null})
             } else {
+                console.log("here");
                 const u = {
                     id: user.id,
                     email: user.email,
                     type: user.teacher === "teacher" ? "teacher" : "student"
                 };
                 this.setState({authUser: u});
-                this.props.history.push("/" + type);
+                this.props.history.push("/"+type);
             }
         }).catch((errorObj) => {
             const err0 = errorObj.errors[0];
@@ -63,13 +63,10 @@ class App extends React.Component {
                 username: username,
                 type: type
             };
-            if (user != this.state.authUser) {
-                this.setState({authUser: user});
-            }
-        }else{
-            this.props.history.push("/login");
+            this.setState({authUser: user});
         }
     }
+
 
     componentDidMount() {
         this.isAuthenticated();
@@ -97,7 +94,6 @@ class App extends React.Component {
         }
         return (
             <AuthContext.Provider value={value}>
-                <div className="App">
                     <Switch>
                         <Route path="/login"
                             exact={true}>
@@ -128,7 +124,6 @@ class App extends React.Component {
                             <Redirect to='/login'/>
                         </Route>
                     </Switch>
-                </div>
             </AuthContext.Provider>
         );
     }
