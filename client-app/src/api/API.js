@@ -1,6 +1,24 @@
 import LectureDTO from "../entity/LectureDTO";
+import Cookies from 'js-cookie';
 
 const baseURL = "";
+
+async function isAuthenticated(){
+    const id = Cookies.get("id");
+    const username = Cookies.get("username");
+    const type = Cookies.get("type");
+    if (id !== undefined && username !== undefined && type !== undefined) {
+        const user = {
+            id: id,
+            username: username,
+            type: type
+        };
+        return user;
+    }else{
+        let err = {status: "authentication Error", errObj:"Authentication Error!"};
+        throw err;  // An object with the error coming from the server
+    }
+}
 
 async function userLogin(email, psw, type) {
     return new Promise((resolve, reject) => {
@@ -9,7 +27,7 @@ async function userLogin(email, psw, type) {
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({email: email, psw: psw, teacher: type == "teacher" ? 1 : 0}),
+            body: JSON.stringify({email: email, psw: psw, teacher: type === "teacher" ? 1 : 0}),
         }).then((response) => {
             if (response.ok) {
                 response.json().then((user) => {
@@ -87,5 +105,49 @@ async function getStudentList(lecture_id){
     }
 }
 
-const API = {userLogin,userLogout,getAllLectures,getNumberStudentsAttending,getStudentList} ;
+async function getNoBookedLectures(){
+    let url = "/student/getAllLectures";
+
+    const response = await fetch(baseURL + url);
+    const lecturesJSON = await response.json();
+    if(response.ok){
+        /*let lectures = lecturesJSON.map((l) => new LectureDTO(l.id,l.availableSeat,l.startTime,l.endTime,l.lectureType,l.surnameString,l.totalSeat,l.roomName,l.subjectName));
+        lectures.forEach(async function(element ,i){
+            const nr = await (await getNumberStudentsAttending(element.id)).nrStudents;
+            lectures[i].nrStudents = nr;
+        });
+        return lectures;*/
+        return lecturesJSON.map((l) => new LectureDTO(l.id,l.availableSeat,l.startTime,l.endTime,l.lectureType,l.surnameString,l.totalSeat,l.roomName,l.subjectName,l.nrStudents));
+    } else {
+        let err = {status: response.status, errObj:lecturesJSON};
+        throw err;  // An object with the error coming from the server
+    }
+}
+
+async function getBookedLectures(){
+    let url = "/student/getBookedLectures";
+
+    const response = await fetch(baseURL + url);
+    const lecturesJSON = await response.json();
+    if(response.ok){
+        /*let lectures = lecturesJSON.map((l) => new LectureDTO(l.id,l.availableSeat,l.startTime,l.endTime,l.lectureType,l.surnameString,l.totalSeat,l.roomName,l.subjectName));
+        lectures.forEach(async function(element ,i){
+            const nr = await (await getNumberStudentsAttending(element.id)).nrStudents;
+            lectures[i].nrStudents = nr;
+        });
+        return lectures;*/
+        return lecturesJSON.map((l) => new LectureDTO(l.id,l.availableSeat,l.startTime,l.endTime,l.lectureType,l.surnameString,l.totalSeat,l.roomName,l.subjectName,l.nrStudents));
+    } else {
+        let err = {status: response.status, errObj:lecturesJSON};
+        throw err;  // An object with the error coming from the server
+    }
+}
+
+async function bookLecture(lecture_id){
+    let url = "/student/bookLecture?"+"lecture_id="+lecture_id;
+    const response = await fetch(baseURL + url);
+    return true; 
+}
+
+const API = {isAuthenticated,userLogin,userLogout,getAllLectures,getNumberStudentsAttending,getStudentList,getNoBookedLectures,getBookedLectures,bookLecture} ;
 export default API;
