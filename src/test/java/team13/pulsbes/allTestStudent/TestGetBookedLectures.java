@@ -1,7 +1,9 @@
 package team13.pulsbes.allTestStudent;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.*;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,11 +19,9 @@ import team13.pulsbes.entities.Student;
 import team13.pulsbes.exception.InvalidCourseException;
 import team13.pulsbes.exception.InvalidStudentException;
 import team13.pulsbes.repositories.StudentRepository;
-import team13.pulsbes.repositories.TeacherRepository;
 import team13.pulsbes.serviceimpl.StudentServiceImpl;
 
-class TestGetAllLectures {
-
+class TestGetBookedLectures {
 	StudentServiceImpl studentService;
 	StudentRepository studentRepository;
 	ModelMapper modelMapper;
@@ -36,32 +36,31 @@ class TestGetAllLectures {
 	}
 	
 	@Test
-	void testGetAllLectures() {
-		assertThrows(InvalidStudentException.class,()->studentService.getAllLectures("-1"));
+	void testGetBookedLectures() {
+		assertThrows(InvalidStudentException.class,()->studentService.getBookedLectures("-1"));
 	}
 	@Test
-	void testGetAllLectures2() {
+	void testGetBookedLectures2() {
 		when(studentRepository.existsById(any())).thenReturn(false);
-		assertThrows(InvalidStudentException.class,()->studentService.getAllLectures("2"));
+		assertThrows(InvalidStudentException.class,()->studentService.getBookedLectures("2"));
 	}
+
 	@Test
-	void testGetAllLectures3() throws InvalidStudentException, InvalidCourseException {
-		Student s = new Student("1","name","surname");
-		Course c = new Course();
+	void testGetBookedLectures3() throws InvalidCourseException, InvalidStudentException {
+		Student s = new Student("1","name","surname");		
 		Lecture l = new Lecture();
 		l.setId("1");
 		List<Lecture> lectures = new ArrayList<>();
 		lectures.add(l);
-		c.setLectures(lectures);
-		s.addCourse(c);
 		when(studentRepository.getOne(any())).thenReturn(s);
 		when(studentRepository.existsById(any())).thenReturn(true);
 		List<LectureDTO> ret = new ArrayList<>();
 		LectureDTO lDto = new LectureDTO();
 		lDto.setId("1");
 		ret.add(lDto);
+		s.addBookLecture(l);
 		studentService.getAllLectures("1");
 		when(modelMapper.map(any(), any())).thenReturn(lDto);
-		assertEquals(ret.get(0).getId(), studentService.getAllLectures("1").get(0).getId());
+		assertEquals(ret.get(0).getId(), studentService.getBookedLectures("1").get(0).getId());
 	}
 }
