@@ -47,7 +47,7 @@ const LecturesTable = (props) => {
                           <td>{lecture.totalSeat}</td>
                           <td>{lecture.roomName}</td>
                           <td>
-                          {remove && <button type="button" className="btn btn-outline-danger" onClick={console.log("fare qualcosa")}> 
+                          {remove && <button type="button" className="btn btn-outline-danger" onClick={() => job(lecture.id)}> 
                               Remove
                           </button> }
                           {!remove && <button type="button" className="btn btn-outline-success" onClick={() => job(lecture.id)}> 
