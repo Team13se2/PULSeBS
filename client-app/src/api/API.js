@@ -151,5 +151,6 @@ async function getStudentList(lecture_id){
     }
 }
 
+
 const API = {isAuthenticated,userLogin,userLogout,getAllLectures,getNumberStudentsAttending,getStudentList,getNoBookedLectures,getBookedLectures,bookLecture} ;
 export default API;

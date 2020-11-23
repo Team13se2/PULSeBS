@@ -67,7 +67,6 @@ class App extends React.Component {
     }
 
     getNoBookedLectures = () =>{
-        console.log("here");
         API.getNoBookedLectures().then((lecture) =>{
             this.setState({noBookedLectures: lecture, authErr: undefined});
         }).catch((err) =>{
@@ -76,7 +75,6 @@ class App extends React.Component {
     };
 
     getBookedLectures = () =>{
-        console.log(this.state.authUser);
         API.getBookedLectures().then((lecture) =>{
             this.setState({bookedLectures: lecture, authErr: undefined});
         }).catch((err) =>{
@@ -108,6 +106,20 @@ class App extends React.Component {
         })
     }
 
+    removeTeacherLecture = (lecture_id) =>{
+        console.log("Create function in API");
+        console.log(this.state.teacherLecture);
+        const l = this.state.teacherLecture.filter(l =>l.id !== lecture_id);
+        this.setState({teacherLecture: l});
+    }
+
+    removeLecture = (lecture_id) =>{
+        console.log("Create function in API");
+        let lectures = this.state.bookedLectures.filter(l =>l.id !== lecture_id);
+        this.setState({bookedLectures: lectures});
+        console.log("in case, call functions");
+    }
+
     render() {
         const value = {
             authUser: this.state.authUser,
@@ -135,7 +147,7 @@ class App extends React.Component {
                         <Col sm={8}
                             className="below-nav">
                             <h1>Booked Lectures</h1>
-                            <LecturesTable lectures={this.state.bookedLectures} getLectures={this.getBookedLectures} remove={true}/>
+                            <LecturesTable lectures={this.state.bookedLectures} getLectures={this.getBookedLectures} remove={true} job={this.removeLecture}/>
                         </Col>
                         <Col sm={1}/>
                     </Row>
@@ -156,7 +168,7 @@ class App extends React.Component {
                         <Col sm={8}
                             className="below-nav">
                             <h1>Next Lectures</h1>
-                            <LecturesTableTeacher lectures={this.state.teacherLecture} getLectures={this.getAllLecturesTeacher} job={(lecture_id) => this.getStudentList(lecture_id)} students={this.state.students}/>
+                            <LecturesTableTeacher lectures={this.state.teacherLecture} getLectures={this.getAllLecturesTeacher} job={(lecture_id) => this.getStudentList(lecture_id)} students={this.state.students} job2={(lecture_id) =>this.removeTeacherLecture(lecture_id)}/>
                         </Col>
                         <Col sm={1}/>
                     </Row>

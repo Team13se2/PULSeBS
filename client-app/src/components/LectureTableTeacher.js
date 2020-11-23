@@ -17,7 +17,7 @@ const customStyles = {
 
 const LecturesTableTeacher = (props) => {
 
-    let {lectures, getLectures,job,students} = props;
+    let {lectures, getLectures,job,students,job2} = props;
     // same as componentDidMount()
     useEffect(() => {
       getLectures();
@@ -59,17 +59,15 @@ const LecturesTableTeacher = (props) => {
                           <td>{lecture.surnameString}</td>
                           <td>{lecture.roomName}</td>
                           <td>{lecture.nrStudents}</td>
-                          <td><button type="button" className="btn btn-outline-success" onClick={() =>openModal(lecture.id)}> 
-                                      Students
-                          </button> 
-                          </td>
+                          <td><button type="button" className="btn btn-outline-success" onClick={() =>openModal(lecture.id)}>Students</button>
+                          <button type="button" className="btn btn-outline-danger" onClick={() =>job2(lecture.id)}>Remove</button></td>
                         </tr>
                     ))}
                   </tbody>
                   
               </Table>
               <Modal isOpen={modalIsOpen} onRequestClose={closeModal} style={customStyles}>
-                {students && students.length == 0 && <h1>There aren't students</h1> }
+                {students && students.length == 0 && <h1>There are no students enrolled </h1> }
                 {students && students.length > 0 &&
                 <Table responsive striped bordered hover>
                 <thead>
