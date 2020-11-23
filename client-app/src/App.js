@@ -12,6 +12,8 @@ import API from './api/API';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import LecturesTableTeacher from './components/LectureTableTeacher';
+import MyCalendar from './components/MyCalendar';
+import moment from 'moment'
 
 class App extends React.Component {
     constructor(props) {
@@ -142,24 +144,45 @@ class App extends React.Component {
                     </Row>
                 </Route>
                 <Route path="/student">
-                    <Row className="">
-                        <Col sm={1}/>
-                        <Col sm={8}
-                            className="below-nav">
-                            <h1>Booked Lectures</h1>
-                            <LecturesTable lectures={this.state.bookedLectures} getLectures={this.getBookedLectures} remove={true} job={this.removeLecture}/>
-                        </Col>
-                        <Col sm={1}/>
-                    </Row>
-                    <Row className="vheight-0">
-                        <Col sm={1}/>
-                        <Col sm={8}
-                            className="below-nav">
-                            <h1>No Booked Lectures</h1>
-                            <LecturesTable lectures={this.state.noBookedLectures} getLectures={this.getNoBookedLectures} remove={false} job={this.bookLecture}/>
-                        </Col>
-                        <Col sm={1}/>
-                    </Row>
+                    <Switch>
+                        <Route path="/student/calendar">
+                            <Row className="vheight-0">
+                                <Col sm={1}/>
+                                <Col sm={8}className="below-nav">
+                                    <MyCalendar lectures={this.state.bookedLectures.map(function(elem) {
+                                        const format = "YYYY-MM-DD HH:mm:ss";
+                                        return {
+                                          start: new Date (elem.startTime),
+                                          end: new Date(elem.endTime),
+                                          title: elem.subjectName,
+                                        } 
+                                      })
+                                    } getBookedLectures={this.getBookedLectures}/>
+                                </Col>
+                                <Col sm={1}/>
+                            </Row>
+                        </Route>
+                        <Route path="/student/">
+                            <Row className="">
+                                <Col sm={1}/>
+                                <Col sm={8}
+                                    className="below-nav">
+                                    <h1>Booked Lectures</h1>
+                                    <LecturesTable lectures={this.state.bookedLectures} getLectures={this.getBookedLectures} remove={true} job={this.removeLecture}/>
+                                </Col>
+                                <Col sm={1}/>
+                            </Row>
+                            <Row className="vheight-0">
+                                <Col sm={1}/>
+                                <Col sm={8}
+                                    className="below-nav">
+                                    <h1>No Booked Lectures</h1>
+                                    <LecturesTable lectures={this.state.noBookedLectures} getLectures={this.getNoBookedLectures} remove={false} job={this.bookLecture}/>
+                                </Col>
+                                <Col sm={1}/>
+                            </Row>
+                        </Route>
+                    </Switch>
                 </Route>
 
                 <Route path="/teacher">

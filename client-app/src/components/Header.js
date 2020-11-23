@@ -1,11 +1,10 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import Navbar from 'react-bootstrap/Navbar';
 import Nav from 'react-bootstrap/Nav';
 import {AuthContext} from '../auth/AuthContext'
 import {NavLink} from 'react-router-dom';
 
 const Header = (props) => {
-
   return(
     <AuthContext.Consumer>
       {(context) => (
@@ -21,20 +20,15 @@ const Header = (props) => {
           Title
         </Navbar.Brand>
         
-        {/*<Nav className="mr-auto">
-          <Nav.Link as={NavLink} to="/tasks">My Tasks</Nav.Link> 
-          <Nav.Link as={NavLink} to="/public" onClick = {() => props.getPublicTasks()}> Public Tasks</Nav.Link> 
-        </Nav>
-        
-        <Form inline className="my-2 my-lg-0 mx-auto d-none d-sm-block" role="search">
-          <FormControl type="search" className="mr-sm-2" placeholder="Search" aria-label="Search query" />
-        </Form>
-      */}
+        {context.authUser && 
+          <Nav className="mr-auto">
+          <Nav.Link as={NavLink} to="/student/calendar" onClick = {() => console.log("clk calendar")}> Calendar</Nav.Link> 
+        </Nav>}
 
         <Nav className="ml-md-auto">
           {context.authUser && 
             <>
-              <Navbar.Brand>Welcome {context.authUser.name}!</Navbar.Brand> 
+              <Navbar.Brand>Welcome {context.authUser.username}!</Navbar.Brand> 
               <Nav.Link onClick = {() => {context.logoutUser()}}>Logout</Nav.Link>
             </>}
           {!context.authUser && <Nav.Link as = {NavLink} to = "/login">Login</Nav.Link>}
