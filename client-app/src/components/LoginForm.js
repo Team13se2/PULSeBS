@@ -12,7 +12,7 @@ class LoginForm extends React.Component {
     
     constructor(props) {
         super(props);
-        this.state = {username: 'student@gmail.com', password: 'psw', submitted: false};
+        this.state = {username: 'teacher@gmail.com', password: 'psw', submitted: false};
     }
 
     onChangeUsername = (event) => {

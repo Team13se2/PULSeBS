@@ -94,6 +94,14 @@ class App extends React.Component {
         })
     };
 
+    getStudentList = (lecture_id) =>{
+        API.getStudentList(lecture_id).then((response) =>{
+            this.setState({students: response});
+        }).catch((err) =>{
+            console.log(err);
+        })
+    }
+
     getAllLecturesTeacher = () =>{
         API.getAllLectures().then((lecture) =>{
             this.setState({teacherLecture: lecture});
@@ -148,7 +156,7 @@ class App extends React.Component {
                         <Col sm={8}
                             className="below-nav">
                             <h1>Next Lectures</h1>
-                            <LecturesTableTeacher lectures={this.state.teacherLecture} getLectures={this.getAllLecturesTeacher} job={() => console.log("farlo")}/>
+                            <LecturesTableTeacher lectures={this.state.teacherLecture} getLectures={this.getAllLecturesTeacher} job={(lecture_id) => this.getStudentList(lecture_id)} students={this.state.students}/>
                         </Col>
                         <Col sm={1}/>
                     </Row>
