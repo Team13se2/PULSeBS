@@ -1,5 +1,6 @@
 import LectureDTO from "../entity/LectureDTO";
 import Cookies from 'js-cookie';
+import StudentDTO from "../entity/StudentDTO";
 
 const baseURL = "";
 
@@ -92,18 +93,6 @@ async function getNumberStudentsAttending(lecture_id){
     }
 }
 
-async function getStudentList(lecture_id){
-    let url = "/teacher/getStudentList"+"?lecture_id="+lecture_id;
-
-    const response = await fetch(baseURL + url);
-    const students = await response.json();
-    if(response.ok){
-        return {students: students};
-    } else {
-        let err = {status: response.status, errObj:students};
-        throw err;  // An object with the error coming from the server
-    }
-}
 
 async function getNoBookedLectures(){
     let url = "/student/getAllLectures";
@@ -148,6 +137,20 @@ async function bookLecture(lecture_id){
     const response = await fetch(baseURL + url);
     return true; 
 }
+
+async function getStudentList(lecture_id){
+    let url = "/teacher/getStudentList?lecture_id="+lecture_id;
+
+    const response = await fetch(baseURL + url);
+    const studentJSON = await response.json();
+    if(response.ok){
+        return studentJSON.map((l) => new StudentDTO(l.name,l.id,l.email,l.surname));
+    } else {
+        let err = {status: response.status, errObj:studentJSON};
+        throw err;  // An object with the error coming from the server
+    }
+}
+
 
 const API = {isAuthenticated,userLogin,userLogout,getAllLectures,getNumberStudentsAttending,getStudentList,getNoBookedLectures,getBookedLectures,bookLecture} ;
 export default API;

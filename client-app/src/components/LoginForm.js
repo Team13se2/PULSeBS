@@ -25,7 +25,7 @@ class LoginForm extends React.Component {
     
     handleSubmit = (event, onLogin) => {
         event.preventDefault();
-        onLogin(this.state.username,this.state.password,"teacher");
+        onLogin(this.state.username,this.state.password,"student");
         this.setState({submitted : true});
     }
 
