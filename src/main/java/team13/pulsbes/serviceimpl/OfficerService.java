@@ -33,6 +33,8 @@ public class OfficerService {
 		lectureRepository.save(l);
 		Timer timer = new Timer();
 		
+		Date notificationTime =  new Date();
+		
 //		notificationTime.setYear(l.getStartTime().getYear());
 //		notificationTime.setMonth(l.getStartTime().getMonth());
 //		notificationTime.setDate(l.getStartTime().getDay());
@@ -40,7 +42,12 @@ public class OfficerService {
 //		notificationTime.setMinutes(l.getStartTime().getMinutes());
 //		notificationTime.setSeconds(0);
 //		notificationTime.setHours(notificationTime.getHours()-1);
-				
+		
+		notificationTime = l.getStartTime2();
+		notificationTime.setDate(notificationTime.getDate() - 1);
+		notificationTime.setHours(23);
+		
+		
 		timer.schedule(new TimerTask() {
 			@Override
 		    public void run() {
@@ -48,7 +55,7 @@ public class OfficerService {
 		        //setEmail(emailContent, subject);
 				notificationService.sendMessage(l.getTeacher().getEmail(), "Students attending lecture", "Number of students attending the lecture is " + l.getStudents().size());
 		    }
-			}, l.getStartTime2());
+			}, notificationTime);
 		}
 	
 }

@@ -68,7 +68,6 @@ public class StudentServiceImpl implements StudentService {
         Optional<Lecture> lectureSelected = lectureRepository.findById(lectureId);
 
         if (!lectureSelected.isPresent()) {
-            System.out.println("primo if");
             throw new InvalidLectureException("Lecture can't be null");
         }
 
@@ -77,12 +76,10 @@ public class StudentServiceImpl implements StudentService {
 
         if (availableSeats > 0) {
             System.out.println("terzo if");
-            try {
-                System.out.println("1 try");
+            try {                
                 lectureSelected.get().addStudentAttending(currentStudent);
 
             } catch (Exception e) {
-                System.out.println("1 catch");
                 log.throwing(this.getClass().getName(), "addStudentAttending", e);
             }
 
