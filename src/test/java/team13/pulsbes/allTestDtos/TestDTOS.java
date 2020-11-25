@@ -25,14 +25,14 @@ class TestDTOS {
 		l.setAvailableSeat(10);
 		l.setTotalSeat(100);
 		l.setRoomName("aula");
-		assertEquals(l.getId(),"1");
+		assertEquals("1",l.getId();
 		assertNull(l.getStartTime());
 		assertNull(l.getEndTime());
-		assertEquals(l.getLectureType(),"lab");
-		assertEquals(l.getSurnameString(),"test");
-		assertEquals(l.getAvailableSeat(),10);
-		assertEquals(l.getTotalSeat(),100);
-		assertEquals(l.getRoomName(),"aula");
+		assertEquals("lab",l.getLectureType());
+		assertEquals("test",l.getSurnameString());
+		assertEquals(10,l.getAvailableSeat());
+		assertEquals(100,l.getTotalSeat());
+		assertEquals("aula",l.getRoomName());
 		}
 		
 		@Test
@@ -47,14 +47,14 @@ class TestDTOS {
 		@Test
 		void testIdPw() {
 			IdPw i = new IdPw("email","psw",true);
-			assertEquals(i.getEmail(), "email");
-			assertEquals(i.getPsw(), "psw");
+			assertEquals( "email",i.getEmail());
+			assertEquals("psw",i.getPsw());
 			assertTrue(i.getTeacher());
 			i.setEmail("1");
 			i.setPsw("2");
 			i.setTeacher(false);
-			assertEquals(i.getEmail(), "1");
-			assertEquals(i.getPsw(), "2");
+			assertEquals("1",i.getEmail());
+			assertEquals("2",i.getPsw());
 			assertTrue(!i.getTeacher());
 		}
 		 
@@ -67,11 +67,11 @@ class TestDTOS {
 			l.setSurname("testsur");
 			l.setTeacher(true);
 			l.setToken("asd");
-			assertEquals(l.getEmail(), "email");
-			assertEquals(l.getId(), "1");
-			assertEquals(l.getName(), "test");
-			assertEquals(l.getSurname(), "testsur");
-			assertEquals(l.getToken(), "asd");
+			assertEquals("email",l.getEmail());
+			assertEquals("1",l.getId());
+			assertEquals("test",l.getName());
+			assertEquals("testsur",l.getSurname());
+			assertEquals("asd",l.getToken());
 			assertTrue(l.getTeacher());			
 		}
 		
