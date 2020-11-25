@@ -87,22 +87,25 @@ public class TeacherServiceImpl implements TeacherService{
 	}
 
 	@Override
-	public String cancelLecture(String lectureId, String courseId) throws InvalidLectureException, InvalidCourseException {
+	public String cancelLecture(String lectureId, String TeacherId) throws InvalidLectureException, InvalidCourseException {
 		if(lectureId.equals("-1")) {
 			throw new InvalidLectureException("Lecture can't be null");
 		}
-		if(courseId.equals("-1")) {
-			throw new InvalidCourseException("Course can't be null");
-		}
 
-		Course tmpCourse = courseRepository.getOne(courseId);
+		Teacher teacher = teacherRepository.findById(TeacherId).get();
+		System.out.println(teacher.getEmail());
 		Lecture tmpLecture = lectureRepository.getOne(lectureId);
 		Calendar tmpCal = Calendar.getInstance();
 		tmpCal.add(Calendar.HOUR, -1);
 
 		try { if(tmpLecture.getStartTime2().before(tmpCal.getTime())) {
 
-			tmpCourse.cancelLecture(tmpLecture);
+            teacher.removeLecture(tmpLecture);
+            teacherRepository.save(teacher);
+            teacherRepository.flush();
+            lectureRepository.delete(tmpLecture);
+            System.out.println(teacher.getLectures());
+
 			return ("Lecture cancelled");
 
 			}
@@ -115,7 +118,7 @@ public class TeacherServiceImpl implements TeacherService{
 
 		{
 			log.throwing(this.getClass().getName(), "cancelLecture", e);
-			return ("Error");		
+			return e.getMessage();
 		}
 
 	}
