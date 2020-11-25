@@ -7,8 +7,6 @@ import org.springframework.web.bind.annotation.*;
 
 import team13.pulsbes.dtos.LectureDTO;
 import team13.pulsbes.dtos.StudentDTO;
-import team13.pulsbes.dtos.TeacherDTO;
-import team13.pulsbes.entities.Lecture;
 import team13.pulsbes.exception.InvalidLectureException;
 import team13.pulsbes.exception.InvalidCourseException;
 import team13.pulsbes.exception.InvalidTeacherException;
