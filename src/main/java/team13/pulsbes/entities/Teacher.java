@@ -4,6 +4,8 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import team13.pulsbes.exception.InvalidCourseException;
+import team13.pulsbes.exception.InvalidLectureException;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -33,7 +35,7 @@ public class Teacher {
     {
         lectures = new ArrayList<>();
     }
-    
+
     @OneToMany (mappedBy = "teacher")
     List <Course> courses;
     {
@@ -107,5 +109,10 @@ public class Teacher {
 	public void setCourses(List<Course> courses) {
 		this.courses = courses;
 	}
-	
+
+	public void removeLecture (Lecture lecture) throws InvalidLectureException, InvalidCourseException {
+
+    	this.lectures.remove(lecture);
+    	System.out.println(this.lectures);
+	}
 }

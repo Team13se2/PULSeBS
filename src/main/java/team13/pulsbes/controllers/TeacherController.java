@@ -1,7 +1,6 @@
 package team13.pulsbes.controllers;
 
 import java.util.List;
-import java.util.logging.Logger;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -19,23 +18,21 @@ import team13.pulsbes.utils.Constants;
 @RequestMapping("/teacher")
 @RestController
 public class TeacherController {
-	
+
 	@Autowired
 	TeacherService teacherService;
 
-	Logger log = Logger.getLogger("StudentController");
-	
 	@RequestMapping(value = Constants.GET_NUMBER_STUDENTS_ATTENDING,method = RequestMethod.GET)
 	public Integer getNumberStudentsAttending(@RequestParam("lecture_id") String id, @CookieValue(value = "type") String type) throws InvalidLectureException {
 		try {
-			if (type.equals("teacher")) {
+			if (type == "teacher") {
 				return teacherService.getNumberStudentsAttending(id);
 			}
 			else return 0;
-			
+
 		} catch (InvalidLectureException e) {
-			
-			log.throwing(this.getClass().getName(), "getNumberStudentsAttending", e);
+
+			System.out.println(e.getMessage());
 			return 0;
 		}
 	}
@@ -51,9 +48,9 @@ public class TeacherController {
 			return l;
 		}
 		else return null;
-		
+
 		} catch (InvalidTeacherException | InvalidLectureException e) {
-			log.throwing(this.getClass().getName(), "getAllLectures", e);
+			System.out.println(e.getMessage());
 			return null;
 		}
 	}
@@ -65,35 +62,22 @@ public class TeacherController {
 			}
 			else return null;
 		} catch (InvalidLectureException e) {
-			
-			log.throwing(this.getClass().getName(), "getStudentList", e);
+
+			System.out.println(e.getMessage());
 			return null;
 		}
 	}
 	@RequestMapping(value = Constants.CANCEL_LECTURE,method = RequestMethod.GET)
-	public String cancelLecture(@RequestParam("lecture_id") String lectureId, @RequestParam("course_id") String courseId, @CookieValue(value = "type") String type) throws InvalidLectureException, InvalidCourseException {
+	public String cancelLecture(@RequestParam("lecture_id") String lectureId,@CookieValue(value = "id") String id, @CookieValue(value = "type") String type) throws InvalidLectureException, InvalidCourseException {
 		try {
 			if (type.equals("teacher")) {
-			return teacherService.cancelLecture(lectureId, courseId);
+			return teacherService.cancelLecture(lectureId,id);
 			}
 			else return null;
 		} catch (InvalidLectureException | InvalidCourseException e) {
-			
-			log.throwing(this.getClass().getName(), "cancelLecture", e);
-			return null;
-		}
-	}
-	@RequestMapping(value = Constants.CHANGE_LECTURE_TYPE,method = RequestMethod.GET)
-	public String changeLectureType(@RequestParam("lecture_id") String lectureId, @RequestParam("course_id") String courseId, @CookieValue(value = "type") String type) throws InvalidLectureException, InvalidCourseException {
-		try {
-			if (type.equals("teacher")) {
-			return teacherService.changeLectureType(lectureId, courseId);
-			}
-			else return null;
-		} catch (InvalidLectureException | InvalidCourseException e) {
-			
-			log.throwing(this.getClass().getName(), "changeLectureType", e);
-			return null;
+
+			System.out.println(e.getMessage());
+			return e.getMessage();
 		}
 	}
 }

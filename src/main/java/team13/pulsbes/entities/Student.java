@@ -15,7 +15,6 @@ import java.util.Optional;
 
 @Data
 @AllArgsConstructor
-@NoArgsConstructor
 @Entity
 @Builder
 
