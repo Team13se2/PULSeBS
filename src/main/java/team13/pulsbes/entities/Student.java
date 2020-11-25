@@ -6,11 +6,14 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import team13.pulsbes.exception.InvalidCourseException;
+import team13.pulsbes.exception.InvalidLectureException;
 
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
@@ -62,12 +65,15 @@ public class Student {
     	courses.remove(c);
 	}
 
+
     public void addBookLecture(Lecture l) {
     	bookedLectures.add(l);
     }
     
     public void removeBookedLecture(Lecture l) {
-    	bookedLectures.remove(l);
+
+    	this.bookedLectures.remove(l);
+    	l.getStudents().remove(this);
     }
     
 	public String getId() {
