@@ -41,7 +41,9 @@ public class Lecture {
 
     private Integer totalSeat;
 
-    private String roomName;
+	private String roomName;
+	
+	private static final String dateFormatString = "yyyy-MM-dd HH:mm";
 
     @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinTable(name="lecture_students", joinColumns = @JoinColumn(name="lecture_id"),
@@ -85,7 +87,7 @@ public class Lecture {
 		
 		c.set(year, month, day, hour, minutes, 0);
 		
-		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+		DateFormat dateFormat = new SimpleDateFormat(dateFormatString);
 		System.out.println(c.getTime().toString());
         String strDate = dateFormat.format(c.getTime());
         
@@ -93,7 +95,7 @@ public class Lecture {
     }
     public Date getStartTime2() throws ParseException{
     	Date notificationTime = new Date();
-    	DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+    	DateFormat dateFormat = new SimpleDateFormat(dateFormatString);
     	
     	notificationTime = dateFormat.parse(startTime);
     	return notificationTime;
@@ -103,14 +105,14 @@ public class Lecture {
 		
 		c.set(year, month, day, hour, minutes, 0);
 		
-		DateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd HH:mm");
+		DateFormat dateFormat = new SimpleDateFormat(dateFormatString);
         String strDate = dateFormat.format(c.getTime());
         
 		endTime = strDate;
     }
     public Date getEndTime2() throws ParseException {
     	Date notificationTime = new Date();
-    	DateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd HH:mm");
+    	DateFormat dateFormat = new SimpleDateFormat(dateFormatString);
     	//SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
     	
     	notificationTime = dateFormat.parse(endTime);

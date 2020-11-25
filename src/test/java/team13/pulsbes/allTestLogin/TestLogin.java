@@ -67,12 +67,12 @@ class TestLogin {
 		teachers.add(t);
 		when(teacherRepository.findAll()).thenReturn(teachers);
 		lDto = loginService.login(cred);
-		assertEquals(lDto.getName(), "name");
-		assertEquals(lDto.getSurname(), "surname");
-		assertEquals(lDto.getId(), "1");
-		assertEquals(lDto.getEmail(), "email");
-		assertEquals(lDto.getTeacher(), true);
-		assertEquals(lDto.getToken(), "token");
+		assertEquals("name",lDto.getName());
+		assertEquals("surname",lDto.getSurname());
+		assertEquals("1",lDto.getId());
+		assertEquals("email",lDto.getEmail());
+		assertEquals(true,lDto.getTeacher());
+		assertEquals("token",lDto.getToken());
 	}
 	@Test
 	void testLogin4() throws WrongCredentialsException {
@@ -86,11 +86,11 @@ class TestLogin {
 		students.add(s);
 		when(studentRepository.findAll()).thenReturn(students);
 		lDto = loginService.login(cred);
-		assertEquals(lDto.getName(), "name");
-		assertEquals(lDto.getSurname(), "surname");
-		assertEquals(lDto.getId(), "1");
-		assertEquals(lDto.getEmail(), "email");
-		assertEquals(lDto.getTeacher(), false);
-		assertEquals(lDto.getToken(), "token");
+		assertEquals("name",lDto.getName());
+		assertEquals("surname",lDto.getSurname());
+		assertEquals("1",lDto.getId());
+		assertEquals("email",lDto.getEmail());
+		assertEquals(false,lDto.getTeacher());
+		assertEquals("token",lDto.getToken());
 	}
 }
