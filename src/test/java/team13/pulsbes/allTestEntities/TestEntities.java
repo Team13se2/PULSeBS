@@ -65,12 +65,12 @@ class TestEntities {
 		l.addEndTime(120, 1, 10 , 10, 12);
 		
 		
-		assertEquals(l.getId(),"1");
-		assertEquals(l.getLectureType(),"lab");
+		assertEquals("1",l.getId());
+		assertEquals("lab",l.getLectureType());
 		assertEquals(l.getSurnameString(),"test");
-		assertEquals(l.getAvailableSeat(),10);
-		assertEquals(l.getTotalSeat(),100);
-		assertEquals(l.getRoomName(),"aula");
+		assertEquals(10,l.getAvailableSeat());
+		assertEquals(100,l.getTotalSeat());
+		assertEquals("aula",l.getRoomName());
 		assertEquals(l.getStudents(),students);
 		assertEquals(l.getCourse(), c);
 		assertEquals(l.getTeacher(), t);

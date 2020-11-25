@@ -42,6 +42,8 @@ public class Student {
     @ManyToMany (mappedBy = "students")
 	List <Lecture> bookedLectures = new ArrayList<>();
 
+	public Student() {};
+
 	public Student( String Id, String Name, String Surname) {
 		super();
 		this.Id = Id;
@@ -119,6 +121,7 @@ public class Student {
 
 
 	public void setCourses(List<Course> courses) {
+		this.courses = courses;
 	}
 
 	public String getPsw() {
