@@ -103,6 +103,10 @@ public class TeacherServiceImpl implements TeacherService{
 		try { if(tmpLecture.getStartTime2().after(tmpCal.getTime())) {
 
 			tmpCourse.cancelLecture(tmpLecture);
+			System.out.print(tmpCourse.getLectures());
+			courseRepository.save(tmpCourse);
+			System.out.print(tmpCourse.getLectures());
+			lectureRepository.flush();
 			return ("Lecture cancelled");
 
 			}

@@ -25,7 +25,7 @@ public class TeacherController {
 	@RequestMapping(value = Constants.GET_NUMBER_STUDENTS_ATTENDING,method = RequestMethod.GET)
 	public Integer getNumberStudentsAttending(@RequestParam("lecture_id") String id, @CookieValue(value = "type") String type) throws InvalidLectureException {
 		try {
-			if (type == "teacher") {
+			if (type.equals("teacher")) {
 				return teacherService.getNumberStudentsAttending(id);
 			}
 			else return 0;
@@ -39,7 +39,7 @@ public class TeacherController {
 	@RequestMapping(value = Constants.GET_ALL_LECTURES, method = RequestMethod.GET)
 	public List<LectureDTO> getAllLectures(@CookieValue(value = "username") String username,@CookieValue(value = "id") String id, @CookieValue(value = "type") String type) throws InvalidTeacherException{
 		try {
-			if (type == "teacher") {
+			if (type.equals("teacher")) {
 			List<LectureDTO> l = teacherService.getAllLectures(id);
 			for(int i=0;i<l.size();i++){
 				Integer nr = teacherService.getNumberStudentsAttending(l.get(i).getId());
@@ -57,7 +57,7 @@ public class TeacherController {
 	@RequestMapping(value = Constants.GET_STUDENT_LIST,method = RequestMethod.GET)
 	public List<StudentDTO> getStudentList(@RequestParam("lecture_id") String id, @CookieValue(value = "type") String type) throws InvalidLectureException {
 		try {
-			if (type == "teacher") {
+			if (type.equals("teacher")) {
 			return teacherService.getStudentList(id);
 			}
 			else return null;
@@ -70,7 +70,7 @@ public class TeacherController {
 	@RequestMapping(value = Constants.CANCEL_LECTURE,method = RequestMethod.GET)
 	public String cancelLecture(@RequestParam("lecture_id") String lectureId, @RequestParam("course_id") String courseId, @CookieValue(value = "type") String type) throws InvalidLectureException, InvalidCourseException {
 		try {
-			if (type == "teacher") {
+			if (type.equals("teacher")) {
 			return teacherService.cancelLecture(lectureId, courseId);
 			}
 			else return null;
@@ -83,7 +83,7 @@ public class TeacherController {
 	@RequestMapping(value = Constants.CHANGE_LECTURE_TYPE,method = RequestMethod.GET)
 	public String changeLectureType(@RequestParam("lecture_id") String lectureId, @RequestParam("course_id") String courseId, @CookieValue(value = "type") String type) throws InvalidLectureException, InvalidCourseException {
 		try {
-			if (type == "teacher") {
+			if (type.equals("teacher")) {
 			return teacherService.changeLectureType(lectureId, courseId);
 			}
 			else return null;
