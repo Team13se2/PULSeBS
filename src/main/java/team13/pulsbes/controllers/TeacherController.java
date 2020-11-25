@@ -65,7 +65,7 @@ public class TeacherController {
 			return null;
 		}
 	}
-	@RequestMapping(value = Constants.CANCEL_LECTURE,method = RequestMethod.GET)
+	@RequestMapping(value = Constants.CANCEL_LECTURE,method = RequestMethod.DELETE)
 	public String cancelLecture(@RequestParam("lecture_id") String lectureId,@CookieValue(value = "id") String id, @CookieValue(value = "type") String type) throws InvalidLectureException, InvalidCourseException {
 		try {
 			if (type.equals("teacher")) {

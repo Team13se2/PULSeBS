@@ -151,6 +151,50 @@ async function getStudentList(lecture_id){
     }
 }
 
+async function removeStudentLecture(lecture_id) {
+    return new Promise((resolve, reject) => {
+        fetch(baseURL + '/student/cancelLecture?lecture_id='+lecture_id, {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        }).then((response) => {
+            if (response.ok) {
+                resolve(response);
+            } else {
+                // analyze the cause of error
+                response.json()
+                    .then((obj) => { reject(obj); }) // error msg in the response body
+                    .catch((err) => { reject({ errors: [{ param: "Application", msg: "Cannot parse server response" }] }) }); // something else
+            }
+        }).catch((err) => { reject({ errors: [{ param: "Server", msg: "Cannot communicate" }] }) }); // connection errors
+    });
+}
 
-const API = {isAuthenticated,userLogin,userLogout,getAllLectures,getNumberStudentsAttending,getStudentList,getNoBookedLectures,getBookedLectures,bookLecture} ;
+async function removeTeacherLecture(lecture_id) {
+    return new Promise((resolve, reject) => {
+        fetch(baseURL + '/teacher/cancelLecture?lecture_id='+lecture_id, {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        }).then((response) => {
+            if (response.ok) {
+                resolve(response);
+            } else {
+                // analyze the cause of error
+                response.json()
+                    .then((obj) => { reject(obj); }) // error msg in the response body
+                    .catch((err) => { reject({ errors: [{ param: "Application", msg: "Cannot parse server response" }] }) }); // something else
+            }
+        }).catch((err) => { reject({ errors: [{ param: "Server", msg: "Cannot communicate" }] }) }); // connection errors
+    });
+}
+
+
+
+const API = {isAuthenticated,userLogin,userLogout,getAllLectures,
+    getNumberStudentsAttending,getStudentList,
+    getNoBookedLectures,getBookedLectures,
+    bookLecture,removeStudentLecture,removeTeacherLecture} ;
 export default API;

@@ -109,17 +109,17 @@ class App extends React.Component {
     }
 
     removeTeacherLecture = (lecture_id) =>{
-        console.log("Create function in API");
-        console.log(this.state.teacherLecture);
-        const l = this.state.teacherLecture.filter(l =>l.id !== lecture_id);
-        this.setState({teacherLecture: l});
+        API.removeTeacherLecture(lecture_id).then((response) =>{
+            this.getAllLecturesTeacher();
+        })
     }
 
     removeLecture = (lecture_id) =>{
-        console.log("Create function in API");
-        let lectures = this.state.bookedLectures.filter(l =>l.id !== lecture_id);
-        this.setState({bookedLectures: lectures});
-        console.log("in case, call functions");
+        API.removeStudentLecture(lecture_id).then((response) =>{
+            console.log(response);
+            this.getBookedLectures();
+            this.getNoBookedLectures();
+        })
     }
 
     render() {
