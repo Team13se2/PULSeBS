@@ -151,20 +151,6 @@ async function getStudentList(lecture_id){
     }
 }
 
-async function removeStudentLecture(lecture_id){
-    return new Promise((resolve, reject) => {
-        let url = "/student/cancelLecture?lecture_id="+lecture_id;
-        fetch(url, {
-            method: 'DELETE',
-        }).then((response) => {
-            resolve(response);
-        }).catch((err) =>{
-            throw err;  // An object with the error coming from the server
-        });
-    });
-}
 
-
-const API = {isAuthenticated,userLogin,userLogout,getAllLectures,getNumberStudentsAttending,
-    getStudentList,getNoBookedLectures,getBookedLectures,bookLecture,removeStudentLecture} ;
+const API = {isAuthenticated,userLogin,userLogout,getAllLectures,getNumberStudentsAttending,getStudentList,getNoBookedLectures,getBookedLectures,bookLecture} ;
 export default API;
