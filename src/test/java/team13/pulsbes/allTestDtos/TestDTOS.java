@@ -25,7 +25,7 @@ class TestDTOS {
 		l.setAvailableSeat(10);
 		l.setTotalSeat(100);
 		l.setRoomName("aula");
-		assertEquals("1",l.getId();
+		assertEquals("1",l.getId());
 		assertNull(l.getStartTime());
 		assertNull(l.getEndTime());
 		assertEquals("lab",l.getLectureType());
