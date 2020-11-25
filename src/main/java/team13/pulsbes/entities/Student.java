@@ -15,6 +15,10 @@ import java.util.Optional;
 
 @Data
 @AllArgsConstructor
+<<<<<<< HEAD
+//@NoArgsConstructor
+=======
+>>>>>>> d6dc1eb3be389a9bf2fc4290ccb3539d967f730f
 @Entity
 @Builder
 
