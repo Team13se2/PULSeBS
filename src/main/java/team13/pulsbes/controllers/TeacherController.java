@@ -80,4 +80,17 @@ public class TeacherController {
 			return null;
 		}
 	}
+	@RequestMapping(value = Constants.CHANGE_LECTURE_TYPE,method = RequestMethod.GET)
+	public String changeLectureType(@RequestParam("lecture_id") String lectureId, @RequestParam("course_id") String courseId, @CookieValue(value = "type") String type) throws InvalidLectureException, InvalidCourseException {
+		try {
+			if (type == "teacher") {
+			return teacherService.changeLectureType(lectureId, courseId);
+			}
+			else return null;
+		} catch (InvalidLectureException | InvalidCourseException e) {
+			
+			System.out.println(e.getMessage());
+			return null;
+		}
+	}
 }
