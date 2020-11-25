@@ -5,6 +5,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import team13.pulsbes.exception.InvalidStudentException;
+import team13.pulsbes.exception.InvalidLectureException;
 
 import javax.persistence.*;
 import java.lang.reflect.Array;
@@ -24,6 +25,8 @@ public class Course {
 
    private String name;
 
+   private Integer cancelledLectures;
+
    @ManyToOne
    @JoinColumn (name = "teacher_id")
    private Teacher teacher;
@@ -35,8 +38,8 @@ public class Course {
     List<Lecture> lectures;
     {
         lectures = new ArrayList<>();
-    }
-
+	}
+	
 
 	public void newStudentEnrolled(Student s) throws InvalidStudentException {
 		if(s==null) {
@@ -62,6 +65,12 @@ public class Course {
 	public void setName(String name) {
 		this.name = name;
 	}
+	public Integer getCancelledLectures() {
+		return cancelledLectures;
+	}
+	public void setCancelledLectures(Integer cancelledLectures) {
+		this.cancelledLectures = cancelledLectures;
+	}
 	public Teacher getTeacher() {
 		return teacher;
 	}
@@ -81,6 +90,14 @@ public class Course {
 
 	public void setLectures(List<Lecture> lectures) {
 		this.lectures = lectures;
+	}
+
+	public void cancelLecture(Lecture lecture) throws InvalidLectureException{
+		if(lecture==null) {
+			throw new InvalidLectureException("Invalid lecture");
+		}
+		lectures.remove(lecture);
+		//setCancelledLectures(getCancelledLectures() + 1);
 	}
 	
 }

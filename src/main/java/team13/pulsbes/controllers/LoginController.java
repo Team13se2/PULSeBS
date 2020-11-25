@@ -21,7 +21,7 @@ public class LoginController {
 	@Autowired
 	LoginService loginService;
 
-	Logger log = Logger.getLogger("LoginController");
+	Logger loglog = Logger.getLogger("LoginController");
 	
 	@RequestMapping(value = Constants.LOGIN, method = RequestMethod.POST)	
 	public LoginDTO login(@RequestBody IdPw idpw, HttpServletResponse response)  {
@@ -49,7 +49,7 @@ public class LoginController {
 			return log;
 		} catch (WrongCredentialsException e) {
 			// TODO Auto-generated catch block
-			log.throwing(this.getClass().getName(), "login", e);
+			loglog.throwing(this.getClass().getName(), "login", e);
 			//e.printStackTrace();
 			LoginDTO loginDTO = new LoginDTO();
 			return loginDTO;
