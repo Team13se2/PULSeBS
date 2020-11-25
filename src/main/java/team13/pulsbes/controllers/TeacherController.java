@@ -1,6 +1,7 @@
 package team13.pulsbes.controllers;
 
 import java.util.List;
+import java.util.logging.Logger;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -21,6 +22,8 @@ public class TeacherController {
 	
 	@Autowired
 	TeacherService teacherService;
+
+	Logger log = Logger.getLogger("StudentController");
 	
 	@RequestMapping(value = Constants.GET_NUMBER_STUDENTS_ATTENDING,method = RequestMethod.GET)
 	public Integer getNumberStudentsAttending(@RequestParam("lecture_id") String id, @CookieValue(value = "type") String type) throws InvalidLectureException {
@@ -32,7 +35,7 @@ public class TeacherController {
 			
 		} catch (InvalidLectureException e) {
 			
-			System.out.println(e.getMessage());
+			log.throwing(this.getClass().getName(), "getNumberStudentsAttending", e);
 			return 0;
 		}
 	}
@@ -50,7 +53,7 @@ public class TeacherController {
 		else return null;
 		
 		} catch (InvalidTeacherException | InvalidLectureException e) {
-			System.out.println(e.getMessage());
+			log.throwing(this.getClass().getName(), "getAllLectures", e);
 			return null;
 		}
 	}
@@ -63,7 +66,7 @@ public class TeacherController {
 			else return null;
 		} catch (InvalidLectureException e) {
 			
-			System.out.println(e.getMessage());
+			log.throwing(this.getClass().getName(), "getStudentList", e);
 			return null;
 		}
 	}
@@ -76,7 +79,7 @@ public class TeacherController {
 			else return null;
 		} catch (InvalidLectureException | InvalidCourseException e) {
 			
-			System.out.println(e.getMessage());
+			log.throwing(this.getClass().getName(), "cancelLecture", e);
 			return null;
 		}
 	}
@@ -89,7 +92,7 @@ public class TeacherController {
 			else return null;
 		} catch (InvalidLectureException | InvalidCourseException e) {
 			
-			System.out.println(e.getMessage());
+			log.throwing(this.getClass().getName(), "changeLectureType", e);
 			return null;
 		}
 	}
