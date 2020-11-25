@@ -97,7 +97,7 @@ public class Course {
 			throw new InvalidLectureException("Invalid lecture");
 		}
 		lectures.remove(lecture);
-		cancelledLectures = getCancelledLectures() + 1;
+		//setCancelledLectures(getCancelledLectures() + 1);
 	}
 	
 }

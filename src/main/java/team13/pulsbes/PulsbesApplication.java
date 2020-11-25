@@ -79,57 +79,60 @@ public class PulsbesApplication {
  			TeacherRepository teacherRepository;
 			@Override
 			public void run(String... args) throws Exception {
-//				Student s = studentRepository.getOne("1");
-//				s.addCourse(courseRepository.getOne("1"));
-//				studentRepository.save(s);
-//				Course c = courseRepository.getOne("1");
-//				c.setTeacher(teacherRepository.getOne("1"));
-//				courseRepository.save(c);
-//
-//				Lecture l1 = new Lecture();
-//				Teacher teacher = teacherRepository.getOne("1");
-//				officerService.addTeacher(teacher);
-//				l1.setId("1");
-//				l1.addStartTime(2020, 10, 20, 15, 0);
-//				l1.addEndTime(2020, 10, 20, 16, 30);
-//				l1.setSubjectName(c.getName());
-//				l1.setAvailableSeat(50);
-//				l1.setTotalSeat(50);
-//				l1.setLectureType("Lab");
-//				l1.setCourse(c);
-//				l1.setSurnameString("Torchiano");
-//				l1.setRoomName("Aula 1");
-//				l1.setTeacher(teacher);
-//				officerService.addLecture(l1);
-//
-//				Lecture l = new Lecture();
-//				l.setId("2"); 
-//				l.addStartTime(2020, 10, 25, 8,30 );
-//				l.addEndTime(2020, 10, 25, 10,0);
-//				l.setSubjectName(c.getName());
-//				l.setAvailableSeat(100); 
-//				l.setTotalSeat(100);
-//				l.setLectureType("Teoria");
-//				l.setCourse(c);
-//				l.setSurnameString("Vetrò");
-//				l.setRoomName("Aula 1");
-//				l.setTeacher(teacher);
-//				officerService.addLecture(l);
-//				
-//				Lecture l3 = new Lecture();
-//				l3.setId("3"); 
-//				l3.addStartTime(2020, 10, 27, 8,30 );
-//				l3.addEndTime(2020, 10, 27, 10,0);
-//				l3.setSubjectName(c.getName());
-//				l3.setAvailableSeat(100); 
-//				l3.setTotalSeat(100);
-//				l3.setLectureType("Teoria");
-//				l3.setCourse(c);
-//				l3.setSurnameString("Vetrò");
-//				l3.setRoomName("Aula 1");
-//				l3.setTeacher(teacher);
-//				officerService.addLecture(l3);
-//				
+				// Student s = studentRepository.getOne("1");
+				// s.addCourse(courseRepository.getOne("1"));
+				// studentRepository.save(s);
+				// Course c = courseRepository.getOne("1");
+				// c.setTeacher(teacherRepository.getOne("1"));
+				// courseRepository.save(c);
+
+				// Lecture l1 = new Lecture();
+				// Teacher teacher = teacherRepository.getOne("1");
+				// officerService.addTeacher(teacher);
+				// l1.setId("1");
+				// l1.addStartTime(2020, 10, 20, 15, 0);
+				// l1.addEndTime(2020, 10, 20, 16, 30);
+				// l1.setSubjectName(c.getName());
+				// l1.setAvailableSeat(50);
+				// l1.setTotalSeat(50);
+				// l1.setLectureType("Lab");
+				// l1.setCourse(c);
+				// l1.setSurnameString("Torchiano");
+				// l1.setRoomName("Aula 1");
+				// l1.setTeacher(teacher);
+				// officerService.addLecture(l1);
+
+				// Lecture l = new Lecture();
+				// l.setId("2"); 
+				// l.addStartTime(2020, 10, 25, 8,30 );
+				// l.addEndTime(2020, 10, 25, 10,0);
+				// l.setSubjectName(c.getName());
+				// l.setAvailableSeat(100); 
+				// l.setTotalSeat(100);
+				// l.setLectureType("Teoria");
+				// l.setCourse(c);
+				// l.setSurnameString("Vetrò");
+				// l.setRoomName("Aula 1");
+				// l.setTeacher(teacher);
+				// officerService.addLecture(l);
+				
+				// Lecture l3 = new Lecture();
+				// l3.setId("3"); 
+				// l3.addStartTime(2020, 10, 27, 8,30 );
+				// l3.addEndTime(2020, 10, 27, 10,0);
+				// l3.setSubjectName(c.getName());
+				// l3.setAvailableSeat(100); 
+				// l3.setTotalSeat(100);
+				// l3.setLectureType("Teoria");
+				// l3.setCourse(c);
+				// l3.setSurnameString("Vetrò");
+				// l3.setRoomName("Aula 1");
+				// l3.setTeacher(teacher);
+				// officerService.addLecture(l3);
+
+				System.out.print(teacherRepository.getOne("1").getLectures());
+
+			
 			}
 		};
 	}

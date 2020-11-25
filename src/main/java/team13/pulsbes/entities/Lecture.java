@@ -51,11 +51,11 @@ public class Lecture {
         students = new ArrayList<>();
     }
 
-    @ManyToOne(cascade = {CascadeType.ALL})
+    @ManyToOne(cascade = {CascadeType.ALL}, fetch=FetchType.EAGER)
     @JoinColumn(name = "course_id")
     private Course course;
 
-    @ManyToOne
+    @ManyToOne(cascade = {CascadeType.ALL}, fetch=FetchType.EAGER)
     @JoinColumn (name = "teacher_id")
     private Teacher teacher;
 
