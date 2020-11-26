@@ -102,7 +102,7 @@ public class StudentServiceImpl implements StudentService {
         if (id.equals("-1")) {
             throw new InvalidStudentException("Student can't be null");
         }
-
+        
         if (!studentRepository.existsById(id))
             throw new InvalidStudentException("Student not found");
 

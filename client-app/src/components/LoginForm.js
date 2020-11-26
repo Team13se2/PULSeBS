@@ -12,7 +12,7 @@ class LoginForm extends React.Component {
     
     constructor(props) {
         super(props);
-        this.state = {username: 'student@gmail.com', password: 'psw', submitted: false};
+        this.state = {username: 'teacher1team13@gmail.com', password: 'psw', submitted: false};
     }
 
     onChangeUsername = (event) => {
@@ -25,7 +25,7 @@ class LoginForm extends React.Component {
     
     handleSubmit = (event, onLogin) => {
         event.preventDefault();
-        onLogin(this.state.username,this.state.password,"student");
+        onLogin(this.state.username,this.state.password,"teacher");
         this.setState({submitted : true});
     }
 
@@ -68,7 +68,7 @@ class LoginForm extends React.Component {
 
                             {context.authErr && 
                             <Alert variant= "danger">
-                                {context.authErr.msg}
+                                {context.authErr}
                             </Alert>
                             }
                         </Col>

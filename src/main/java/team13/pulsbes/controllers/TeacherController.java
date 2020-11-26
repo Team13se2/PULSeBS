@@ -7,8 +7,6 @@ import org.springframework.web.bind.annotation.*;
 
 import team13.pulsbes.dtos.LectureDTO;
 import team13.pulsbes.dtos.StudentDTO;
-import team13.pulsbes.dtos.TeacherDTO;
-import team13.pulsbes.entities.Lecture;
 import team13.pulsbes.exception.InvalidLectureException;
 import team13.pulsbes.exception.InvalidCourseException;
 import team13.pulsbes.exception.InvalidTeacherException;
@@ -67,7 +65,7 @@ public class TeacherController {
 			return null;
 		}
 	}
-	@RequestMapping(value = Constants.CANCEL_LECTURE,method = RequestMethod.GET)
+	@RequestMapping(value = Constants.CANCEL_LECTURE,method = RequestMethod.DELETE)
 	public String cancelLecture(@RequestParam("lecture_id") String lectureId,@CookieValue(value = "id") String id, @CookieValue(value = "type") String type) throws InvalidLectureException, InvalidCourseException {
 		try {
 			if (type.equals("teacher")) {

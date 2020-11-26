@@ -24,7 +24,7 @@ class TestBookLecture {
 	NotificationServiceImpl notificationService;
 	StudentRepository sr;
 	LectureRepository lr;
-	String bookingSuccess = "The lecture was corrrectly booked";    
+	String bookingSuccess = "The lecture was correctly booked";    
 	String bookingFailure = "The lecture has no more available seats, you will receive a mail if a spot opens up";
 	@BeforeEach
 	void setUp() {

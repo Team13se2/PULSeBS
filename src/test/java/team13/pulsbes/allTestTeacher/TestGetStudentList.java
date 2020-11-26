@@ -39,7 +39,7 @@ class TestGetStudentList {
 		assertThrows(InvalidLectureException.class , () -> teacherService.getStudentList("-1"));
 	}
 	@Test
-	void testGetStudentList1() throws InvalidStudentException {
+	void testGetStudentList1() throws InvalidStudentException, InvalidLectureException {
 		Lecture l = new Lecture();
 		Student s = new Student("1","test","testsur");
 		l.addStudentAttending(s);
@@ -48,6 +48,6 @@ class TestGetStudentList {
 		when(lectureRepository.getOne(any())).thenReturn(l);
 		when(modelMapper.map(any(),any())).thenReturn(sDto);
 		assertEquals(s.getId(),sDto.getId());
-		
+		assertEquals(s.getId(),teacherService.getStudentList("1").get(0).getId());
 	}
 }
