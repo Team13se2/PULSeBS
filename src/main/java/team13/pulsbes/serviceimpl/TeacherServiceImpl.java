@@ -96,21 +96,23 @@ public class TeacherServiceImpl implements TeacherService{
 		System.out.println(teacher.getEmail());
 		Lecture tmpLecture = lectureRepository.getOne(lectureId);
 		Calendar tmpCal = Calendar.getInstance();
-		tmpCal.add(Calendar.HOUR, -1);
-
+		tmpCal.add(Calendar.MONTH, 1);
+		tmpCal.add(Calendar.HOUR_OF_DAY, -1);
+		
 		try { if(tmpLecture.getStartTime2().before(tmpCal.getTime())) {
 
             teacher.removeLecture(tmpLecture);
+            tmpLecture.getCourse().getLectures().remove(tmpLecture);
             teacherRepository.save(teacher);
             teacherRepository.flush();
-            lectureRepository.delete(tmpLecture);
+            //lectureRepository.delete(tmpLecture);
             System.out.println(teacher.getLectures());
 
 			return ("Lecture cancelled");
 
 			}
 
-			else return ("Lecture is too soon to be cancelled");
+			else return ("Lecture is too late to be cancelled");
 
 		}
 
