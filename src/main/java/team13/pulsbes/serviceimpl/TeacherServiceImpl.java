@@ -40,6 +40,8 @@ public class TeacherServiceImpl implements TeacherService{
 	LectureRepository lectureRepository;
 	@Autowired
 	CourseRepository courseRepository;
+
+	private static final String dateFormatString = "yyyy-MM-dd HH:mm";
 	
 	public void addRepo (TeacherRepository tr) {
 		this.teacherRepository = tr;
@@ -96,8 +98,7 @@ public class TeacherServiceImpl implements TeacherService{
 		Teacher teacher = teacherRepository.findById(TeacherId).get();
 		System.out.println(teacher.getEmail());
 		Lecture tmpLecture = lectureRepository.getOne(lectureId);
-		Calendar tmpCal = Calendar.getInstance();
-		tmpCal.add(Calendar.MONTH, 1);
+		Calendar tmpCal = Calendar.getInstance();		
 		tmpCal.add(Calendar.HOUR_OF_DAY, -1);
 		
 		try { if(tmpLecture.getStartTime2().before(tmpCal.getTime())) {
@@ -133,12 +134,11 @@ public class TeacherServiceImpl implements TeacherService{
 		}
 
 		Calendar tmpCal = Calendar.getInstance();
-		tmpCal.add(Calendar.MONTH, 1);
 
 		return  teacherRepository.getOne(id)
 				.getLectures()
 				.stream()
-				.filter(x -> { try { return x.getEndTime2().before(tmpCal.getTime()); } catch (ParseException e) {log.throwing(this.getClass().getName(), "getPastLectures", e); return false;} })
+				.filter(x -> { try { System.out.println(x.getEndTime2()); return x.getEndTime2().before(tmpCal.getTime()); } catch (ParseException e) {log.throwing(this.getClass().getName(), "getPastLectures", e); return false;} })
 				.map(l -> modelMapper.map(l,LectureDTO.class))
 				.collect(Collectors.toList());
 	}
