@@ -17,4 +17,5 @@ public interface TeacherService {
 	List<LectureDTO> getAllLectures(String id) throws InvalidTeacherException;
 	List<StudentDTO> getStudentList(String id) throws InvalidLectureException;
 	String cancelLecture(String lectureId, String TeacherId) throws InvalidLectureException, InvalidCourseException;
+	List<LectureDTO> getPastLectures(String id) throws InvalidTeacherException;
 }
