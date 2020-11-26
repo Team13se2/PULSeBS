@@ -12,6 +12,7 @@ import team13.pulsbes.entities.Course;
 import team13.pulsbes.exception.InvalidLectureException;
 import team13.pulsbes.exception.InvalidTeacherException;
 import team13.pulsbes.exception.InvalidCourseException;
+import java.text.ParseException;
 import team13.pulsbes.repositories.LectureRepository;
 import team13.pulsbes.repositories.CourseRepository;
 import team13.pulsbes.repositories.TeacherRepository;
@@ -121,5 +122,22 @@ public class TeacherServiceImpl implements TeacherService{
 			return e.getMessage();
 		}
 
+	}
+
+	@Override
+	public List<LectureDTO> getPastLectures(String id) throws InvalidTeacherException {
+		if(id.equals("-1")) {
+			throw new InvalidTeacherException("Teacher can't be null");
+		}
+
+		Calendar tmpCal = Calendar.getInstance();
+		tmpCal.add(Calendar.MONTH, 1);
+
+		return  teacherRepository.getOne(id)
+				.getLectures()
+				.stream()
+				.filter(x -> { try { return x.getEndTime2().before(tmpCal.getTime()); } catch (ParseException e) {log.throwing(this.getClass().getName(), "getPastLectures", e); return false;} })
+				.map(l -> modelMapper.map(l,LectureDTO.class))
+				.collect(Collectors.toList());
 	}
 }
