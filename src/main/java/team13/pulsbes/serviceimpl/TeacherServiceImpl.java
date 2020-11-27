@@ -68,10 +68,13 @@ public class TeacherServiceImpl implements TeacherService{
 		if(id.equals("-1")) {
 			throw new InvalidTeacherException("Teacher can't be null");
 		}
+
+		Calendar tmpCal = Calendar.getInstance();
+
 		return  teacherRepository.getOne(id)
 				.getLectures()
 				.stream()
-				.filter(Objects::nonNull)
+				.filter(x -> { try { System.out.println(x.getStartTime2()); return x.getStartTime2().after(tmpCal.getTime()); } catch (ParseException e) {log.throwing(this.getClass().getName(), "getAllLectures", e); return false;} })
 				.map(l -> modelMapper.map(l,LectureDTO.class))
 				.collect(Collectors.toList());
 	}
