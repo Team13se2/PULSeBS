@@ -9,6 +9,7 @@ import team13.pulsbes.dtos.TeacherDTO;
 import team13.pulsbes.entities.Lecture;
 import team13.pulsbes.entities.Teacher;
 import team13.pulsbes.entities.Course;
+import team13.pulsbes.entities.Student;
 import team13.pulsbes.exception.InvalidLectureException;
 import team13.pulsbes.exception.InvalidTeacherException;
 import team13.pulsbes.exception.InvalidCourseException;
@@ -40,6 +41,8 @@ public class TeacherServiceImpl implements TeacherService{
 	LectureRepository lectureRepository;
 	@Autowired
 	CourseRepository courseRepository;
+	@Autowired
+    NotificationServiceImpl notificationService;
 
 	private static final String dateFormatString = "yyyy-MM-dd HH:mm";
 	
@@ -52,6 +55,9 @@ public class TeacherServiceImpl implements TeacherService{
 	public void addMM (ModelMapper mm) {
 		this.modelMapper = mm;
 	}
+	public void addNotificationService(NotificationServiceImpl ns) {
+        this.notificationService = ns;
+    }
 
 	Logger log = Logger.getLogger("TeacherServiceImpl");
 
@@ -103,15 +109,25 @@ public class TeacherServiceImpl implements TeacherService{
 		Lecture tmpLecture = lectureRepository.getOne(lectureId);
 		Calendar tmpCal = Calendar.getInstance();		
 		tmpCal.add(Calendar.HOUR_OF_DAY, -1);
+
 		
 		try { if(tmpLecture.getStartTime2().before(tmpCal.getTime())) {
 
-            teacher.removeLecture(tmpLecture);
-            tmpLecture.getCourse().getLectures().remove(tmpLecture);
-            teacherRepository.save(teacher);
-            teacherRepository.flush();
-            //lectureRepository.delete(tmpLecture);
+			List<Student> listStudent = tmpLecture.getStudents();
+			teacher.removeLecture(tmpLecture);
             System.out.println(teacher.getLectures());
+            lectureRepository.delete(tmpLecture);
+            teacherRepository.save(teacher);
+			teacherRepository.flush();
+
+			for (Student tmpStudent : listStudent) {
+
+				notificationService.sendMessage(tmpStudent.getEmail(), "Lecture cancel notification", "The following lecture that you had a booking for was canceled: " + tmpLecture.getSubjectName() + ".");
+
+			}			
+			
+            //lectureRepository.delete(tmpLecture);
+
 
 			return ("Lecture cancelled");
 
@@ -125,6 +141,54 @@ public class TeacherServiceImpl implements TeacherService{
 
 		{
 			log.throwing(this.getClass().getName(), "cancelLecture", e);
+			return e.getMessage();
+		}
+
+	}
+
+	@Override
+	public String cancelPresenceLecture(String lectureId, String TeacherId) throws InvalidLectureException, InvalidCourseException {
+		if(lectureId.equals("-1")) {
+			throw new InvalidLectureException("Lecture can't be null");
+		}
+
+		Teacher teacher = teacherRepository.findById(TeacherId).get();
+		System.out.println(teacher.getEmail());
+		Lecture tmpLecture = lectureRepository.getOne(lectureId);
+		Calendar tmpCal = Calendar.getInstance();		
+		tmpCal.add(Calendar.MINUTE, -30);
+
+		
+		try { if(tmpLecture.getStartTime2().before(tmpCal.getTime())) {
+
+			List<Student> listStudent = tmpLecture.getStudents();
+			teacher.removeLecture(tmpLecture);
+            System.out.println(teacher.getLectures());
+            lectureRepository.delete(tmpLecture);
+            teacherRepository.save(teacher);
+			teacherRepository.flush();
+			
+			for (Student tmpStudent : listStudent) {
+
+				notificationService.sendMessage(tmpStudent.getEmail(), "Lecture change notification", "The following lecture has been changed from in presence to online only: " + tmpLecture.getSubjectName() + ".");
+
+			}	
+
+            //lectureRepository.delete(tmpLecture);
+
+
+			return ("Lecture was changd from in presence to online");
+
+			}
+
+			else return ("Lecture is too late to be changed");
+
+		}
+
+		catch (Exception e)
+
+		{
+			log.throwing(this.getClass().getName(), "cancelPresenceLecture", e);
 			return e.getMessage();
 		}
 

@@ -53,7 +53,7 @@ public class OfficerService {
 		    public void run() {
 		        //Call your method here
 		        //setEmail(emailContent, subject);
-				notificationService.sendMessage(l.getTeacher().getEmail(), "Students attending lecture", "Number of students attending the lecture is " + l.getStudents().size());
+				//notificationService.sendMessage(l.getTeacher().getEmail(), "Students attending lecture", "Number of students attending the lecture is " + l.getStudents().size());
 		    }
 			}, notificationTime);
 		}
