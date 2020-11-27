@@ -18,7 +18,7 @@ const customStyles = {
 
 const LecturesTableTeacher = (props) => {
 
-    let {lectures, getLectures,job,students,job2} = props;
+    let {lectures, getLectures,job,students,job2,past} = props;
     // same as componentDidMount()
     useEffect(() => {
       getLectures();
@@ -61,8 +61,8 @@ const LecturesTableTeacher = (props) => {
                       <th>End Time</th>
                       <th>Teacher</th>
                       <th>Location</th>
-                      <th>Students №</th>
-                      <th> </th> 
+                      {!past && <th>Students №</th>}
+                      {!past && <th> </th> }
                     </tr>
                   </thead>
 
@@ -76,10 +76,10 @@ const LecturesTableTeacher = (props) => {
                           <td>{lecture.endTime}</td>         
                           <td>{lecture.surnameString}</td>
                           <td>{lecture.roomName}</td>
-                          <td>{lecture.nrStudents}</td>
-                          <td><button type="button" className="btn btn-outline-success" onClick={() =>openModal(lecture.id)}>Students</button>
+                          {!past && <td>{lecture.nrStudents}</td>}
+                          {!past &&<td><button type="button" className="btn btn-outline-success" onClick={() =>openModal(lecture.id)}>Students</button>
                             {removeButton(lecture.id,lecture.startTime)}
-                          </td>
+                          </td> }
                         </tr>
                     ))}
                   </tbody>

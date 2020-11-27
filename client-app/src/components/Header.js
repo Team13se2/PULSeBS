@@ -20,9 +20,13 @@ const Header = (props) => {
           Title
         </Navbar.Brand>
         
-        {context.authUser && 
+        {context.authUser && context.authUser.type == "student" &&
           <Nav className="mr-auto">
           <Nav.Link as={NavLink} to="/student/calendar" onClick = {() => console.log("clk calendar")}> Calendar</Nav.Link> 
+        </Nav>}
+        {context.authUser && context.authUser.type == "teacher" &&
+          <Nav className="mr-auto">
+          <Nav.Link as={NavLink} to="/teacher/pastLectures" > Past Lectures</Nav.Link> 
         </Nav>}
 
         <Nav className="ml-md-auto">
