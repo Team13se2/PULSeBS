@@ -1,4 +1,5 @@
 import LoginForm from './components/LoginForm';
+import PastLecturesFilter from './components/PastLecturesFilter'
 import React from 'react';
 import {AuthContext} from './auth/AuthContext';
 // import "react-big-calendar/lib/css/react-big-calendar.css";
@@ -13,7 +14,7 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import LecturesTableTeacher from './components/LectureTableTeacher';
 import MyCalendar from './components/MyCalendar';
-import moment from 'moment'
+import MonthChart from './components/MonthChart';
 
 class App extends React.Component {
     constructor(props) {
@@ -108,6 +109,12 @@ class App extends React.Component {
         })
     }
 
+    getPastLecturesTeacher = () =>{
+        API.getPastLectures().then((lecture) =>{
+            this.setState({teacherLecture: lecture});
+        })
+    }
+
     removeTeacherLecture = (lecture_id) =>{
         API.removeTeacherLecture(lecture_id).then((response) =>{
             this.getAllLecturesTeacher();
@@ -122,6 +129,7 @@ class App extends React.Component {
         })
     }
 
+
     render() {
         const value = {
             authUser: this.state.authUser,
@@ -130,9 +138,10 @@ class App extends React.Component {
             logoutUser: this.logout
         }
         return (<AuthContext.Provider value={value}>
-
-            <Header/>
-
+            <Row className="rowHeader">
+                <Header/>
+            </Row>
+                
             <Switch>
                 <Route path="/login">
                     <Row className="vheight-100">
@@ -145,7 +154,7 @@ class App extends React.Component {
                 </Route>
                 <Route path="/student">
                     <Switch>
-                        <Route path="/student/calendar">
+                        <Route exact path="/student/calendar">
                             <Row className="vheight-0">
                                 <Col sm={1}/>
                                 <Col sm={8}className="below-nav">
@@ -162,7 +171,7 @@ class App extends React.Component {
                                 <Col sm={1}/>
                             </Row>
                         </Route>
-                        <Route path="/student/">
+                        <Route exact path="/student/">
                             <Row className="">
                                 <Col sm={1}/>
                                 <Col sm={8}
@@ -184,17 +193,60 @@ class App extends React.Component {
                         </Route>
                     </Switch>
                 </Route>
-
                 <Route path="/teacher">
-                    <Row className="">
-                        <Col sm={1}/>
-                        <Col sm={8}
-                            className="below-nav">
-                            <h1>Next Lectures</h1>
-                            <LecturesTableTeacher lectures={this.state.teacherLecture} getLectures={this.getAllLecturesTeacher} job={(lecture_id) => this.getStudentList(lecture_id)} students={this.state.students} job2={(lecture_id) =>this.removeTeacherLecture(lecture_id)}/>
-                        </Col>
-                        <Col sm={1}/>
-                    </Row>
+                    <Switch>
+                        <Route path="/teacher/pastLectures">
+                            <Route path="/teacher/pastLectures">
+                                <Row className="">
+                                    <Col sm={2}>
+                                        <PastLecturesFilter getAllPastLectures={this.getPastLecturesTeacher}/>
+                                    </Col>
+                                    <Switch>
+                                        <Route exact path="/teacher/pastLectures/all">
+                                            <Col sm={8}
+                                                className="below-nav">
+                                                <h1>Past Lectures</h1>
+                                                <LecturesTableTeacher lectures={this.state.teacherLecture} past={true} getLectures={this.getPastLecturesTeacher}/>
+                                            </Col>
+                                            <Col sm={1}/>
+                                        </Route>
+                                        <Route exact path="/teacher/pastLectures/week">
+                                            <Col sm={8}
+                                                className="below-nav">
+                                                <h1>Past Lectures</h1>
+                                            </Col>
+                                            <Col sm={1}/>
+                                        </Route>
+                                        <Route exact path="/teacher/pastLectures/month">
+                                            <Col sm={8}
+                                                className="below-nav">
+                                                <MonthChart lectures={this.state.teacherLecture} getAllPastLectures={this.getPastLecturesTeacher}/>
+                                            </Col>
+                                            <Col sm={1}/>
+                                        </Route>
+                                        <Route exact path="/teacher/pastLectures/graph">
+                                            <Col sm={8}
+                                                className="below-nav">
+                                                <h1>Past Lectures</h1>
+                                            </Col>
+                                            <Col sm={1}/>
+                                        </Route>
+                                    </Switch>
+                                </Row>
+                            </Route>
+                        </Route>
+                        <Route exact path="/teacher">
+                            <Row className="">
+                                <Col sm={1}/>
+                                <Col sm={8}
+                                    className="below-nav">
+                                    <h1>Next Lectures</h1>
+                                    <LecturesTableTeacher lectures={this.state.teacherLecture} past={false} getLectures={this.getAllLecturesTeacher} job={(lecture_id) => this.getStudentList(lecture_id)} students={this.state.students} job2={(lecture_id) =>this.removeTeacherLecture(lecture_id)}/>
+                                </Col>
+                                <Col sm={1}/>
+                            </Row>
+                        </Route>
+                    </Switch>
                 </Route>
                 <Route>
                     <Redirect to='/login'/>
