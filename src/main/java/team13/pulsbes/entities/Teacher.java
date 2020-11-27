@@ -7,10 +7,7 @@ import lombok.NoArgsConstructor;
 import team13.pulsbes.exception.InvalidCourseException;
 import team13.pulsbes.exception.InvalidLectureException;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.ManyToMany;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,7 +27,7 @@ public class Teacher {
     private String Email;
 
     private String Psw;
-    @OneToMany (mappedBy = "teacher")
+    @OneToMany (mappedBy = "teacher",cascade = CascadeType.ALL, orphanRemoval = true)
     List<Lecture> lectures;
     {
         lectures = new ArrayList<>();
@@ -112,7 +109,13 @@ public class Teacher {
 
 	public void removeLecture (Lecture lecture) throws InvalidLectureException, InvalidCourseException {
 
-    	this.lectures.remove(lecture);
-    	System.out.println(this.lectures);
+    	lectures.remove(lecture);
+    	lecture.setTeacher(null);
+		System.out.println("1" + lecture.getStudents());
+		lecture.getStudents().forEach(s-> s.removeBookedLecture(lecture));
+		lecture.getStudents().forEach(s-> System.out.println("2" + s.getBookedLectures()));
+		lecture.getCourse().cancelLecture(lecture);
+		System.out.println("3" + lecture.getCourse().getLectures());
+
 	}
 }
