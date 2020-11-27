@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.OnDelete;
 import team13.pulsbes.exception.InvalidStudentException;
 import team13.pulsbes.exception.InvalidLectureException;
 
@@ -35,6 +36,7 @@ public class Course {
    private List<Student> students = new ArrayList<>();
 
    @OneToMany (mappedBy = "course")
+
     List<Lecture> lectures;
     {
         lectures = new ArrayList<>();
