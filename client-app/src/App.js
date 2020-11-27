@@ -1,4 +1,5 @@
 import LoginForm from './components/LoginForm';
+import PastLecturesFilter from './components/PastLecturesFilter'
 import React from 'react';
 import {AuthContext} from './auth/AuthContext';
 // import "react-big-calendar/lib/css/react-big-calendar.css";
@@ -13,8 +14,7 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import LecturesTableTeacher from './components/LectureTableTeacher';
 import MyCalendar from './components/MyCalendar';
-import { ProSidebar, Menu, MenuItem, SubMenu } from 'react-pro-sidebar';
-import 'react-pro-sidebar/dist/css/styles.css';
+import MonthChart from './components/MonthChart';
 
 class App extends React.Component {
     constructor(props) {
@@ -129,6 +129,7 @@ class App extends React.Component {
         })
     }
 
+
     render() {
         const value = {
             authUser: this.state.authUser,
@@ -194,28 +195,45 @@ class App extends React.Component {
                 </Route>
                 <Route path="/teacher">
                     <Switch>
-                        <Route exact path="/teacher/pastLectures">
-                            <Row className="">
-                                <Col sm={2}>
-                                    <ProSidebar>
-                                        <Menu iconShape="square">
-                                            <SubMenu title="Single Lecture" >
-                                            <MenuItem>Component 1</MenuItem>
-                                            <MenuItem>Component 2</MenuItem>
-                                            </SubMenu>
-                                            <MenuItem >Week</MenuItem>
-                                            <MenuItem >Month</MenuItem>
-                                            <MenuItem >Graph</MenuItem>
-                                        </Menu>
-                                    </ProSidebar>
-                                </Col>
-                                <Col sm={8}
-                                    className="below-nav">
-                                    <h1>Past Lectures</h1>{console.log(" ")}
-                                    <LecturesTableTeacher lectures={this.state.teacherLecture} past={true} getLectures={this.getPastLecturesTeacher}/>
-                                </Col>
-                                <Col sm={1}/>
-                            </Row>
+                        <Route path="/teacher/pastLectures">
+                            <Route path="/teacher/pastLectures">
+                                <Row className="">
+                                    <Col sm={2}>
+                                        <PastLecturesFilter getAllPastLectures={this.getPastLecturesTeacher}/>
+                                    </Col>
+                                    <Switch>
+                                        <Route exact path="/teacher/pastLectures/all">
+                                            <Col sm={8}
+                                                className="below-nav">
+                                                <h1>Past Lectures</h1>
+                                                <LecturesTableTeacher lectures={this.state.teacherLecture} past={true} getLectures={this.getPastLecturesTeacher}/>
+                                            </Col>
+                                            <Col sm={1}/>
+                                        </Route>
+                                        <Route exact path="/teacher/pastLectures/week">
+                                            <Col sm={8}
+                                                className="below-nav">
+                                                <h1>Past Lectures</h1>
+                                            </Col>
+                                            <Col sm={1}/>
+                                        </Route>
+                                        <Route exact path="/teacher/pastLectures/month">
+                                            <Col sm={8}
+                                                className="below-nav">
+                                                <MonthChart lectures={this.state.teacherLecture} getAllPastLectures={this.getPastLecturesTeacher}/>
+                                            </Col>
+                                            <Col sm={1}/>
+                                        </Route>
+                                        <Route exact path="/teacher/pastLectures/graph">
+                                            <Col sm={8}
+                                                className="below-nav">
+                                                <h1>Past Lectures</h1>
+                                            </Col>
+                                            <Col sm={1}/>
+                                        </Route>
+                                    </Switch>
+                                </Row>
+                            </Route>
                         </Route>
                         <Route exact path="/teacher">
                             <Row className="">
