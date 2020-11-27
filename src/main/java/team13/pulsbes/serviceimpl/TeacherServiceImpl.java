@@ -134,6 +134,47 @@ public class TeacherServiceImpl implements TeacherService{
 	}
 
 	@Override
+	public String cancelPresenceLecture(String lectureId, String TeacherId) throws InvalidLectureException, InvalidCourseException {
+		if(lectureId.equals("-1")) {
+			throw new InvalidLectureException("Lecture can't be null");
+		}
+
+		Teacher teacher = teacherRepository.findById(TeacherId).get();
+		System.out.println(teacher.getEmail());
+		Lecture tmpLecture = lectureRepository.getOne(lectureId);
+		Calendar tmpCal = Calendar.getInstance();		
+		tmpCal.add(Calendar.MINUTE, -30);
+
+		
+		try { if(tmpLecture.getStartTime2().before(tmpCal.getTime())) {
+
+            teacher.removeLecture(tmpLecture);
+            System.out.println(teacher.getLectures());
+            lectureRepository.delete(tmpLecture);
+            teacherRepository.save(teacher);
+            teacherRepository.flush();
+
+            //lectureRepository.delete(tmpLecture);
+
+
+			return ("Lecture was changd from in presence to online");
+
+			}
+
+			else return ("Lecture is too late to be changed");
+
+		}
+
+		catch (Exception e)
+
+		{
+			log.throwing(this.getClass().getName(), "cancelPresenceLecture", e);
+			return e.getMessage();
+		}
+
+	}
+
+	@Override
 	public List<LectureDTO> getPastLectures(String id) throws InvalidTeacherException {
 		if(id.equals("-1")) {
 			throw new InvalidTeacherException("Teacher can't be null");
