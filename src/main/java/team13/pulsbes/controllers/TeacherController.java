@@ -1,6 +1,7 @@
 package team13.pulsbes.controllers;
 
 import java.util.List;
+import java.util.logging.Logger;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -20,6 +21,8 @@ public class TeacherController {
 	@Autowired
 	TeacherService teacherService;
 
+	Logger log = Logger.getLogger("TeacherController");
+
 	@RequestMapping(value = Constants.GET_NUMBER_STUDENTS_ATTENDING,method = RequestMethod.GET)
 	public Integer getNumberStudentsAttending(@RequestParam("lecture_id") String id, @CookieValue(value = "type") String type) throws InvalidLectureException {
 		try {
@@ -30,7 +33,7 @@ public class TeacherController {
 
 		} catch (InvalidLectureException e) {
 
-			System.out.println(e.getMessage());
+			log.throwing(this.getClass().getName(), "getNumberStudentsAttending", e);
 			return 0;
 		}
 	}
@@ -48,7 +51,7 @@ public class TeacherController {
 		else return null;
 
 		} catch (InvalidTeacherException | InvalidLectureException e) {
-			System.out.println(e.getMessage());
+			log.throwing(this.getClass().getName(), "getAllLectures", e);
 			return null;
 		}
 	}
@@ -61,7 +64,7 @@ public class TeacherController {
 			else return null;
 		} catch (InvalidLectureException e) {
 
-			System.out.println(e.getMessage());
+			log.throwing(this.getClass().getName(), "getStudentList", e);
 			return null;
 		}
 	}
@@ -74,8 +77,22 @@ public class TeacherController {
 			else return null;
 		} catch (InvalidLectureException | InvalidCourseException e) {
 
-			System.out.println(e.getMessage());
+			log.throwing(this.getClass().getName(), "cancelLecture", e);
 			return e.getMessage();
+		}
+	}
+	@RequestMapping(value = Constants.GET_PAST_LECTURES, method = RequestMethod.GET)
+	public List<LectureDTO> getPastLectures(@CookieValue(value = "username") String username,@CookieValue(value = "id") String id, @CookieValue(value = "type") String type) throws InvalidTeacherException{
+		try {
+			if (type.equals("teacher")) {
+			List<LectureDTO> l = teacherService.getPastLectures(id);			
+			return l;
+		}
+		else return null;
+
+		} catch (InvalidTeacherException e) {
+			log.throwing(this.getClass().getName(), "getPastLectures", e);
+			return null;
 		}
 	}
 }

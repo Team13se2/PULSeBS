@@ -1,13 +1,17 @@
-FROM ubuntu:18.04
+FROM ubuntu:latest
 RUN apt-get update
 
 RUN apt-get install -y openjdk-11-jdk
-RUN apt-get install -y nodejs
 RUN apt-get install -y npm
-RUN apt-get install -y maven
 RUN apt-get install -y git
-RUN git clone https://github.com/Team13se2/PULSeBS.git
 
+RUN git clone https://github.com/Team13se2/PULSeBS.git && chmod +x PULSeBS/mvnw
+
+WORKDIR PULSeBS/client-app
+RUN npm install
+
+EXPOSE 3000/tcp
 EXPOSE 8081/tcp
 
-CMD cd PULSeBS; mvn spring-boot:run
+WORKDIR /PULSeBS
+CMD  ./mvnw spring-boot:run & ( cd client-app && npm start)

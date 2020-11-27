@@ -12,6 +12,7 @@ import team13.pulsbes.entities.Course;
 import team13.pulsbes.exception.InvalidLectureException;
 import team13.pulsbes.exception.InvalidTeacherException;
 import team13.pulsbes.exception.InvalidCourseException;
+import java.text.ParseException;
 import team13.pulsbes.repositories.LectureRepository;
 import team13.pulsbes.repositories.CourseRepository;
 import team13.pulsbes.repositories.TeacherRepository;
@@ -39,6 +40,8 @@ public class TeacherServiceImpl implements TeacherService{
 	LectureRepository lectureRepository;
 	@Autowired
 	CourseRepository courseRepository;
+
+	private static final String dateFormatString = "yyyy-MM-dd HH:mm";
 	
 	public void addRepo (TeacherRepository tr) {
 		this.teacherRepository = tr;
@@ -95,22 +98,23 @@ public class TeacherServiceImpl implements TeacherService{
 		Teacher teacher = teacherRepository.findById(TeacherId).get();
 		System.out.println(teacher.getEmail());
 		Lecture tmpLecture = lectureRepository.getOne(lectureId);
-		Calendar tmpCal = Calendar.getInstance();
-		tmpCal.add(Calendar.HOUR, -1);
-
+		Calendar tmpCal = Calendar.getInstance();		
+		tmpCal.add(Calendar.HOUR_OF_DAY, -1);
+		
 		try { if(tmpLecture.getStartTime2().before(tmpCal.getTime())) {
 
             teacher.removeLecture(tmpLecture);
+            tmpLecture.getCourse().getLectures().remove(tmpLecture);
             teacherRepository.save(teacher);
             teacherRepository.flush();
-            lectureRepository.delete(tmpLecture);
+            //lectureRepository.delete(tmpLecture);
             System.out.println(teacher.getLectures());
 
 			return ("Lecture cancelled");
 
 			}
 
-			else return ("Lecture is too soon to be cancelled");
+			else return ("Lecture is too late to be cancelled");
 
 		}
 
@@ -121,5 +125,21 @@ public class TeacherServiceImpl implements TeacherService{
 			return e.getMessage();
 		}
 
+	}
+
+	@Override
+	public List<LectureDTO> getPastLectures(String id) throws InvalidTeacherException {
+		if(id.equals("-1")) {
+			throw new InvalidTeacherException("Teacher can't be null");
+		}
+
+		Calendar tmpCal = Calendar.getInstance();
+
+		return  teacherRepository.getOne(id)
+				.getLectures()
+				.stream()
+				.filter(x -> { try { System.out.println(x.getEndTime2()); return x.getEndTime2().before(tmpCal.getTime()); } catch (ParseException e) {log.throwing(this.getClass().getName(), "getPastLectures", e); return false;} })
+				.map(l -> modelMapper.map(l,LectureDTO.class))
+				.collect(Collectors.toList());
 	}
 }
