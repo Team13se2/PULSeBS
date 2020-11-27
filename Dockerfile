@@ -1,8 +1,7 @@
-ROM ubuntu:latest
+FROM ubuntu:latest
 RUN apt-get update
 
 RUN apt-get install -y openjdk-11-jdk
-#nodejs
 RUN apt-get install -y npm
 RUN apt-get install -y git
 
