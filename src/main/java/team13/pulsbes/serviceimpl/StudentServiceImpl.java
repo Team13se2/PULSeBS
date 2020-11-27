@@ -158,9 +158,8 @@ public class StudentServiceImpl implements StudentService {
 
                 System.out.println(CurrentStudent.getBookedLectures());
                 CurrentStudent.removeBookedLecture(DeletingLecture);
-                System.out.println(CurrentStudent.getBookedLectures());
                 studentRepository.saveAndFlush(CurrentStudent);
-                System.out.println(CurrentStudent.getBookedLectures());
+
 
             } catch (Exception e) {
                 System.out.println("Student has no this lecture booked");

@@ -48,6 +48,7 @@ public class Lecture {
     @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinTable(name="lecture_students", joinColumns = @JoinColumn(name="lecture_id"),
             inverseJoinColumns = @JoinColumn(name="student_id"))
+
     private List<Student> students;
     {
         students = new ArrayList<>();
@@ -57,7 +58,7 @@ public class Lecture {
     @JoinColumn(name = "course_id")
     private Course course;
 
-    @ManyToOne(cascade = {CascadeType.ALL}, fetch=FetchType.EAGER)
+    @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn (name = "teacher_id")
     private Teacher teacher;
 
@@ -118,6 +119,8 @@ public class Lecture {
     	notificationTime = dateFormat.parse(endTime);
     	return notificationTime;
     }
+
+
 	public String getId() {
 		return id;
 	}

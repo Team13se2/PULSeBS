@@ -81,6 +81,19 @@ public class TeacherController {
 			return e.getMessage();
 		}
 	}
+	@RequestMapping(value = Constants.CANCEL_PRESENCE_LECTURE,method = RequestMethod.DELETE)
+	public String cancelPresenceLecture(@RequestParam("lecture_id") String lectureId,@CookieValue(value = "id") String id, @CookieValue(value = "type") String type) throws InvalidLectureException, InvalidCourseException {
+		try {
+			if (type.equals("teacher")) {
+			return teacherService.cancelLecture(lectureId,id);
+			}
+			else return null;
+		} catch (InvalidLectureException | InvalidCourseException e) {
+
+			log.throwing(this.getClass().getName(), "cancelLecture", e);
+			return e.getMessage();
+		}
+	}
 	@RequestMapping(value = Constants.GET_PAST_LECTURES, method = RequestMethod.GET)
 	public List<LectureDTO> getPastLectures(@CookieValue(value = "username") String username,@CookieValue(value = "id") String id, @CookieValue(value = "type") String type) throws InvalidTeacherException{
 		try {
