@@ -3,6 +3,7 @@ import {Redirect} from 'react-router-dom';
 import {AuthContext} from '../auth/AuthContext'
 import Table from "react-bootstrap/Table";
 import Modal from 'react-modal';
+import moment from 'moment';
 
 const customStyles = {
   content : {
@@ -32,6 +33,21 @@ const LecturesTableTeacher = (props) => {
       setIsOpen(false);
     }
 
+    function removeButton(lecture_id,startTime){
+      const format1 = "YYYY-MM-DD HH:mm:ss";
+      let date1 = new Date();
+      let dateTime1 = moment(date1).format(format1);
+      let date2 = new Date(startTime);
+      let dateTime2 = moment(date2).format(format1);
+      dateTime2 = moment(dateTime2,"YYYY-MM-DD HH:mm:ss");
+      if(dateTime2.diff(dateTime1, 'minutes') > 60){
+        return (<button type="button"className="btn btn-outline-danger" onClick={() =>job2(lecture_id)}>Remove</button>);
+      }else{
+        console.log("here");
+        return (<button type="button" disabled className="btn btn-outline-danger" onClick={() =>job2(lecture_id)}>Remove</button>);
+      }
+    }
+
     return(
         <AuthContext.Consumer>
           {(context) => (
@@ -41,7 +57,8 @@ const LecturesTableTeacher = (props) => {
                     <tr>
                       <th>Id</th>
                       <th>Course</th>
-                      <th>Date</th>
+                      <th>Start Time</th>
+                      <th>End Time</th>
                       <th>Teacher</th>
                       <th>Location</th>
                       <th>Students №</th>
@@ -56,11 +73,13 @@ const LecturesTableTeacher = (props) => {
                           <td>{lecture.id}</td>
                           <td>{lecture.subjectName}</td>
                           <td>{lecture.startTime}</td>                          
+                          <td>{lecture.endTime}</td>         
                           <td>{lecture.surnameString}</td>
                           <td>{lecture.roomName}</td>
                           <td>{lecture.nrStudents}</td>
                           <td><button type="button" className="btn btn-outline-success" onClick={() =>openModal(lecture.id)}>Students</button>
-                          <button type="button" className="btn btn-outline-danger" onClick={() =>job2(lecture.id)}>Remove</button></td>
+                            {removeButton(lecture.id,lecture.startTime)}
+                          </td>
                         </tr>
                     ))}
                   </tbody>
