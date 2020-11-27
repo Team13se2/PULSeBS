@@ -120,8 +120,8 @@ public class PulsbesApplication {
 				
 				Lecture l3 = new Lecture();
 				l3.setId("3"); 
-				l3.addStartTime(2020, 10, 27, 8,30 );
-				l3.addEndTime(2020, 10, 27, 10,0);
+				l3.addStartTime(2020, 10, 28, 8,30 );
+				l3.addEndTime(2020, 10, 28, 10,0);
 				l3.setSubjectName(c.getName());
 				l3.setAvailableSeat(100); 
 				l3.setTotalSeat(100);
