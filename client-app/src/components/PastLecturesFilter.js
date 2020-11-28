@@ -16,16 +16,25 @@ const PastLecturesFilter = (props) => {
         <AuthContext.Consumer>
           {(context) => (
               <>
-            <ProSidebar>
+            <ProSidebar >
                 <Menu iconShape="square">
-                    <SubMenu title="Single Lecture" >
-                    <MenuItem>Component 1</MenuItem>
-                    <MenuItem>Component 2</MenuItem>
-                    </SubMenu>
                     <MenuItem >All Lectures <Link to="/teacher/pastLectures/all"/></MenuItem>
                     <MenuItem >Week <Link to="/teacher/pastLectures/week"/></MenuItem>
-                    <MenuItem >Month<Link to="/teacher/pastLectures/month"/></MenuItem>
-                    <MenuItem >Graph</MenuItem>
+                    <SubMenu title="Month" >
+                    <MenuItem>January<Link to="/teacher/pastLectures/month/January"/></MenuItem>
+                    <MenuItem>February<Link to="/teacher/pastLectures/month/February"/></MenuItem>
+                    <MenuItem>March<Link to="/teacher/pastLectures/month/March"/></MenuItem>
+                    <MenuItem>April<Link to="/teacher/pastLectures/month/April"/></MenuItem>
+                    <MenuItem>May<Link to="/teacher/pastLectures/month/May"/></MenuItem>
+                    <MenuItem>June<Link to="/teacher/pastLectures/month/June"/></MenuItem>
+                    <MenuItem>July<Link to="/teacher/pastLectures/month/July"/></MenuItem>
+                    <MenuItem>August<Link to="/teacher/pastLectures/month/August"/></MenuItem>
+                    <MenuItem>September<Link to="/teacher/pastLectures/month/September"/></MenuItem>
+                    <MenuItem>October<Link to="/teacher/pastLectures/month/October"/></MenuItem>
+                    <MenuItem>November<Link to="/teacher/pastLectures/month/November"/></MenuItem>
+                    <MenuItem>December<Link to="/teacher/pastLectures/month/December"/></MenuItem>
+                    </SubMenu>
+                    <MenuItem >Graph<Link to="/teacher/pastLectures/graph"/></MenuItem>
                 </Menu>
                 
             </ProSidebar>
