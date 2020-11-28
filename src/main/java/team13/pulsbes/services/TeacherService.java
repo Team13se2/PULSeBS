@@ -1,5 +1,6 @@
 package team13.pulsbes.services;
 
+import java.text.ParseException;
 import java.util.List;
 
 import team13.pulsbes.dtos.LectureDTO;

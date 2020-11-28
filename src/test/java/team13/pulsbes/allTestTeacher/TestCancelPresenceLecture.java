@@ -1,16 +1,18 @@
 package team13.pulsbes.allTestTeacher;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.isA;
+import static org.mockito.Mockito.doNothing;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
+
+import java.text.ParseException;
+import java.util.Optional;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-
-import static org.mockito.ArgumentMatchers.isA;
-import static org.mockito.Mockito.*;
-
-import java.text.ParseException;
-import java.util.Optional;
 
 import team13.pulsbes.entities.Course;
 import team13.pulsbes.entities.Lecture;
@@ -23,9 +25,8 @@ import team13.pulsbes.repositories.LectureRepository;
 import team13.pulsbes.repositories.TeacherRepository;
 import team13.pulsbes.serviceimpl.NotificationServiceImpl;
 import team13.pulsbes.serviceimpl.TeacherServiceImpl;
-import team13.pulsbes.services.NotificationService;
 
-class TestCancelLecture {
+class TestCancelPresenceLecture {
 
 	@Autowired
 	TeacherServiceImpl teacherService;
@@ -48,12 +49,12 @@ class TestCancelLecture {
 	}
 	
 	@Test
-	void testCancelLecture() {
-		assertThrows(InvalidLectureException.class, ()->teacherService.cancelLecture("-1", "-1") );
+	void testCancelPresenceLecture() {
+		assertThrows(InvalidLectureException.class, ()->teacherService.cancelPresenceLecture("-1", "-1") );
 	}
 	
 	@Test
-	void testCancelLecture2() throws InvalidStudentException, InvalidLectureException, InvalidCourseException, ParseException {
+	void testCancelPresenceLecture2() throws InvalidStudentException, InvalidLectureException, InvalidCourseException, ParseException {
 		Teacher t = new Teacher();
 		Lecture l = new Lecture();
 		Student s = new Student("1","test","testsur");
@@ -74,10 +75,10 @@ class TestCancelLecture {
 		when(teacherRepository.save(any())).thenReturn(t);
 		doNothing().when(teacherRepository).flush();
 		doNothing().when(notificationService).sendMessage(isA(String.class), isA(String.class), isA(String.class));
-		assertEquals("Lecture cancelled",teacherService.cancelLecture("1", "1"));		
+		assertEquals("Lecture was changd from in presence to online",teacherService.cancelPresenceLecture("1", "1"));		
 	}
 	@Test
-	void testCancelLecture3() throws InvalidStudentException, InvalidLectureException, InvalidCourseException, ParseException {
+	void testCancelPresenceLecture3() throws InvalidStudentException, InvalidLectureException, InvalidCourseException, ParseException {
 		Teacher t = new Teacher();
 		Lecture l = new Lecture();
 		Student s = new Student("1","test","testsur");
@@ -94,6 +95,6 @@ class TestCancelLecture {
 		Optional<Teacher> teacher = Optional.of(t);
 		when(teacherRepository.findById(any())).thenReturn(teacher);
 		when(lectureRepository.getOne(any())).thenReturn(l);
-		assertEquals("Lecture is too late to be cancelled",teacherService.cancelLecture("1", "1"));		
+		assertEquals("Lecture is too late to be changed",teacherService.cancelPresenceLecture("1", "1"));		
 	}
 }

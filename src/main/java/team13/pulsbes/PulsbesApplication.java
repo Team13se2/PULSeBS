@@ -79,18 +79,19 @@ public class PulsbesApplication {
  			TeacherRepository teacherRepository;
 			@Override
 			public void run(String... args) throws Exception {
-//				 Student s = studentRepository.getOne("1");
-				 //s.addCourse(courseRepository.getOne("1"));
-//				 s.setEmail("student1team13@gmail.com");
-//				 studentRepository.save(s);
-//				 Course c = courseRepository.getOne("1");
-//				 c.setTeacher(teacherRepository.getOne("1"));
-//				 courseRepository.save(c);
+//				 
+				Student s = studentRepository.getOne("1");
+				 s.addCourse(courseRepository.getOne("1"));
+				 s.setEmail("student1team13@gmail.com");
+				 studentRepository.save(s);
+				 Course c = courseRepository.getOne("1");
+				 c.setTeacher(teacherRepository.getOne("1"));
+				 courseRepository.save(c);
 
-				// Lecture l1 = new Lecture();
-//				 Teacher teacher = teacherRepository.getOne("1");
-//				 teacher.setEmail("teacher1team13@gmail.com");
-//				 officerService.addTeacher(teacher);
+				 Teacher teacher = teacherRepository.getOne("1");
+				 teacher.setEmail("teacher1team13@gmail.com");
+				 officerService.addTeacher(teacher);
+				 Lecture l1 = new Lecture();
 				// l1.setId("1");
 				// l1.addStartTime(2020, 10, 20, 15, 0);
 				// l1.addEndTime(2020, 10, 20, 16, 30);
@@ -134,19 +135,21 @@ public class PulsbesApplication {
 
 				System.out.print(teacherRepository.getOne("1").getLectures());
 				
-//				 Lecture l3 = new Lecture();
-//				 l3.setId("4"); 
-//				 l3.addStartTime(2020, 10, 25, 18, 40);
-//				 l3.addEndTime(2020, 10, 27, 10,0);
-//				 l3.setSubjectName(c.getName());
-//				 l3.setAvailableSeat(100); 
-//				 l3.setTotalSeat(100);
-//				 l3.setLectureType("Teoria");
-//				 l3.setCourse(c);
-//				 l3.setSurnameString("Vetrò");
-//				 l3.setRoomName("TEST");
-//				 l3.setTeacher(teacher);
-//				 officerService.addLecture(l3);
+				 Lecture l3 = new Lecture();
+				 //l3.addStudentAttending(s);
+				 s.addBookLecture(l3);
+				 l3.setId("4"); 
+				 l3.addStartTime(2020, 10, 30, 18, 40);
+				 l3.addEndTime(2020, 10, 27, 10,0);
+				 l3.setSubjectName(c.getName());
+				 l3.setAvailableSeat(100); 
+				 l3.setTotalSeat(100);
+				 l3.setLectureType("Teoria");
+				 l3.setCourse(c);
+				 l3.setSurnameString("Vetrò");
+				 l3.setRoomName("TEST");
+				 l3.setTeacher(teacher);
+				 officerService.addLecture(l3);
 			
 			}
 		};

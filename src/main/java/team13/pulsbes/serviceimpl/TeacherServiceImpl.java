@@ -109,12 +109,13 @@ public class TeacherServiceImpl implements TeacherService{
 		Lecture tmpLecture = lectureRepository.getOne(lectureId);
 		Calendar tmpCal = Calendar.getInstance();		
 		tmpCal.add(Calendar.HOUR_OF_DAY, -1);
-
+		tmpCal.add(Calendar.MONTH, 1);
 		
-		try { if(tmpLecture.getStartTime2().before(tmpCal.getTime())) {
-
+		try { 
+			if(tmpLecture.getStartTime2().before(tmpCal.getTime())) {
+		
 			List<Student> listStudent = tmpLecture.getStudents();
-			teacher.removeLecture(tmpLecture);
+			teacher.removeLecture(tmpLecture);			
             System.out.println(teacher.getLectures());
             lectureRepository.delete(tmpLecture);
             teacherRepository.save(teacher);
@@ -144,7 +145,7 @@ public class TeacherServiceImpl implements TeacherService{
 			return e.getMessage();
 		}
 
-	}
+}
 
 	@Override
 	public String cancelPresenceLecture(String lectureId, String TeacherId) throws InvalidLectureException, InvalidCourseException {
@@ -160,7 +161,7 @@ public class TeacherServiceImpl implements TeacherService{
 
 		
 		try { if(tmpLecture.getStartTime2().before(tmpCal.getTime())) {
-
+			
 			List<Student> listStudent = tmpLecture.getStudents();
 			teacher.removeLecture(tmpLecture);
             System.out.println(teacher.getLectures());
