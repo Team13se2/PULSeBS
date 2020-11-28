@@ -15,6 +15,9 @@ import Col from 'react-bootstrap/Col';
 import LecturesTableTeacher from './components/LectureTableTeacher';
 import MyCalendar from './components/MyCalendar';
 import MonthChart from './components/MonthChart';
+import Day_Picker from './components/Day_Picker';
+import moment from 'moment';
+import MonthNrStudents from './components/MonthNrStudents';
 
 class App extends React.Component {
     constructor(props) {
@@ -129,6 +132,39 @@ class App extends React.Component {
         })
     }
 
+    selectWeek = (start,end) =>{
+        let sum = 0;
+        let nrLectures = 0;
+        this.state.teacherLecture.forEach(lecture => {
+            const format1 = "YYYY-MM-DD HH:mm:ss";
+            let startTime = moment(lecture.startTime).format(format1);
+            startTime = moment(startTime,"YYYY-MM-DD HH:mm:ss");
+            if(startTime.isBetween(start,end)){
+                sum += lecture.nrStudents;
+                nrLectures ++;
+            }
+        });
+        console.log(sum);
+        this.setState({nrStudents: sum/(nrLectures == 0 ? 1: nrLectures)});
+    }
+
+    selectMonth = (month) =>{
+        let sum = 0;
+        let nrLectures = 0;
+        this.state.teacherLecture.forEach(lecture =>{
+            const format1 = "YYYY-MM-DD HH:mm:ss";
+            let startTime = moment(lecture.startTime).format(format1);
+            startTime = moment(startTime,"YYYY-MM-DD HH:mm:ss");
+            console.log(month);
+            if(startTime.month() == month){
+                sum += lecture.nrStudents;
+                nrLectures ++;
+            }
+        });
+        console.log(sum);
+        this.setState({nrStudents: sum/(nrLectures == 0 ? 1: nrLectures)});
+    }
+
 
     render() {
         const value = {
@@ -139,7 +175,7 @@ class App extends React.Component {
         }
         return (<AuthContext.Provider value={value}>
             <Row className="rowHeader">
-                <Header/>
+                <Header />
             </Row>
                 
             <Switch>
@@ -211,23 +247,78 @@ class App extends React.Component {
                                             <Col sm={1}/>
                                         </Route>
                                         <Route exact path="/teacher/pastLectures/week">
-                                            <Col sm={8}
+                                            <Col sm={3}
                                                 className="below-nav">
-                                                <h1>Past Lectures</h1>
+                                                <h1>Week</h1>
+                                                <Day_Picker selectWeek={this.selectWeek}/>
+                                                
+                                            </Col>
+                                            <Col sm={3} className="below-nav">
+                                                {this.state.nrStudents !== undefined && <h1>There are {this.state.nrStudents} booked</h1>}
                                             </Col>
                                             <Col sm={1}/>
                                         </Route>
-                                        <Route exact path="/teacher/pastLectures/month">
+                                        <Route path="/teacher/pastLectures/month">
                                             <Col sm={8}
                                                 className="below-nav">
-                                                <MonthChart lectures={this.state.teacherLecture} getAllPastLectures={this.getPastLecturesTeacher}/>
+                                                    <Switch>
+                                                        <Route exact path="/teacher/pastLectures/month/January">
+                                                            <MonthNrStudents selectMonth={this.selectMonth} month={0}/>
+                                                            <h1>January</h1>
+                                                        </Route>
+                                                        <Route exact path="/teacher/pastLectures/month/February">
+                                                            <MonthNrStudents selectMonth={this.selectMonth} month={1}/>
+                                                            <h1>February</h1>
+                                                        </Route>
+                                                        <Route exact path="/teacher/pastLectures/month/March">
+                                                            <MonthNrStudents selectMonth={this.selectMonth} month={2}/>
+                                                            <h1>March</h1>
+                                                        </Route>
+                                                        <Route exact path="/teacher/pastLectures/month/April">
+                                                            <MonthNrStudents selectMonth={this.selectMonth} month={3}/>
+                                                            <h1>April</h1>
+                                                        </Route>
+                                                        <Route exact path="/teacher/pastLectures/month/May">
+                                                            <MonthNrStudents selectMonth={this.selectMonth} month={4}/>
+                                                            <h1>May</h1>
+                                                        </Route>
+                                                        <Route exact path="/teacher/pastLectures/month/June">
+                                                            <MonthNrStudents selectMonth={this.selectMonth} month={5}/>
+                                                            <h1>June</h1>
+                                                        </Route>
+                                                        <Route exact path="/teacher/pastLectures/month/July">
+                                                            <MonthNrStudents selectMonth={this.selectMonth} month={6}/>
+                                                            <h1>July</h1>
+                                                        </Route>
+                                                        <Route exact path="/teacher/pastLectures/month/August">
+                                                            <MonthNrStudents selectMonth={this.selectMonth} month={7}/>
+                                                            <h1>August</h1>
+                                                        </Route>
+                                                        <Route exact path="/teacher/pastLectures/month/September">
+                                                            <MonthNrStudents selectMonth={this.selectMonth} month={8}/>
+                                                            <h1>September</h1>
+                                                        </Route>
+                                                        <Route exact path="/teacher/pastLectures/month/October">
+                                                            <MonthNrStudents selectMonth={this.selectMonth} month={9}/>
+                                                            <h1>October</h1>
+                                                        </Route>
+                                                        <Route exact path="/teacher/pastLectures/month/November">
+                                                            <MonthNrStudents selectMonth={this.selectMonth} month={10}/>
+                                                            <h1>November</h1>
+                                                        </Route>   
+                                                        <Route exact path="/teacher/pastLectures/month/December">
+                                                            <MonthNrStudents selectMonth={this.selectMonth} month={11}/>
+                                                            <h1>December</h1>
+                                                        </Route>                                             
+                                                    </Switch>
+                                                    {this.state.nrStudents !== undefined && <h1>There are {this.state.nrStudents} booked</h1>}
                                             </Col>
                                             <Col sm={1}/>
                                         </Route>
                                         <Route exact path="/teacher/pastLectures/graph">
                                             <Col sm={8}
                                                 className="below-nav">
-                                                <h1>Past Lectures</h1>
+                                                <MonthChart lectures={this.state.teacherLecture} getAllPastLectures={this.getPastLecturesTeacher}/>
                                             </Col>
                                             <Col sm={1}/>
                                         </Route>
