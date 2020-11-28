@@ -64,3 +64,12 @@ input:focus:invalid {
 .list-title {
     font-weight: 500;
 }
+
+.overflow{
+    overflow: hidden;
+    height: 90vh;
+}
+
+body{
+    height: 90vh;
+}

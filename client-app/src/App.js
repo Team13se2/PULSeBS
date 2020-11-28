@@ -234,7 +234,7 @@ class App extends React.Component {
                         <Route path="/teacher/pastLectures">
                             <Route path="/teacher/pastLectures">
                                 <Row className="">
-                                    <Col sm={2}>
+                                    <Col sm={2} className="overflow">
                                         <PastLecturesFilter getAllPastLectures={this.getPastLecturesTeacher}/>
                                     </Col>
                                     <Switch>
