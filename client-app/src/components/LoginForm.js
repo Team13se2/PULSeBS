@@ -27,7 +27,7 @@ class LoginForm extends React.Component {
     
     handleSubmit = (event, onLogin) => {
         event.preventDefault();
-        onLogin(this.state.username,this.state.password,"teacher");
+        onLogin(this.state.username,this.state.password,"student");
         this.setState({submitted : true});
     }
 
@@ -40,6 +40,7 @@ class LoginForm extends React.Component {
                 <>
                 
                 {context.authUser && context.authUser.type === "teacher" && <Redirect to='/teacher'/>}
+                {context.authUser && context.authUser.type === "student" && <Redirect to='/student'/>}
                 <Container fluid>
                     <Row>
                         <Col>

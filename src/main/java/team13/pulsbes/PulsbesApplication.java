@@ -512,7 +512,7 @@ public class PulsbesApplication {
 
 				System.out.print(teacherRepository.getOne("1").getLectures());
 
-				Lecture l3 = new Lecture();
+				/*Lecture l3 = new Lecture();
 				//l3.addStudentAttending(s);
 				s.addBookLecture(l3);
 				l3.setId("4");
@@ -526,7 +526,7 @@ public class PulsbesApplication {
 				l3.setSurnameString("Vetrò");
 				l3.setRoomName("TEST");
 				l3.setTeacher(teacher);
-				officerService.addLecture(l3);
+				officerService.addLecture(l3);*/
 
 			}
 		};
