@@ -44,26 +44,23 @@ class App extends React.Component {
     }
 
     // Add a logout method
-    // Add a logout method
     logout = () => {
         console.log("logout");
         API.userLogout().then(() => {
             this.setState({authUser: undefined, authErr: undefined});
+            this.props.history.push("/");
         });
-        this.props.history.push("/login");
     }
 
     // Add a login method
     login = (username, password, type) => {
         API.userLogin(username, password, type).then((user) => {
-            this.setState({authUser: user});
-            if (user.id != -1) {
-                if (user.teacher) {
-                    this.props.history.push("/teacher");
-                } else {
-                    this.props.history.push("/student");
-                }
-            } else {
+            let usr;
+            if(user.id != -1 && user.teacher >= 0){
+                usr = {id: user.id, password: user.password, type: user.teacher ? "teacher" : "student"};
+            }
+            this.setState({authUser: usr});
+            if (user.id == -1) {
                 this.setState({authErr: "Login Error"});
             }
         }).catch((errorObj) => {
@@ -109,12 +106,16 @@ class App extends React.Component {
     getAllLecturesTeacher = () =>{
         API.getAllLectures().then((lecture) =>{
             this.setState({teacherLecture: lecture});
+        }).catch((err) =>{
+            console.log(err);
         })
     }
 
     getPastLecturesTeacher = () =>{
         API.getPastLectures().then((lecture) =>{
             this.setState({teacherLecture: lecture});
+        }).catch((err) =>{
+            console.log(err);
         })
     }
 
