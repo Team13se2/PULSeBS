@@ -41,10 +41,16 @@ const LecturesTableTeacher = (props) => {
       let dateTime2 = moment(date2).format(format1);
       dateTime2 = moment(dateTime2,"YYYY-MM-DD HH:mm:ss");
       if(dateTime2.diff(dateTime1, 'minutes') > 60){
-        return (<button type="button"className="btn btn-outline-danger" onClick={() =>job2(lecture_id)}>Remove</button>);
+        return (<><button type="button"className="btn btn-outline-danger" onClick={() =>job2(lecture_id)}>Remove</button>
+        <button type="button"className="btn btn-outline-warning" onClick={() =>job2(lecture_id)}>Move Online</button></>);
       }else{
-        console.log("here");
-        return (<button type="button" disabled className="btn btn-outline-danger" onClick={() =>job2(lecture_id)}>Remove</button>);
+        if(dateTime2.diff(dateTime1, 'minutes') > 30){
+          return (<><button type="button" disabled className="btn btn-outline-danger" onClick={() =>job2(lecture_id)}>Remove</button>
+          <button type="button"className="btn btn-outline-warning" onClick={() =>job2(lecture_id)}>Move Online</button></>);
+        }else{
+          return (<><button type="button" disabled className="btn btn-outline-danger" onClick={() =>job2(lecture_id)}>Remove</button>
+          <button type="button" disabled className="btn btn-outline-warning" onClick={() =>job2(lecture_id)}>Move Online</button></>);
+        }
       }
     }
 
