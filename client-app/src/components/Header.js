@@ -7,7 +7,6 @@ import {Route} from 'react-router-dom';
 
 const Header = (props) => {
   useEffect(() => {
-    console.log("dentro");
   }, []);
 
   return(

@@ -6,13 +6,15 @@ import Col from 'react-bootstrap/Col';
 import Button from'react-bootstrap/Button';
 import Alert from'react-bootstrap/Alert';
 import {Redirect} from 'react-router-dom';
-import {AuthContext} from '../auth/AuthContext'
-
+import {AuthContext} from '../auth/AuthContext';
 class LoginForm extends React.Component {
     
     constructor(props) {
         super(props);
         this.state = {username: 'teacher1team13@gmail.com', password: 'psw', submitted: false};
+    }
+
+    componentDidMount(){
     }
 
     onChangeUsername = (event) => {
@@ -36,8 +38,8 @@ class LoginForm extends React.Component {
             <AuthContext.Consumer>
                 {(context) => (
                 <>
-                {/*context.authUser !== undefined && context.authUser.type === "student" && <Redirect to = "/student"></Redirect>}
-                {context.authUser !== undefined && context.authUser.type === "teacher" && <Redirect to = "/teacher"></Redirect>*/}
+                
+                {context.authUser && context.authUser.type === "teacher" && <Redirect to='/teacher'/>}
                 <Container fluid>
                     <Row>
                         <Col>
@@ -83,5 +85,5 @@ class LoginForm extends React.Component {
 
 
 }
-
+LoginForm.contextType = AuthContext;
 export default LoginForm;
