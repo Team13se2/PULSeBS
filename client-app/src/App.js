@@ -53,9 +53,10 @@ class App extends React.Component {
     }
 
     // Add a login method
-    login = (username, password, type) => {
-        API.userLogin(username, password, type).then((user) => {
+    login = (username, password) => {
+        API.userLogin(username, password).then((user) => {
             let usr;
+            console.log(user);
             if(user.id != -1 && user.teacher >= 0){
                 usr = {id: user.id, password: user.password, type: user.teacher ? "teacher" : "student"};
             }

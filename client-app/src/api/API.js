@@ -21,14 +21,14 @@ async function isAuthenticated(){
     }
 }
 
-async function userLogin(email, psw, type) {
+async function userLogin(email, psw) {
     return new Promise((resolve, reject) => {
         fetch(baseURL + '/login/login', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({email: email, psw: psw, teacher: type === "teacher" ? 1 : 0}),
+            body: JSON.stringify({email: email, psw: psw,teacher:1}),
         }).then((response) => {
             if (response.ok) {
                 response.json().then((user) => {
