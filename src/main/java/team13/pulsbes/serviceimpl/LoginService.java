@@ -33,6 +33,13 @@ public class LoginService {
 
 	public LoginDTO login(IdPw idpw) throws WrongCredentialsException {
 		LoginDTO login = null;
+		
+		//check email to set teacher Bool
+		if(checkEmail(idpw))
+			idpw.setTeacher(true);
+		else
+			idpw.setTeacher(false);
+		
 		if(!idpw.getTeacher()) {
 			for(Student s : studentRepository.findAll()) {
 				if(s.getEmail().equals(idpw.getEmail()) && s.getPsw().equals(idpw.getPsw())) {
@@ -55,7 +62,11 @@ public class LoginService {
 		return login;
 	}
 	
-
+	static private boolean checkEmail(IdPw idpw) {
+		if(idpw.getEmail().charAt(0) == 't')
+			return true;		
+		return false;
+	}
 
 	static private LoginDTO loginConverter(Student s, Teacher t) {
 		LoginDTO login = new LoginDTO();
