@@ -35,14 +35,6 @@ public class OfficerService {
 		
 		Date notificationTime =  new Date();
 		
-//		notificationTime.setYear(l.getStartTime().getYear());
-//		notificationTime.setMonth(l.getStartTime().getMonth());
-//		notificationTime.setDate(l.getStartTime().getDay());
-//		notificationTime.setHours(l.getStartTime().getHour());
-//		notificationTime.setMinutes(l.getStartTime().getMinutes());
-//		notificationTime.setSeconds(0);
-//		notificationTime.setHours(notificationTime.getHours()-1);
-		
 		notificationTime = l.getStartTime2();
 		notificationTime.setDate(notificationTime.getDate() - 1);
 		notificationTime.setHours(23);
@@ -51,9 +43,11 @@ public class OfficerService {
 		timer.schedule(new TimerTask() {
 			@Override
 		    public void run() {
-		        //Call your method here
 		        //setEmail(emailContent, subject);
-				//notificationService.sendMessage(l.getTeacher().getEmail(), "Students attending lecture", "Number of students attending the lecture is " + l.getStudents().size());
+				
+				notificationService.sendMessage(l.getTeacher().getEmail(), 
+									"Students attending lecture of " + l.getSubjectName(),
+									"Number of students attending the lecture is " + l.getStudents().size() + ".\n The lecture is scheduled at "+ l.getStartTime() + ".");
 		    }
 			}, notificationTime);
 		}

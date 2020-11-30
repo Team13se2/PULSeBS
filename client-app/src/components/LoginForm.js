@@ -40,6 +40,7 @@ class LoginForm extends React.Component {
                 <>
                 
                 {context.authUser && context.authUser.type === "teacher" && <Redirect to='/teacher'/>}
+                {context.authUser && context.authUser.type === "student" && <Redirect to='/student'/>}
                 <Container fluid>
                     <Row>
                         <Col>
