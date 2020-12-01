@@ -38,19 +38,21 @@ public class OfficerService {
 		notificationTime = l.getStartTime2();
 		notificationTime.setDate(notificationTime.getDate() - 1);
 		notificationTime.setHours(23);
+		Calendar now = Calendar.getInstance();
 		
-		
-		timer.schedule(new TimerTask() {
-			@Override
-		    public void run() {
-		        //setEmail(emailContent, subject);
-				
-				notificationService.sendMessage(l.getTeacher().getEmail(), 
-									"Students attending lecture of " + l.getSubjectName(),
-									"Number of students attending the lecture is " + l.getStudents().size() + ".\n The lecture is scheduled at "+ l.getStartTime() + ".");
-		    }
-			}, notificationTime);
+		if(notificationTime.before(now.getTime())) {
+			timer.schedule(new TimerTask() {
+				@Override
+			    public void run() {
+			        //setEmail(emailContent, subject);
+					
+					notificationService.sendMessage(l.getTeacher().getEmail(), 
+										"Students attending lecture of " + l.getSubjectName(),
+										"Number of students attending the lecture is " + l.getStudents().size() + ".\n The lecture is scheduled at "+ l.getStartTime() + ".");
+			    }
+				}, notificationTime);
 		}
+	}
 	
 }
 	
