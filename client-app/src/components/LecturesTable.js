@@ -10,7 +10,7 @@ const LecturesTable = (props) => {
     // same as componentDidMount()
     useEffect(() => {
       getLectures();
-    }, []);
+    }, [lectures]);
 
 
     return(
