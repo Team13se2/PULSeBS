@@ -65,7 +65,6 @@ const LecturesTableTeacher = (props) => {
                       <th>Course</th>
                       <th>Start Time</th>
                       <th>End Time</th>
-                      <th>Teacher</th>
                       <th>Location</th>
                       <th>Students №</th>
                       {!past && <th> </th> }
@@ -79,8 +78,7 @@ const LecturesTableTeacher = (props) => {
                           <td>{lecture.id}</td>
                           <td>{lecture.subjectName}</td>
                           <td>{lecture.startTime}</td>                          
-                          <td>{lecture.endTime}</td>         
-                          <td>{lecture.surnameString}</td>
+                          <td>{lecture.endTime}</td>
                           <td>{lecture.roomName}</td>
                           <td>{lecture.nrStudents}</td>
                           {!past &&<td><button type="button" className="btn btn-outline-success" onClick={() =>openModal(lecture.id)}>Students</button>

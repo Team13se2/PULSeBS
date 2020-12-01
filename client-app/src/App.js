@@ -57,9 +57,10 @@ class App extends React.Component {
         API.userLogin(username, password).then((user) => {
             let usr;
             console.log(user);
-            if(user.id != -1 && user.teacher >= 0){
-                usr = {id: user.id, password: user.password, type: user.teacher ? "teacher" : "student"};
+            if(user.id != -1){
+                usr = {id: user.id, password: user.password, type: user.role};
             }
+            console.log(usr);
             this.setState({authUser: usr});
             if (user.id == -1) {
                 this.setState({authErr: "Login Error"});

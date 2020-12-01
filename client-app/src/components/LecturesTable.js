@@ -10,7 +10,7 @@ const LecturesTable = (props) => {
     // same as componentDidMount()
     useEffect(() => {
       getLectures();
-    }, [lectures]);
+    }, []);
 
 
     return(
@@ -25,7 +25,6 @@ const LecturesTable = (props) => {
                       <th>End</th>
                       <th>Subject</th>
                       <th>Lecture Type</th>
-                      <th>Professor</th>
                       <th>Available Seat</th>
                       <th>Total Seat</th>
                       <th>Room Name</th>
@@ -41,8 +40,7 @@ const LecturesTable = (props) => {
                           <td>{lecture.startTime}</td>
                           <td>{lecture.endTime}</td>                          
                           <td>{lecture.subjectName}</td>
-                          <td>{lecture.lectureType}</td>
-                          <td>{lecture.surnameString}</td>                          
+                          <td>{lecture.lectureType}</td>                       
                           <td>{lecture.availableSeat}</td>
                           <td>{lecture.totalSeat}</td>
                           <td>{lecture.roomName}</td>
