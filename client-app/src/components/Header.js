@@ -21,17 +21,20 @@ const Header = (props) => {
             <path fillRule="evenodd" d="M12.354 3.646a.5.5 0 010 .708l-7 7a.5.5 0 01-.708 0l-3.5-3.5a.5.5 0 11.708-.708L5 10.293l6.646-6.647a.5.5 0 01.708 0z" clipRule="evenodd"/>
             <path d="M6.25 8.043l-.896-.897a.5.5 0 10-.708.708l.897.896.707-.707zm1 2.414l.896.897a.5.5 0 00.708 0l7-7a.5.5 0 00-.708-.708L8.5 10.293l-.543-.543-.707.707z"/>
           </svg>
-          Title
+          PULSeBS
         </Navbar.Brand>
         
         <Route path="/student/">
           <Nav className="mr-auto">
+          <Nav.Link as={NavLink} exact to="/student/" onClick = {() => console.log("clk Lectures")}> Lectures</Nav.Link> 
+          <Nav.Link as={NavLink} exact to="/student/noBookedLectures" onClick = {() => console.log("clk Lectures")}> Prenotation</Nav.Link> 
           <Nav.Link as={NavLink} to="/student/calendar" onClick = {() => console.log("clk calendar")}> Calendar</Nav.Link> 
         </Nav>
         </Route>
         <Route path="/teacher/">
             <Nav className="mr-auto">
-            <Nav.Link as={NavLink} to="/teacher/pastLectures/all" > Past Lectures</Nav.Link> 
+            <Nav.Link as={NavLink} exact to="/teacher" > Lectures</Nav.Link> 
+            <Nav.Link as={NavLink} to="/teacher/pastLectures/" > Past Lectures</Nav.Link> 
           </Nav>
         </Route>
 

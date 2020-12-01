@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Optional;
 import java.util.List;
 import java.util.logging.Logger;
+import java.util.Calendar;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,6 +17,7 @@ import team13.pulsbes.entities.Course;
 import team13.pulsbes.entities.Student;
 import team13.pulsbes.exception.InvalidLectureException;
 import team13.pulsbes.exception.InvalidStudentException;
+import java.text.ParseException;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
@@ -113,6 +115,8 @@ public class StudentServiceImpl implements StudentService {
 
         List<Course> listCourse = studentRepository.getOne(id).getCourses();
         List<Lecture> listLecture = new ArrayList<>();
+        Calendar tmpCal = Calendar.getInstance();
+
 
 
         for (Course tmpCourse : listCourse) {
@@ -121,7 +125,7 @@ public class StudentServiceImpl implements StudentService {
 
         return listLecture
                 .stream()
-                .filter(x -> !studentRepository.getOne(id).getBookedLectures().contains(x))
+                .filter(x -> { { try { System.out.println(x.getStartTime2()); return x.getStartTime2().after(tmpCal.getTime()) && !studentRepository.getOne(id).getBookedLectures().contains(x); } catch (ParseException e) {log.throwing(this.getClass().getName(), "getAllLectures", e); return false;} } })
                 .map(l -> modelMapper.map(l, LectureDTO.class))
                 .collect(Collectors.toList());
     }
@@ -134,11 +138,13 @@ public class StudentServiceImpl implements StudentService {
         if (!studentRepository.existsById(id))
             throw new InvalidStudentException("Student not found");
 
+        Calendar tmpCal = Calendar.getInstance();
+
 
         return studentRepository.getOne(id)
                 .getBookedLectures()
                 .stream()
-                .filter(Objects::nonNull)
+                .filter(x -> { try { System.out.println(x.getStartTime2()); return x.getStartTime2().after(tmpCal.getTime()); } catch (ParseException e) {log.throwing(this.getClass().getName(), "getAllLectures", e); return false;} })
                 .map(l -> modelMapper.map(l, LectureDTO.class))
                 .collect(Collectors.toList());
     }

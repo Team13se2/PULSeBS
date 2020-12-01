@@ -80,7 +80,7 @@ public class PulsbesApplication {
 			@Override
 			public void run(String... args) throws Exception {
 //
-				Student s = studentRepository.getOne("1");
+			/*	Student s = studentRepository.getOne("1");
 				s.addCourse(courseRepository.getOne("1"));
 				s.setEmail("student1team13@gmail.com");
 				studentRepository.save(s);
@@ -454,7 +454,7 @@ public class PulsbesApplication {
 				l22.setSurnameString("Torchiano");
 				l22.setRoomName("Aula 1");
 				l22.setTeacher(teacher);
-				officerService.addLecture(l22);
+				//officerService.addLecture(l22);
 
 				Lecture l23 = new Lecture();
 				l23.setId("23");
@@ -468,7 +468,7 @@ public class PulsbesApplication {
 				l23.setSurnameString("Torchiano");
 				l23.setRoomName("Aula 1");
 				l23.setTeacher(teacher);
-				officerService.addLecture(l23);
+				//officerService.addLecture(l23);
 				// l1.setId("1");
 				// l1.addStartTime(2020, 10, 20, 15, 0);
 				// l1.addEndTime(2020, 10, 20, 16, 30);
@@ -512,21 +512,7 @@ public class PulsbesApplication {
 
 				System.out.print(teacherRepository.getOne("1").getLectures());
 
-				/*Lecture l3 = new Lecture();
-				//l3.addStudentAttending(s);
-				s.addBookLecture(l3);
-				l3.setId("4");
-				l3.addStartTime(2020, 10, 30, 18, 40);
-				l3.addEndTime(2020, 10, 27, 10,0);
-				l3.setSubjectName(c.getName());
-				l3.setAvailableSeat(100);
-				l3.setTotalSeat(100);
-				l3.setLectureType("Teoria");
-				l3.setCourse(c);
-				l3.setSurnameString("Vetrò");
-				l3.setRoomName("TEST");
-				l3.setTeacher(teacher);
-				officerService.addLecture(l3);*/
+		*/
 
 			}
 		};

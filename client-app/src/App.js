@@ -53,9 +53,10 @@ class App extends React.Component {
     }
 
     // Add a login method
-    login = (username, password, type) => {
-        API.userLogin(username, password, type).then((user) => {
+    login = (username, password) => {
+        API.userLogin(username, password).then((user) => {
             let usr;
+            console.log(user);
             if(user.id != -1 && user.teacher >= 0){
                 usr = {id: user.id, password: user.password, type: user.teacher ? "teacher" : "student"};
             }
@@ -113,6 +114,9 @@ class App extends React.Component {
 
     getPastLecturesTeacher = () =>{
         API.getPastLectures().then((lecture) =>{
+            const l = lecture.sort((a,b) =>{
+                return a.id > b.id;
+            })
             this.setState({teacherLecture: lecture});
         }).catch((err) =>{
             console.log(err);
@@ -179,12 +183,12 @@ class App extends React.Component {
                 <Header />
             </Row>
                 
-            <Switch>
+            <Switch >
                 <Route path="/login">
                     <Row className="vheight-100">
                         <Col sm={4}></Col>
                         <Col sm={4}
-                            className="below-nav">
+                            className="below-nav loginColumn">
                             <LoginForm/>
                         </Col>
                     </Row>
@@ -208,6 +212,17 @@ class App extends React.Component {
                                 <Col sm={1}/>
                             </Row>
                         </Route>
+                        <Route exact path="/student/noBookedLectures">
+                            <Row className="vheight-0">
+                                <Col sm={1}/>
+                                <Col sm={8}
+                                    className="below-nav">
+                                    <h1>No Booked Lectures</h1>
+                                    <LecturesTable lectures={this.state.noBookedLectures} getLectures={this.getNoBookedLectures} remove={false} job={this.bookLecture}/>
+                                </Col>
+                                <Col sm={1}/>
+                            </Row>
+                        </Route>
                         <Route exact path="/student/">
                             <Row className="">
                                 <Col sm={1}/>
@@ -215,15 +230,6 @@ class App extends React.Component {
                                     className="below-nav">
                                     <h1>Booked Lectures</h1>
                                     <LecturesTable lectures={this.state.bookedLectures} getLectures={this.getBookedLectures} remove={true} job={this.removeLecture}/>
-                                </Col>
-                                <Col sm={1}/>
-                            </Row>
-                            <Row className="vheight-0">
-                                <Col sm={1}/>
-                                <Col sm={8}
-                                    className="below-nav">
-                                    <h1>No Booked Lectures</h1>
-                                    <LecturesTable lectures={this.state.noBookedLectures} getLectures={this.getNoBookedLectures} remove={false} job={this.bookLecture}/>
                                 </Col>
                                 <Col sm={1}/>
                             </Row>
@@ -255,7 +261,7 @@ class App extends React.Component {
                                                 
                                             </Col>
                                             <Col sm={3} className="below-nav">
-                                                {this.state.nrStudents !== undefined && <h1>There are {this.state.nrStudents} booked</h1>}
+                                                {this.state.nrStudents !== undefined && <h1>There are {this.state.nrStudents.toFixed(1)} booked per lecture</h1>}
                                             </Col>
                                             <Col sm={1}/>
                                         </Route>
@@ -312,16 +318,19 @@ class App extends React.Component {
                                                             <h1>December</h1>
                                                         </Route>                                             
                                                     </Switch>
-                                                    {this.state.nrStudents !== undefined && <h1>There are {this.state.nrStudents} booked</h1>}
+                                                    {this.state.nrStudents !== undefined && <h1>There are {this.state.nrStudents.toFixed(1)} booked per lecture</h1>}
                                             </Col>
                                             <Col sm={1}/>
                                         </Route>
                                         <Route exact path="/teacher/pastLectures/graph">
-                                            <Col sm={8}
+                                            <Col sm={10}
                                                 className="below-nav">
                                                 <MonthChart lectures={this.state.teacherLecture} getAllPastLectures={this.getPastLecturesTeacher}/>
                                             </Col>
                                             <Col sm={1}/>
+                                        </Route>
+                                        <Route exact path="/teacher/pastLectures">
+                                            <Redirect to="/teacher/pastLectures/all"/>
                                         </Route>
                                     </Switch>
                                 </Row>
@@ -330,7 +339,7 @@ class App extends React.Component {
                         <Route exact path="/teacher">
                             <Row className="">
                                 <Col sm={1}/>
-                                <Col sm={8}
+                                <Col sm={9}
                                     className="below-nav">
                                     <h1>Next Lectures</h1>
                                     <LecturesTableTeacher lectures={this.state.teacherLecture} past={false} getLectures={this.getAllLecturesTeacher} job={(lecture_id) => this.getStudentList(lecture_id)} students={this.state.students} job2={(lecture_id) =>this.removeTeacherLecture(lecture_id)}/>
