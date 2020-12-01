@@ -42,6 +42,8 @@ public class Lecture {
     private Integer totalSeat;
 
 	private String roomName;
+
+	private Integer nrStudents;
 	
 	private static final String dateFormatString = "yyyy-MM-dd HH:mm";
 
@@ -215,6 +217,13 @@ public class Lecture {
 
 	public void setTeacher(Teacher teacher) {
 		this.teacher = teacher;
+	}
+
+	public Integer getNrStudents(){
+		return nrStudents;
+	}
+	public void setNrStudents(Integer nrStudents){
+		this.nrStudents = nrStudents;
 	}
     
     
