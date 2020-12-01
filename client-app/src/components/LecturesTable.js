@@ -20,15 +20,15 @@ const LecturesTable = (props) => {
             <Table responsive striped bordered hover>
                   <thead>
                     <tr>
-                      <th>id</th>
-                      <th>startTime</th>
-                      <th>endTime</th>
-                      <th>subjectName</th>
-                      <th>lectureType</th>
-                      <th>surnameString</th>
-                      <th>availableSeat</th>
-                      <th>totalSeat</th>
-                      <th>roomName</th>
+                      <th>Id</th>
+                      <th>Start</th>
+                      <th>End</th>
+                      <th>Subject</th>
+                      <th>Lecture Type</th>
+                      <th>Professor</th>
+                      <th>Available Seat</th>
+                      <th>Total Seat</th>
+                      <th>Room Name</th>
                       <th> </th> 
                     </tr>
                   </thead>

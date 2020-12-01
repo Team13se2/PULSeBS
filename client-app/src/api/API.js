@@ -107,12 +107,6 @@ async function getNoBookedLectures(){
     const response = await fetch(baseURL + url);
     const lecturesJSON = await response.json();
     if(response.ok){
-        /*let lectures = lecturesJSON.map((l) => new LectureDTO(l.id,l.availableSeat,l.startTime,l.endTime,l.lectureType,l.surnameString,l.totalSeat,l.roomName,l.subjectName));
-        lectures.forEach(async function(element ,i){
-            const nr = await (await getNumberStudentsAttending(element.id)).nrStudents;
-            lectures[i].nrStudents = nr;
-        });
-        return lectures;*/
         return lecturesJSON.map((l) => new LectureDTO(l.id,l.availableSeat,l.startTime,l.endTime,l.lectureType,l.surnameString,l.totalSeat,l.roomName,l.subjectName,l.nrStudents));
     } else {
         let err = {status: response.status, errObj:lecturesJSON};

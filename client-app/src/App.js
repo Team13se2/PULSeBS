@@ -114,6 +114,9 @@ class App extends React.Component {
 
     getPastLecturesTeacher = () =>{
         API.getPastLectures().then((lecture) =>{
+            const l = lecture.sort((a,b) =>{
+                return a.id > b.id;
+            })
             this.setState({teacherLecture: lecture});
         }).catch((err) =>{
             console.log(err);
@@ -185,7 +188,7 @@ class App extends React.Component {
                     <Row className="vheight-100">
                         <Col sm={4}></Col>
                         <Col sm={4}
-                            className="below-nav">
+                            className="below-nav loginColumn">
                             <LoginForm/>
                         </Col>
                     </Row>
@@ -219,6 +222,8 @@ class App extends React.Component {
                                 </Col>
                                 <Col sm={1}/>
                             </Row>
+                        </Route>
+                        <Route exact path="/student/noBookedLectures">
                             <Row className="vheight-0">
                                 <Col sm={1}/>
                                 <Col sm={8}
@@ -323,6 +328,9 @@ class App extends React.Component {
                                                 <MonthChart lectures={this.state.teacherLecture} getAllPastLectures={this.getPastLecturesTeacher}/>
                                             </Col>
                                             <Col sm={1}/>
+                                        </Route>
+                                        <Route exact path="/teacher/pastLectures">
+                                            <Redirect to="/teacher/pastLectures/all"/>
                                         </Route>
                                     </Switch>
                                 </Row>
