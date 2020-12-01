@@ -50,6 +50,7 @@ class TestGetBookedLectures {
 		Student s = new Student("1","name","surname");		
 		Lecture l = new Lecture();
 		l.setId("1");
+		l.addStartTime(2030, 1, 1, 0, 0);
 		List<Lecture> lectures = new ArrayList<>();
 		lectures.add(l);
 		when(studentRepository.getOne(any())).thenReturn(s);

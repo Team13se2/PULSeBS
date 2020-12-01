@@ -17,7 +17,7 @@ public interface TeacherService {
 	Integer getNumberStudentsAttending(String id) throws InvalidLectureException;
 	List<LectureDTO> getAllLectures(String id) throws InvalidTeacherException;
 	List<StudentDTO> getStudentList(String id) throws InvalidLectureException;
-	String cancelLecture(String lectureId, String TeacherId) throws InvalidLectureException, InvalidCourseException;
-	String cancelPresenceLecture(String lectureId, String TeacherId) throws InvalidLectureException, InvalidCourseException;
+	String cancelLecture(String lectureId, String TeacherId) throws InvalidLectureException, InvalidCourseException, ParseException;
+	String cancelPresenceLecture(String lectureId, String TeacherId) throws InvalidLectureException, InvalidCourseException, ParseException;
 	List<LectureDTO> getPastLectures(String id) throws InvalidTeacherException;
 }

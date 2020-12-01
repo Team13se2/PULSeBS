@@ -50,6 +50,7 @@ class TestGetAllLectures {
 		Course c = new Course();
 		Lecture l = new Lecture();
 		l.setId("1");
+		l.addStartTime(2030, 1, 1, 0, 0);
 		List<Lecture> lectures = new ArrayList<>();
 		lectures.add(l);
 		c.setLectures(lectures);

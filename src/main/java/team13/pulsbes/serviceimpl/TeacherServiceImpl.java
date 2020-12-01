@@ -123,11 +123,12 @@ public class TeacherServiceImpl implements TeacherService{
 
 			for (Student tmpStudent : listStudent) {
 
+				
 				notificationService.sendMessage(tmpStudent.getEmail(),
 						"Lecture cancel notification",
 						"Dear "+tmpStudent.getName()+" "+tmpStudent.getSurname()+ ", \n" +
 						"The lecture of " + tmpLecture.getSubjectName() + " schedlued for " + tmpLecture.getStartTime() +" has been canceled. \n" +
-						"Best regards, \n" + tmpLecture.getTeacher().getName() + " " + tmpLecture.getTeacher().getSurname());
+						"Best regards, \n" + teacher.getName() + " " + teacher.getSurname());
 
 			}			
 			
@@ -180,7 +181,7 @@ public class TeacherServiceImpl implements TeacherService{
 						"Lecture change notification",
 						"Dear "+tmpStudent.getName()+" "+tmpStudent.getSurname()+ ", \n" +
 						"The lecture of " + tmpLecture.getSubjectName() + " schedlued for " + tmpLecture.getStartTime() +" will take place on the virtual platform. \n" +
-						"Best regards, \n" + tmpLecture.getTeacher().getName() + " " + tmpLecture.getTeacher().getSurname());
+						"Best regards, \n" + teacher.getName() + " " + teacher.getSurname());
 
 			}	
 

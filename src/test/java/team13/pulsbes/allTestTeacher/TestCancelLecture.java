@@ -58,6 +58,8 @@ class TestCancelLecture {
 		Lecture l = new Lecture();
 		Student s = new Student("1","test","testsur");
 		Course c = new Course();
+		t.setName("test");
+		t.setSurname("testsur");
 		c.getLectures().add(l);
 		l.setCourse(c);
 		s.setEmail("student1team13@gmail.com");
