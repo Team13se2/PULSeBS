@@ -158,6 +158,7 @@ public class TeacherServiceImpl implements TeacherService{
 		Lecture tmpLecture = lectureRepository.getOne(lectureId);
 		Calendar tmpCal = Calendar.getInstance();		
 		tmpCal.add(Calendar.MINUTE, -30);
+		tmpCal.add(Calendar.MONTH, 1);
 
 		
 		try { if(tmpLecture.getStartTime2().before(tmpCal.getTime())) {
