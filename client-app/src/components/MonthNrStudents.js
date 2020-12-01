@@ -12,7 +12,7 @@ const MonthNrStudents = (props) => {
     // same as componentDidMount()
     useEffect(() => {
         selectMonth(month);
-    }, []);
+    }, [month]);
 
     return(<> </>
       );
