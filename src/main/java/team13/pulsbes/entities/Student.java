@@ -66,13 +66,20 @@ public class Student {
 
 
     public void addBookLecture(Lecture l) {
-    	bookedLectures.add(l);
+		bookedLectures.add(l);
+		if (l.getNrStudents() == null) {
+			l.setNrStudents(1);
+		}
+		else {
+			l.setNrStudents(l.getNrStudents()+1);
+		}		
     }
     
     public void removeBookedLecture(Lecture l) {
 
     	this.bookedLectures.remove(l);
-    	l.getStudents().remove(this);
+		l.getStudents().remove(this);
+		l.setNrStudents(l.getNrStudents()-1);
 		l.setAvailableSeat(l.getAvailableSeat()+1);
     }
     
