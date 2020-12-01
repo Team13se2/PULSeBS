@@ -101,3 +101,10 @@ button {
 .rowHeader{
   height: 62px;
 }
+.row{
+  width: 100%;
+}
+.pro-sidebar{
+  min-width: 0px;
+  width: 100%;
+}

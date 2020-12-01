@@ -30,7 +30,7 @@ const MonthChart = (props) => {
         });
         return {animationEnabled: true,	
             title:{
-                text: "Number of Students CHANGE ME"
+                text: "Number of Students per month"
             },
             axisY : {
                 title: "Number of Students"
