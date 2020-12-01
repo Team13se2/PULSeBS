@@ -6,16 +6,16 @@ public class LoginDTO {
 	private String Id;
 	private String Name;
 	private String Surname;
-	private Boolean Teacher;
+	private String Role;
 	private String Token;
 	
-	public LoginDTO(String email, String id, String name, String surname,Boolean teacher, String token) {
+	public LoginDTO(String email, String id, String name, String surname,String teacher, String token) {
 		super();
 		this.Email = email;
 		this.Id = id;
 		this.Name = name;
 		this.Surname = surname;
-		this.Teacher = teacher;
+		this.Role = teacher;
 		this.Token = token;
 	}
 
@@ -56,12 +56,12 @@ public class LoginDTO {
 		this.Surname = surname;
 	}
 
-	public Boolean getTeacher() {
-		return Teacher;
+	public String getRole() {
+		return Role;
 	}
 
-	public void setTeacher(Boolean teacher) {
-		this.Teacher = teacher;
+	public void setRole(String teacher) {
+		this.Role = teacher;
 	}
 
 	public String getToken() {

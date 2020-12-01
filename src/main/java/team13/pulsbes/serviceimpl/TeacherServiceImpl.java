@@ -123,7 +123,11 @@ public class TeacherServiceImpl implements TeacherService{
 
 			for (Student tmpStudent : listStudent) {
 
-				notificationService.sendMessage(tmpStudent.getEmail(), "Lecture cancel notification", "The following lecture that you had a booking for was canceled: " + tmpLecture.getSubjectName() + ".");
+				notificationService.sendMessage(tmpStudent.getEmail(),
+						"Lecture cancel notification",
+						"Dear "+tmpStudent.getName()+" "+tmpStudent.getSurname()+ ", \n" +
+						"The lecture of " + tmpLecture.getSubjectName() + " schedlued for " + tmpLecture.getStartTime() +" has been canceled. \n" +
+						"Best regards, \n" + tmpLecture.getTeacher().getName() + " " + tmpLecture.getTeacher().getSurname());
 
 			}			
 			
@@ -171,8 +175,12 @@ public class TeacherServiceImpl implements TeacherService{
 			teacherRepository.flush();
 			
 			for (Student tmpStudent : listStudent) {
-
-				notificationService.sendMessage(tmpStudent.getEmail(), "Lecture change notification", "The following lecture has been changed from in presence to online only: " + tmpLecture.getSubjectName() + ".");
+				
+				notificationService.sendMessage(tmpStudent.getEmail(),
+						"Lecture change notification",
+						"Dear "+tmpStudent.getName()+" "+tmpStudent.getSurname()+ ", \n" +
+						"The lecture of " + tmpLecture.getSubjectName() + " schedlued for " + tmpLecture.getStartTime() +" will take place on the virtual platform. \n" +
+						"Best regards, \n" + tmpLecture.getTeacher().getName() + " " + tmpLecture.getTeacher().getSurname());
 
 			}	
 

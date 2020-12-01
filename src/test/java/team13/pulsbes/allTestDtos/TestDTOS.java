@@ -46,16 +46,16 @@ class TestDTOS {
 		
 		@Test
 		void testIdPw() {
-			IdPw i = new IdPw("email","psw",true);
+			IdPw i = new IdPw("email","psw","teacher");
 			assertEquals( "email",i.getEmail());
 			assertEquals("psw",i.getPsw());
-			assertTrue(i.getTeacher());
+			assertEquals("teacher",i.getRole());
 			i.setEmail("1");
 			i.setPsw("2");
-			i.setTeacher(false);
+			i.setRole("student");
 			assertEquals("1",i.getEmail());
 			assertEquals("2",i.getPsw());
-			assertTrue(!i.getTeacher());
+			assertEquals("student",i.getRole());
 		}
 		 
 		@Test
@@ -65,14 +65,14 @@ class TestDTOS {
 			l.setId("1");
 			l.setName("test");
 			l.setSurname("testsur");
-			l.setTeacher(true);
+			l.setRole("teacher");
 			l.setToken("asd");
 			assertEquals("email",l.getEmail());
 			assertEquals("1",l.getId());
 			assertEquals("test",l.getName());
 			assertEquals("testsur",l.getSurname());
 			assertEquals("asd",l.getToken());
-			assertTrue(l.getTeacher());			
+			assertEquals("teacher",l.getRole());			
 		}
 		
 		@Test 

@@ -6,12 +6,12 @@ public class IdPw {
 	
 	private String Psw;
 
-	private Boolean Teacher;
+	private String Role;
 	
-	public IdPw(String email, String psw, Boolean teacher) {
+	public IdPw(String email, String psw, String teacher) {
 		this.Email = email;
 		this.Psw = psw;
-		this.Teacher = teacher;
+		this.Role = teacher;
 	}
 
 	public String getEmail() {
@@ -30,12 +30,12 @@ public class IdPw {
 		this.Psw = psw;
 	}
 
-	public Boolean getTeacher() {
-		return Teacher;
+	public String getRole() {
+		return Role;
 	}
 
-	public void setTeacher(Boolean teacher) {
-		this.Teacher = teacher;
+	public void setRole(String teacher) {
+		this.Role = teacher;
 	}
 	
 }
