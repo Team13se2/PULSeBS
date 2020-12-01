@@ -107,15 +107,9 @@ public class Teacher {
 		this.courses = courses;
 	}
 
-	public void removeLecture (Lecture lecture) throws InvalidLectureException, InvalidCourseException {
+	public void removeLecture(Lecture lecture) throws InvalidLectureException, InvalidCourseException {
 
     	lectures.remove(lecture);
     	lecture.setTeacher(null);
-		System.out.println("1" + lecture.getStudents());
-		lecture.getStudents().forEach(s-> s.removeBookedLecture(lecture));
-		lecture.getStudents().forEach(s-> System.out.println("2" + s.getBookedLectures()));
-		lecture.getCourse().cancelLecture(lecture);
-		System.out.println("3" + lecture.getCourse().getLectures());
-
 	}
 }

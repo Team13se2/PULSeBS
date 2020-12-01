@@ -1,4 +1,5 @@
 import LoginForm from './components/LoginForm';
+import PastLecturesFilter from './components/PastLecturesFilter'
 import React from 'react';
 import {AuthContext} from './auth/AuthContext';
 // import "react-big-calendar/lib/css/react-big-calendar.css";
@@ -13,7 +14,10 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import LecturesTableTeacher from './components/LectureTableTeacher';
 import MyCalendar from './components/MyCalendar';
-import moment from 'moment'
+import MonthChart from './components/MonthChart';
+import Day_Picker from './components/Day_Picker';
+import moment from 'moment';
+import MonthNrStudents from './components/MonthNrStudents';
 
 class App extends React.Component {
     constructor(props) {
@@ -40,26 +44,23 @@ class App extends React.Component {
     }
 
     // Add a logout method
-    // Add a logout method
     logout = () => {
         console.log("logout");
         API.userLogout().then(() => {
             this.setState({authUser: undefined, authErr: undefined});
+            this.props.history.push("/");
         });
-        this.props.history.push("/login");
     }
 
     // Add a login method
     login = (username, password, type) => {
         API.userLogin(username, password, type).then((user) => {
-            this.setState({authUser: user});
-            if (user.id != -1) {
-                if (user.teacher) {
-                    this.props.history.push("/teacher");
-                } else {
-                    this.props.history.push("/student");
-                }
-            } else {
+            let usr;
+            if(user.id != -1 && user.teacher >= 0){
+                usr = {id: user.id, password: user.password, type: user.teacher ? "teacher" : "student"};
+            }
+            this.setState({authUser: usr});
+            if (user.id == -1) {
                 this.setState({authErr: "Login Error"});
             }
         }).catch((errorObj) => {
@@ -105,6 +106,16 @@ class App extends React.Component {
     getAllLecturesTeacher = () =>{
         API.getAllLectures().then((lecture) =>{
             this.setState({teacherLecture: lecture});
+        }).catch((err) =>{
+            console.log(err);
+        })
+    }
+
+    getPastLecturesTeacher = () =>{
+        API.getPastLectures().then((lecture) =>{
+            this.setState({teacherLecture: lecture});
+        }).catch((err) =>{
+            console.log(err);
         })
     }
 
@@ -122,6 +133,40 @@ class App extends React.Component {
         })
     }
 
+    selectWeek = (start,end) =>{
+        let sum = 0;
+        let nrLectures = 0;
+        this.state.teacherLecture.forEach(lecture => {
+            const format1 = "YYYY-MM-DD HH:mm:ss";
+            let startTime = moment(lecture.startTime).format(format1);
+            startTime = moment(startTime,"YYYY-MM-DD HH:mm:ss");
+            if(startTime.isBetween(start,end)){
+                sum += lecture.nrStudents;
+                nrLectures ++;
+            }
+        });
+        console.log(sum);
+        this.setState({nrStudents: sum/(nrLectures == 0 ? 1: nrLectures)});
+    }
+
+    selectMonth = (month) =>{
+        let sum = 0;
+        let nrLectures = 0;
+        this.state.teacherLecture.forEach(lecture =>{
+            const format1 = "YYYY-MM-DD HH:mm:ss";
+            let startTime = moment(lecture.startTime).format(format1);
+            startTime = moment(startTime,"YYYY-MM-DD HH:mm:ss");
+            console.log(month);
+            if(startTime.month() == month){
+                sum += lecture.nrStudents;
+                nrLectures ++;
+            }
+        });
+        console.log(sum);
+        this.setState({nrStudents: sum/(nrLectures == 0 ? 1: nrLectures)});
+    }
+
+
     render() {
         const value = {
             authUser: this.state.authUser,
@@ -130,9 +175,10 @@ class App extends React.Component {
             logoutUser: this.logout
         }
         return (<AuthContext.Provider value={value}>
-
-            <Header/>
-
+            <Row className="rowHeader">
+                <Header />
+            </Row>
+                
             <Switch>
                 <Route path="/login">
                     <Row className="vheight-100">
@@ -145,7 +191,7 @@ class App extends React.Component {
                 </Route>
                 <Route path="/student">
                     <Switch>
-                        <Route path="/student/calendar">
+                        <Route exact path="/student/calendar">
                             <Row className="vheight-0">
                                 <Col sm={1}/>
                                 <Col sm={8}className="below-nav">
@@ -162,7 +208,7 @@ class App extends React.Component {
                                 <Col sm={1}/>
                             </Row>
                         </Route>
-                        <Route path="/student/">
+                        <Route exact path="/student/">
                             <Row className="">
                                 <Col sm={1}/>
                                 <Col sm={8}
@@ -184,17 +230,115 @@ class App extends React.Component {
                         </Route>
                     </Switch>
                 </Route>
-
                 <Route path="/teacher">
-                    <Row className="">
-                        <Col sm={1}/>
-                        <Col sm={8}
-                            className="below-nav">
-                            <h1>Next Lectures</h1>
-                            <LecturesTableTeacher lectures={this.state.teacherLecture} getLectures={this.getAllLecturesTeacher} job={(lecture_id) => this.getStudentList(lecture_id)} students={this.state.students} job2={(lecture_id) =>this.removeTeacherLecture(lecture_id)}/>
-                        </Col>
-                        <Col sm={1}/>
-                    </Row>
+                    <Switch>
+                        <Route path="/teacher/pastLectures">
+                            <Route path="/teacher/pastLectures">
+                                <Row className="">
+                                    <Col sm={2} className="overflow">
+                                        <PastLecturesFilter getAllPastLectures={this.getPastLecturesTeacher}/>
+                                    </Col>
+                                    <Switch>
+                                        <Route exact path="/teacher/pastLectures/all">
+                                            <Col sm={8}
+                                                className="below-nav">
+                                                <h1>Past Lectures</h1>
+                                                <LecturesTableTeacher lectures={this.state.teacherLecture} past={true} getLectures={this.getPastLecturesTeacher}/>
+                                            </Col>
+                                            <Col sm={1}/>
+                                        </Route>
+                                        <Route exact path="/teacher/pastLectures/week">
+                                            <Col sm={3}
+                                                className="below-nav">
+                                                <h1>Week</h1>
+                                                <Day_Picker selectWeek={this.selectWeek}/>
+                                                
+                                            </Col>
+                                            <Col sm={3} className="below-nav">
+                                                {this.state.nrStudents !== undefined && <h1>There are {this.state.nrStudents} booked</h1>}
+                                            </Col>
+                                            <Col sm={1}/>
+                                        </Route>
+                                        <Route path="/teacher/pastLectures/month">
+                                            <Col sm={8}
+                                                className="below-nav">
+                                                    <Switch>
+                                                        <Route exact path="/teacher/pastLectures/month/January">
+                                                            <MonthNrStudents selectMonth={this.selectMonth} month={0}/>
+                                                            <h1>January</h1>
+                                                        </Route>
+                                                        <Route exact path="/teacher/pastLectures/month/February">
+                                                            <MonthNrStudents selectMonth={this.selectMonth} month={1}/>
+                                                            <h1>February</h1>
+                                                        </Route>
+                                                        <Route exact path="/teacher/pastLectures/month/March">
+                                                            <MonthNrStudents selectMonth={this.selectMonth} month={2}/>
+                                                            <h1>March</h1>
+                                                        </Route>
+                                                        <Route exact path="/teacher/pastLectures/month/April">
+                                                            <MonthNrStudents selectMonth={this.selectMonth} month={3}/>
+                                                            <h1>April</h1>
+                                                        </Route>
+                                                        <Route exact path="/teacher/pastLectures/month/May">
+                                                            <MonthNrStudents selectMonth={this.selectMonth} month={4}/>
+                                                            <h1>May</h1>
+                                                        </Route>
+                                                        <Route exact path="/teacher/pastLectures/month/June">
+                                                            <MonthNrStudents selectMonth={this.selectMonth} month={5}/>
+                                                            <h1>June</h1>
+                                                        </Route>
+                                                        <Route exact path="/teacher/pastLectures/month/July">
+                                                            <MonthNrStudents selectMonth={this.selectMonth} month={6}/>
+                                                            <h1>July</h1>
+                                                        </Route>
+                                                        <Route exact path="/teacher/pastLectures/month/August">
+                                                            <MonthNrStudents selectMonth={this.selectMonth} month={7}/>
+                                                            <h1>August</h1>
+                                                        </Route>
+                                                        <Route exact path="/teacher/pastLectures/month/September">
+                                                            <MonthNrStudents selectMonth={this.selectMonth} month={8}/>
+                                                            <h1>September</h1>
+                                                        </Route>
+                                                        <Route exact path="/teacher/pastLectures/month/October">
+                                                            <MonthNrStudents selectMonth={this.selectMonth} month={9}/>
+                                                            <h1>October</h1>
+                                                        </Route>
+                                                        <Route exact path="/teacher/pastLectures/month/November">
+                                                            <MonthNrStudents selectMonth={this.selectMonth} month={10}/>
+                                                            <h1>November</h1>
+                                                        </Route>   
+                                                        <Route exact path="/teacher/pastLectures/month/December">
+                                                            <MonthNrStudents selectMonth={this.selectMonth} month={11}/>
+                                                            <h1>December</h1>
+                                                        </Route>                                             
+                                                    </Switch>
+                                                    {this.state.nrStudents !== undefined && <h1>There are {this.state.nrStudents} booked</h1>}
+                                            </Col>
+                                            <Col sm={1}/>
+                                        </Route>
+                                        <Route exact path="/teacher/pastLectures/graph">
+                                            <Col sm={8}
+                                                className="below-nav">
+                                                <MonthChart lectures={this.state.teacherLecture} getAllPastLectures={this.getPastLecturesTeacher}/>
+                                            </Col>
+                                            <Col sm={1}/>
+                                        </Route>
+                                    </Switch>
+                                </Row>
+                            </Route>
+                        </Route>
+                        <Route exact path="/teacher">
+                            <Row className="">
+                                <Col sm={1}/>
+                                <Col sm={8}
+                                    className="below-nav">
+                                    <h1>Next Lectures</h1>
+                                    <LecturesTableTeacher lectures={this.state.teacherLecture} past={false} getLectures={this.getAllLecturesTeacher} job={(lecture_id) => this.getStudentList(lecture_id)} students={this.state.students} job2={(lecture_id) =>this.removeTeacherLecture(lecture_id)}/>
+                                </Col>
+                                <Col sm={1}/>
+                            </Row>
+                        </Route>
+                    </Switch>
                 </Route>
                 <Route>
                     <Redirect to='/login'/>

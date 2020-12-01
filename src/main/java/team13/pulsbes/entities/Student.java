@@ -73,6 +73,7 @@ public class Student {
 
     	this.bookedLectures.remove(l);
     	l.getStudents().remove(this);
+		l.setAvailableSeat(l.getAvailableSeat()+1);
     }
     
 	public String getId() {

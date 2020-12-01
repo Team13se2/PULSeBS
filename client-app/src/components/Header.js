@@ -1,10 +1,14 @@
-import React, {useEffect} from 'react';
+import React, {useEffect,useContext} from 'react';
 import Navbar from 'react-bootstrap/Navbar';
 import Nav from 'react-bootstrap/Nav';
 import {AuthContext} from '../auth/AuthContext'
 import {NavLink} from 'react-router-dom';
+import {Route} from 'react-router-dom';
 
 const Header = (props) => {
+  useEffect(() => {
+  }, []);
+
   return(
     <AuthContext.Consumer>
       {(context) => (
@@ -20,10 +24,16 @@ const Header = (props) => {
           Title
         </Navbar.Brand>
         
-        {context.authUser && 
+        <Route path="/student/">
           <Nav className="mr-auto">
           <Nav.Link as={NavLink} to="/student/calendar" onClick = {() => console.log("clk calendar")}> Calendar</Nav.Link> 
-        </Nav>}
+        </Nav>
+        </Route>
+        <Route path="/teacher/">
+            <Nav className="mr-auto">
+            <Nav.Link as={NavLink} to="/teacher/pastLectures/all" > Past Lectures</Nav.Link> 
+          </Nav>
+        </Route>
 
         <Nav className="ml-md-auto">
           {context.authUser && 

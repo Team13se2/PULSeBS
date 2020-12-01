@@ -1,5 +1,6 @@
 package team13.pulsbes.controllers;
 
+import java.text.ParseException;
 import java.util.List;
 import java.util.logging.Logger;
 
@@ -69,7 +70,7 @@ public class TeacherController {
 		}
 	}
 	@RequestMapping(value = Constants.CANCEL_LECTURE,method = RequestMethod.DELETE)
-	public String cancelLecture(@RequestParam("lecture_id") String lectureId,@CookieValue(value = "id") String id, @CookieValue(value = "type") String type) throws InvalidLectureException, InvalidCourseException {
+	public String cancelLecture(@RequestParam("lecture_id") String lectureId,@CookieValue(value = "id") String id, @CookieValue(value = "type") String type) throws InvalidLectureException, InvalidCourseException, ParseException {
 		try {
 			if (type.equals("teacher")) {
 			return teacherService.cancelLecture(lectureId,id);
@@ -82,7 +83,7 @@ public class TeacherController {
 		}
 	}
 	@RequestMapping(value = Constants.CANCEL_PRESENCE_LECTURE,method = RequestMethod.DELETE)
-	public String cancelPresenceLecture(@RequestParam("lecture_id") String lectureId,@CookieValue(value = "id") String id, @CookieValue(value = "type") String type) throws InvalidLectureException, InvalidCourseException {
+	public String cancelPresenceLecture(@RequestParam("lecture_id") String lectureId,@CookieValue(value = "id") String id, @CookieValue(value = "type") String type) throws InvalidLectureException, InvalidCourseException, ParseException {
 		try {
 			if (type.equals("teacher")) {
 			return teacherService.cancelLecture(lectureId,id);

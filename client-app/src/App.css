@@ -98,3 +98,6 @@ button {
   color: #fff;
 }
 
+.rowHeader{
+  height: 62px;
+}

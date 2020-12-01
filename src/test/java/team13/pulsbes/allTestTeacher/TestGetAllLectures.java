@@ -27,7 +27,7 @@ public class TestGetAllLectures {
 	TeacherServiceImpl  teacherService;
 	TeacherRepository teacherRepository;
 	List<Lecture> lectures = new ArrayList<>();
-	Teacher t = new Teacher();
+	
 	ModelMapper modelMapper;
 	
 	@BeforeEach
@@ -35,24 +35,13 @@ public class TestGetAllLectures {
 		teacherRepository = mock(TeacherRepository.class);
 		modelMapper = mock(ModelMapper.class);
 		//Lecture l = new Lecture("analisi", 10, 50);
-		Lecture l = new Lecture();
-		LectureDTO lDto = new LectureDTO ();
-		lectures.add(l);
-		t.setLectures(lectures);
-		l.setSubjectName("dio");
-		l.setStartTime(null);
-		l.setEndTime(null);
-		l.setLectureType("cane");
-		l.setSurnameString(t.getSurname());
-		l.setRoomName("infame");
-		t.setId("1");
+
 		teacherService = new TeacherServiceImpl();
 		teacherService.addRepo(teacherRepository);
 		teacherService.addMM(modelMapper);
 		//teacherRepository.save(t);
 		
-		when(teacherRepository.getOne(anyString())).thenReturn(t);
-		when(modelMapper.map(any(),any())).thenReturn(lDto);
+
 	}
 	
 	@Test
@@ -61,6 +50,21 @@ public class TestGetAllLectures {
 	}
 	@Test
 	public void testGetAllLectures2() throws InvalidTeacherException {
+		Teacher t = new Teacher();
+		Lecture l = new Lecture();
+		LectureDTO lDto = new LectureDTO ();
+		lectures.add(l);
+		t.setLectures(lectures);
+		l.setSubjectName("dio");
+		l.setStartTime(null);
+		l.setEndTime(null);
+		l.setLectureType("cane");
+		l.addStartTime(2021, 12, 31, 24, 0);
+		l.setSurnameString(t.getSurname());
+		l.setRoomName("infame");
+		t.setId("1");
+		when(teacherRepository.getOne(anyString())).thenReturn(t);
+		when(modelMapper.map(any(),any())).thenReturn(lDto);
 		when(teacherRepository.getOne(anyString())).thenReturn(t);
 		List<LectureDTO> lDtos = new ArrayList<>();
 		lDtos = teacherService.getAllLectures("1");
