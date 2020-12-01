@@ -32,7 +32,7 @@ public class LoginController {
 				/*cookieUsername.setSecure(true);
 				cookieUsername.setHttpOnly(true);*/
 				Cookie cookieId = new Cookie("id", log.getId());
-				Cookie cookieType = new Cookie("type", log.getTeacher() ? "teacher" : "student");
+				Cookie cookieType = new Cookie("type", log.getRole());
 				//cookieId.setSecure(true);
 				//cookieId.setHttpOnly(true);
 				cookieUsername.setPath("/");

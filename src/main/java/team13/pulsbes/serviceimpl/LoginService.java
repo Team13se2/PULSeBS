@@ -34,12 +34,30 @@ public class LoginService {
 	public LoginDTO login(IdPw idpw) throws WrongCredentialsException {
 		LoginDTO login = null;
 		
-		//check email to set teacher Bool
-		if(checkEmail(idpw))
-			idpw.setTeacher(true);
-		else
-			idpw.setTeacher(false);
+		checkEmail(idpw);
 		
+		//check email's first char to set role
+		switch (idpw.getRole()) {
+		case "teacher":
+			for (Teacher t : teacherRepository.findAll()) {
+				if(t.getEmail().equals(idpw.getEmail()) && t.getPsw().equals(idpw.getPsw())) {
+					login = loginConverter(null,t);
+					break;
+				}
+			}
+			break;
+		case "student":
+			for(Student s : studentRepository.findAll()) {
+				if(s.getEmail().equals(idpw.getEmail()) && s.getPsw().equals(idpw.getPsw())) {
+					login = loginConverter(s,null);
+					break;
+				}
+			}
+			break;
+		default:
+			break;
+		}
+	/*	
 		if(!idpw.getTeacher()) {
 			for(Student s : studentRepository.findAll()) {
 				if(s.getEmail().equals(idpw.getEmail()) && s.getPsw().equals(idpw.getPsw())) {
@@ -56,16 +74,23 @@ public class LoginService {
 				}
 			}
 		}
+*/
 		if(login == null) {
 			throw new WrongCredentialsException("Wrong Credentials");
 		}
 		return login;
 	}
 	
-	static private boolean checkEmail(IdPw idpw) {
-		if(idpw.getEmail().charAt(0) == 't')
-			return true;		
-		return false;
+	static private void checkEmail(IdPw idpw) {
+		if(idpw.getEmail().charAt(0) == 't') {
+			idpw.setRole("teacher");
+			return;
+		}
+		else if(idpw.getEmail().charAt(0) == 's') {
+			idpw.setRole("student");
+			return;
+		}
+		idpw.setRole("exception");
 	}
 
 	static private LoginDTO loginConverter(Student s, Teacher t) {
@@ -75,7 +100,7 @@ public class LoginService {
 			login.setId(s.getId());
 			login.setName(s.getName());
 			login.setSurname(s.getSurname());
-			login.setTeacher(false);
+			login.setRole("student");
 			login.setToken("token");
 			return login;
 		}else {
@@ -83,7 +108,7 @@ public class LoginService {
 			login.setId(t.getId());
 			login.setName(t.getName());
 			login.setSurname(t.getSurname());
-			login.setTeacher(true);
+			login.setRole("teacher");
 			login.setToken("token");		//(LUCA) secondo me setToken deve essere impostato con l'id del teacher:
 		}
 		return login;
