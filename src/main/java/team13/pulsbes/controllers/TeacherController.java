@@ -26,7 +26,7 @@ public class TeacherController {
 	Logger log = Logger.getLogger("TeacherController");
 	private static final String TYPE_TEACHER = "teacher";
 
-	@RequestMapping(value = Constants.GET_NUMBER_STUDENTS_ATTENDING,method = RequestMethod.GET)
+	@GetMapping(value = Constants.GET_NUMBER_STUDENTS_ATTENDING)
 	public Integer getNumberStudentsAttending(@RequestParam("lecture_id") String id, @CookieValue(value = "type") String type) throws InvalidLectureException {
 		try {
 			if (type.equals(TYPE_TEACHER)) {
@@ -40,7 +40,7 @@ public class TeacherController {
 			return 0;
 		}
 	}
-	@RequestMapping(value = Constants.GET_ALL_LECTURES, method = RequestMethod.GET)
+	@GetMapping(value = Constants.GET_ALL_LECTURES)
 	public List<LectureDTO> getAllLectures(@CookieValue(value = "username") String username,@CookieValue(value = "id") String id, @CookieValue(value = "type") String type) throws InvalidTeacherException{
 		try {
 			if (type.equals(TYPE_TEACHER)) {
@@ -58,7 +58,7 @@ public class TeacherController {
 			return Collections.emptyList();
 		}
 	}
-	@RequestMapping(value = Constants.GET_STUDENT_LIST,method = RequestMethod.GET)
+	@GetMapping(value = Constants.GET_STUDENT_LIST)
 	public List<StudentDTO> getStudentList(@RequestParam("lecture_id") String id, @CookieValue(value = "type") String type) throws InvalidLectureException {
 		try {
 			if (type.equals(TYPE_TEACHER)) {
@@ -71,7 +71,7 @@ public class TeacherController {
 			return Collections.emptyList();
 		}
 	}
-	@RequestMapping(value = Constants.CANCEL_LECTURE,method = RequestMethod.DELETE)
+	@DeleteMapping(value = Constants.CANCEL_LECTURE)
 	public String cancelLecture(@RequestParam("lecture_id") String lectureId,@CookieValue(value = "id") String id, @CookieValue(value = "type") String type) throws InvalidLectureException, InvalidCourseException, ParseException, InvalidTeacherException {
 		try {
 			if (type.equals(TYPE_TEACHER)) {
@@ -84,7 +84,7 @@ public class TeacherController {
 			return e.getMessage();
 		}
 	}
-	@RequestMapping(value = Constants.CANCEL_PRESENCE_LECTURE,method = RequestMethod.DELETE)
+	@DeleteMapping(value = Constants.CANCEL_PRESENCE_LECTURE)
 	public String cancelPresenceLecture(@RequestParam("lecture_id") String lectureId,@CookieValue(value = "id") String id, @CookieValue(value = "type") String type) throws InvalidLectureException, InvalidCourseException, ParseException,InvalidTeacherException {
 		try {
 			if (type.equals(TYPE_TEACHER)) {
@@ -97,7 +97,7 @@ public class TeacherController {
 			return e.getMessage();
 		}
 	}
-	@RequestMapping(value = Constants.GET_PAST_LECTURES, method = RequestMethod.GET)
+	@GetMapping(value = Constants.GET_PAST_LECTURES)
 	public List<LectureDTO> getPastLectures(@CookieValue(value = "username") String username,@CookieValue(value = "id") String id, @CookieValue(value = "type") String type) throws InvalidTeacherException{
 		try {
 			if (type.equals(TYPE_TEACHER)) {
