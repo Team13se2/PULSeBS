@@ -63,7 +63,7 @@ public class StudentServiceImpl implements StudentService {
     @Override
     public String bookLecture(String lectureId, String studentId) throws InvalidLectureException, InvalidStudentException {
 
-        System.out.println("entrato");
+        log.info("entrato");
 
         if (studentId.equals("-1")) {
             throw new InvalidStudentException(STUDENT_NULL);
@@ -80,7 +80,7 @@ public class StudentServiceImpl implements StudentService {
         Integer availableSeats = lectureSelected.get().getAvailableSeat();
 
         if (availableSeats > 0) {
-            System.out.println("terzo if");
+            log.info("terzo if");
             try {                
                 lectureSelected.get().addStudentAttending(currentStudent);
 
@@ -128,7 +128,7 @@ public class StudentServiceImpl implements StudentService {
 
         return listLecture
                 .stream()
-                .filter(x -> { { try { System.out.println(x.getStartTime2()); return x.getStartTime2().after(tmpCal.getTime()) && !studentRepository.getOne(id).getBookedLectures().contains(x); } catch (ParseException e) {log.throwing(this.getClass().getName(), "getAllLectures", e); return false;} } })
+                .filter(x -> { { try { return x.getStartTime2().after(tmpCal.getTime()) && !studentRepository.getOne(id).getBookedLectures().contains(x); } catch (ParseException e) {log.throwing(this.getClass().getName(), "getAllLectures", e); return false;} } })
                 .map(l -> modelMapper.map(l, LectureDTO.class))
                 .collect(Collectors.toList());
     }
@@ -147,7 +147,7 @@ public class StudentServiceImpl implements StudentService {
         return studentRepository.getOne(id)
                 .getBookedLectures()
                 .stream()
-                .filter(x -> { try { System.out.println(x.getStartTime2()); return x.getStartTime2().after(tmpCal.getTime()); } catch (ParseException e) {log.throwing(this.getClass().getName(), "getAllLectures", e); return false;} })
+                .filter(x -> { try { return x.getStartTime2().after(tmpCal.getTime()); } catch (ParseException e) {log.throwing(this.getClass().getName(), "getAllLectures", e); return false;} })
                 .map(l -> modelMapper.map(l, LectureDTO.class))
                 .collect(Collectors.toList());
     }
@@ -178,13 +178,13 @@ public class StudentServiceImpl implements StudentService {
         if (currentStudent.getBookedLectures().contains(deletingLecture)) {
             try {
 
-                System.out.println(currentStudent.getBookedLectures());
+                //System.out.println(currentStudent.getBookedLectures());
                 currentStudent.removeBookedLecture(deletingLecture);
                 studentRepository.saveAndFlush(currentStudent);
 
 
             } catch (Exception e) {
-                System.out.println("Student has no this lecture booked");
+                log.info("Student has no this lecture booked");
                 log.throwing(this.getClass().getName(), "getBookedLectures", e);
             }
 
