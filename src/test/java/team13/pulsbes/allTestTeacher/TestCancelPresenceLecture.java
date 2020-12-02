@@ -20,6 +20,7 @@ import team13.pulsbes.entities.Student;
 import team13.pulsbes.entities.Teacher;
 import team13.pulsbes.exception.InvalidCourseException;
 import team13.pulsbes.exception.InvalidLectureException;
+import team13.pulsbes.exception.InvalidTeacherException;
 import team13.pulsbes.exception.InvalidStudentException;
 import team13.pulsbes.repositories.LectureRepository;
 import team13.pulsbes.repositories.TeacherRepository;
@@ -54,7 +55,7 @@ class TestCancelPresenceLecture {
 	}
 	
 	@Test
-	void testCancelPresenceLecture2() throws InvalidStudentException, InvalidLectureException, InvalidCourseException, ParseException {
+	void testCancelPresenceLecture2() throws InvalidStudentException, InvalidLectureException, InvalidCourseException, ParseException, InvalidTeacherException{
 		Teacher t = new Teacher();
 		Lecture l = new Lecture();
 		Student s = new Student("1","test","testsur");
@@ -78,7 +79,7 @@ class TestCancelPresenceLecture {
 		assertEquals("Lecture was changd from in presence to online",teacherService.cancelPresenceLecture("1", "1"));		
 	}
 	@Test
-	void testCancelPresenceLecture3() throws InvalidStudentException, InvalidLectureException, InvalidCourseException, ParseException {
+	void testCancelPresenceLecture3() throws InvalidStudentException, InvalidLectureException, InvalidCourseException, ParseException, InvalidTeacherException{
 		Teacher t = new Teacher();
 		Lecture l = new Lecture();
 		Student s = new Student("1","test","testsur");

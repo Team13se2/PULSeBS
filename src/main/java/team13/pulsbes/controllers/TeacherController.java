@@ -70,7 +70,7 @@ public class TeacherController {
 		}
 	}
 	@RequestMapping(value = Constants.CANCEL_LECTURE,method = RequestMethod.DELETE)
-	public String cancelLecture(@RequestParam("lecture_id") String lectureId,@CookieValue(value = "id") String id, @CookieValue(value = "type") String type) throws InvalidLectureException, InvalidCourseException, ParseException {
+	public String cancelLecture(@RequestParam("lecture_id") String lectureId,@CookieValue(value = "id") String id, @CookieValue(value = "type") String type) throws InvalidLectureException, InvalidCourseException, ParseException, InvalidTeacherException {
 		try {
 			if (type.equals("teacher")) {
 			return teacherService.cancelLecture(lectureId,id);
@@ -83,7 +83,7 @@ public class TeacherController {
 		}
 	}
 	@RequestMapping(value = Constants.CANCEL_PRESENCE_LECTURE,method = RequestMethod.DELETE)
-	public String cancelPresenceLecture(@RequestParam("lecture_id") String lectureId,@CookieValue(value = "id") String id, @CookieValue(value = "type") String type) throws InvalidLectureException, InvalidCourseException, ParseException {
+	public String cancelPresenceLecture(@RequestParam("lecture_id") String lectureId,@CookieValue(value = "id") String id, @CookieValue(value = "type") String type) throws InvalidLectureException, InvalidCourseException, ParseException,InvalidTeacherException {
 		try {
 			if (type.equals("teacher")) {
 			return teacherService.cancelLecture(lectureId,id);
