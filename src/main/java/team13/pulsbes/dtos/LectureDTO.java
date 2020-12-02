@@ -5,7 +5,7 @@ import javax.persistence.Id;
 public class LectureDTO {
 
     @Id
-    private String Id;
+    private String id;
 
     private String startTime;
 
@@ -28,10 +28,10 @@ public class LectureDTO {
     
 	public LectureDTO(){}
 	public String getId() {
-		return Id;
+		return id;
 	}
 	public void setId(String id) {
-		this.Id = id;
+		this.id = id;
 	}
 	public String getStartTime() {
 		return startTime;
