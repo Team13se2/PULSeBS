@@ -27,7 +27,7 @@ public class TeacherController {
 	@RequestMapping(value = Constants.GET_NUMBER_STUDENTS_ATTENDING,method = RequestMethod.GET)
 	public Integer getNumberStudentsAttending(@RequestParam("lecture_id") String id, @CookieValue(value = "type") String type) throws InvalidLectureException {
 		try {
-			if (type == "teacher") {
+			if (type.equals("teacher")) {
 				return teacherService.getNumberStudentsAttending(id);
 			}
 			else return 0;
