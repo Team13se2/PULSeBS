@@ -51,8 +51,8 @@ public class LoginController {
 			// TODO Auto-generated catch block
 			loglog.throwing(this.getClass().getName(), "login", e);
 			//e.printStackTrace();
-			LoginDTO loginDTO = new LoginDTO();
-			return loginDTO;
+			//LoginDTO loginDTO = new LoginDTO();
+			return (new LoginDTO());
 		}
 	}
 
