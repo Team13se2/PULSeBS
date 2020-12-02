@@ -2,14 +2,11 @@ package team13.pulsbes.entities;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.OnDelete;
 import team13.pulsbes.exception.InvalidStudentException;
 import team13.pulsbes.exception.InvalidLectureException;
 
 import javax.persistence.*;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
