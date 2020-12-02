@@ -43,9 +43,7 @@ public class TeacherServiceImpl implements TeacherService{
 	@Autowired
 	CourseRepository courseRepository;
 	@Autowired
-    NotificationServiceImpl notificationService;
-
-	private static final String dateFormatString = "yyyy-MM-dd HH:mm";
+    NotificationServiceImpl notificationService;	
 	
 	public void addRepo (TeacherRepository tr) {
 		this.teacherRepository = tr;
@@ -62,10 +60,13 @@ public class TeacherServiceImpl implements TeacherService{
 
 	Logger log = Logger.getLogger("TeacherServiceImpl");
 
+	private static final String LECTURE_NULL = "Lecture can't be null";
+	private static final String TEACHER_NULL = "Teacher can't be null";
+
 	@Override
 	public Integer getNumberStudentsAttending(String id) throws InvalidLectureException{
 		if (id.equals("-1")) {
-			throw new InvalidLectureException("Lecture can't be null");
+			throw new InvalidLectureException(LECTURE_NULL);
 		}
 		return lectureRepository.getOne(id).getStudents().size();
 	}
@@ -73,7 +74,7 @@ public class TeacherServiceImpl implements TeacherService{
 	@Override
 	public List<LectureDTO> getAllLectures(String id) throws InvalidTeacherException {
 		if(id.equals("-1")) {
-			throw new InvalidTeacherException("Teacher can't be null");
+			throw new InvalidTeacherException(TEACHER_NULL);
 		}
 
 		Calendar tmpCal = Calendar.getInstance();
@@ -89,7 +90,7 @@ public class TeacherServiceImpl implements TeacherService{
 	@Override
 	public List<StudentDTO> getStudentList(String id) throws InvalidLectureException {
 		if(id.equals("-1")) {
-			throw new InvalidLectureException("Lecture can't be null");
+			throw new InvalidLectureException(LECTURE_NULL);
 		}
 		return  lectureRepository.getOne(id)
 				.getStudents()
@@ -102,13 +103,13 @@ public class TeacherServiceImpl implements TeacherService{
 	@Override
 	public String cancelLecture(String lectureId, String teacherId) throws InvalidLectureException, InvalidCourseException, InvalidTeacherException{
 		if(lectureId.equals("-1")) {
-			throw new InvalidLectureException("Lecture can't be null");
+			throw new InvalidLectureException(LECTURE_NULL);
 		}
 
 		Optional<Teacher> optTeacher = teacherRepository.findById(teacherId);
 
         if (!optTeacher.isPresent()) {
-            throw new InvalidTeacherException("Teacher can't be null");
+            throw new InvalidTeacherException(TEACHER_NULL);
         }
 
         Teacher teacher = optTeacher.get();
@@ -164,13 +165,13 @@ public class TeacherServiceImpl implements TeacherService{
 	@Override
 	public String cancelPresenceLecture(String lectureId, String teacherId) throws InvalidLectureException, InvalidCourseException, InvalidTeacherException{
 		if(lectureId.equals("-1")) {
-			throw new InvalidLectureException("Lecture can't be null");
+			throw new InvalidLectureException(LECTURE_NULL);
 		}
 
 		Optional<Teacher> optTeacher = teacherRepository.findById(teacherId);
 
         if (!optTeacher.isPresent()) {
-            throw new InvalidTeacherException("Teacher can't be null");
+            throw new InvalidTeacherException(TEACHER_NULL);
         }
 
         Teacher teacher = optTeacher.get();
@@ -225,7 +226,7 @@ public class TeacherServiceImpl implements TeacherService{
 	@Override
 	public List<LectureDTO> getPastLectures(String id) throws InvalidTeacherException {
 		if(id.equals("-1")) {
-			throw new InvalidTeacherException("Teacher can't be null");
+			throw new InvalidTeacherException(TEACHER_NULL);
 		}
 
 		Calendar tmpCal = Calendar.getInstance();

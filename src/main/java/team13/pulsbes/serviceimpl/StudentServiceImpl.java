@@ -57,13 +57,16 @@ public class StudentServiceImpl implements StudentService {
 
     Logger log = Logger.getLogger("StudentServiceImpl");
 
+    private static final String STUDENT_NULL = "Student can't be null";
+    private static final String STUDENT_NOT_FOUND = "Student not found";
+
     @Override
     public String bookLecture(String lectureId, String studentId) throws InvalidLectureException, InvalidStudentException {
 
         System.out.println("entrato");
 
         if (studentId.equals("-1")) {
-            throw new InvalidStudentException("Student can't be null");
+            throw new InvalidStudentException(STUDENT_NULL);
         }
 
         Student currentStudent = studentRepository.getOne(studentId);
@@ -107,11 +110,11 @@ public class StudentServiceImpl implements StudentService {
     @Override
     public List<LectureDTO> getAllLectures(String id) throws InvalidStudentException {
         if (id.equals("-1")) {
-            throw new InvalidStudentException("Student can't be null");
+            throw new InvalidStudentException(STUDENT_NULL);
         }
         
         if (!studentRepository.existsById(id))
-            throw new InvalidStudentException("Student not found");
+            throw new InvalidStudentException(STUDENT_NOT_FOUND);
 
         List<Course> listCourse = studentRepository.getOne(id).getCourses();
         List<Lecture> listLecture = new ArrayList<>();
@@ -133,10 +136,10 @@ public class StudentServiceImpl implements StudentService {
     @Override
     public List<LectureDTO> getBookedLectures(String id) throws InvalidStudentException {
         if (id.equals("-1")) {
-            throw new InvalidStudentException("Student can't be null");
+            throw new InvalidStudentException(STUDENT_NULL);
         }
         if (!studentRepository.existsById(id))
-            throw new InvalidStudentException("Student not found");
+            throw new InvalidStudentException(STUDENT_NOT_FOUND);
 
         Calendar tmpCal = Calendar.getInstance();
 
@@ -153,7 +156,7 @@ public class StudentServiceImpl implements StudentService {
     public String deleteLecture(String lectureId, String studentId) throws InvalidLectureException, InvalidStudentException {
 
         if (!studentRepository.existsById(studentId)) {
-            throw new InvalidStudentException("Student not found");
+            throw new InvalidStudentException(STUDENT_NOT_FOUND);
         }
 
         if (!lectureRepository.existsById(lectureId)) {
@@ -163,7 +166,7 @@ public class StudentServiceImpl implements StudentService {
         Optional<Student> optStudent = studentRepository.findById(studentId);
 
         if (!optStudent.isPresent()) {
-            throw new InvalidStudentException("Student can't be null");
+            throw new InvalidStudentException(STUDENT_NULL);
         }
 
         Student currentStudent = optStudent.get();
