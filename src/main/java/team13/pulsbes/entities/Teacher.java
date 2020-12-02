@@ -106,7 +106,7 @@ public class Teacher {
 		this.courses = courses;
 	}
 
-	public void removeLecture(Lecture lecture) throws InvalidLectureException, InvalidCourseException {
+	public void removeLecture(Lecture lecture) {
 
     	lectures.remove(lecture);
     	lecture.setTeacher(null);
