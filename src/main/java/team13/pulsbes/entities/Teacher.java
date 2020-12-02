@@ -2,7 +2,6 @@ package team13.pulsbes.entities;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.Data;
 import lombok.NoArgsConstructor;
 import team13.pulsbes.exception.InvalidCourseException;
 import team13.pulsbes.exception.InvalidLectureException;
