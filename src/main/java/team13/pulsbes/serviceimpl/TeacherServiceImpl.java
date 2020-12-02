@@ -24,6 +24,7 @@ import java.util.logging.Logger;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.Calendar;
 import java.util.Objects;
 import java.util.Timer;
@@ -99,12 +100,20 @@ public class TeacherServiceImpl implements TeacherService{
 	}
 
 	@Override
-	public String cancelLecture(String lectureId, String TeacherId) throws InvalidLectureException, InvalidCourseException {
+	public String cancelLecture(String lectureId, String teacherId) throws InvalidLectureException, InvalidCourseException, InvalidTeacherException{
 		if(lectureId.equals("-1")) {
 			throw new InvalidLectureException("Lecture can't be null");
 		}
 
-		Teacher teacher = teacherRepository.findById(TeacherId).get();
+		Optional<Teacher> optTeacher = teacherRepository.findById(teacherId);
+
+        if (!optTeacher.isPresent()) {
+            throw new InvalidTeacherException("Teacher can't be null");
+        }
+
+        Teacher teacher = optTeacher.get();
+
+		//Teacher teacher = teacherRepository.findById(TeacherId).get();
 		System.out.println(teacher.getEmail());
 		Lecture tmpLecture = lectureRepository.getOne(lectureId);
 		Calendar tmpCal = Calendar.getInstance();		
@@ -153,12 +162,20 @@ public class TeacherServiceImpl implements TeacherService{
 }
 
 	@Override
-	public String cancelPresenceLecture(String lectureId, String TeacherId) throws InvalidLectureException, InvalidCourseException {
+	public String cancelPresenceLecture(String lectureId, String teacherId) throws InvalidLectureException, InvalidCourseException, InvalidTeacherException{
 		if(lectureId.equals("-1")) {
 			throw new InvalidLectureException("Lecture can't be null");
 		}
 
-		Teacher teacher = teacherRepository.findById(TeacherId).get();
+		Optional<Teacher> optTeacher = teacherRepository.findById(teacherId);
+
+        if (!optTeacher.isPresent()) {
+            throw new InvalidTeacherException("Teacher can't be null");
+        }
+
+        Teacher teacher = optTeacher.get();
+
+		//Teacher teacher = teacherRepository.findById(TeacherId).get();
 		System.out.println(teacher.getEmail());
 		Lecture tmpLecture = lectureRepository.getOne(lectureId);
 		Calendar tmpCal = Calendar.getInstance();		
