@@ -27,7 +27,7 @@ public class StudentController {
 
 	Logger log = Logger.getLogger("StudentController");
 
-	@RequestMapping(value = Constants.GET_ALL_LECTURES, method = RequestMethod.GET)
+	@GetMapping(value = Constants.GET_ALL_LECTURES)
 	public List<LectureDTO> getAllLectures(@CookieValue(value = "username") String username, @CookieValue(value = "id") String id) throws InvalidStudentException {
 		try {
 			return studentService.getAllLectures(id);
@@ -37,7 +37,7 @@ public class StudentController {
 		}
 	}
 
-	@RequestMapping(value = Constants.BOOK_LECTURE, method = RequestMethod.GET)
+	@GetMapping(value = Constants.BOOK_LECTURE)
 	public String bookLecture(@RequestParam("lecture_id") String l_id, @CookieValue(value = "username") String username, @CookieValue(value = "id") String s_id) throws InvalidLectureException, InvalidStudentException {
 		try {
 			return studentService.bookLecture(l_id, s_id);
@@ -47,7 +47,7 @@ public class StudentController {
 		}
 	}
 
-	@RequestMapping(value = Constants.GET_BOOKED_LECTURES, method = RequestMethod.GET)
+	@GetMapping(value = Constants.GET_BOOKED_LECTURES)
 	public List<LectureDTO> getBookedLectures(@CookieValue(value = "username") String username, @CookieValue(value = "id") String id) {
 		try {
 			return studentService.getBookedLectures(id);

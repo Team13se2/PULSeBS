@@ -1,7 +1,5 @@
 package team13.pulsbes.dtos;
 
-import lombok.Data;
-
 import javax.persistence.Id;
 
 

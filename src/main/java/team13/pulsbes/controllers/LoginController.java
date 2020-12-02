@@ -23,7 +23,7 @@ public class LoginController {
 
 	Logger loglog = Logger.getLogger("LoginController");
 	
-	@RequestMapping(value = Constants.LOGIN, method = RequestMethod.POST)	
+	@PostMapping(value = Constants.LOGIN)	
 	public LoginDTO login(@RequestBody IdPw idpw, HttpServletResponse response)  {
 		try {
 			LoginDTO log = loginService.login(idpw);
@@ -51,8 +51,8 @@ public class LoginController {
 			// TODO Auto-generated catch block
 			loglog.throwing(this.getClass().getName(), "login", e);
 			//e.printStackTrace();
-			LoginDTO loginDTO = new LoginDTO();
-			return loginDTO;
+			//LoginDTO loginDTO = new LoginDTO();
+			return (new LoginDTO());
 		}
 	}
 
@@ -61,7 +61,7 @@ public class LoginController {
 		return "Hey! My username is " + username;
 	}
 
-	@RequestMapping(value = "/logout", method = RequestMethod.POST)
+	@PostMapping(value = "/logout")
 	public void logout(HttpServletResponse response){
 		// create a cookie
 		Cookie cookieUsername = new Cookie("username", null);
