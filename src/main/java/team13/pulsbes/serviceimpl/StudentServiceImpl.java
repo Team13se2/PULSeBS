@@ -57,16 +57,19 @@ public class StudentServiceImpl implements StudentService {
 
     Logger log = Logger.getLogger("StudentServiceImpl");
 
+    private static final String STUDENT_NULL = "Student can't be null";
+    private static final String STUDENT_NOT_FOUND = "Student not found";
+
     @Override
-    public String bookLecture(String lectureId, String StudentId) throws InvalidLectureException, InvalidStudentException {
+    public String bookLecture(String lectureId, String studentId) throws InvalidLectureException, InvalidStudentException {
 
-        System.out.println("entrato");
+        log.info("entrato");
 
-        if (StudentId.equals("-1")) {
-            throw new InvalidStudentException("Student can't be null");
+        if (studentId.equals("-1")) {
+            throw new InvalidStudentException(STUDENT_NULL);
         }
 
-        Student currentStudent = studentRepository.getOne(StudentId);
+        Student currentStudent = studentRepository.getOne(studentId);
         Optional<Lecture> lectureSelected = lectureRepository.findById(lectureId);
 
         if (!lectureSelected.isPresent()) {
@@ -77,7 +80,7 @@ public class StudentServiceImpl implements StudentService {
         Integer availableSeats = lectureSelected.get().getAvailableSeat();
 
         if (availableSeats > 0) {
-            System.out.println("terzo if");
+            log.info("terzo if");
             try {                
                 lectureSelected.get().addStudentAttending(currentStudent);
 
@@ -107,11 +110,11 @@ public class StudentServiceImpl implements StudentService {
     @Override
     public List<LectureDTO> getAllLectures(String id) throws InvalidStudentException {
         if (id.equals("-1")) {
-            throw new InvalidStudentException("Student can't be null");
+            throw new InvalidStudentException(STUDENT_NULL);
         }
         
         if (!studentRepository.existsById(id))
-            throw new InvalidStudentException("Student not found");
+            throw new InvalidStudentException(STUDENT_NOT_FOUND);
 
         List<Course> listCourse = studentRepository.getOne(id).getCourses();
         List<Lecture> listLecture = new ArrayList<>();
@@ -125,7 +128,7 @@ public class StudentServiceImpl implements StudentService {
 
         return listLecture
                 .stream()
-                .filter(x -> { { try { System.out.println(x.getStartTime2()); return x.getStartTime2().after(tmpCal.getTime()) && !studentRepository.getOne(id).getBookedLectures().contains(x); } catch (ParseException e) {log.throwing(this.getClass().getName(), "getAllLectures", e); return false;} } })
+                .filter(x -> { { try { return x.getStartTime2().after(tmpCal.getTime()) && !studentRepository.getOne(id).getBookedLectures().contains(x); } catch (ParseException e) {log.throwing(this.getClass().getName(), "getAllLectures", e); return false;} } })
                 .map(l -> modelMapper.map(l, LectureDTO.class))
                 .collect(Collectors.toList());
     }
@@ -133,10 +136,10 @@ public class StudentServiceImpl implements StudentService {
     @Override
     public List<LectureDTO> getBookedLectures(String id) throws InvalidStudentException {
         if (id.equals("-1")) {
-            throw new InvalidStudentException("Student can't be null");
+            throw new InvalidStudentException(STUDENT_NULL);
         }
         if (!studentRepository.existsById(id))
-            throw new InvalidStudentException("Student not found");
+            throw new InvalidStudentException(STUDENT_NOT_FOUND);
 
         Calendar tmpCal = Calendar.getInstance();
 
@@ -144,36 +147,44 @@ public class StudentServiceImpl implements StudentService {
         return studentRepository.getOne(id)
                 .getBookedLectures()
                 .stream()
-                .filter(x -> { try { System.out.println(x.getStartTime2()); return x.getStartTime2().after(tmpCal.getTime()); } catch (ParseException e) {log.throwing(this.getClass().getName(), "getAllLectures", e); return false;} })
+                .filter(x -> { try { return x.getStartTime2().after(tmpCal.getTime()); } catch (ParseException e) {log.throwing(this.getClass().getName(), "getAllLectures", e); return false;} })
                 .map(l -> modelMapper.map(l, LectureDTO.class))
                 .collect(Collectors.toList());
     }
 
     @Override
-    public String deleteLecture(String lectureId, String StudentId) throws InvalidLectureException, InvalidStudentException {
+    public String deleteLecture(String lectureId, String studentId) throws InvalidLectureException, InvalidStudentException {
 
-        if (!studentRepository.existsById(StudentId)) {
-            throw new InvalidStudentException("Student not found");
+        if (!studentRepository.existsById(studentId)) {
+            throw new InvalidStudentException(STUDENT_NOT_FOUND);
         }
 
         if (!lectureRepository.existsById(lectureId)) {
             throw new InvalidLectureException("Lecture not found");
         }
 
-        Student CurrentStudent = studentRepository.findById(StudentId).get();
-        Lecture DeletingLecture = lectureRepository.getOne(lectureId);
+        Optional<Student> optStudent = studentRepository.findById(studentId);
+
+        if (!optStudent.isPresent()) {
+            throw new InvalidStudentException(STUDENT_NULL);
+        }
+
+        Student currentStudent = optStudent.get();
+
+        //Student currentStudent = studentRepository.findById(studentId).get();
+        Lecture deletingLecture = lectureRepository.getOne(lectureId);
 
 
-        if (CurrentStudent.getBookedLectures().contains(DeletingLecture)) {
+        if (currentStudent.getBookedLectures().contains(deletingLecture)) {
             try {
 
-                System.out.println(CurrentStudent.getBookedLectures());
-                CurrentStudent.removeBookedLecture(DeletingLecture);
-                studentRepository.saveAndFlush(CurrentStudent);
+                //System.out.println(currentStudent.getBookedLectures());
+                currentStudent.removeBookedLecture(deletingLecture);
+                studentRepository.saveAndFlush(currentStudent);
 
 
             } catch (Exception e) {
-                System.out.println("Student has no this lecture booked");
+                log.info("Student has no this lecture booked");
                 log.throwing(this.getClass().getName(), "getBookedLectures", e);
             }
 

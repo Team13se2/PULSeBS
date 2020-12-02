@@ -45,7 +45,7 @@ public class Lecture {
 
 	private Integer nrStudents;
 	
-	private static final String dateFormatString = "yyyy-MM-dd HH:mm";
+	private static final String DATE_FORMAT_STRING = "yyyy-MM-dd HH:mm";
 
     @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinTable(name="lecture_students", joinColumns = @JoinColumn(name="lecture_id"),
@@ -90,17 +90,16 @@ public class Lecture {
 		
 		c.set(year, month, day, hour, minutes, 0);
 		
-		DateFormat dateFormat = new SimpleDateFormat(dateFormatString);
-		System.out.println(c.getTime().toString());
+		DateFormat dateFormat = new SimpleDateFormat(DATE_FORMAT_STRING);
         String strDate = dateFormat.format(c.getTime());
         
 		startTime = strDate;
     }
     public Date getStartTime2() throws ParseException{
-    	Date notificationTime = new Date();
-    	DateFormat dateFormat = new SimpleDateFormat(dateFormatString);
+    	//Date notificationTime = new Date();
+    	DateFormat dateFormat = new SimpleDateFormat(DATE_FORMAT_STRING);
     	
-    	notificationTime = dateFormat.parse(startTime);
+    	Date notificationTime = dateFormat.parse(startTime);
     	return notificationTime;
     }
     public void addEndTime(int year, int month, int day, int hour, int minutes) {
@@ -108,17 +107,17 @@ public class Lecture {
 		
 		c.set(year, month, day, hour, minutes, 0);
 		
-		DateFormat dateFormat = new SimpleDateFormat(dateFormatString);
+		DateFormat dateFormat = new SimpleDateFormat(DATE_FORMAT_STRING);
         String strDate = dateFormat.format(c.getTime());
         
 		endTime = strDate;
     }
     public Date getEndTime2() throws ParseException {
-    	Date notificationTime = new Date();
-    	DateFormat dateFormat = new SimpleDateFormat(dateFormatString);
+    	//Date notificationTime = new Date();
+    	DateFormat dateFormat = new SimpleDateFormat(DATE_FORMAT_STRING);
     	//SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
     	
-    	notificationTime = dateFormat.parse(endTime);
+    	Date notificationTime = dateFormat.parse(endTime);
     	return notificationTime;
     }
 

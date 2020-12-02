@@ -24,6 +24,7 @@ import java.util.logging.Logger;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.Calendar;
 import java.util.Objects;
 import java.util.Timer;
@@ -42,9 +43,7 @@ public class TeacherServiceImpl implements TeacherService{
 	@Autowired
 	CourseRepository courseRepository;
 	@Autowired
-    NotificationServiceImpl notificationService;
-
-	private static final String dateFormatString = "yyyy-MM-dd HH:mm";
+    NotificationServiceImpl notificationService;	
 	
 	public void addRepo (TeacherRepository tr) {
 		this.teacherRepository = tr;
@@ -61,10 +60,13 @@ public class TeacherServiceImpl implements TeacherService{
 
 	Logger log = Logger.getLogger("TeacherServiceImpl");
 
+	private static final String LECTURE_NULL = "Lecture can't be null";
+	private static final String TEACHER_NULL = "Teacher can't be null";
+
 	@Override
 	public Integer getNumberStudentsAttending(String id) throws InvalidLectureException{
 		if (id.equals("-1")) {
-			throw new InvalidLectureException("Lecture can't be null");
+			throw new InvalidLectureException(LECTURE_NULL);
 		}
 		return lectureRepository.getOne(id).getStudents().size();
 	}
@@ -72,7 +74,7 @@ public class TeacherServiceImpl implements TeacherService{
 	@Override
 	public List<LectureDTO> getAllLectures(String id) throws InvalidTeacherException {
 		if(id.equals("-1")) {
-			throw new InvalidTeacherException("Teacher can't be null");
+			throw new InvalidTeacherException(TEACHER_NULL);
 		}
 
 		Calendar tmpCal = Calendar.getInstance();
@@ -80,7 +82,7 @@ public class TeacherServiceImpl implements TeacherService{
 		return  teacherRepository.getOne(id)
 				.getLectures()
 				.stream()
-				.filter(x -> { try { System.out.println(x.getStartTime2()); return x.getStartTime2().after(tmpCal.getTime()); } catch (ParseException e) {log.throwing(this.getClass().getName(), "getAllLectures", e); return false;} })
+				.filter(x -> { try { return x.getStartTime2().after(tmpCal.getTime()); } catch (ParseException e) {log.throwing(this.getClass().getName(), "getAllLectures", e); return false;} })
 				.map(l -> modelMapper.map(l,LectureDTO.class))
 				.collect(Collectors.toList());
 	}
@@ -88,7 +90,7 @@ public class TeacherServiceImpl implements TeacherService{
 	@Override
 	public List<StudentDTO> getStudentList(String id) throws InvalidLectureException {
 		if(id.equals("-1")) {
-			throw new InvalidLectureException("Lecture can't be null");
+			throw new InvalidLectureException(LECTURE_NULL);
 		}
 		return  lectureRepository.getOne(id)
 				.getStudents()
@@ -99,13 +101,21 @@ public class TeacherServiceImpl implements TeacherService{
 	}
 
 	@Override
-	public String cancelLecture(String lectureId, String TeacherId) throws InvalidLectureException, InvalidCourseException {
+	public String cancelLecture(String lectureId, String teacherId) throws InvalidLectureException, InvalidCourseException, InvalidTeacherException{
 		if(lectureId.equals("-1")) {
-			throw new InvalidLectureException("Lecture can't be null");
+			throw new InvalidLectureException(LECTURE_NULL);
 		}
 
-		Teacher teacher = teacherRepository.findById(TeacherId).get();
-		System.out.println(teacher.getEmail());
+		Optional<Teacher> optTeacher = teacherRepository.findById(teacherId);
+
+        if (!optTeacher.isPresent()) {
+            throw new InvalidTeacherException(TEACHER_NULL);
+        }
+
+        Teacher teacher = optTeacher.get();
+
+		//Teacher teacher = teacherRepository.findById(TeacherId).get();
+		log.info(teacher.getEmail());
 		Lecture tmpLecture = lectureRepository.getOne(lectureId);
 		Calendar tmpCal = Calendar.getInstance();		
 		tmpCal.add(Calendar.HOUR_OF_DAY, -1);
@@ -116,7 +126,7 @@ public class TeacherServiceImpl implements TeacherService{
 		
 			List<Student> listStudent = tmpLecture.getStudents();
 			teacher.removeLecture(tmpLecture);			
-            System.out.println(teacher.getLectures());
+            //System.out.println(teacher.getLectures());
             lectureRepository.delete(tmpLecture);
             teacherRepository.save(teacher);
 			teacherRepository.flush();
@@ -153,13 +163,21 @@ public class TeacherServiceImpl implements TeacherService{
 }
 
 	@Override
-	public String cancelPresenceLecture(String lectureId, String TeacherId) throws InvalidLectureException, InvalidCourseException {
+	public String cancelPresenceLecture(String lectureId, String teacherId) throws InvalidLectureException, InvalidCourseException, InvalidTeacherException{
 		if(lectureId.equals("-1")) {
-			throw new InvalidLectureException("Lecture can't be null");
+			throw new InvalidLectureException(LECTURE_NULL);
 		}
 
-		Teacher teacher = teacherRepository.findById(TeacherId).get();
-		System.out.println(teacher.getEmail());
+		Optional<Teacher> optTeacher = teacherRepository.findById(teacherId);
+
+        if (!optTeacher.isPresent()) {
+            throw new InvalidTeacherException(TEACHER_NULL);
+        }
+
+        Teacher teacher = optTeacher.get();
+
+		//Teacher teacher = teacherRepository.findById(TeacherId).get();
+		log.info(teacher.getEmail());
 		Lecture tmpLecture = lectureRepository.getOne(lectureId);
 		Calendar tmpCal = Calendar.getInstance();		
 		tmpCal.add(Calendar.MINUTE, -30);
@@ -170,7 +188,7 @@ public class TeacherServiceImpl implements TeacherService{
 			
 			List<Student> listStudent = tmpLecture.getStudents();
 			teacher.removeLecture(tmpLecture);
-            System.out.println(teacher.getLectures());
+            //System.out.println(teacher.getLectures());
             lectureRepository.delete(tmpLecture);
             teacherRepository.save(teacher);
 			teacherRepository.flush();
@@ -208,7 +226,7 @@ public class TeacherServiceImpl implements TeacherService{
 	@Override
 	public List<LectureDTO> getPastLectures(String id) throws InvalidTeacherException {
 		if(id.equals("-1")) {
-			throw new InvalidTeacherException("Teacher can't be null");
+			throw new InvalidTeacherException(TEACHER_NULL);
 		}
 
 		Calendar tmpCal = Calendar.getInstance();
@@ -216,7 +234,7 @@ public class TeacherServiceImpl implements TeacherService{
 		return  teacherRepository.getOne(id)
 				.getLectures()
 				.stream()
-				.filter(x -> { try { System.out.println(x.getEndTime2()); return x.getEndTime2().before(tmpCal.getTime()); } catch (ParseException e) {log.throwing(this.getClass().getName(), "getPastLectures", e); return false;} })
+				.filter(x -> { try { return x.getEndTime2().before(tmpCal.getTime()); } catch (ParseException e) {log.throwing(this.getClass().getName(), "getPastLectures", e); return false;} })
 				.map(l -> modelMapper.map(l,LectureDTO.class))
 				.collect(Collectors.toList());
 	}

@@ -1,5 +1,6 @@
 package team13.pulsbes.controllers;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.logging.Logger;
 
@@ -32,7 +33,7 @@ public class StudentController {
 			return studentService.getAllLectures(id);
 		} catch (InvalidStudentException e) {
 			log.throwing(this.getClass().getName(), "getAllLectures", e);
-			return null;
+			return Collections.emptyList();
 		}
 	}
 
@@ -52,7 +53,7 @@ public class StudentController {
 			return studentService.getBookedLectures(id);
 		} catch (InvalidStudentException e) {
 			log.throwing(this.getClass().getName(), "getBookedLectures", e);
-			return null;
+			return Collections.emptyList();
 		}
 	}
 
