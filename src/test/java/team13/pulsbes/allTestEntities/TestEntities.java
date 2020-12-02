@@ -67,7 +67,7 @@ class TestEntities {
 		
 		assertEquals("1",l.getId());
 		assertEquals("lab",l.getLectureType());
-		assertEquals(l.getSurnameString(),"test");
+		assertEquals("test",l.getSurnameString());
 		assertEquals(10,l.getAvailableSeat());
 		assertEquals(100,l.getTotalSeat());
 		assertEquals("aula",l.getRoomName());
