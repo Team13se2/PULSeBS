@@ -82,7 +82,7 @@ public class TeacherServiceImpl implements TeacherService{
 		return  teacherRepository.getOne(id)
 				.getLectures()
 				.stream()
-				.filter(x -> { try { System.out.println(x.getStartTime2()); return x.getStartTime2().after(tmpCal.getTime()); } catch (ParseException e) {log.throwing(this.getClass().getName(), "getAllLectures", e); return false;} })
+				.filter(x -> { try { return x.getStartTime2().after(tmpCal.getTime()); } catch (ParseException e) {log.throwing(this.getClass().getName(), "getAllLectures", e); return false;} })
 				.map(l -> modelMapper.map(l,LectureDTO.class))
 				.collect(Collectors.toList());
 	}
@@ -115,7 +115,7 @@ public class TeacherServiceImpl implements TeacherService{
         Teacher teacher = optTeacher.get();
 
 		//Teacher teacher = teacherRepository.findById(TeacherId).get();
-		System.out.println(teacher.getEmail());
+		log.info(teacher.getEmail());
 		Lecture tmpLecture = lectureRepository.getOne(lectureId);
 		Calendar tmpCal = Calendar.getInstance();		
 		tmpCal.add(Calendar.HOUR_OF_DAY, -1);
@@ -126,7 +126,7 @@ public class TeacherServiceImpl implements TeacherService{
 		
 			List<Student> listStudent = tmpLecture.getStudents();
 			teacher.removeLecture(tmpLecture);			
-            System.out.println(teacher.getLectures());
+            //System.out.println(teacher.getLectures());
             lectureRepository.delete(tmpLecture);
             teacherRepository.save(teacher);
 			teacherRepository.flush();
@@ -177,7 +177,7 @@ public class TeacherServiceImpl implements TeacherService{
         Teacher teacher = optTeacher.get();
 
 		//Teacher teacher = teacherRepository.findById(TeacherId).get();
-		System.out.println(teacher.getEmail());
+		log.info(teacher.getEmail());
 		Lecture tmpLecture = lectureRepository.getOne(lectureId);
 		Calendar tmpCal = Calendar.getInstance();		
 		tmpCal.add(Calendar.MINUTE, -30);
@@ -188,7 +188,7 @@ public class TeacherServiceImpl implements TeacherService{
 			
 			List<Student> listStudent = tmpLecture.getStudents();
 			teacher.removeLecture(tmpLecture);
-            System.out.println(teacher.getLectures());
+            //System.out.println(teacher.getLectures());
             lectureRepository.delete(tmpLecture);
             teacherRepository.save(teacher);
 			teacherRepository.flush();
@@ -234,7 +234,7 @@ public class TeacherServiceImpl implements TeacherService{
 		return  teacherRepository.getOne(id)
 				.getLectures()
 				.stream()
-				.filter(x -> { try { System.out.println(x.getEndTime2()); return x.getEndTime2().before(tmpCal.getTime()); } catch (ParseException e) {log.throwing(this.getClass().getName(), "getPastLectures", e); return false;} })
+				.filter(x -> { try { return x.getEndTime2().before(tmpCal.getTime()); } catch (ParseException e) {log.throwing(this.getClass().getName(), "getPastLectures", e); return false;} })
 				.map(l -> modelMapper.map(l,LectureDTO.class))
 				.collect(Collectors.toList());
 	}
