@@ -81,7 +81,7 @@ public class LoginService {
 		return login;
 	}
 	
-	static private void checkEmail(IdPw idpw) {
+	private static void checkEmail(IdPw idpw) {
 		if(idpw.getEmail().charAt(0) == 't') {
 			idpw.setRole(TYPE_TEACHER);
 			return;
@@ -93,7 +93,7 @@ public class LoginService {
 		idpw.setRole("exception");
 	}
 
-	static private LoginDTO loginConverter(Student s, Teacher t) {
+	private static LoginDTO loginConverter(Student s, Teacher t) {
 		LoginDTO login = new LoginDTO();
 		if(t == null) {
 			login.setEmail(s.getEmail());
