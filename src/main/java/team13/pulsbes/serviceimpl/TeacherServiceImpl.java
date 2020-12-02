@@ -5,10 +5,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import team13.pulsbes.dtos.LectureDTO;
 import team13.pulsbes.dtos.StudentDTO;
-import team13.pulsbes.dtos.TeacherDTO;
 import team13.pulsbes.entities.Lecture;
 import team13.pulsbes.entities.Teacher;
-import team13.pulsbes.entities.Course;
 import team13.pulsbes.entities.Student;
 import team13.pulsbes.exception.InvalidLectureException;
 import team13.pulsbes.exception.InvalidTeacherException;
@@ -18,17 +16,12 @@ import team13.pulsbes.repositories.LectureRepository;
 import team13.pulsbes.repositories.CourseRepository;
 import team13.pulsbes.repositories.TeacherRepository;
 import team13.pulsbes.services.TeacherService;
-import team13.pulsbes.services.TeacherService;
 
 import java.util.logging.Logger;
-import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.Calendar;
 import java.util.Objects;
-import java.util.Timer;
-import java.util.TimerTask;
 import java.util.stream.Collectors;
 
 @Service
