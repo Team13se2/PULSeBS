@@ -1,17 +1,6 @@
 package team13.pulsbes.dtos;
 
-
-import lombok.Data;
-import team13.pulsbes.entities.Student;
-
-import org.hibernate.exception.DataException;
-
 import javax.persistence.Id;
-
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-
 
 public class LectureDTO {
 
