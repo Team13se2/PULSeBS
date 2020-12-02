@@ -91,16 +91,15 @@ public class Lecture {
 		c.set(year, month, day, hour, minutes, 0);
 		
 		DateFormat dateFormat = new SimpleDateFormat(DATE_FORMAT_STRING);
-		System.out.println(c.getTime().toString());
         String strDate = dateFormat.format(c.getTime());
         
 		startTime = strDate;
     }
     public Date getStartTime2() throws ParseException{
-    	Date notificationTime = new Date();
+    	//Date notificationTime = new Date();
     	DateFormat dateFormat = new SimpleDateFormat(DATE_FORMAT_STRING);
     	
-    	notificationTime = dateFormat.parse(startTime);
+    	Date notificationTime = dateFormat.parse(startTime);
     	return notificationTime;
     }
     public void addEndTime(int year, int month, int day, int hour, int minutes) {
@@ -114,11 +113,11 @@ public class Lecture {
 		endTime = strDate;
     }
     public Date getEndTime2() throws ParseException {
-    	Date notificationTime = new Date();
+    	//Date notificationTime = new Date();
     	DateFormat dateFormat = new SimpleDateFormat(DATE_FORMAT_STRING);
     	//SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
     	
-    	notificationTime = dateFormat.parse(endTime);
+    	Date notificationTime = dateFormat.parse(endTime);
     	return notificationTime;
     }
 
