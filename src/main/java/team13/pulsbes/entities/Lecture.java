@@ -98,8 +98,8 @@ public class Lecture {
     	//Date notificationTime = new Date();
     	DateFormat dateFormat = new SimpleDateFormat(DATE_FORMAT_STRING);
     	
-    	Date notificationTime = dateFormat.parse(startTime);
-    	return notificationTime;
+    	//Date notificationTime = dateFormat.parse(startTime);
+    	return dateFormat.parse(startTime);
     }
     public void addEndTime(int year, int month, int day, int hour, int minutes) {
     	Calendar c = Calendar.getInstance();
@@ -116,8 +116,8 @@ public class Lecture {
     	DateFormat dateFormat = new SimpleDateFormat(DATE_FORMAT_STRING);
     	//SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
     	
-    	Date notificationTime = dateFormat.parse(endTime);
-    	return notificationTime;
+    	//Date notificationTime = dateFormat.parse(endTime);
+    	return dateFormat.parse(endTime);
     }
 
 

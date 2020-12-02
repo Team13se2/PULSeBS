@@ -1,6 +1,11 @@
 package team13.pulsbes.utils;
 
 public final class Constants {
+
+	private Constants() {
+		throw new IllegalStateException("Utility class");
+	  }
+
 	public static final String GET_NUMBER_STUDENTS_ATTENDING = "/getNumberStudentsAttending";
 	public static final String GET_STUDENT_LIST = "/getStudentList";
 	public static final String GET_ALL_LECTURES = "/getAllLectures";
