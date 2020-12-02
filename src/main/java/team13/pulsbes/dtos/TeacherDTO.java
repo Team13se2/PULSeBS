@@ -1,6 +1,5 @@
 package team13.pulsbes.dtos;
 
-import lombok.Data;
 import team13.pulsbes.entities.Course;
 import team13.pulsbes.entities.Lecture;
 
@@ -8,8 +7,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
-
 
 public class TeacherDTO
 {
