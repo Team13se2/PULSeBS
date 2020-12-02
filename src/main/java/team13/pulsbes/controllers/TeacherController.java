@@ -1,6 +1,7 @@
 package team13.pulsbes.controllers;
 
 import java.text.ParseException;
+import java.util.Collections;
 import java.util.List;
 import java.util.logging.Logger;
 
@@ -50,11 +51,11 @@ public class TeacherController {
 			}
 			return l;
 		}
-		else return null;
+		else return Collections.emptyList();
 
 		} catch (InvalidTeacherException | InvalidLectureException e) {
 			log.throwing(this.getClass().getName(), "getAllLectures", e);
-			return null;
+			return Collections.emptyList();
 		}
 	}
 	@RequestMapping(value = Constants.GET_STUDENT_LIST,method = RequestMethod.GET)
@@ -63,11 +64,11 @@ public class TeacherController {
 			if (type.equals(TYPE_TEACHER)) {
 			return teacherService.getStudentList(id);
 			}
-			else return null;
+			else return Collections.emptyList();
 		} catch (InvalidLectureException e) {
 
 			log.throwing(this.getClass().getName(), "getStudentList", e);
-			return null;
+			return Collections.emptyList();
 		}
 	}
 	@RequestMapping(value = Constants.CANCEL_LECTURE,method = RequestMethod.DELETE)
@@ -103,11 +104,11 @@ public class TeacherController {
 			List<LectureDTO> l = teacherService.getPastLectures(id);			
 			return l;
 		}
-		else return null;
+		else return Collections.emptyList();
 
 		} catch (InvalidTeacherException e) {
 			log.throwing(this.getClass().getName(), "getPastLectures", e);
-			return null;
+			return Collections.emptyList();
 		}
 	}
 }
