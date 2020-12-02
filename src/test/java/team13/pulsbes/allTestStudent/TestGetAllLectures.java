@@ -17,7 +17,6 @@ import team13.pulsbes.entities.Student;
 import team13.pulsbes.exception.InvalidCourseException;
 import team13.pulsbes.exception.InvalidStudentException;
 import team13.pulsbes.repositories.StudentRepository;
-import team13.pulsbes.repositories.TeacherRepository;
 import team13.pulsbes.serviceimpl.StudentServiceImpl;
 
 class TestGetAllLectures {

@@ -13,7 +13,6 @@ import org.junit.jupiter.api.Test;
 import org.modelmapper.ModelMapper;
 
 import team13.pulsbes.dtos.LectureDTO;
-import team13.pulsbes.entities.Course;
 import team13.pulsbes.entities.Lecture;
 import team13.pulsbes.entities.Student;
 import team13.pulsbes.exception.InvalidCourseException;

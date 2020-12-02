@@ -24,7 +24,6 @@ import team13.pulsbes.repositories.LectureRepository;
 import team13.pulsbes.repositories.TeacherRepository;
 import team13.pulsbes.serviceimpl.NotificationServiceImpl;
 import team13.pulsbes.serviceimpl.TeacherServiceImpl;
-import team13.pulsbes.services.NotificationService;
 
 class TestCancelLecture {
 

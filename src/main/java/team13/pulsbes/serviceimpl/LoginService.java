@@ -1,7 +1,5 @@
 package team13.pulsbes.serviceimpl;
 
-import java.util.ArrayList;
-import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -11,7 +9,6 @@ import team13.pulsbes.dtos.LoginDTO;
 import team13.pulsbes.entities.Student;
 import team13.pulsbes.entities.Teacher;
 import team13.pulsbes.exception.WrongCredentialsException;
-import team13.pulsbes.repositories.LectureRepository;
 import team13.pulsbes.repositories.StudentRepository;
 import team13.pulsbes.repositories.TeacherRepository;
 
