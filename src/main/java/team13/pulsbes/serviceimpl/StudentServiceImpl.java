@@ -58,15 +58,15 @@ public class StudentServiceImpl implements StudentService {
     Logger log = Logger.getLogger("StudentServiceImpl");
 
     @Override
-    public String bookLecture(String lectureId, String StudentId) throws InvalidLectureException, InvalidStudentException {
+    public String bookLecture(String lectureId, String studentId) throws InvalidLectureException, InvalidStudentException {
 
         System.out.println("entrato");
 
-        if (StudentId.equals("-1")) {
+        if (studentId.equals("-1")) {
             throw new InvalidStudentException("Student can't be null");
         }
 
-        Student currentStudent = studentRepository.getOne(StudentId);
+        Student currentStudent = studentRepository.getOne(studentId);
         Optional<Lecture> lectureSelected = lectureRepository.findById(lectureId);
 
         if (!lectureSelected.isPresent()) {
@@ -150,9 +150,9 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
-    public String deleteLecture(String lectureId, String StudentId) throws InvalidLectureException, InvalidStudentException {
+    public String deleteLecture(String lectureId, String studentId) throws InvalidLectureException, InvalidStudentException {
 
-        if (!studentRepository.existsById(StudentId)) {
+        if (!studentRepository.existsById(studentId)) {
             throw new InvalidStudentException("Student not found");
         }
 
@@ -160,16 +160,24 @@ public class StudentServiceImpl implements StudentService {
             throw new InvalidLectureException("Lecture not found");
         }
 
-        Student CurrentStudent = studentRepository.findById(StudentId).get();
-        Lecture DeletingLecture = lectureRepository.getOne(lectureId);
+        Optional<Student> optStudent = studentRepository.findById(studentId);
+
+        if (!optStudent.isPresent()) {
+            throw new InvalidStudentException("Student can't be null");
+        }
+
+        Student currentStudent = optStudent.get();
+
+        //Student currentStudent = studentRepository.findById(studentId).get();
+        Lecture deletingLecture = lectureRepository.getOne(lectureId);
 
 
-        if (CurrentStudent.getBookedLectures().contains(DeletingLecture)) {
+        if (currentStudent.getBookedLectures().contains(deletingLecture)) {
             try {
 
-                System.out.println(CurrentStudent.getBookedLectures());
-                CurrentStudent.removeBookedLecture(DeletingLecture);
-                studentRepository.saveAndFlush(CurrentStudent);
+                System.out.println(currentStudent.getBookedLectures());
+                currentStudent.removeBookedLecture(deletingLecture);
+                studentRepository.saveAndFlush(currentStudent);
 
 
             } catch (Exception e) {
