@@ -101,8 +101,8 @@ public class TeacherController {
 	public List<LectureDTO> getPastLectures(@CookieValue(value = "username") String username,@CookieValue(value = "id") String id, @CookieValue(value = "type") String type) throws InvalidTeacherException{
 		try {
 			if (type.equals(TYPE_TEACHER)) {
-			List<LectureDTO> l = teacherService.getPastLectures(id);			
-			return l;
+			//List<LectureDTO> l = teacherService.getPastLectures(id);			
+			return teacherService.getPastLectures(id);
 		}
 		else return Collections.emptyList();
 
