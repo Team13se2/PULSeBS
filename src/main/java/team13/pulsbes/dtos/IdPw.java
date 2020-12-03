@@ -2,40 +2,40 @@ package team13.pulsbes.dtos;
 
 public class IdPw {
 	
-	private String Email;
+	private String email;
 	
-	private String Psw;
+	private String psw;
 
-	private String Role;
+	private String role;
 	
 	public IdPw(String email, String psw, String teacher) {
-		this.Email = email;
-		this.Psw = psw;
-		this.Role = teacher;
+		this.email = email;
+		this.psw = psw;
+		this.role = teacher;
 	}
 
 	public String getEmail() {
-		return Email;
+		return email;
 	}
 
 	public void setEmail(String email) {
-		this.Email = email;
+		this.email = email;
 	}
 
 	public String getPsw() {
-		return Psw;
+		return psw;
 	}
 
 	public void setPsw(String psw) {
-		this.Psw = psw;
+		this.psw = psw;
 	}
 
 	public String getRole() {
-		return Role;
+		return role;
 	}
 
 	public void setRole(String teacher) {
-		this.Role = teacher;
+		this.role = teacher;
 	}
 	
 }

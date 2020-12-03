@@ -11,6 +11,7 @@ import java.util.Optional;
 
 import team13.pulsbes.entities.Lecture;
 import team13.pulsbes.entities.Student;
+import team13.pulsbes.entities.Teacher;
 import team13.pulsbes.exception.InvalidLectureException;
 import team13.pulsbes.exception.InvalidStudentException;
 import team13.pulsbes.repositories.LectureRepository;
@@ -53,7 +54,14 @@ class TestBookLecture {
 	@Test
 	void testBookLecture3() throws InvalidLectureException,InvalidStudentException {
 		Lecture l = new Lecture();
+		Teacher t = new Teacher();
+		t.setName("giovanni");
+		l.setSurnameString("muchacha");
+		t.setSurname("muchacha");
 		l.setAvailableSeat(1);
+		l.setStartTime("1010");
+		l.setTeacher(t);
+		l.setRoomName("aula");
 		Student s = new Student("1","test","test");
 		s.setEmail("fake@gmail.com");
 		l.setSubjectName("test");		

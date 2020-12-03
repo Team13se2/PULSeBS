@@ -1,6 +1,5 @@
 package team13.pulsbes.dtos;
 
-import lombok.Data;
 import team13.pulsbes.entities.Course;
 import team13.pulsbes.entities.Lecture;
 
@@ -8,19 +7,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
-
 
 public class TeacherDTO
 {
     @Id
-    private String Id;
+    private String id;
 
-    private String Name;
+    private String name;
 
-    private String Surname;
+    private String surname;
 
-    private String Email;
+    private String email;
 
     List<Lecture> lectures;
     {
@@ -32,28 +29,28 @@ public class TeacherDTO
         courses = new ArrayList<>();
     }
 	public String getId() {
-		return Id;
+		return id;
 	}
 	public void setId(String id) {
-		this.Id = id;
+		this.id = id;
 	}
 	public String getName() {
-		return Name;
+		return name;
 	}
 	public void setName(String name) {
-		this.Name = name;
+		this.name = name;
 	}
 	public String getSurname() {
-		return Surname;
+		return surname;
 	}
 	public void setSurname(String surname) {
-		this.Surname = surname;
+		this.surname = surname;
 	}
 	public String getEmail() {
-		return Email;
+		return email;
 	}
 	public void setEmail(String email) {
-		this.Email = email;
+		this.email = email;
 	}
 	public List<Lecture> getLectures() {
 		return lectures;

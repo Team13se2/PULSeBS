@@ -17,7 +17,6 @@ import team13.pulsbes.entities.Student;
 import team13.pulsbes.exception.InvalidCourseException;
 import team13.pulsbes.exception.InvalidStudentException;
 import team13.pulsbes.repositories.StudentRepository;
-import team13.pulsbes.repositories.TeacherRepository;
 import team13.pulsbes.serviceimpl.StudentServiceImpl;
 
 class TestGetAllLectures {
@@ -50,6 +49,7 @@ class TestGetAllLectures {
 		Course c = new Course();
 		Lecture l = new Lecture();
 		l.setId("1");
+		l.addStartTime(2030, 1, 1, 0, 0);
 		List<Lecture> lectures = new ArrayList<>();
 		lectures.add(l);
 		c.setLectures(lectures);

@@ -1,20 +1,16 @@
 package team13.pulsbes.allTestTeacher;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.*;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mock;
 import org.modelmapper.ModelMapper;
 
 import team13.pulsbes.dtos.LectureDTO;
-import team13.pulsbes.dtos.TeacherDTO;
 import team13.pulsbes.entities.Lecture;
 import team13.pulsbes.entities.Teacher;
 import team13.pulsbes.exception.InvalidTeacherException;

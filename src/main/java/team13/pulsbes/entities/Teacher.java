@@ -2,10 +2,7 @@ package team13.pulsbes.entities;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.Data;
 import lombok.NoArgsConstructor;
-import team13.pulsbes.exception.InvalidCourseException;
-import team13.pulsbes.exception.InvalidLectureException;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -19,14 +16,14 @@ import java.util.List;
 public class Teacher {
 
     @Id
-    private String Id;
-    private String Name;
+    private String id;
+    private String name;
 
-    private String Surname;
+    private String surname;
 
-    private String Email;
+    private String email;
 
-    private String Psw;
+    private String psw;
     @OneToMany (mappedBy = "teacher",cascade = CascadeType.ALL, orphanRemoval = true)
     List<Lecture> lectures;
     {
@@ -40,52 +37,52 @@ public class Teacher {
     }
 
 	public String getId() {
-		return Id;
+		return id;
 	}
 
 
 	public void setId(String id) {
-		this.Id = id;
+		this.id = id;
 	}
 
 
 	public String getName() {
-		return Name;
+		return name;
 	}
 
 
 	public void setName(String name) {
-		this.Name = name;
+		this.name = name;
 	}
 
 
 	public String getSurname() {
-		return Surname;
+		return surname;
 	}
 
 
 	public void setSurname(String surname) {
-		this.Surname = surname;
+		this.surname = surname;
 	}
 
 
 	public String getEmail() {
-		return Email;
+		return email;
 	}
 
 
 	public void setEmail(String email) {
-		this.Email = email;
+		this.email = email;
 	}
 
 
 	public String getPsw() {
-		return Psw;
+		return psw;
 	}
 
 
 	public void setPsw(String psw) {
-		this.Psw = psw;
+		this.psw = psw;
 	}
 
 
@@ -107,7 +104,7 @@ public class Teacher {
 		this.courses = courses;
 	}
 
-	public void removeLecture(Lecture lecture) throws InvalidLectureException, InvalidCourseException {
+	public void removeLecture(Lecture lecture) {
 
     	lectures.remove(lecture);
     	lecture.setTeacher(null);

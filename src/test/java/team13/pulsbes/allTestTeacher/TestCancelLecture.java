@@ -18,12 +18,12 @@ import team13.pulsbes.entities.Student;
 import team13.pulsbes.entities.Teacher;
 import team13.pulsbes.exception.InvalidCourseException;
 import team13.pulsbes.exception.InvalidLectureException;
+import team13.pulsbes.exception.InvalidTeacherException;
 import team13.pulsbes.exception.InvalidStudentException;
 import team13.pulsbes.repositories.LectureRepository;
 import team13.pulsbes.repositories.TeacherRepository;
 import team13.pulsbes.serviceimpl.NotificationServiceImpl;
 import team13.pulsbes.serviceimpl.TeacherServiceImpl;
-import team13.pulsbes.services.NotificationService;
 
 class TestCancelLecture {
 
@@ -53,11 +53,13 @@ class TestCancelLecture {
 	}
 	
 	@Test
-	void testCancelLecture2() throws InvalidStudentException, InvalidLectureException, InvalidCourseException, ParseException {
+	void testCancelLecture2() throws InvalidStudentException, InvalidLectureException, InvalidCourseException, ParseException, InvalidTeacherException {
 		Teacher t = new Teacher();
 		Lecture l = new Lecture();
 		Student s = new Student("1","test","testsur");
 		Course c = new Course();
+		t.setName("test");
+		t.setSurname("testsur");
 		c.getLectures().add(l);
 		l.setCourse(c);
 		s.setEmail("student1team13@gmail.com");
@@ -77,7 +79,7 @@ class TestCancelLecture {
 		assertEquals("Lecture cancelled",teacherService.cancelLecture("1", "1"));		
 	}
 	@Test
-	void testCancelLecture3() throws InvalidStudentException, InvalidLectureException, InvalidCourseException, ParseException {
+	void testCancelLecture3() throws InvalidStudentException, InvalidLectureException, InvalidCourseException, ParseException, InvalidTeacherException {
 		Teacher t = new Teacher();
 		Lecture l = new Lecture();
 		Student s = new Student("1","test","testsur");

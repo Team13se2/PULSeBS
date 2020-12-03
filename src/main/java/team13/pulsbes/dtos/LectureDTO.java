@@ -1,22 +1,11 @@
 package team13.pulsbes.dtos;
 
-
-import lombok.Data;
-import team13.pulsbes.entities.Student;
-
-import org.hibernate.exception.DataException;
-
 import javax.persistence.Id;
-
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-
 
 public class LectureDTO {
 
     @Id
-    private String Id;
+    private String id;
 
     private String startTime;
 
@@ -39,10 +28,10 @@ public class LectureDTO {
     
 	public LectureDTO(){}
 	public String getId() {
-		return Id;
+		return id;
 	}
 	public void setId(String id) {
-		this.Id = id;
+		this.id = id;
 	}
 	public String getStartTime() {
 		return startTime;

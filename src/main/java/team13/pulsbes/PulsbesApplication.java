@@ -10,10 +10,6 @@ import org.springframework.context.annotation.Primary;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 
-import team13.pulsbes.entities.Course;
-import team13.pulsbes.entities.Lecture;
-import team13.pulsbes.entities.Student;
-import team13.pulsbes.entities.Teacher;
 import team13.pulsbes.repositories.CourseRepository;
 import team13.pulsbes.repositories.LectureRepository;
 import team13.pulsbes.repositories.StudentRepository;
@@ -27,8 +23,6 @@ import javax.annotation.PostConstruct;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.Properties;
 
 @SpringBootApplication

@@ -2,74 +2,74 @@ package team13.pulsbes.dtos;
 
 public class LoginDTO {
 	
-	private String Email;
-	private String Id;
-	private String Name;
-	private String Surname;
-	private String Role;
-	private String Token;
+	private String email;
+	private String id;
+	private String name;
+	private String surname;
+	private String role;
+	private String token;
 	
 	public LoginDTO(String email, String id, String name, String surname,String teacher, String token) {
 		super();
-		this.Email = email;
-		this.Id = id;
-		this.Name = name;
-		this.Surname = surname;
-		this.Role = teacher;
-		this.Token = token;
+		this.email = email;
+		this.id = id;
+		this.name = name;
+		this.surname = surname;
+		this.role = teacher;
+		this.token = token;
 	}
 
 	public LoginDTO() {
-		this.Id = "-1";
+		this.id = "-1";
 		// TODO Auto-generated constructor stub
 	}
 
 	public String getEmail() {
-		return Email;
+		return email;
 	}
 
 	public void setEmail(String email) {
-		this.Email = email;
+		this.email = email;
 	}
 
 	public String getId() {
-		return Id;
+		return id;
 	}
 
 	public void setId(String id) {
-		this.Id = id;
+		this.id = id;
 	}
 
 	public String getName() {
-		return Name;
+		return name;
 	}
 
 	public void setName(String name) {
-		this.Name = name;
+		this.name = name;
 	}
 
 	public String getSurname() {
-		return Surname;
+		return surname;
 	}
 
 	public void setSurname(String surname) {
-		this.Surname = surname;
+		this.surname = surname;
 	}
 
 	public String getRole() {
-		return Role;
+		return role;
 	}
 
 	public void setRole(String teacher) {
-		this.Role = teacher;
+		this.role = teacher;
 	}
 
 	public String getToken() {
-		return Token;
+		return token;
 	}
 
 	public void setToken(String token) {
-		this.Token = token;
+		this.token = token;
 	}
 	
 	

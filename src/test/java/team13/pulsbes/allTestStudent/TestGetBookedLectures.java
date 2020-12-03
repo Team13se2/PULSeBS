@@ -13,7 +13,6 @@ import org.junit.jupiter.api.Test;
 import org.modelmapper.ModelMapper;
 
 import team13.pulsbes.dtos.LectureDTO;
-import team13.pulsbes.entities.Course;
 import team13.pulsbes.entities.Lecture;
 import team13.pulsbes.entities.Student;
 import team13.pulsbes.exception.InvalidCourseException;
@@ -50,6 +49,7 @@ class TestGetBookedLectures {
 		Student s = new Student("1","name","surname");		
 		Lecture l = new Lecture();
 		l.setId("1");
+		l.addStartTime(2030, 1, 1, 0, 0);
 		List<Lecture> lectures = new ArrayList<>();
 		lectures.add(l);
 		when(studentRepository.getOne(any())).thenReturn(s);

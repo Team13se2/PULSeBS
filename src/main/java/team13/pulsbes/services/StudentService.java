@@ -9,9 +9,9 @@ import team13.pulsbes.exception.InvalidStudentException;
 
 public interface StudentService {
 
-    String bookLecture (String lectureId,String StudentId) throws InvalidLectureException, InvalidStudentException;
+    String bookLecture (String lectureId,String studentId) throws InvalidLectureException, InvalidStudentException;
     List<LectureDTO> getAllLectures(String id) throws InvalidStudentException;
-	List<LectureDTO> getBookedLectures(String Id)throws InvalidStudentException;
-	String deleteLecture (String lectureId,String StudentId) throws InvalidLectureException,InvalidStudentException;
+	List<LectureDTO> getBookedLectures(String id)throws InvalidStudentException;
+	String deleteLecture (String lectureId,String studentId) throws InvalidLectureException,InvalidStudentException;
 
 }

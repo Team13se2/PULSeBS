@@ -1,7 +1,5 @@
 package team13.pulsbes;
 
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -10,16 +8,6 @@ import org.springframework.test.context.ActiveProfiles;
 import team13.pulsbes.services.NotificationService;
 import team13.pulsbes.services.StudentService;
 import team13.pulsbes.services.TeacherService;
-import team13.pulsbes.entities.Course;
-import team13.pulsbes.entities.Lecture;
-import team13.pulsbes.entities.Student;
-import team13.pulsbes.entities.Teacher;
-import team13.pulsbes.exception.InvalidCourseException;
-import team13.pulsbes.exception.InvalidStudentException;
-import team13.pulsbes.repositories.CourseRepository;
-import team13.pulsbes.repositories.LectureRepository;
-import team13.pulsbes.repositories.StudentRepository;
-import team13.pulsbes.repositories.TeacherRepository;
 
 @ActiveProfiles("test")
 @SpringBootTest

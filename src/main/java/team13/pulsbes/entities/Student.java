@@ -3,15 +3,11 @@ package team13.pulsbes.entities;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
-import lombok.NoArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import team13.pulsbes.exception.InvalidCourseException;
-import team13.pulsbes.exception.InvalidLectureException;
 
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Data
 @AllArgsConstructor
@@ -20,15 +16,15 @@ import java.util.Optional;
 
 public class Student {
     @Id
-    private String Id;
+    private String id;
 
-    private String Name;
+    private String name;
 
-    private String Surname;
+    private String surname;
 
-    private String Email;
+    private String email;
 
-    private String Psw;
+    private String psw;
     @ManyToMany(cascade = {CascadeType.PERSIST,CascadeType.MERGE})
     @JoinTable(name = "courses_students",joinColumns = @JoinColumn(name = "course_id"),
     inverseJoinColumns = @JoinColumn(name = "student_id"))
@@ -43,11 +39,11 @@ public class Student {
 
 	public Student() {};
 
-	public Student( String Id, String Name, String Surname) {
+	public Student( String id, String name, String surname) {
 		super();
-		this.Id = Id;
-		this.Name = Name;
-		this.Surname = Surname;
+		this.id = id;
+		this.name = name;
+		this.surname = surname;
 	}
 
 	public void addCourse(Course c) throws InvalidCourseException {
@@ -84,42 +80,42 @@ public class Student {
     }
     
 	public String getId() {
-		return Id;
+		return id;
 	}
 
 
 	public void setId(String id) {
-		this.Id = id;
+		this.id = id;
 	}
 
 
 	public String getName() {
-		return Name;
+		return name;
 	}
 
 
 	public void setName(String name) {
-		this.Name = name;
+		this.name = name;
 	}
 
 
 	public String getSurname() {
-		return Surname;
+		return surname;
 	}
 
 
 	public void setSurname(String surname) {
-		this.Surname = surname;
+		this.surname = surname;
 	}
 
 
 	public String getEmail() {
-		return Email;
+		return email;
 	}
 
 
 	public void setEmail(String email) {
-		this.Email = email;
+		this.email = email;
 	}
 
 	public List<Course> getCourses() {
@@ -132,11 +128,11 @@ public class Student {
 	}
 
 	public String getPsw() {
-		return Psw;
+		return psw;
 	}
 
 	public void setPsw(String psw) {
-		this.Psw = psw;
+		this.psw = psw;
 	}
 
 	public List<Lecture> getBookedLectures() {
