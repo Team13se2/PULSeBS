@@ -18,6 +18,7 @@ import MonthChart from './components/MonthChart';
 import Day_Picker from './components/Day_Picker';
 import moment from 'moment';
 import MonthNrStudents from './components/MonthNrStudents';
+import LecturesTableNoBooked from './components/LecturesTableNoBooked';
 
 class App extends React.Component {
     constructor(props) {
@@ -219,7 +220,7 @@ class App extends React.Component {
                                 <Col sm={8}
                                     className="below-nav">
                                     <h1>No Booked Lectures</h1>
-                                    <LecturesTable lectures={this.state.noBookedLectures} getLectures={this.getNoBookedLectures} remove={false} job={this.bookLecture}/>
+                                    <LecturesTableNoBooked lectures={this.state.noBookedLectures} getLectures={this.getNoBookedLectures} remove={false} job={this.bookLecture}/>
                                 </Col>
                                 <Col sm={1}/>
                             </Row>
