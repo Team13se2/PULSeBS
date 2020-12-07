@@ -10,10 +10,12 @@ import org.springframework.context.annotation.Primary;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 
+import team13.pulsbes.entities.BookingManager;
 import team13.pulsbes.entities.Course;
 import team13.pulsbes.entities.Lecture;
 import team13.pulsbes.entities.Student;
 import team13.pulsbes.entities.Teacher;
+import team13.pulsbes.repositories.BookingManagerRepository;
 import team13.pulsbes.repositories.CourseRepository;
 import team13.pulsbes.repositories.LectureRepository;
 import team13.pulsbes.repositories.StudentRepository;
@@ -75,9 +77,18 @@ public class PulsbesApplication {
 			CourseRepository courseRepository;
 			@Autowired
 			TeacherRepository teacherRepository;
+			@Autowired
+			BookingManagerRepository bookingRepository;
 			@Override
 			public void run(String... args) throws Exception {
 //
+				BookingManager b = new BookingManager();
+				b.setEmail("booking1team13@gmail.com");
+				b.setPsw("psw");
+				b.setId("1");
+				b.setName("Signor");
+				b.setSurname("Booking");
+				bookingRepository.save(b);
 	/*			Student s = studentRepository.getOne("1");
 				//s.addCourse(courseRepository.getOne("1"));
 				s.setEmail("student1team13@gmail.com");

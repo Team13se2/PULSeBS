@@ -6,9 +6,11 @@ import org.springframework.stereotype.Service;
 
 import team13.pulsbes.dtos.IdPw;
 import team13.pulsbes.dtos.LoginDTO;
+import team13.pulsbes.entities.BookingManager;
 import team13.pulsbes.entities.Student;
 import team13.pulsbes.entities.Teacher;
 import team13.pulsbes.exception.WrongCredentialsException;
+import team13.pulsbes.repositories.BookingManagerRepository;
 import team13.pulsbes.repositories.StudentRepository;
 import team13.pulsbes.repositories.TeacherRepository;
 
@@ -21,6 +23,9 @@ public class LoginService {
 	@Autowired
 	StudentRepository studentRepository;
 	
+	@Autowired
+	BookingManagerRepository bookingRepository;
+	
 	 public void addStudentRepo (StudentRepository sr) {
 			this.studentRepository = sr;
 		}
@@ -30,7 +35,8 @@ public class LoginService {
 
 	private static final String TYPE_TEACHER = "teacher";
 	private static final String TYPE_STUDENT = "student";
-
+	private static final String TYPE_BOOKING_MANAGER = "booking_manager";
+	
 	public LoginDTO login(IdPw idpw) throws WrongCredentialsException {
 		LoginDTO login = null;
 		
@@ -38,18 +44,26 @@ public class LoginService {
 		
 		//check email's first char to set role
 		switch (idpw.getRole()) {
-		case TYPE_TEACHER:
-			for (Teacher t : teacherRepository.findAll()) {
-				if(t.getEmail().equals(idpw.getEmail()) && t.getPsw().equals(idpw.getPsw())) {
-					login = loginConverter(null,t);
+		case TYPE_STUDENT:
+			for(Student s : studentRepository.findAll()) {
+				if(s.getEmail().equals(idpw.getEmail()) && s.getPsw().equals(idpw.getPsw())) {
+					login = loginConverter(s,null,null);
 					break;
 				}
 			}
 			break;
-		case TYPE_STUDENT:
-			for(Student s : studentRepository.findAll()) {
-				if(s.getEmail().equals(idpw.getEmail()) && s.getPsw().equals(idpw.getPsw())) {
-					login = loginConverter(s,null);
+		case TYPE_TEACHER:
+			for (Teacher t : teacherRepository.findAll()) {
+				if(t.getEmail().equals(idpw.getEmail()) && t.getPsw().equals(idpw.getPsw())) {
+					login = loginConverter(null,t,null);
+					break;
+				}
+			}
+			break;
+		case TYPE_BOOKING_MANAGER:
+			for(BookingManager b : bookingRepository.findAll()) {
+				if(b.getEmail().equals(idpw.getEmail()) && b.getPsw().equals(idpw.getPsw())) {
+					login = loginConverter(null,null,b);
 					break;
 				}
 			}
@@ -57,24 +71,6 @@ public class LoginService {
 		default:
 			break;
 		}
-	/*	
-		if(!idpw.getTeacher()) {
-			for(Student s : studentRepository.findAll()) {
-				if(s.getEmail().equals(idpw.getEmail()) && s.getPsw().equals(idpw.getPsw())) {
-					login = loginConverter(s,null);
-					break;
-				}
-			}
-		}
-		else if(idpw.getTeacher()) {
-			for (Teacher t : teacherRepository.findAll()) {
-				if(t.getEmail().equals(idpw.getEmail()) && t.getPsw().equals(idpw.getPsw())) {
-					login = loginConverter(null,t);
-					break;
-				}
-			}
-		}
-*/
 		if(login == null) {
 			throw new WrongCredentialsException("Wrong Credentials");
 		}
@@ -90,12 +86,16 @@ public class LoginService {
 			idpw.setRole(TYPE_STUDENT);
 			return;
 		}
+		else if(idpw.getEmail().charAt(0) == 'b') {
+			idpw.setRole(TYPE_BOOKING_MANAGER);
+			return;
+		}
 		idpw.setRole("exception");
 	}
 
-	private static LoginDTO loginConverter(Student s, Teacher t) {
+	private static LoginDTO loginConverter(Student s, Teacher t,BookingManager b) {
 		LoginDTO login = new LoginDTO();
-		if(t == null) {
+		if(t == null && b == null) {
 			login.setEmail(s.getEmail());
 			login.setId(s.getId());
 			login.setName(s.getName());
@@ -103,13 +103,20 @@ public class LoginService {
 			login.setRole(TYPE_STUDENT);
 			login.setToken("token");
 			return login;
-		}else {
+		}else if(s==null && b == null){
 			login.setEmail(t.getEmail());
 			login.setId(t.getId());
 			login.setName(t.getName());
 			login.setSurname(t.getSurname());
 			login.setRole(TYPE_TEACHER);
 			login.setToken("token");		//(LUCA) secondo me setToken deve essere impostato con l'id del teacher:
+		}else if(s==null && t ==null) {
+			login.setEmail(b.getEmail());
+			login.setId(b.getId());
+			login.setName(b.getName());
+			login.setSurname(b.getSurname());
+			login.setRole(TYPE_BOOKING_MANAGER);
+			login.setToken("token");
 		}
 		return login;
 	}
