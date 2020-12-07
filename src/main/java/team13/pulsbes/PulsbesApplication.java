@@ -14,11 +14,13 @@ import team13.pulsbes.entities.BookingManager;
 import team13.pulsbes.entities.Course;
 import team13.pulsbes.entities.Lecture;
 import team13.pulsbes.entities.Student;
+import team13.pulsbes.entities.SupportOfficer;
 import team13.pulsbes.entities.Teacher;
 import team13.pulsbes.repositories.BookingManagerRepository;
 import team13.pulsbes.repositories.CourseRepository;
 import team13.pulsbes.repositories.LectureRepository;
 import team13.pulsbes.repositories.StudentRepository;
+import team13.pulsbes.repositories.SupportOfficerRepository;
 import team13.pulsbes.repositories.TeacherRepository;
 import team13.pulsbes.serviceimpl.OfficerService;
 import team13.pulsbes.services.NotificationService;
@@ -79,6 +81,9 @@ public class PulsbesApplication {
 			TeacherRepository teacherRepository;
 			@Autowired
 			BookingManagerRepository bookingRepository;
+			@Autowired
+			SupportOfficerRepository supportRepository;
+			
 			@Override
 			public void run(String... args) throws Exception {
 //
@@ -89,6 +94,14 @@ public class PulsbesApplication {
 				b.setName("Signor");
 				b.setSurname("Booking");
 				bookingRepository.save(b);
+				
+				SupportOfficer so = new SupportOfficer();
+				so.setEmail("officer1team13@gmail.com");
+				so.setPsw("psw");
+				so.setId("1");
+				so.setName("Signor");
+				so.setSurname("Officer");
+				supportRepository.save(so);
 	/*			Student s = studentRepository.getOne("1");
 				//s.addCourse(courseRepository.getOne("1"));
 				s.setEmail("student1team13@gmail.com");

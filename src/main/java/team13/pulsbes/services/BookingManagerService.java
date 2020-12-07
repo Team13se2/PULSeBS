@@ -1,5 +1,11 @@
 package team13.pulsbes.services;
 
-public interface BookingManagerService {
+import java.util.List;
 
+import team13.pulsbes.dtos.LectureDTO;
+
+public interface BookingManagerService {
+	
+	List<LectureDTO> getAllLectures ();
+	
 }
