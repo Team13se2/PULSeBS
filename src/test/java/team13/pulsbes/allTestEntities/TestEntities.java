@@ -7,9 +7,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.jupiter.api.Test;
+
+import team13.pulsbes.entities.BookingManager;
 import team13.pulsbes.entities.Course;
 import team13.pulsbes.entities.Lecture;
 import team13.pulsbes.entities.Student;
+import team13.pulsbes.entities.SupportOfficer;
 import team13.pulsbes.entities.Teacher;
 import team13.pulsbes.exception.InvalidCourseException;
 import team13.pulsbes.exception.InvalidStudentException;
@@ -126,5 +129,32 @@ class TestEntities {
 		assertEquals(courses, 	t.getCourses());
 		assertEquals(lectures, 	t.getLectures());
 	}
-	
+	@Test
+	void testBookingManager() {
+		BookingManager b = new BookingManager();
+		b.setId("1");
+		b.setName("test");
+		b.setSurname("testsur");
+		b.setEmail("test@gmail.com");
+		b.setPsw("psw");
+		assertEquals("1", 		b.getId());
+		assertEquals("test", 	b.getName());
+		assertEquals("testsur", b.getSurname());
+		assertEquals("test@gmail.com", 	b.getEmail());
+		assertEquals("psw",		b.getPsw());
+	}
+	@Test
+	void testSupportOfficer() {
+		SupportOfficer s = new SupportOfficer();
+		s.setId("1");
+		s.setName("test");
+		s.setSurname("testsur");
+		s.setEmail("test@gmail.com");
+		s.setPsw("psw");
+		assertEquals("1", 		s.getId());
+		assertEquals("test", 	s.getName());
+		assertEquals("testsur", s.getSurname());
+		assertEquals("test@gmail.com", 	s.getEmail());
+		assertEquals("psw",		s.getPsw());
+	}
 }

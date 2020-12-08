@@ -19,6 +19,12 @@ public class BookingManagerServiceImpl implements BookingManagerService{
 	@Autowired
 	ModelMapper modelMapper;
 	
+	public void addLectureRepository(LectureRepository lectureRepository) {
+		this.lectureRepository = lectureRepository;
+	}
+	public void addModelMapper(ModelMapper mm) {
+		this.modelMapper = mm;
+	}
 	@Override
 	public List<LectureDTO> getAllLectures() {      
 		return lectureRepository.findAll().stream().map(l->modelMapper.map(l,LectureDTO.class)).collect(Collectors.toList());

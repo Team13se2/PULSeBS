@@ -12,7 +12,6 @@ public class SupportOfficerDTO {
 	
 	private String email;
 	
-	private String psw;
 
 	public String getId() {
 		return id;
@@ -44,14 +43,6 @@ public class SupportOfficerDTO {
 
 	public void setEmail(String email) {
 		this.email = email;
-	}
-
-	public String getPsw() {
-		return psw;
-	}
-
-	public void setPsw(String psw) {
-		this.psw = psw;
 	}
 
 	
