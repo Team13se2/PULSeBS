@@ -10,11 +10,6 @@ import org.springframework.context.annotation.Primary;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 
-import team13.pulsbes.entities.BookingManager;
-import team13.pulsbes.entities.Course;
-import team13.pulsbes.entities.Lecture;
-import team13.pulsbes.entities.Student;
-import team13.pulsbes.entities.SupportOfficer;
 import team13.pulsbes.entities.Teacher;
 import team13.pulsbes.repositories.BookingManagerRepository;
 import team13.pulsbes.repositories.CourseRepository;
@@ -169,7 +164,7 @@ public class PulsbesApplication {
 				Teacher teacher3 = teacherRepository.getOne("3");
 				teacher3.setEmail("teacher3team13@gmail.com");
 				officerService.addTeacher(teacher3);
-				
+
 				Lecture l1 = new Lecture();
 
 				l1.setId("1");
@@ -542,6 +537,10 @@ public class PulsbesApplication {
 				System.out.print(teacherRepository.getOne("1").getLectures());
 
 		*/
+
+
+
+
 
 			}
 		};

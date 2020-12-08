@@ -58,11 +58,11 @@ public class Lecture {
     }
 
     @ManyToOne(cascade = {CascadeType.ALL}, fetch=FetchType.EAGER)
-    @JoinColumn(name = "course_id")
+    @JoinColumn(name = "course_code")
     private Course course;
 
     @ManyToOne(fetch=FetchType.LAZY)
-    @JoinColumn (name = "teacher_id")
+    @JoinColumn (name = "teacher_number")
     private Teacher teacher;
 
     

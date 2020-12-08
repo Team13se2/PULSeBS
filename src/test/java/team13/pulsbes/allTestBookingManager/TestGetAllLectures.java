@@ -15,7 +15,6 @@ import java.util.List;
 import team13.pulsbes.dtos.LectureDTO;
 import team13.pulsbes.entities.Course;
 import team13.pulsbes.entities.Lecture;
-import team13.pulsbes.entities.Teacher;
 import team13.pulsbes.repositories.LectureRepository;
 import team13.pulsbes.serviceimpl.BookingManagerServiceImpl;
 

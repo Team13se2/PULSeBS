@@ -42,9 +42,9 @@ class TestDTOS {
 		@Test
 		void testCourseDTO() {
 			CourseDTO c = new CourseDTO();
-			c.setId("1");
+			c.setCode("1");
 			c.setName("analisi");
-			assertEquals("1",c.getId());
+			assertEquals("1",c.getCode());
 			assertEquals("analisi",c.getName());
 		}
 		
@@ -95,11 +95,11 @@ class TestDTOS {
 		@Test
 		void testTeacherDTO() {
 			TeacherDTO t = new TeacherDTO();
-			t.setId("1");
+			t.setNumber("1");
 			t.setName("test");
 			t.setSurname("testsur");
 			t.setEmail("email");
-			assertEquals("1", 		t.getId());
+			assertEquals("1", 		t.getNumber());
 			assertEquals("test", 	t.getName());
 			assertEquals("testsur", t.getSurname());
 			assertEquals("email", 	t.getEmail());

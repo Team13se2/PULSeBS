@@ -8,12 +8,7 @@ import java.util.List;
 
 import org.junit.jupiter.api.Test;
 
-import team13.pulsbes.entities.BookingManager;
-import team13.pulsbes.entities.Course;
-import team13.pulsbes.entities.Lecture;
-import team13.pulsbes.entities.Student;
-import team13.pulsbes.entities.SupportOfficer;
-import team13.pulsbes.entities.Teacher;
+import team13.pulsbes.entities.*;
 import team13.pulsbes.exception.InvalidCourseException;
 import team13.pulsbes.exception.InvalidStudentException;
 
@@ -25,10 +20,10 @@ class TestEntities {
 		Teacher t = new Teacher();
 		List<Student> students = new ArrayList<>();
 		Student s =  new Student("id", "name", "surname");
-		c.setId("1");
+		c.setCode("1");
 		c.setName("analisi");
 		c.setTeacher(t);
-		assertEquals("1",c.getId());
+		assertEquals("1",c.getCode());
 		assertEquals("analisi",c.getName());
 		assertEquals(t,c.getTeacher());
 		c.newStudentEnrolled(s);
@@ -116,13 +111,13 @@ class TestEntities {
 		Teacher t = new Teacher();
 		List<Lecture> lectures = new ArrayList<>();
 		List<Course> courses = new ArrayList<>(); 
-		t.setId("1");
+		t.setNumber("1");
 		t.setName("test");
 		t.setSurname("testsur");
 		t.setEmail("email");
 		t.setCourses(courses);
 		t.setLectures(lectures);
-		assertEquals("1", 		t.getId());
+		assertEquals("1", t.getNumber());
 		assertEquals("test", 	t.getName());
 		assertEquals("testsur", t.getSurname());
 		assertEquals("email", 	t.getEmail());

@@ -22,11 +22,15 @@ public class Student {
 
     private String surname;
 
+	private String city;
+
     private String email;
+
+    private String SSN;
 
     private String psw;
     @ManyToMany(cascade = {CascadeType.PERSIST,CascadeType.MERGE})
-    @JoinTable(name = "courses_students",joinColumns = @JoinColumn(name = "course_id"),
+    @JoinTable(name = "courses_students",joinColumns = @JoinColumn(name = "course_code"),
     inverseJoinColumns = @JoinColumn(name = "student_id"))
     private List<Course> courses;
     {

@@ -3,6 +3,7 @@ package team13.pulsbes.entities;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.DynamicUpdate;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -13,10 +14,12 @@ import java.util.List;
 @Entity
 @Builder
 
+
 public class Teacher {
 
     @Id
-    private String id;
+    private String number;
+
     private String name;
 
     private String surname;
@@ -24,6 +27,9 @@ public class Teacher {
     private String email;
 
     private String psw;
+
+    private String SSN;
+
     @OneToMany (mappedBy = "teacher",cascade = CascadeType.ALL, orphanRemoval = true)
     List<Lecture> lectures;
     {
@@ -36,13 +42,13 @@ public class Teacher {
         courses = new ArrayList<>();
     }
 
-	public String getId() {
-		return id;
+	public String getNumber() {
+		return number;
 	}
 
 
-	public void setId(String id) {
-		this.id = id;
+	public void setNumber(String number) {
+		this.number = number;
 	}
 
 

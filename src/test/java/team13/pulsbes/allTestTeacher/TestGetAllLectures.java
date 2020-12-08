@@ -60,7 +60,7 @@ public class TestGetAllLectures {
 		l.addStartTime(2021, 12, 31, 24, 0);
 		l.setSurnameString(t.getSurname());
 		l.setRoomName("infame");
-		t.setId("1");
+		t.setNumber("1");
 		when(teacherRepository.existsById(any())).thenReturn(true);
 		when(teacherRepository.getOne(anyString())).thenReturn(t);
 		when(modelMapper.map(any(),any())).thenReturn(lDto);
