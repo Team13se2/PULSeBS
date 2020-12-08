@@ -87,6 +87,7 @@ public class PulsbesApplication {
 			@Override
 			public void run(String... args) throws Exception {
 //
+				/*
 				BookingManager b = new BookingManager();
 				b.setEmail("booking1team13@gmail.com");
 				b.setPsw("psw");
@@ -102,7 +103,7 @@ public class PulsbesApplication {
 				so.setName("Signor");
 				so.setSurname("Officer");
 				supportRepository.save(so);
-	/*			Student s = studentRepository.getOne("1");
+				Student s = studentRepository.getOne("1");
 				//s.addCourse(courseRepository.getOne("1"));
 				s.setEmail("student1team13@gmail.com");
 				studentRepository.save(s);
