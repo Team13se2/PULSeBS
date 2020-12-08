@@ -43,6 +43,8 @@ public class Lecture {
 	private String roomName;
 
 	private Integer nrStudents;
+
+	private Boolean bookable;
 	
 	private static final String DATE_FORMAT_STRING = "yyyy-MM-dd HH:mm";
 
@@ -222,6 +224,14 @@ public class Lecture {
 	}
 	public void setNrStudents(Integer nrStudents){
 		this.nrStudents = nrStudents;
+	}
+
+	public Boolean isBookable() {
+		return bookable;
+	}
+
+	public void setBookable(Boolean bookable) {
+		this.bookable = bookable;
 	}
     
     

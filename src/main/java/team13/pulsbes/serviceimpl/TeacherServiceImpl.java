@@ -75,7 +75,9 @@ public class TeacherServiceImpl implements TeacherService{
 		return  teacherRepository.getOne(id)
 				.getLectures()
 				.stream()
-				.filter(x -> { try { return x.getStartTime2().after(tmpCal.getTime()); } catch (ParseException e) {log.throwing(this.getClass().getName(), "getAllLectures", e); return false;} })
+				.filter(x -> { try { return x.getStartTime2().after(tmpCal.getTime())
+					&& x.isBookable(); } 
+					catch (ParseException e) {log.throwing(this.getClass().getName(), "getAllLectures", e); return false;} })
 				.map(l -> modelMapper.map(l,LectureDTO.class))
 				.collect(Collectors.toList());
 	}
@@ -118,11 +120,14 @@ public class TeacherServiceImpl implements TeacherService{
 			if(tmpLecture.getStartTime2().before(tmpCal.getTime())) {
 		
 			List<Student> listStudent = tmpLecture.getStudents();
-			teacher.removeLecture(tmpLecture);			
+			tmpLecture.setBookable(false);
+			lectureRepository.save(tmpLecture);
+			lectureRepository.flush();
+			/*teacher.removeLecture(tmpLecture);			
             //System.out.println(teacher.getLectures());
             lectureRepository.delete(tmpLecture);
             teacherRepository.save(teacher);
-			teacherRepository.flush();
+			teacherRepository.flush();*/
 
 			for (Student tmpStudent : listStudent) {
 
@@ -180,11 +185,14 @@ public class TeacherServiceImpl implements TeacherService{
 		try { if(tmpLecture.getStartTime2().before(tmpCal.getTime())) {
 			
 			List<Student> listStudent = tmpLecture.getStudents();
-			teacher.removeLecture(tmpLecture);
+			tmpLecture.setBookable(false);
+			lectureRepository.save(tmpLecture);
+			lectureRepository.flush();
+			/*teacher.removeLecture(tmpLecture);
             //System.out.println(teacher.getLectures());
             lectureRepository.delete(tmpLecture);
             teacherRepository.save(teacher);
-			teacherRepository.flush();
+			teacherRepository.flush();*/
 			
 			for (Student tmpStudent : listStudent) {
 				
@@ -227,7 +235,9 @@ public class TeacherServiceImpl implements TeacherService{
 		return  teacherRepository.getOne(id)
 				.getLectures()
 				.stream()
-				.filter(x -> { try { return x.getEndTime2().before(tmpCal.getTime()); } catch (ParseException e) {log.throwing(this.getClass().getName(), "getPastLectures", e); return false;} })
+				.filter(x -> { try { return x.getEndTime2().before(tmpCal.getTime())
+					&& x.isBookable(); } 
+					catch (ParseException e) {log.throwing(this.getClass().getName(), "getPastLectures", e); return false;} })
 				.map(l -> modelMapper.map(l,LectureDTO.class))
 				.collect(Collectors.toList());
 	}
