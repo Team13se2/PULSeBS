@@ -74,6 +74,10 @@ public class StudentServiceImpl implements StudentService {
             throw new InvalidLectureException("Lecture can't be null");
         }
 
+        if (!lectureSelected.get().isBookable()) {
+            return ("Lecture was canceled");
+        }
+
 
         Integer availableSeats = lectureSelected.get().getAvailableSeat();
 
@@ -126,7 +130,10 @@ public class StudentServiceImpl implements StudentService {
 
         return listLecture
                 .stream()
-                .filter(x -> { { try { return x.getStartTime2().after(tmpCal.getTime()) && !studentRepository.getOne(id).getBookedLectures().contains(x); } catch (ParseException e) {log.throwing(this.getClass().getName(), "getAllLectures", e); return false;} } })
+                .filter(x -> { { try { return x.getStartTime2().after(tmpCal.getTime()) 
+                    && !studentRepository.getOne(id).getBookedLectures().contains(x)
+                    && x.isBookable(); } 
+                    catch (ParseException e) {log.throwing(this.getClass().getName(), "getAllLectures", e); return false;} } })
                 .map(l -> modelMapper.map(l, LectureDTO.class))
                 .collect(Collectors.toList());
     }
@@ -145,7 +152,9 @@ public class StudentServiceImpl implements StudentService {
         return studentRepository.getOne(id)
                 .getBookedLectures()
                 .stream()
-                .filter(x -> { try { return x.getStartTime2().after(tmpCal.getTime()); } catch (ParseException e) {log.throwing(this.getClass().getName(), "getAllLectures", e); return false;} })
+                .filter(x -> { try { return x.getStartTime2().after(tmpCal.getTime())
+                    && x.isBookable(); } 
+                    catch (ParseException e) {log.throwing(this.getClass().getName(), "getAllLectures", e); return false;} })
                 .map(l -> modelMapper.map(l, LectureDTO.class))
                 .collect(Collectors.toList());
     }
