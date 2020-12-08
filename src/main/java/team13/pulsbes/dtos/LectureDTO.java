@@ -23,7 +23,9 @@ public class LectureDTO {
 
     private String roomName;
 
-    private Integer nrStudents;
+	private Integer nrStudents;
+	
+	private Boolean bookable;
 
     
 	public LectureDTO(){}
@@ -86,5 +88,13 @@ public class LectureDTO {
 	}
 	public void setNrStudents(Integer nrStudents){
 		this.nrStudents = nrStudents;
+	}
+
+	public Boolean isBookable() {
+		return bookable;
+	}
+
+	public void setBookable(Boolean bookable) {
+		this.bookable = bookable;
 	}
 }
