@@ -48,6 +48,7 @@ class TestGetAllLectures {
 		Student s = new Student("1","name","surname");
 		Course c = new Course();
 		Lecture l = new Lecture();
+		l.setBookable(true);
 		l.setId("1");
 		l.addStartTime(2030, 1, 1, 0, 0);
 		List<Lecture> lectures = new ArrayList<>();

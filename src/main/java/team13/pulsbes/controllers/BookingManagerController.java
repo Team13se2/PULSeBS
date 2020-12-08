@@ -1,6 +1,8 @@
 package team13.pulsbes.controllers;
 
+import java.util.Collections;
 import java.util.List;
+import java.util.logging.Logger;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CookieValue;
@@ -19,8 +21,14 @@ public class BookingManagerController {
 	@Autowired
 	BookingManagerService bookingService;
 	
+	Logger log = Logger.getLogger("BookingManagerController");
+	private static final String TYPE_BOOKING_MANAGER= "booking_manager";
+	
 	@GetMapping(value = Constants.GET_ALL_LECTURES)
-	public List<LectureDTO> getAllLectures(@CookieValue(value = "username") String username, @CookieValue(value = "id") String id){
-		return bookingService.getAllLectures();
+	public List<LectureDTO> getAllLectures(@CookieValue(value = "username") String username, @CookieValue(value = "id") String id,@CookieValue(value = "type") String type){
+		if(type.equals(TYPE_BOOKING_MANAGER))
+			return bookingService.getAllLectures();
+		else
+			return Collections.emptyList();
 	}
 }

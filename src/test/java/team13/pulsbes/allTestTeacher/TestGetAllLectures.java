@@ -1,6 +1,7 @@
 package team13.pulsbes.allTestTeacher;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
 import java.util.ArrayList;
@@ -51,6 +52,7 @@ public class TestGetAllLectures {
 		LectureDTO lDto = new LectureDTO ();
 		lectures.add(l);
 		t.setLectures(lectures);
+		l.setBookable(true);
 		l.setSubjectName("dio");
 		l.setStartTime(null);
 		l.setEndTime(null);
@@ -59,6 +61,7 @@ public class TestGetAllLectures {
 		l.setSurnameString(t.getSurname());
 		l.setRoomName("infame");
 		t.setId("1");
+		when(teacherRepository.existsById(any())).thenReturn(true);
 		when(teacherRepository.getOne(anyString())).thenReturn(t);
 		when(modelMapper.map(any(),any())).thenReturn(lDto);
 		when(teacherRepository.getOne(anyString())).thenReturn(t);

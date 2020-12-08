@@ -24,11 +24,15 @@ public class StudentController {
 	StudentService studentService;
 
 	Logger log = Logger.getLogger("StudentController");
-
+	private static final String TYPE_STUDENT = "student";
+	
 	@GetMapping(value = Constants.GET_ALL_LECTURES)
-	public List<LectureDTO> getAllLectures(@CookieValue(value = "username") String username, @CookieValue(value = "id") String id) throws InvalidStudentException {
+	public List<LectureDTO> getAllLectures(@CookieValue(value = "username") String username, @CookieValue(value = "id") String id,@CookieValue(value = "type") String type) throws InvalidStudentException {
 		try {
-			return studentService.getAllLectures(id);
+			if(type.equals(TYPE_STUDENT))
+				return studentService.getAllLectures(id);
+			else
+				return Collections.emptyList();
 		} catch (InvalidStudentException e) {
 			log.throwing(this.getClass().getName(), "getAllLectures", e);
 			return Collections.emptyList();
@@ -36,9 +40,12 @@ public class StudentController {
 	}
 
 	@GetMapping(value = Constants.BOOK_LECTURE)
-	public String bookLecture(@RequestParam("lecture_id") String l_id, @CookieValue(value = "username") String username, @CookieValue(value = "id") String s_id) throws InvalidLectureException, InvalidStudentException {
+	public String bookLecture(@RequestParam("lecture_id") String l_id, @CookieValue(value = "username") String username, @CookieValue(value = "id") String s_id,@CookieValue(value = "type") String type) throws InvalidLectureException, InvalidStudentException {
 		try {
-			return studentService.bookLecture(l_id, s_id);
+			if(type.equals(TYPE_STUDENT))
+				return studentService.bookLecture(l_id, s_id);
+			else 
+				return "null";
 		} catch (InvalidStudentException | InvalidLectureException e) {
 			log.throwing(this.getClass().getName(), "booklecture", e);
 			return null;
@@ -46,9 +53,12 @@ public class StudentController {
 	}
 
 	@GetMapping(value = Constants.GET_BOOKED_LECTURES)
-	public List<LectureDTO> getBookedLectures(@CookieValue(value = "username") String username, @CookieValue(value = "id") String id) {
+	public List<LectureDTO> getBookedLectures(@CookieValue(value = "username") String username, @CookieValue(value = "id") String id,@CookieValue(value = "type") String type) {
 		try {
-			return studentService.getBookedLectures(id);
+			if(type.equals(TYPE_STUDENT))
+				return studentService.getBookedLectures(id);
+			else
+				return Collections.emptyList();
 		} catch (InvalidStudentException e) {
 			log.throwing(this.getClass().getName(), "getBookedLectures", e);
 			return Collections.emptyList();
@@ -56,11 +66,12 @@ public class StudentController {
 	}
 
 	@DeleteMapping(value = Constants.CANCEL_LECTURE)
-	public String deleteLecture(@RequestParam("lecture_id") String l_id, @CookieValue(value = "username") String username, @CookieValue(value = "id") String s_id) {
-
+	public String deleteLecture(@RequestParam("lecture_id") String l_id, @CookieValue(value = "username") String username, @CookieValue(value = "id") String s_id,@CookieValue(value = "type") String type) {
 		try {
-
-			return studentService.deleteLecture(l_id, s_id);
+			if(type.equals(TYPE_STUDENT))
+				return studentService.deleteLecture(l_id, s_id);
+			else 
+				return "null";
 		} catch (InvalidStudentException | InvalidLectureException e) {
 			log.throwing(this.getClass().getName(), "deleteLecture", e);
 			return e.getMessage();

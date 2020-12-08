@@ -59,7 +59,7 @@ public class TeacherController {
 		}
 	}
 	@GetMapping(value = Constants.GET_STUDENT_LIST)
-	public List<StudentDTO> getStudentList(@RequestParam("lecture_id") String id, @CookieValue(value = "type") String type) throws InvalidLectureException {
+	public List<StudentDTO> getStudentList(@RequestParam("lecture_id") String id, @CookieValue(value = "type") String type) throws InvalidLectureException, InvalidTeacherException {
 		try {
 			if (type.equals(TYPE_TEACHER)) {
 			return teacherService.getStudentList(id);
