@@ -10,9 +10,17 @@ import org.springframework.context.annotation.Primary;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 
+import team13.pulsbes.entities.BookingManager;
+import team13.pulsbes.entities.Course;
+import team13.pulsbes.entities.Lecture;
+import team13.pulsbes.entities.Student;
+import team13.pulsbes.entities.SupportOfficer;
+import team13.pulsbes.entities.Teacher;
+import team13.pulsbes.repositories.BookingManagerRepository;
 import team13.pulsbes.repositories.CourseRepository;
 import team13.pulsbes.repositories.LectureRepository;
 import team13.pulsbes.repositories.StudentRepository;
+import team13.pulsbes.repositories.SupportOfficerRepository;
 import team13.pulsbes.repositories.TeacherRepository;
 import team13.pulsbes.serviceimpl.OfficerService;
 import team13.pulsbes.services.NotificationService;
@@ -71,14 +79,34 @@ public class PulsbesApplication {
 			CourseRepository courseRepository;
 			@Autowired
 			TeacherRepository teacherRepository;
+			@Autowired
+			BookingManagerRepository bookingRepository;
+			@Autowired
+			SupportOfficerRepository supportRepository;
+			
 			@Override
 			public void run(String... args) throws Exception {
 //
-			/*	Student s = studentRepository.getOne("1");
-				s.addCourse(courseRepository.getOne("1"));
+				BookingManager b = new BookingManager();
+				b.setEmail("booking1team13@gmail.com");
+				b.setPsw("psw");
+				b.setId("1");
+				b.setName("Signor");
+				b.setSurname("Booking");
+				bookingRepository.save(b);
+				
+				SupportOfficer so = new SupportOfficer();
+				so.setEmail("officer1team13@gmail.com");
+				so.setPsw("psw");
+				so.setId("1");
+				so.setName("Signor");
+				so.setSurname("Officer");
+				supportRepository.save(so);
+	/*			Student s = studentRepository.getOne("1");
+				//s.addCourse(courseRepository.getOne("1"));
 				s.setEmail("student1team13@gmail.com");
 				studentRepository.save(s);
-
+			
 				Student s2 = studentRepository.getOne("2");
 				s2.setEmail("student2team13@gmail.com");
 				studentRepository.save(s2);
@@ -94,12 +122,13 @@ public class PulsbesApplication {
 				s5.setEmail("student5team13@gmail.com");
 				studentRepository.save(s5);
 
-
+				
 				//analisi 1
 				Course c = courseRepository.getOne("1");
 				c.setTeacher(teacherRepository.getOne("1"));
 				courseRepository.save(c);
-
+	
+				/*
 				//Elettrotecnica
 				Course c2 = courseRepository.getOne("2");
 				c2.setTeacher(teacherRepository.getOne("2"));
@@ -139,7 +168,7 @@ public class PulsbesApplication {
 				Teacher teacher3 = teacherRepository.getOne("3");
 				teacher3.setEmail("teacher3team13@gmail.com");
 				officerService.addTeacher(teacher3);
-
+				
 				Lecture l1 = new Lecture();
 
 				l1.setId("1");
@@ -153,6 +182,11 @@ public class PulsbesApplication {
 				l1.setSurnameString("Torchiano");
 				l1.setRoomName("Aula 1");
 				l1.setTeacher(teacher);
+				l1.addStudentAttending(s);
+				l1.addStudentAttending(s2);
+				l1.addStudentAttending(s3);
+				l1.addStudentAttending(s4);
+				l1.addStudentAttending(s5);
 				officerService.addLecture(l1);
 
 				Lecture l = new Lecture();

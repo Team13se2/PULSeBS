@@ -40,7 +40,7 @@ public class OfficerService {
 		notificationTime.setHours(23);
 		Calendar now = Calendar.getInstance();
 		
-		if(notificationTime.before(now.getTime())) {
+		//if(notificationTime.before(now.getTime())) {
 			timer.schedule(new TimerTask() {
 				@Override
 			    public void run() {
@@ -51,7 +51,7 @@ public class OfficerService {
 										"Number of students attending the lecture is " + l.getStudents().size() + ".\n The lecture is scheduled at "+ l.getStartTime() + ".");
 			    }
 				}, notificationTime);
-		}
+		//}
 	}
 	
 }
