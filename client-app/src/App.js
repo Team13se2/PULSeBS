@@ -19,6 +19,7 @@ import Day_Picker from './components/Day_Picker';
 import moment from 'moment';
 import MonthNrStudents from './components/MonthNrStudents';
 import LecturesTableNoBooked from './components/LecturesTableNoBooked';
+import UploadFiles from './components/UploadFiles';
 
 class App extends React.Component {
     constructor(props) {
@@ -139,6 +140,10 @@ class App extends React.Component {
         })
     }
 
+    addWaitingList = (lecture_id) =>{
+        console.log("Inserire l'API");
+    }
+
     selectWeek = (start,end) =>{
         let sum = 0;
         let nrLectures = 0;
@@ -220,7 +225,7 @@ class App extends React.Component {
                                 <Col sm={8}
                                     className="below-nav">
                                     <h1>No Booked Lectures</h1>
-                                    <LecturesTableNoBooked lectures={this.state.noBookedLectures} getLectures={this.getNoBookedLectures} remove={false} job={this.bookLecture}/>
+                                    <LecturesTableNoBooked lectures={this.state.noBookedLectures} getLectures={this.getNoBookedLectures} remove={false} job={this.bookLecture} job2={this.addWaitingList}/>
                                 </Col>
                                 <Col sm={1}/>
                             </Row>
@@ -345,6 +350,37 @@ class App extends React.Component {
                                     className="below-nav">
                                     <h1>Next Lectures</h1>
                                     <LecturesTableTeacher lectures={this.state.teacherLecture} past={false} getLectures={this.getAllLecturesTeacher} job={(lecture_id) => this.getStudentList(lecture_id)} students={this.state.students} job2={(lecture_id) =>this.removeTeacherLecture(lecture_id)}/>
+                                </Col>
+                                <Col sm={1}/>
+                            </Row>
+                        </Route>
+                    </Switch>
+                </Route>
+                <Route path="/booking_manager">
+                    <Switch>
+                    <Route exact path="/booking_manager">
+                            <Row className="">
+                                <Col sm={1}/>
+                                <Col sm={9}
+                                    className="below-nav">
+                                    <h1>Aggiungere la parte del booking manager</h1>
+                                    {/*<LecturesTableTeacher lectures={this.state.teacherLecture} past={false} getLectures={this.getAllLecturesTeacher} job={(lecture_id) => this.getStudentList(lecture_id)} students={this.state.students} job2={(lecture_id) =>this.removeTeacherLecture(lecture_id)}/> */}
+                                </Col>
+                                <Col sm={1}/>
+                            </Row>
+                        </Route>
+                    </Switch>
+                </Route>
+                <Route path="/support_officer">
+                    <Switch>
+                    <Route exact path="/support_officer">
+                            <Row className="">
+                                <Col sm={1}/>
+                                <Col sm={8}
+                                    className="below-nav">
+                                    <h1>Aggiungere la parte del support_officer</h1>
+                                    {/*<LecturesTableTeacher lectures={this.state.teacherLecture} past={false} getLectures={this.getAllLecturesTeacher} job={(lecture_id) => this.getStudentList(lecture_id)} students={this.state.students} job2={(lecture_id) =>this.removeTeacherLecture(lecture_id)}/> */}
+                                    {<UploadFiles/>}
                                 </Col>
                                 <Col sm={1}/>
                             </Row>

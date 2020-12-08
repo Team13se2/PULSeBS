@@ -5,7 +5,7 @@ import Table from "react-bootstrap/Table";
 
 const LecturesTableNoBooked = (props) => {
 
-    let {lectures, getLectures, remove, job} = props;
+    let {lectures, getLectures, remove, job,job2} = props;
 
     // same as componentDidMount()
     useEffect(() => {
@@ -48,9 +48,14 @@ const LecturesTableNoBooked = (props) => {
                           {remove && <button type="button" className="btn btn-outline-danger" onClick={() => job(lecture.id)}> 
                               Remove
                           </button> }
-                          {!remove && <button type="button" className="btn btn-outline-success" onClick={() => job(lecture.id)}> 
+                          {!remove && lecture.availableSeat > 0 && <button type="button" className="btn btn-outline-success" onClick={() => job(lecture.id)}> 
                                       Book
                           </button> }
+                          {lecture.availableSeat === 0 && <button type="button" 
+                          className="btn btn-outline-success" 
+                          onClick={() => job2(lecture.id)}>
+                             Waiting List
+                          </button>}
                           </td>
                         </tr>
                     ))}
