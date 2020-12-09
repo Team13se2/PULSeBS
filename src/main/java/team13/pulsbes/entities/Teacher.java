@@ -3,7 +3,6 @@ package team13.pulsbes.entities;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.DynamicUpdate;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -115,4 +114,15 @@ public class Teacher {
     	lectures.remove(lecture);
     	lecture.setTeacher(null);
 	}
+
+
+	public String getSSN() {
+		return SSN;
+	}
+
+
+	public void setSSN(String sSN) {
+		SSN = sSN;
+	}
+	
 }

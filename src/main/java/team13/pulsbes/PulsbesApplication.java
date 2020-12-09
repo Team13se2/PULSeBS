@@ -537,11 +537,15 @@ public class PulsbesApplication {
 				System.out.print(teacherRepository.getOne("1").getLectures());
 
 		*/
-
-
-
-
-
+				
+				studentRepository.deleteAll();
+				courseRepository.deleteAll();
+				teacherRepository.deleteAll();
+//				officerService.addStudentList();
+//				officerService.addTeacherList();
+//				officerService.addCourseList();
+				//officerService.enrollStudent();
+				
 			}
 		};
 	}

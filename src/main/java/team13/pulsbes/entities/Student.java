@@ -24,6 +24,8 @@ public class Student {
 
 	private String city;
 
+	private String birthday;
+	
     private String email;
 
     private String SSN;
@@ -147,5 +149,29 @@ public class Student {
 		this.bookedLectures = bookedLectures;
 	}
 
+	public String getCity() {
+		return city;
+	}
+
+	public void setCity(String city) {
+		this.city = city;
+	}
+
+	public String getSSN() {
+		return SSN;
+	}
+
+	public void setSSN(String sSN) {
+		SSN = sSN;
+	}
+
+	public String getBirthday() {
+		return birthday;
+	}
+
+	public void setBirthday(String birthday) {
+		this.birthday = birthday;
+	}
+	
 	
 }
