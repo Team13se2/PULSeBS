@@ -6,16 +6,37 @@ import javax.persistence.Id;
 public class CourseDTO {
 
     @Id
-    private String id;
+    private String code;
+
+    private Integer year;
+
+	public Integer getYear() {
+		return year;
+	}
+
+	public void setYear(Integer year) {
+		this.year = year;
+	}
+
+	public Integer getSemester() {
+		return semester;
+	}
+
+	public void setSemester(Integer semester) {
+		this.semester = semester;
+	}
+
+	private Integer semester;
 
     private String name;
 
-	public String getId() {
-		return id;
+
+	public String getCode() {
+		return code;
 	}
 
-	public void setId(String id) {
-		this.id = id;
+	public void setCode(String code) {
+		this.code = code;
 	}
 
 	public String getName() {

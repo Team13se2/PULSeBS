@@ -13,10 +13,12 @@ import java.util.List;
 @Entity
 @Builder
 
+
 public class Teacher {
 
     @Id
-    private String id;
+    private String number;
+
     private String name;
 
     private String surname;
@@ -24,6 +26,9 @@ public class Teacher {
     private String email;
 
     private String psw;
+
+    private String SSN;
+
     @OneToMany (mappedBy = "teacher",cascade = CascadeType.ALL, orphanRemoval = true)
     List<Lecture> lectures;
     {
@@ -36,13 +41,13 @@ public class Teacher {
         courses = new ArrayList<>();
     }
 
-	public String getId() {
-		return id;
+	public String getNumber() {
+		return number;
 	}
 
 
-	public void setId(String id) {
-		this.id = id;
+	public void setNumber(String number) {
+		this.number = number;
 	}
 
 
@@ -109,4 +114,15 @@ public class Teacher {
     	lectures.remove(lecture);
     	lecture.setTeacher(null);
 	}
+
+
+	public String getSSN() {
+		return SSN;
+	}
+
+
+	public void setSSN(String sSN) {
+		SSN = sSN;
+	}
+	
 }

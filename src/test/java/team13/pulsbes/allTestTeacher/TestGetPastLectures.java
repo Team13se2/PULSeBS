@@ -45,11 +45,13 @@ class TestGetPastLectures {
 		Lecture l = new Lecture();
 		LectureDTO lDto = new LectureDTO();
 		lDto.setSubjectName("test");
+		l.setBookable(true);
 		l.setSubjectName("test");
 		l.addEndTime(2019, 10, 1, 10, 0);
 		t.getLectures().add(l);
 		when(teacherRepository.getOne(any())).thenReturn(t);
 		when(modelMapper.map(any(),any())).thenReturn(lDto);
+		when(teacherRepository.existsById(any())).thenReturn(true);
 		assertEquals(l.getSubjectName(),teacherService.getPastLectures("1").get(0).getSubjectName());
 	}
 }

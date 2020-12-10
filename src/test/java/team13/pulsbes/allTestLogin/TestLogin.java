@@ -60,7 +60,7 @@ class TestLogin {
 		Teacher t = new Teacher();
 		List<Teacher> teachers = new ArrayList<>();
 		t.setEmail("teacher@email"); 
-		t.setId("1");
+		t.setNumber("1");
 		t.setName("name");
 		t.setSurname("surname");
 		t.setPsw("psw");

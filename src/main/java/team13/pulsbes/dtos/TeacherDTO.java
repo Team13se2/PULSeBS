@@ -11,13 +11,17 @@ import javax.persistence.Id;
 public class TeacherDTO
 {
     @Id
-    private String id;
+    private String number;
 
     private String name;
 
     private String surname;
 
     private String email;
+
+	private String SSN;
+
+
 
     List<Lecture> lectures;
     {
@@ -28,11 +32,11 @@ public class TeacherDTO
     {
         courses = new ArrayList<>();
     }
-	public String getId() {
-		return id;
+	public String getNumber() {
+		return number;
 	}
-	public void setId(String id) {
-		this.id = id;
+	public void setNumber(String number) {
+		this.number = number;
 	}
 	public String getName() {
 		return name;
@@ -64,5 +68,9 @@ public class TeacherDTO
 	public void setCourses(List<Course> courses) {
 		this.courses = courses;
 	}
-    
+	public String getSSN() { return SSN;}
+	public void setSSN(String SSN) {this.SSN = SSN; }
+
+
+
 }

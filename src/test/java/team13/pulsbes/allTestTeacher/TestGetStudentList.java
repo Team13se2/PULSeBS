@@ -13,7 +13,9 @@ import team13.pulsbes.entities.Lecture;
 import team13.pulsbes.entities.Student;
 import team13.pulsbes.exception.InvalidLectureException;
 import team13.pulsbes.exception.InvalidStudentException;
+import team13.pulsbes.exception.InvalidTeacherException;
 import team13.pulsbes.repositories.LectureRepository;
+import team13.pulsbes.repositories.TeacherRepository;
 import team13.pulsbes.serviceimpl.TeacherServiceImpl;
 
 class TestGetStudentList {
@@ -21,14 +23,16 @@ class TestGetStudentList {
 	LectureRepository lectureRepository;
 	TeacherServiceImpl teacherService;
 	ModelMapper modelMapper;
-	
+	TeacherRepository teacherRepository;
 	@BeforeEach
 	void setUp() {
 		lectureRepository = mock(LectureRepository.class);
+		teacherRepository = mock(TeacherRepository.class);
 		modelMapper = mock (ModelMapper.class);
 		teacherService = new TeacherServiceImpl();
 		teacherService.addLectureRepo(lectureRepository);
 		teacherService.addMM(modelMapper);
+		teacherService.addRepo(teacherRepository);
 	}
 	
 	@Test
@@ -36,14 +40,16 @@ class TestGetStudentList {
 		assertThrows(InvalidLectureException.class , () -> teacherService.getStudentList("-1"));
 	}
 	@Test
-	void testGetStudentList1() throws InvalidStudentException, InvalidLectureException {
+	void testGetStudentList1() throws InvalidStudentException, InvalidLectureException, InvalidTeacherException {
 		Lecture l = new Lecture();
+		l.setBookable(true);
 		Student s = new Student("1","test","testsur");
 		l.addStudentAttending(s);
 		StudentDTO sDto = new StudentDTO();
 		sDto.setId("1"); sDto.setName("test"); sDto.setSurname("testsur");
 		when(lectureRepository.getOne(any())).thenReturn(l);
 		when(modelMapper.map(any(),any())).thenReturn(sDto);
+		when(teacherRepository.existsById(any())).thenReturn(true);
 		assertEquals(s.getId(),sDto.getId());
 		assertEquals(s.getId(),teacherService.getStudentList("1").get(0).getId());
 	}

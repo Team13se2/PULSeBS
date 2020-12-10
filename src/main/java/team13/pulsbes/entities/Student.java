@@ -22,11 +22,17 @@ public class Student {
 
     private String surname;
 
+	private String city;
+
+	private String birthday;
+	
     private String email;
+
+    private String SSN;
 
     private String psw;
     @ManyToMany(cascade = {CascadeType.PERSIST,CascadeType.MERGE})
-    @JoinTable(name = "courses_students",joinColumns = @JoinColumn(name = "course_id"),
+    @JoinTable(name = "courses_students",joinColumns = @JoinColumn(name = "course_code"),
     inverseJoinColumns = @JoinColumn(name = "student_id"))
     private List<Course> courses;
     {
@@ -143,5 +149,29 @@ public class Student {
 		this.bookedLectures = bookedLectures;
 	}
 
+	public String getCity() {
+		return city;
+	}
+
+	public void setCity(String city) {
+		this.city = city;
+	}
+
+	public String getSSN() {
+		return SSN;
+	}
+
+	public void setSSN(String sSN) {
+		SSN = sSN;
+	}
+
+	public String getBirthday() {
+		return birthday;
+	}
+
+	public void setBirthday(String birthday) {
+		this.birthday = birthday;
+	}
+	
 	
 }
