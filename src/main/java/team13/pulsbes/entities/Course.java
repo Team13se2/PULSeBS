@@ -3,7 +3,6 @@ package team13.pulsbes.entities;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.DynamicUpdate;
 import team13.pulsbes.exception.InvalidStudentException;
 import team13.pulsbes.exception.InvalidLectureException;
 
@@ -22,9 +21,9 @@ public class Course {
     @Id
     private String code;
 
-    private Integer year;
+    private String year;
 
-    private Integer semester;
+    private String semester;
 
     private String name;
 
@@ -103,6 +102,18 @@ public class Course {
         lectures.remove(lecture);
         setCancelledLectures(getCancelledLectures() + 1);
     }
+	public String getYear() {
+		return year;
+	}
+	public void setYear(String year) {
+		this.year = year;
+	}
+	public String getSemester() {
+		return semester;
+	}
+	public void setSemester(String semester) {
+		this.semester = semester;
+	}
 
 }
 
