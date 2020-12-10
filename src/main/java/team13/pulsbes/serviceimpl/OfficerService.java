@@ -1,6 +1,7 @@
 package team13.pulsbes.serviceimpl;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
@@ -69,15 +70,14 @@ public class OfficerService {
 		}
 	}
 	
-	public void addStudentList() {
+	public void addStudentList(File f) {
 		boolean firstline = true;
-		String csvFile = "../Students.csv";
         BufferedReader br = null;
         String line = "";
         String cvsSplitBy = ",";
         try {
         	
-	            br = new BufferedReader(new FileReader(csvFile));
+	            br = new BufferedReader(new FileReader(f));
 	            while ((line = br.readLine()) != null) {
 	            	if(!firstline) {  	
 	            		Student s = new Student();
@@ -111,14 +111,14 @@ public class OfficerService {
 
     }
 	
-	public void addTeacherList() {
+	public void addTeacherList(File f) {
 		boolean firstline = true;
-		String csvFile = "../Professors.csv";
+
         BufferedReader br = null;
         String line = "";
         String cvsSplitBy = ",";
         try {
-	            br = new BufferedReader(new FileReader(csvFile));
+	            br = new BufferedReader(new FileReader(f));
 	            while ((line = br.readLine()) != null) {
 	            	if(!firstline) {
 	            	Teacher t = new Teacher();
@@ -151,15 +151,14 @@ public class OfficerService {
         }
 	}
 	
-	public void addCourseList() {
+	public void addCourseList(File f) {
 		boolean firstline = true;
-		String csvFile = "../Courses.csv";
         BufferedReader br = null;
         String line = "";
         String cvsSplitBy = ",";
         try {
 
-            br = new BufferedReader(new FileReader(csvFile));
+            br = new BufferedReader(new FileReader(f));
             while ((line = br.readLine()) != null) {
             	if(!firstline) {
 	            	Course c = new Course();
@@ -199,15 +198,14 @@ public class OfficerService {
         }
 	}
 	
-	public void enrollStudent() throws InvalidCourseException, InvalidStudentException {
+	public void enrollStudent(File f) throws InvalidCourseException, InvalidStudentException {
 		boolean firstline = true;
-		String csvFile = "../Enrollment.csv";
         BufferedReader br = null;
         String line = "";
         String cvsSplitBy = ",";
         try {
 
-            br = new BufferedReader(new FileReader(csvFile));
+            br = new BufferedReader(new FileReader(f));
             while ((line = br.readLine()) != null) {
             	if(!firstline) {
 	                String[] enroll = line.split(cvsSplitBy);
