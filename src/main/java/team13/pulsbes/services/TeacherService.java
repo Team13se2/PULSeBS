@@ -8,6 +8,7 @@ import team13.pulsbes.dtos.StudentDTO;
 import team13.pulsbes.exception.InvalidLectureException;
 import team13.pulsbes.exception.InvalidTeacherException;
 import team13.pulsbes.exception.InvalidCourseException;
+import team13.pulsbes.exception.InvalidStudentException;
 
 public interface TeacherService {
 	
@@ -17,4 +18,5 @@ public interface TeacherService {
 	String cancelLecture(String lectureId, String teacherId) throws InvalidLectureException, InvalidCourseException, ParseException, InvalidTeacherException;
 	String cancelPresenceLecture(String lectureId, String teacherId) throws InvalidLectureException, InvalidCourseException, ParseException, InvalidTeacherException;
 	List<LectureDTO> getPastLectures(String id) throws InvalidTeacherException;
+	String addPresence(String lectureId, String studentId)throws InvalidLectureException, InvalidStudentException;
 }

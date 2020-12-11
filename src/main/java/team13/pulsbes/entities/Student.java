@@ -43,6 +43,9 @@ public class Student {
     @ManyToMany (mappedBy = "students")
 	List <Lecture> bookedLectures = new ArrayList<>();
 
+	@ManyToMany (mappedBy = "studentsPresent")
+	List <Lecture> attendedLectures = new ArrayList<>();
+
 	public Student() {};
 
 	public Student( String id, String name, String surname) {
@@ -69,11 +72,11 @@ public class Student {
 
     public void addBookLecture(Lecture l) {
 		bookedLectures.add(l);
-		if (l.getNrStudents() == null) {
-			l.setNrStudents(1);
+		if (l.getNrStudentsBooked() == null) {
+			l.setNrStudentsBooked(1);
 		}
 		else {
-			l.setNrStudents(l.getNrStudents()+1);
+			l.setNrStudentsBooked(l.getNrStudentsBooked()+1);
 		}		
     }
     
@@ -81,8 +84,18 @@ public class Student {
 
     	this.bookedLectures.remove(l);
 		l.getStudents().remove(this);
-		l.setNrStudents(l.getNrStudents()-1);
+		l.setNrStudentsBooked(l.getNrStudentsBooked()-1);
 		l.setAvailableSeat(l.getAvailableSeat()+1);
+	}
+	
+	public void addLecturePresence(Lecture l) {
+		attendedLectures.add(l);
+		if (l.getNrStudentsPresent() == null) {
+			l.setNrStudentsPresent(1);
+		}
+		else {
+			l.setNrStudentsPresent(l.getNrStudentsPresent()+1);
+		}		
     }
     
 	public String getId() {
