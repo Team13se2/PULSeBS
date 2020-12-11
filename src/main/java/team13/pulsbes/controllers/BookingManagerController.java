@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import team13.pulsbes.dtos.LectureDTO;
+import team13.pulsbes.dtos.StudentDTO;
+import team13.pulsbes.exception.InvalidStudentException;
 import team13.pulsbes.services.BookingManagerService;
 import team13.pulsbes.utils.Constants;
 
@@ -28,6 +30,13 @@ public class BookingManagerController {
 	public List<LectureDTO> getAllLectures(@CookieValue(value = "username") String username, @CookieValue(value = "id") String id,@CookieValue(value = "type") String type){
 		if(type.equals(TYPE_BOOKING_MANAGER))
 			return bookingService.getAllLectures();
+		else
+			return Collections.emptyList();
+	}
+	@GetMapping(value = Constants.GET_CONTACT_REPORT)
+	public List<StudentDTO> getContactReport(String studentId,@CookieValue(value = "type") String type) throws InvalidStudentException {
+		if(type.equals(TYPE_BOOKING_MANAGER))
+			return bookingService.getContactReport(studentId);
 		else
 			return Collections.emptyList();
 	}
