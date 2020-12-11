@@ -245,7 +245,10 @@ public class Lecture {
 	}
 
 	public Integer getNrStudentsPresent(){
-		return nrStudentsPresent;
+		if(nrStudentsPresent == null) {
+			return 0;
+		}
+		else return nrStudentsPresent;
 	}
 	public void setNrStudentsPresent(Integer nrStudentsPresent){
 		this.nrStudentsPresent = nrStudentsPresent;

@@ -41,6 +41,20 @@ public class TeacherController {
 			return 0;
 		}
 	}
+	@GetMapping(value = Constants.GET_NUMBER_STUDENTS_PRESENT)
+	public Integer getNumberStudentsPresent(@RequestParam("lecture_id") String id, @CookieValue(value = "type") String type) throws InvalidLectureException {
+		try {
+			if (type.equals(TYPE_TEACHER)) {
+				return teacherService.getNumberStudentsPresent(id);
+			}
+			else return 0;
+
+		} catch (InvalidLectureException e) {
+
+			log.throwing(this.getClass().getName(), "getNumberStudentsPresent", e);
+			return 0;
+		}
+	}
 	@GetMapping(value = Constants.GET_ALL_LECTURES)
 	public List<LectureDTO> getAllLectures(@CookieValue(value = "username") String username,@CookieValue(value = "id") String id, @CookieValue(value = "type") String type) throws InvalidTeacherException{
 		try {
