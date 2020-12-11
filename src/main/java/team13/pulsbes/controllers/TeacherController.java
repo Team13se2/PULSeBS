@@ -13,6 +13,7 @@ import team13.pulsbes.dtos.StudentDTO;
 import team13.pulsbes.exception.InvalidLectureException;
 import team13.pulsbes.exception.InvalidCourseException;
 import team13.pulsbes.exception.InvalidTeacherException;
+import team13.pulsbes.exception.InvalidStudentException;
 import team13.pulsbes.services.TeacherService;
 import team13.pulsbes.utils.Constants;
 
@@ -47,7 +48,7 @@ public class TeacherController {
 			List<LectureDTO> l = teacherService.getAllLectures(id);
 			for(int i=0;i<l.size();i++){
 				Integer nr = teacherService.getNumberStudentsAttending(l.get(i).getId());
-				l.get(i).setNrStudents(nr);
+				l.get(i).setNrStudentsBooked(nr);
 			}
 			return l;
 		}
@@ -109,6 +110,19 @@ public class TeacherController {
 		} catch (InvalidTeacherException e) {
 			log.throwing(this.getClass().getName(), "getPastLectures", e);
 			return Collections.emptyList();
+		}
+	}
+	@PostMapping(value = Constants.ADD_PRESENCE)
+	public String addPresence(String lectureId, String studentId, @CookieValue(value = "type") String type) throws InvalidLectureException, InvalidStudentException{
+		try {
+			if (type.equals(TYPE_TEACHER)) {			
+			return teacherService.addPresence(lectureId, studentId);
+		}
+		else return null;
+
+		} catch (InvalidLectureException | InvalidStudentException e) {
+			log.throwing(this.getClass().getName(), "addPresence", e);
+			return e.getMessage();
 		}
 	}
 }

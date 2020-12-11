@@ -10,9 +10,11 @@ import team13.pulsbes.entities.Teacher;
 import team13.pulsbes.entities.Student;
 import team13.pulsbes.exception.InvalidLectureException;
 import team13.pulsbes.exception.InvalidTeacherException;
+import team13.pulsbes.exception.InvalidStudentException;
 import team13.pulsbes.exception.InvalidCourseException;
 import java.text.ParseException;
 import team13.pulsbes.repositories.LectureRepository;
+import team13.pulsbes.repositories.StudentRepository;
 import team13.pulsbes.repositories.CourseRepository;
 import team13.pulsbes.repositories.TeacherRepository;
 import team13.pulsbes.services.TeacherService;
@@ -36,6 +38,8 @@ public class TeacherServiceImpl implements TeacherService{
 	@Autowired
 	CourseRepository courseRepository;
 	@Autowired
+	StudentRepository studentRepository;
+	@Autowired
     NotificationServiceImpl notificationService;	
 	
 	public void addRepo (TeacherRepository tr) {
@@ -55,6 +59,7 @@ public class TeacherServiceImpl implements TeacherService{
 
 	private static final String LECTURE_NULL = "Lecture can't be null";
 	private static final String TEACHER_NULL = "Teacher can't be null";
+	private static final String STUDENT_NULL = "Student can't be null";
 
 	@Override
 	public Integer getNumberStudentsAttending(String id) throws InvalidLectureException{
@@ -251,5 +256,28 @@ public class TeacherServiceImpl implements TeacherService{
 					catch (ParseException e) {log.throwing(this.getClass().getName(), "getPastLectures", e); return false;} })
 				.map(l -> modelMapper.map(l,LectureDTO.class))
 				.collect(Collectors.toList());
+	}
+
+	@Override
+	public String addPresence(String lectureId, String studentId)throws InvalidLectureException, InvalidStudentException{
+		Optional<Lecture> optLecture = lectureRepository.findById(lectureId);
+		if(!optLecture.isPresent()) {
+			throw new InvalidLectureException(LECTURE_NULL);
+		}
+		
+		Optional<Student> optStudent = studentRepository.findById(studentId);
+
+        if (!optStudent.isPresent()) {
+            throw new InvalidStudentException(STUDENT_NULL);
+		}
+
+		Student student = optStudent.get();
+		Lecture lecture = optLecture.get();
+
+		student.addLecturePresence(lecture);
+		lecture.addStudentPresent(student);
+
+		return ("Presence added");
+
 	}
 }
