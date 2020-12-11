@@ -56,9 +56,7 @@ public class TestGetAllLectures {
 		l.setSubjectName("dio");
 		l.setStartTime(null);
 		l.setEndTime(null);
-		l.setLectureType("cane");
 		l.addStartTime(2021, 12, 31, 24, 0);
-		l.setSurnameString(t.getSurname());
 		l.setRoomName("infame");
 		t.setNumber("1");
 		when(teacherRepository.existsById(any())).thenReturn(true);

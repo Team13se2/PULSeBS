@@ -58,7 +58,6 @@ class TestBookLecture {
 		Teacher t = new Teacher();
 		l.setBookable(true);
 		t.setName("giovanni");
-		l.setSurnameString("muchacha");
 		t.setSurname("muchacha");
 		l.setAvailableSeat(1);
 		l.setStartTime("1010");

@@ -46,8 +46,6 @@ class TestGetAllLectures {
 		l.setSubjectName(c.getName());
 		l.setAvailableSeat(50);
 		l.setTotalSeat(50);
-		l.setLectureType("Lab");
-		l.setSurnameString("Torchiano");
 		l.setRoomName("Aula 1");
 		
 		lDto.setId("1");
@@ -66,8 +64,6 @@ class TestGetAllLectures {
 		assertEquals(l.getSubjectName(),  bookingService.getAllLectures().get(0).getSubjectName());
 		assertEquals(l.getAvailableSeat(),  bookingService.getAllLectures().get(0).getAvailableSeat());
 		assertEquals(l.getTotalSeat(),  bookingService.getAllLectures().get(0).getTotalSeat());
-		assertEquals(l.getLectureType(),  bookingService.getAllLectures().get(0).getLectureType());
-		assertEquals(l.getSurnameString(),  bookingService.getAllLectures().get(0).getSurnameString());
 		assertEquals(l.getRoomName(),  bookingService.getAllLectures().get(0).getRoomName());
 	}
 

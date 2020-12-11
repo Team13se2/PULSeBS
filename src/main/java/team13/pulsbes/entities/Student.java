@@ -32,8 +32,8 @@ public class Student {
 
     private String psw;
     @ManyToMany(cascade = {CascadeType.PERSIST,CascadeType.MERGE})
-    @JoinTable(name = "courses_students",joinColumns = @JoinColumn(name = "course_code"),
-    inverseJoinColumns = @JoinColumn(name = "student_id"))
+    @JoinTable(name = "courses_students",joinColumns = @JoinColumn(name = "student_id"),
+    inverseJoinColumns = @JoinColumn(name = "course_code"))
     private List<Course> courses;
     {
         courses = new ArrayList<>();
@@ -46,7 +46,7 @@ public class Student {
 	@ManyToMany (mappedBy = "studentsPresent")
 	List <Lecture> attendedLectures = new ArrayList<>();
 
-	public Student() {};
+	public Student() {}
 
 	public Student( String id, String name, String surname) {
 		super();
