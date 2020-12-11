@@ -7,6 +7,7 @@ public final class Constants {
 	  }
 
 	public static final String GET_NUMBER_STUDENTS_ATTENDING = "/getNumberStudentsAttending";
+	public static final String GET_NUMBER_STUDENTS_PRESENT = "/getNumberStudentsPresent";
 	public static final String GET_STUDENT_LIST = "/getStudentList";
 	public static final String GET_ALL_LECTURES = "/getAllLectures";
 	public static final String GET_PAST_LECTURES = "/getPastLectures";
@@ -19,4 +20,6 @@ public final class Constants {
 	public static final String ADD_TEACHERS = "/addTeachers";
 	public static final String ADD_COURSES = "/addCourses";
 	public static final String ENROLL_STUDENTS = "/enrollStudents";
+	public static final String ADD_PRESENCE = "/addPresence";
+	public static final String GET_CONTACT_REPORT = "/getContactReport";
 }

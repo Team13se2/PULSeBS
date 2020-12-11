@@ -42,7 +42,9 @@ public class Lecture {
 
 	private String roomName;
 
-	private Integer nrStudents;
+	private Integer nrStudentsBooked;
+
+	private Integer nrStudentsPresent;
 
 	private Boolean bookable;
 	
@@ -53,6 +55,15 @@ public class Lecture {
             inverseJoinColumns = @JoinColumn(name="student_id"))
 
     private List<Student> students;
+    {
+        students = new ArrayList<>();
+	}
+	
+	@ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @JoinTable(name="lecture_students_present", joinColumns = @JoinColumn(name="lecture_id"),
+            inverseJoinColumns = @JoinColumn(name="student_id"))
+
+    private List<Student> studentsPresent;
     {
         students = new ArrayList<>();
     }
@@ -78,6 +89,13 @@ public class Lecture {
     	}
     	students.remove(s);
 	}
+
+	public void addStudentPresent(Student s) throws InvalidStudentException {
+    	if(s==null) {
+    		throw new InvalidStudentException("Invalid Student");
+    	}
+    	studentsPresent.add(s);
+    }
 	
 //	public Lecture( String Id, Integer AvailableSeat, Integer TotalSeat) {
 //		super();
@@ -219,11 +237,21 @@ public class Lecture {
 		this.teacher = teacher;
 	}
 
-	public Integer getNrStudents(){
-		return nrStudents;
+	public Integer getNrStudentsBooked(){
+		return nrStudentsBooked;
 	}
-	public void setNrStudents(Integer nrStudents){
-		this.nrStudents = nrStudents;
+	public void setNrStudentsBooked(Integer nrStudentsBooked){
+		this.nrStudentsBooked = nrStudentsBooked;
+	}
+
+	public Integer getNrStudentsPresent(){
+		if(nrStudentsPresent == null) {
+			return 0;
+		}
+		else return nrStudentsPresent;
+	}
+	public void setNrStudentsPresent(Integer nrStudentsPresent){
+		this.nrStudentsPresent = nrStudentsPresent;
 	}
 
 	public Boolean isBookable() {
@@ -233,6 +261,10 @@ public class Lecture {
 	public void setBookable(Boolean bookable) {
 		this.bookable = bookable;
 	}
+
+	public List<Student> getStudentsPresent() {
+        return studentsPresent;
+    }
     
     
 }
