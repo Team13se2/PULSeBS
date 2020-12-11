@@ -27,8 +27,6 @@ public class Course {
 
     private String name;
 
-    private Integer cancelledLectures;
-
     @ManyToOne
     @JoinColumn (name = "teacher_number")
     private Teacher teacher;
@@ -68,12 +66,6 @@ public class Course {
     public void setName(String name) {
         this.name = name;
     }
-    public Integer getCancelledLectures() {
-        return cancelledLectures;
-    }
-    public void setCancelledLectures(Integer cancelledLectures) {
-        this.cancelledLectures = cancelledLectures;
-    }
     public Teacher getTeacher() {
         return teacher;
     }
@@ -100,7 +92,6 @@ public class Course {
             throw new InvalidLectureException("Invalid lecture");
         }
         lectures.remove(lecture);
-        setCancelledLectures(getCancelledLectures() + 1);
     }
 	public String getYear() {
 		return year;

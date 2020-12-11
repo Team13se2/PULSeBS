@@ -20,4 +20,5 @@ public interface TeacherService {
 	String cancelPresenceLecture(String lectureId, String teacherId) throws InvalidLectureException, InvalidCourseException, ParseException, InvalidTeacherException;
 	List<LectureDTO> getPastLectures(String id) throws InvalidTeacherException;
 	String addPresence(String lectureId, String studentId)throws InvalidLectureException, InvalidStudentException;
+
 }

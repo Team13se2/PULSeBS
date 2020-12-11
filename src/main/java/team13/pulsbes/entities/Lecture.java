@@ -10,10 +10,8 @@ import javax.persistence.*;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -31,11 +29,6 @@ public class Lecture {
 
     private String subjectName;
 
-    private String lectureType;
-    //theory or exercitation
-
-    private String surnameString;
-
     private Integer availableSeat;
 
     private Integer totalSeat;
@@ -46,8 +39,24 @@ public class Lecture {
 
 	private Integer nrStudentsPresent;
 
+	private String day;
+
 	private Boolean bookable;
-	
+
+	public Map<String, Integer> getQueue() {
+		return queue;
+	}
+
+	public void setQueue(Map<String, Integer> queue) {
+		this.queue = queue;
+	}
+
+	@ElementCollection
+	private Map<String,Integer> queue;
+	{
+		queue=new HashMap<>();
+	}
+
 	private static final String DATE_FORMAT_STRING = "yyyy-MM-dd HH:mm";
 
     @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
@@ -76,7 +85,7 @@ public class Lecture {
     @JoinColumn (name = "teacher_number")
     private Teacher teacher;
 
-    
+
 	public void addStudentAttending(Student s) throws InvalidStudentException {
     	if(s==null) {
     		throw new InvalidStudentException("Invalid Student");
@@ -90,12 +99,17 @@ public class Lecture {
     	students.remove(s);
 	}
 
+
 	public void addStudentPresent(Student s) throws InvalidStudentException {
     	if(s==null) {
     		throw new InvalidStudentException("Invalid Student");
     	}
     	studentsPresent.add(s);
     }
+
+
+
+
 	
 //	public Lecture( String Id, Integer AvailableSeat, Integer TotalSeat) {
 //		super();
@@ -173,22 +187,6 @@ public class Lecture {
 		this.subjectName = subjectName;
 	}
 
-	public String getLectureType() {
-		return lectureType;
-	}
-
-	public void setLectureType(String lectureType) {
-		this.lectureType = lectureType;
-	}
-
-	public String getSurnameString() {
-		return surnameString;
-	}
-
-	public void setSurnameString(String surnameString) {
-		this.surnameString = surnameString;
-	}
-
 	public Integer getAvailableSeat() {
 		return availableSeat;
 	}
@@ -262,9 +260,26 @@ public class Lecture {
 		this.bookable = bookable;
 	}
 
+
 	public List<Student> getStudentsPresent() {
         return studentsPresent;
     }
     
     
+
+	public Boolean getBookable() {
+		return bookable;
+	}
+
+
+	public String getDay() {
+		return day;
+	}
+
+	public void setDay(String day) {
+		this.day = day;
+	}
+
+
+
 }
