@@ -7,6 +7,7 @@ public final class Constants {
 	  }
 
 	public static final String GET_NUMBER_STUDENTS_ATTENDING = "/getNumberStudentsAttending";
+	public static final String GET_NUMBER_STUDENTS_PRESENT = "/getNumberStudentsPresent";
 	public static final String GET_STUDENT_LIST = "/getStudentList";
 	public static final String GET_ALL_LECTURES = "/getAllLectures";
 	public static final String GET_PAST_LECTURES = "/getPastLectures";

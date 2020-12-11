@@ -71,6 +71,16 @@ public class TeacherServiceImpl implements TeacherService{
 		}
 		return lectureRepository.getOne(id).getStudents().size();
 	}
+	@Override
+	public Integer getNumberStudentsPresent(String id) throws InvalidLectureException{
+		if (id.equals("-1")) {
+			throw new InvalidLectureException(LECTURE_NULL);
+		}
+		if(!lectureRepository.existsById(id)) {
+			throw new InvalidLectureException(LECTURE_NULL);
+		}
+		return lectureRepository.getOne(id).getNrStudentsPresent();
+	}
 
 	@Override
 	public List<LectureDTO> getAllLectures(String id) throws InvalidTeacherException {

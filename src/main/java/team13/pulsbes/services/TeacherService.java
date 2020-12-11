@@ -13,6 +13,7 @@ import team13.pulsbes.exception.InvalidStudentException;
 public interface TeacherService {
 	
 	Integer getNumberStudentsAttending(String id) throws InvalidLectureException;
+	Integer getNumberStudentsPresent(String id) throws InvalidLectureException;
 	List<LectureDTO> getAllLectures(String id) throws InvalidTeacherException;
 	List<StudentDTO> getStudentList(String id) throws InvalidLectureException, InvalidTeacherException;
 	String cancelLecture(String lectureId, String teacherId) throws InvalidLectureException, InvalidCourseException, ParseException, InvalidTeacherException;
