@@ -261,6 +261,10 @@ public class Lecture {
 	public void setBookable(Boolean bookable) {
 		this.bookable = bookable;
 	}
+
+	public List<Student> getStudentsPresent() {
+        return studentsPresent;
+    }
     
     
 }

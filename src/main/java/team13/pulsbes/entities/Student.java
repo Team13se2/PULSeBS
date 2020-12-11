@@ -162,6 +162,14 @@ public class Student {
 		this.bookedLectures = bookedLectures;
 	}
 
+	public List<Lecture> getAttendedLectures() {
+		return attendedLectures;
+	}
+
+	public void setAttendedLectures(List<Lecture> attendedLectures) {
+		this.attendedLectures = attendedLectures;
+	}
+
 	public String getCity() {
 		return city;
 	}
