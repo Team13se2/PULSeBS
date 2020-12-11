@@ -17,6 +17,7 @@
     "react-bootstrap": "^1.4.0",
     "react-day-picker": "^7.4.8",
     "react-dom": "^17.0.1",
+    "react-dropzone": "^11.2.4",
     "react-helmet": "^6.1.0",
     "react-modal": "^3.12.1",
     "react-pro-sidebar": "^0.4.4",

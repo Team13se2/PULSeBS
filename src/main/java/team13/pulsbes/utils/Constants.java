@@ -15,4 +15,8 @@ public final class Constants {
 	public static final String CANCEL_LECTURE = "/cancelLecture";
 	public static final String CANCEL_PRESENCE_LECTURE = "/cancelPresenceLecture";
 	public static final String LOGIN = "/login";
+	public static final String ADD_STUDENTS = "/addStudents";
+	public static final String ADD_TEACHERS = "/addTeachers";
+	public static final String ADD_COURSES = "/addCourses";
+	public static final String ENROLL_STUDENTS = "/enrollStudents";
 }

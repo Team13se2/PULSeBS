@@ -121,7 +121,7 @@ public class LoginService {
 			return login;
 		}else if(s==null && b == null && so == null){
 			login.setEmail(t.getEmail());
-			login.setId(t.getId());
+			login.setId(t.getNumber());
 			login.setName(t.getName());
 			login.setSurname(t.getSurname());
 			login.setRole(TYPE_TEACHER);

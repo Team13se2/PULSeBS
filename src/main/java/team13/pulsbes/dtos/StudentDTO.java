@@ -12,7 +12,39 @@ public class StudentDTO {
 
     private String surname;
 
-    private String email;
+    private String city;
+
+	private String birthday;
+
+	private String SSN;
+
+	private String email;
+
+	public String getCity() {
+		return city;
+	}
+
+	public void setCity(String city) {
+		this.city = city;
+	}
+
+	public String getBirthday() {
+		return birthday;
+	}
+
+	public void setBirthday(String birthday) {
+		this.birthday = birthday;
+	}
+
+	public String getSSN() {
+		return SSN;
+	}
+
+	public void setSSN(String SSN) {
+		this.SSN = SSN;
+	}
+
+
 
 	public String getId() {
 		return id;

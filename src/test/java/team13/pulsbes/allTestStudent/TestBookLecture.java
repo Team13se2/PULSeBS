@@ -46,6 +46,7 @@ class TestBookLecture {
 	@Test
 	void testBookLecture2() throws InvalidLectureException,InvalidStudentException {
 		Lecture l = new Lecture();
+		l.setBookable(true);
 		l.setAvailableSeat(0);
 		Optional<Lecture> ol = Optional.of(l);
 		when(lr.findById(any())).thenReturn(ol);
@@ -55,6 +56,7 @@ class TestBookLecture {
 	void testBookLecture3() throws InvalidLectureException,InvalidStudentException {
 		Lecture l = new Lecture();
 		Teacher t = new Teacher();
+		l.setBookable(true);
 		t.setName("giovanni");
 		l.setSurnameString("muchacha");
 		t.setSurname("muchacha");

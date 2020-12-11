@@ -61,6 +61,9 @@ public class TeacherServiceImpl implements TeacherService{
 		if (id.equals("-1")) {
 			throw new InvalidLectureException(LECTURE_NULL);
 		}
+		if(!lectureRepository.existsById(id)) {
+			throw new InvalidLectureException(LECTURE_NULL);
+		}
 		return lectureRepository.getOne(id).getStudents().size();
 	}
 
@@ -69,7 +72,9 @@ public class TeacherServiceImpl implements TeacherService{
 		if(id.equals("-1")) {
 			throw new InvalidTeacherException(TEACHER_NULL);
 		}
-
+		if(!teacherRepository.existsById(id)) {
+			throw new InvalidTeacherException(TEACHER_NULL);
+		}
 		Calendar tmpCal = Calendar.getInstance();
 
 		return  teacherRepository.getOne(id)
@@ -83,9 +88,12 @@ public class TeacherServiceImpl implements TeacherService{
 	}
 
 	@Override
-	public List<StudentDTO> getStudentList(String id) throws InvalidLectureException {
+	public List<StudentDTO> getStudentList(String id) throws InvalidLectureException, InvalidTeacherException {
 		if(id.equals("-1")) {
 			throw new InvalidLectureException(LECTURE_NULL);
+		}
+		if(!teacherRepository.existsById(id)) {
+			throw new InvalidTeacherException(TEACHER_NULL);
 		}
 		return  lectureRepository.getOne(id)
 				.getStudents()
@@ -229,8 +237,11 @@ public class TeacherServiceImpl implements TeacherService{
 		if(id.equals("-1")) {
 			throw new InvalidTeacherException(TEACHER_NULL);
 		}
-
-		Calendar tmpCal = Calendar.getInstance();
+		if(!teacherRepository.existsById(id)) {
+			throw new InvalidTeacherException(TEACHER_NULL);
+		}
+			
+			Calendar tmpCal = Calendar.getInstance();
 
 		return  teacherRepository.getOne(id)
 				.getLectures()

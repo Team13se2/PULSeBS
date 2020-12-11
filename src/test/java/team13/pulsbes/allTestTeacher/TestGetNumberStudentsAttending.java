@@ -38,6 +38,7 @@ class TestGetNumberStudentsAttending {
 	@Test
 	void testGetNumberStudentsAttending() throws InvalidTeacherException, InvalidStudentException, InvalidLectureException {
 		//lDto.setStudents(l.getStudents());
+		when(lectureRepository.existsById(any())).thenReturn(true);
 		assertEquals(1,teacherService.getNumberStudentsAttending("1"));
 
 	}

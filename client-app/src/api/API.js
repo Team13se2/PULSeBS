@@ -192,11 +192,24 @@ async function removeTeacherLecture(lecture_id) {
     });
 }
 
+async function getAllLecturesBookingManager(){
+    let url = "/booking_manager/getAllLectures";
+
+    const response = await fetch(baseURL + url);
+    const lecturesJSON = await response.json();
+    if(response.ok){
+        return lecturesJSON.map((l) => new LectureDTO(l.id,l.availableSeat,l.startTime,l.endTime,l.lectureType,l.surnameString,l.totalSeat,l.roomName,l.subjectName,l.nrStudents,l.bookable));
+    } else {
+        let err = {status: response.status, errObj:lecturesJSON};
+        throw err;  // An object with the error coming from the server
+    }
+}
+
 
 
 const API = {isAuthenticated,userLogin,userLogout,getAllLectures,
     getNumberStudentsAttending,getStudentList,
     getNoBookedLectures,getBookedLectures,
     bookLecture,removeStudentLecture,removeTeacherLecture,
-    getPastLectures} ;
+    getPastLectures,getAllLecturesBookingManager} ;
 export default API;
