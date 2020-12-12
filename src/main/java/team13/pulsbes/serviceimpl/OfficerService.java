@@ -6,24 +6,16 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.text.ParseException;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.Timer;
-import java.util.TimerTask;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import team13.pulsbes.entities.Course;
-import team13.pulsbes.entities.Lecture;
-import team13.pulsbes.entities.Student;
-import team13.pulsbes.entities.Teacher;
+import team13.pulsbes.entities.*;
 import team13.pulsbes.exception.InvalidCourseException;
 import team13.pulsbes.exception.InvalidStudentException;
-import team13.pulsbes.repositories.CourseRepository;
-import team13.pulsbes.repositories.LectureRepository;
-import team13.pulsbes.repositories.StudentRepository;
-import team13.pulsbes.repositories.TeacherRepository;
+import team13.pulsbes.repositories.*;
 import team13.pulsbes.services.NotificationService;
 
 @Service
@@ -39,6 +31,8 @@ public class OfficerService {
 	StudentRepository studentRepository;
 	@Autowired
 	CourseRepository courseRepository;
+	@Autowired
+	ScheduleRepository scheduleRepository;
 	
 	public void addTeacher(Teacher t) {
 		teacherRepository.save(t);
@@ -151,53 +145,6 @@ public class OfficerService {
         }
 	}
 	
-	public void addCourseList(File f) {
-		boolean firstline = true;
-        BufferedReader br = null;
-        String line = "";
-        String cvsSplitBy = ",";
-        try {
-
-            br = new BufferedReader(new FileReader(f));
-            while ((line = br.readLine()) != null) {
-            	if(!firstline) {
-	            	Course c = new Course();
-	            	String name;
-	                String[] course = line.split(cvsSplitBy);
-	                if(course[3].charAt(0) == '"') {
-	                	name = course [3] + course[4];
-	                	course[4] = course[5]; 
-	                }
-	                else 
-	                	name = course[3];
-	                
-	                
-	                c.setCode(course[0]);
-	                c.setYear(course[1]);
-	                c.setSemester(course[2]);             
-	                c.setName(name);           
-	                c.setTeacher(teacherRepository.getOne(course[4]));
-	                
-	                courseRepository.save(c);
-            	}   
-            	firstline = false;
-            }
-
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } finally {
-            if (br != null) {
-                try {
-                    br.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
-	}
-	
 	public void enrollStudent(File f) throws InvalidCourseException, InvalidStudentException {
 		boolean firstline = true;
         BufferedReader br = null;
@@ -215,9 +162,9 @@ public class OfficerService {
 	                //c.newStudentEnrolled(s);
 	                //courseRepository.save(c);
 	                studentRepository.save(s);
-            	}   
+            	}
             	firstline = false;
-            	
+
             }
 
         } catch (FileNotFoundException e) {
@@ -234,6 +181,143 @@ public class OfficerService {
             }
         }
 	}
-}
+
+	public void addCourseList(File f) {
+		boolean firstline = true;
+		BufferedReader br = null;
+		String line = "";
+		String cvsSplitBy = ",";
+		try {
+
+			br = new BufferedReader(new FileReader(f));
+			while ((line = br.readLine()) != null) {
+				if(!firstline) {
+					Course c = new Course();
+					String name;
+					String[] course = line.split(cvsSplitBy);
+					if(course[3].charAt(0) == '"') {
+						name = course [3] + course[4];
+						course[4] = course[5];
+					}
+					else
+						name = course[3];
+
+
+					c.setCode(course[0]);
+					c.setYear(course[1]);
+					c.setSemester(course[2]);
+					c.setName(name);
+					c.setTeacher(teacherRepository.getOne(course[4]));
+
+					courseRepository.save(c);
+				}
+				firstline = false;
+			}
+
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		} finally {
+			if (br != null) {
+				try {
+					br.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+	}
+
+	public void addScheduleList(File f) {
+		boolean firstline = true;
+		BufferedReader br = null;
+		String line = "";
+		String cvsSplitBy = ",";
+		try {
+
+			br = new BufferedReader(new FileReader(f));
+			while ((line = br.readLine()) != null) {
+				if (!firstline) {
+					Schedule s = new Schedule();
+					String[] schedule = line.split(cvsSplitBy);
+					String[] time = schedule[4].split("-");
+					String start = time[0];
+					String end = time[1];
+
+
+					s.setCode(schedule[0]);
+					s.setRoom(schedule[1]);
+					s.setDay(schedule[2]);
+					s.setSeats(Integer.valueOf(schedule[3]));
+					s.setStartTime(start);
+					s.setEndTime(end);
+
+					Lecture l= new Lecture();
+					String[] lecture = line.split(cvsSplitBy);
+					String [] time2 = lecture[4].split("-");
+					String start2 = time2[0];
+					String end2= time2[1];
+
+
+					SimpleDateFormat sdf = new SimpleDateFormat("yyyy MMM dd HH:mm:ss");
+					Calendar calendar = new GregorianCalendar(2020, Calendar.OCTOBER,5, 0, 0, 0);
+
+					int i,j;
+
+					for (i=0;i<17;i++) {
+
+						switch (lecture[2]) {
+
+							case "Mon":
+
+								break;
+
+
+						}
+
+						l.setRoomName(lecture[1]);
+						l.setDay(lecture[2]);
+						l.setTotalSeat(Integer.valueOf(lecture[3]));
+						//l.setStartTime(start2);
+						//l.setEndTime(end2);
+						l.setCode(lecture[0]);
+						l.setSubjectName(courseRepository.getOne(lecture[0]).getName());
+						l.setBookable(true);
+						l.setNrStudentsBooked(0);
+						l.setNrStudentsPresent(0);
+						l.setTeacher(courseRepository.getOne(lecture[0]).getTeacher());
+
+
+						lectureRepository.save(l);
+						lectureRepository.flush();
+					}
+					scheduleRepository.save(s);
+				}
+				firstline = false;
+			}
+
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		} finally {
+			if (br != null) {
+				try {
+					br.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+	}
+
+
+	}
+
+
+
+
+
 	
 

@@ -90,19 +90,24 @@ public class LoginService {
 	}
 	
 	private static void checkEmail(IdPw idpw) {
-		if(idpw.getEmail().charAt(0) == 't') {
+		String at ="@";
+		String [] check  = idpw.getEmail().split(at);
+		check = check[1].split("\\.");
+		
+		
+		if(check[0].equals("politu")) {
 			idpw.setRole(TYPE_TEACHER);
 			return;
 		}
-		else if(idpw.getEmail().charAt(0) == 's') {
+		else if(check[0].equals("students")) {
 			idpw.setRole(TYPE_STUDENT);
 			return;
 		}
-		else if(idpw.getEmail().charAt(0) == 'b') {
+		else if(check[0].equals("booking")) {
 			idpw.setRole(TYPE_BOOKING_MANAGER);
 			return;
 		}
-		else if(idpw.getEmail().charAt(0) == 'o') {
+		else if(check[0].equals("officer")) {
 			idpw.setRole(TYPE_SUPPORT_OFFICER);
 			return;
 		}

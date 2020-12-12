@@ -5,5 +5,5 @@ import org.springframework.stereotype.Repository;
 import team13.pulsbes.entities.Lecture;
 
 @Repository
-public interface LectureRepository extends JpaRepository <Lecture, String> {
+public interface LectureRepository extends JpaRepository <Lecture, Integer> {
 }

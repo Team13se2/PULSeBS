@@ -4,8 +4,14 @@ import javax.persistence.Id;
 
 public class LectureDTO {
 
-    @Id
-    private String id;
+
+
+
+
+	@Id
+    Integer id;
+
+	private String code;
 
     private String startTime;
 
@@ -13,26 +19,34 @@ public class LectureDTO {
     
     private String subjectName;
 
-    private String lectureType;
-
-    private String surnameString;
-
     private Integer availableSeat;
 
     private Integer totalSeat;
 
     private String roomName;
 
-	private Integer nrStudents;
+	private Integer nrStudentsBooked;
+
+	private Integer nrStudentsPresent;
 	
 	private Boolean bookable;
 
     
 	public LectureDTO(){}
-	public String getId() {
+	public Integer getId() {
 		return id;
 	}
-	public void setId(String id) {
+	public String getCode() {
+		return code;
+	}
+
+	public void setCode(String code) {
+		this.code = code;
+	}
+	public Boolean getBookable() {
+		return bookable;
+	}
+	public void setId(Integer id) {
 		this.id = id;
 	}
 	public String getStartTime() {
@@ -46,18 +60,6 @@ public class LectureDTO {
 	}
 	public void setEndTime(String endTime) {
 		this.endTime = endTime;
-	}
-	public String getLectureType() {
-		return lectureType;
-	}
-	public void setLectureType(String lectureType) {
-		this.lectureType = lectureType;
-	}
-	public String getSurnameString() {
-		return surnameString;
-	}
-	public void setSurnameString(String surnameString) {
-		this.surnameString = surnameString;
 	}
 	public Integer getAvailableSeat() {
 		return availableSeat;
@@ -83,11 +85,17 @@ public class LectureDTO {
 	public void setSubjectName(String subjectName) {
 		this.subjectName = subjectName;
 	}
-    public Integer getNrStudents(){
-		return nrStudents;
+    public Integer getNrStudentsBooked(){
+		return nrStudentsBooked;
 	}
-	public void setNrStudents(Integer nrStudents){
-		this.nrStudents = nrStudents;
+	public void setNrStudentsBooked(Integer nrStudentsBooked){
+		this.nrStudentsBooked = nrStudentsBooked;
+	}
+	public Integer getNrStudentsPresent(){
+		return nrStudentsPresent;
+	}
+	public void setNrStudentsPresent(Integer nrStudentsPresent){
+		this.nrStudentsPresent = nrStudentsPresent;
 	}
 
 	public Boolean isBookable() {
