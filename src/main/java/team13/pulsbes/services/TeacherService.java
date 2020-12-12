@@ -12,13 +12,13 @@ import team13.pulsbes.exception.InvalidStudentException;
 
 public interface TeacherService {
 	
-	Integer getNumberStudentsAttending(String id) throws InvalidLectureException;
-	Integer getNumberStudentsPresent(String id) throws InvalidLectureException;
+	Integer getNumberStudentsAttending(Integer id) throws InvalidLectureException;
+	Integer getNumberStudentsPresent(Integer id) throws InvalidLectureException;
 	List<LectureDTO> getAllLectures(String id) throws InvalidTeacherException;
-	List<StudentDTO> getStudentList(String id) throws InvalidLectureException, InvalidTeacherException;
-	String cancelLecture(String lectureId, String teacherId) throws InvalidLectureException, InvalidCourseException, ParseException, InvalidTeacherException;
-	String cancelPresenceLecture(String lectureId, String teacherId) throws InvalidLectureException, InvalidCourseException, ParseException, InvalidTeacherException;
+	List<StudentDTO> getStudentList(Integer id) throws InvalidLectureException, InvalidTeacherException;
+	String cancelLecture(Integer lectureId, String teacherId) throws InvalidLectureException, InvalidCourseException, ParseException, InvalidTeacherException;
+	String cancelPresenceLecture(Integer lectureId, String teacherId) throws InvalidLectureException, InvalidCourseException, ParseException, InvalidTeacherException;
 	List<LectureDTO> getPastLectures(String id) throws InvalidTeacherException;
-	String addPresence(String lectureId, String studentId)throws InvalidLectureException, InvalidStudentException;
+	String addPresence(Integer lectureId, String studentId)throws InvalidLectureException, InvalidStudentException;
 
 }

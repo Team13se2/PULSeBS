@@ -3,6 +3,7 @@ package team13.pulsbes.entities;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.GenericGenerator;
 import team13.pulsbes.exception.InvalidStudentException;
 
 import javax.persistence.*;
@@ -21,13 +22,16 @@ import java.util.stream.Collectors;
 public class Lecture {
 
     @Id
-    private String id;    
-    
-    private String startTime;
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
+    Integer id;
+
+    private String code;
+
+	private String subjectName;
+
+	private String startTime;
     
     private String endTime;
-
-    private String subjectName;
 
     private Integer availableSeat;
 
@@ -77,9 +81,6 @@ public class Lecture {
         students = new ArrayList<>();
     }
 
-    @ManyToOne(cascade = {CascadeType.ALL}, fetch=FetchType.EAGER)
-    @JoinColumn(name = "course_code")
-    private Course course;
 
     @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn (name = "teacher_number")
@@ -99,6 +100,13 @@ public class Lecture {
     	students.remove(s);
 	}
 
+	public String getCode() {
+		return code;
+	}
+
+	public void setCode(String code) {
+		this.code = code;
+	}
 
 	public void addStudentPresent(Student s) throws InvalidStudentException {
     	if(s==null) {
@@ -155,11 +163,11 @@ public class Lecture {
     }
 
 
-	public String getId() {
+	public Integer getId() {
 		return id;
 	}
 
-	public void setId(String id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 
@@ -217,14 +225,6 @@ public class Lecture {
 
 	public void setStudents(List<Student> students) {
 		this.students = students;
-	}
-
-	public Course getCourse() {
-		return course;
-	}
-
-	public void setCourse(Course course) {
-		this.course = course;
 	}
 
 	public Teacher getTeacher() {

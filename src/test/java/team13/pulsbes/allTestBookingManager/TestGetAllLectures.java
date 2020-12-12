@@ -42,18 +42,16 @@ class TestGetAllLectures {
 		LectureDTO lDto = new LectureDTO();
 		Course c = new Course();
 		List<Lecture> lectures = new ArrayList<>();
-		l.setId("1");
+		l.setId((1));
 		l.setSubjectName(c.getName());
 		l.setAvailableSeat(50);
 		l.setTotalSeat(50);
 		l.setRoomName("Aula 1");
 		
-		lDto.setId("1");
+		lDto.setId((1));
 		lDto.setSubjectName(c.getName());
 		lDto.setAvailableSeat(50);
 		lDto.setTotalSeat(50);
-		lDto.setLectureType("Lab");
-		lDto.setSurnameString("Torchiano");
 		lDto.setRoomName("Aula 1");
 		
 		lectures.add(l);

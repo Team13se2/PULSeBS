@@ -39,13 +39,13 @@ class TestGetNumberStudentsAttending {
 	void testGetNumberStudentsAttending() throws InvalidTeacherException, InvalidStudentException, InvalidLectureException {
 		//lDto.setStudents(l.getStudents());
 		when(lectureRepository.existsById(any())).thenReturn(true);
-		assertEquals(1,teacherService.getNumberStudentsAttending("1"));
+		assertEquals(1,teacherService.getNumberStudentsAttending(1));
 
 	}
 
 	@Test
 	void testGetNumberStudentsAttending2() throws InvalidTeacherException, InvalidStudentException, InvalidLectureException {
-		assertThrows(InvalidLectureException.class, () -> teacherService.getNumberStudentsAttending("-1"));
+		assertThrows(InvalidLectureException.class, () -> teacherService.getNumberStudentsAttending(-1));
 	}
 
 }
