@@ -62,10 +62,14 @@ public class BookingManagerServiceImpl implements BookingManagerService{
 		Calendar tmpCal = Calendar.getInstance();
 		tmpCal.add(Calendar.DAY_OF_MONTH, -14);
 
-        for (Course tmpCourse : listCourse) {
-            listLecture.addAll(tmpCourse.getLectures());
+
+		for (Course tmpCourse : listCourse) {
+			lectureRepository.findAll().forEach(l -> {
+				if (l.getCode().equals(tmpCourse.getName())) {
+					listLecture.add(l);
+				}
+			});
 		}
-		
 		List<Lecture> listAttendedLecture = listLecture.stream()
                 .filter(x -> { { try { return x.getStartTime2().before(tmpCal.getTime()) 
                     && studentRepository.getOne(studentId).getAttendedLectures().contains(x); } 

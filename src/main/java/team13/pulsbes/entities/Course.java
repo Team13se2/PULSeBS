@@ -34,13 +34,6 @@ public class Course {
     @ManyToMany(mappedBy = "courses")
     private List<Student> students = new ArrayList<>();
 
-    @OneToMany (mappedBy = "course")
-
-    List<Lecture> lectures;
-    {
-        lectures = new ArrayList<>();
-    }
-
 
     public void newStudentEnrolled(Student s) throws InvalidStudentException {
         if(s==null) {
@@ -78,21 +71,13 @@ public class Course {
     public void setStudents(List<Student> students) {
         this.students = students;
     }
+  /*  public void cancelLecture(Lecture lecture) throws InvalidLectureException{
 
-    public List<Lecture> getLectures() {
-        return lectures;
-    }
-
-    public void setLectures(List<Lecture> lectures) {
-        this.lectures = lectures;
-    }
-
-    public void cancelLecture(Lecture lecture) throws InvalidLectureException{
         if(lecture==null) {
             throw new InvalidLectureException("Invalid lecture");
         }
         lectures.remove(lecture);
-    }
+    }*/
 	public String getYear() {
 		return year;
 	}

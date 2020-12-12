@@ -49,7 +49,7 @@ class TestGetBookedLectures {
 		Student s = new Student("1","name","surname");		
 		Lecture l = new Lecture();
 		l.setBookable(true);
-		l.setId("1");
+		l.setId(1);
 		l.addStartTime(2030, 1, 1, 0, 0);
 		List<Lecture> lectures = new ArrayList<>();
 		lectures.add(l);
@@ -57,7 +57,7 @@ class TestGetBookedLectures {
 		when(studentRepository.existsById(any())).thenReturn(true);
 		List<LectureDTO> ret = new ArrayList<>();
 		LectureDTO lDto = new LectureDTO();
-		lDto.setId("1");
+		lDto.setId(1);
 		ret.add(lDto);
 		s.addBookLecture(l);
 		studentService.getAllLectures("1");
