@@ -10,6 +10,8 @@ import org.springframework.context.annotation.Primary;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 
+import team13.pulsbes.entities.BookingManager;
+import team13.pulsbes.entities.SupportOfficer;
 import team13.pulsbes.entities.Teacher;
 import team13.pulsbes.repositories.BookingManagerRepository;
 import team13.pulsbes.repositories.CourseRepository;
@@ -83,6 +85,42 @@ public class PulsbesApplication {
 			
 			@Override
 			public void run(String... args) throws Exception {
+<<<<<<< HEAD
+				
+			/*	studentRepository.deleteAll();
+				courseRepository.deleteAll();
+				teacherRepository.deleteAll();
+				String csvFileS = "../Students.csv";
+				File fs = new File(csvFileS);
+				officerService.addStudentList(fs);
+				String csvFileT = "../Professors.csv";
+				File ft = new File(csvFileT);
+				officerService.addTeacherList(ft);
+				String csvFileC = "../Courses.csv";
+				File fc = new File(csvFileC);
+				officerService.addCourseList(fc);
+				String csvFileE = "../Enrollment.csv";
+				File fe = new File(csvFileE);
+				officerService.enrollStudent(fe);   */
+			//String csvFileS = "../Schedule.csv";
+			//File fs = new File(csvFileS);
+			//officerService.addLectureList(fs);
+				SupportOfficer so = new SupportOfficer();
+				so.setId("1");
+				so.setEmail("support@officer.politu.it");
+				so.setName("Signor");
+				so.setSurname("Officer");
+				so.setPsw("psw");
+				supportRepository.save(so);
+				
+				BookingManager b = new BookingManager();
+				b.setId("1");
+				b.setEmail("manager@booking.politu.it");
+				b.setName("Signor");
+				b.setSurname("Booking");
+				b.setPsw("psw");
+				bookingRepository.save(b);
+=======
 
 //		studentRepository.deleteAll();
 //		courseRepository.deleteAll();
@@ -110,6 +148,7 @@ public class PulsbesApplication {
 
 
 
+>>>>>>> bd77b095eaedbb91eb38e6c81009107f3d86c701
 			}
 		};
 	}
