@@ -85,26 +85,6 @@ public class PulsbesApplication {
 			
 			@Override
 			public void run(String... args) throws Exception {
-				
-				// studentRepository.deleteAll();
-				// courseRepository.deleteAll();
-				// teacherRepository.deleteAll();
-				lectureRepository.deleteAll();
-				// String csvFileS = "../Students.csv";
-				// File fs = new File(csvFileS);
-				// officerService.addStudentList(fs);
-				// String csvFileT = "../Professors.csv";
-				// File ft = new File(csvFileT);
-				// officerService.addTeacherList(ft);
-				// String csvFileC = "../Courses.csv";
-				// File fc = new File(csvFileC);
-				// officerService.addCourseList(fc);
-				// String csvFileE = "../Enrollment.csv";
-				// File fe = new File(csvFileE);
-				// officerService.enrollStudent(fe);   
-				String csvFileSs = "../Schedule.csv";
-				File fss = new File(csvFileSs);
-				officerService.addScheduleList(fss);
 
 				SupportOfficer so = new SupportOfficer();
 				so.setId("1");
@@ -122,6 +102,29 @@ public class PulsbesApplication {
 				b.setPsw("psw");
 				bookingRepository.save(b);
 
+//		studentRepository.deleteAll();
+//		courseRepository.deleteAll();
+//		lectureRepository.deleteAll();
+//		teacherRepository.deleteAll();
+//		String csvFileT = "../Professors.csv";
+//		File ft = new File(csvFileT);
+//		officerService.addTeacherList(ft);
+//		String csvFileC = "../Courses.csv";
+//		File fc = new File(csvFileC);
+//		officerService.addCourseList(fc);
+//		String csvFileS = "../Students.csv";
+//		File fs = new File(csvFileS);
+//		officerService.addStudentList(fs);
+   //
+   //
+//		String csvFileE = "../Enrollment.csv";
+//		File fe = new File(csvFileE);
+//		officerService.enrollStudent(fe);
+   //
+			    /*String csvFileSS = "../Schedule.csv";
+			    File fss = new File(csvFileSS);
+			    officerService.addScheduleList(fss);*/
+//			    officerService.addLectureList(fss);
 
 			}
 		};

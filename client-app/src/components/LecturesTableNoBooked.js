@@ -45,15 +45,15 @@ const LecturesTableNoBooked = (props) => {
                           <td>{lecture.totalSeat}</td>
                           <td>{lecture.roomName}</td>
                           <td>
-                          {remove && <button type="button" className="btn btn-outline-danger" onClick={() => job(lecture.id)}> 
+                          {remove && <button type="button" className="btn btn-danger" onClick={() => job(lecture.id)}> 
                               Remove
                           </button> }
-                          {!remove && lecture.availableSeat > 0 && <button type="button" className="btn btn-outline-success" onClick={() => job(lecture.id)}> 
+                          {!remove && lecture.availableSeat > 0 && <button type="button" className="btn btn-success" onClick={() => job(lecture.id)}> 
                                       Book
                           </button> }
                           {lecture.availableSeat === 0 && <button type="button" 
-                          className="btn btn-outline-success" 
-                          onClick={() => job2(lecture.id)}>
+                          className="btn btn-warning" 
+                          onClick={() => job(lecture.id)}>
                              Waiting List
                           </button>}
                           </td>
