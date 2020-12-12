@@ -10,6 +10,8 @@ import org.springframework.context.annotation.Primary;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 
+import team13.pulsbes.entities.BookingManager;
+import team13.pulsbes.entities.SupportOfficer;
 import team13.pulsbes.entities.Teacher;
 import team13.pulsbes.repositories.BookingManagerRepository;
 import team13.pulsbes.repositories.CourseRepository;
@@ -102,8 +104,21 @@ public class PulsbesApplication {
 			//String csvFileS = "../Schedule.csv";
 			//File fs = new File(csvFileS);
 			//officerService.addLectureList(fs);
-
-
+				SupportOfficer so = new SupportOfficer();
+				so.setId("1");
+				so.setEmail("support@officer.politu.it");
+				so.setName("Signor");
+				so.setSurname("Officer");
+				so.setPsw("psw");
+				supportRepository.save(so);
+				
+				BookingManager b = new BookingManager();
+				b.setId("1");
+				b.setEmail("manager@booking.politu.it");
+				b.setName("Signor");
+				b.setSurname("Booking");
+				b.setPsw("psw");
+				bookingRepository.save(b);
 			}
 		};
 	}
