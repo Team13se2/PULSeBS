@@ -22,6 +22,7 @@ import LecturesTableNoBooked from './components/LecturesTableNoBooked';
 import UploadFiles from './components/UploadFiles';
 import MonthChartBookingManager from './components/MonthChartBookingManager';
 import RadioButtonsCSV from './components/RadioButtonsCSV';
+import ContactTracing from './components/ContactTracing';
 
 class App extends React.Component {
     constructor(props) {
@@ -217,6 +218,11 @@ class App extends React.Component {
         this.setState({CSV: value});
     }
 
+    addIdContactTracing = (id) =>{
+        console.log("call API with "+id);
+    }
+
+
 
     render() {
         const value = {
@@ -401,7 +407,7 @@ class App extends React.Component {
                     <Route exact path="/booking_manager">
                             <Row className="">
                                 <Col sm={2} className="overflow">
-                                        <PastLecturesFilter getAllPastLectures={this.getAllLecturesBookingManager}/>
+                                        <PastLecturesFilter  getAllPastLectures={this.getAllLecturesBookingManager}/>
                                     </Col>
                                 <Col sm={8}
                                     className="below-nav">
@@ -410,7 +416,17 @@ class App extends React.Component {
                                 </Col>
                                 <Col sm={1}/>
                             </Row>
-                        </Route>
+                    </Route>
+                    <Route exact path="/booking_manager/contact_tracing/">
+                            <Row className="">
+                                <Col sm={4}/>
+                                <Col sm={4}
+                                    className="below-nav">
+                                    <ContactTracing addIdContactTracing={this.addIdContactTracing}/>
+                                </Col>
+                                <Col sm={4}/>
+                            </Row>
+                    </Route>
                     </Switch>
                 </Route>
                 <Route path="/support_officer">

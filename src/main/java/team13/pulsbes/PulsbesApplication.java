@@ -122,7 +122,7 @@ public class PulsbesApplication {
 
 //		studentRepository.deleteAll();
 //		courseRepository.deleteAll();
-		lectureRepository.deleteAll();
+//		lectureRepository.deleteAll();
 //		teacherRepository.deleteAll();
 //		String csvFileT = "../Professors.csv";
 //		File ft = new File(csvFileT);
@@ -139,9 +139,9 @@ public class PulsbesApplication {
 //		File fe = new File(csvFileE);
 //		officerService.enrollStudent(fe);
    //
-			    String csvFileSS = "../Schedule.csv";
+			    /*String csvFileSS = "../Schedule.csv";
 			    File fss = new File(csvFileSS);
-			    officerService.addScheduleList(fss);
+			    officerService.addScheduleList(fss);*/
 //			    officerService.addLectureList(fss);
 
 			}

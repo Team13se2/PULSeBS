@@ -99,6 +99,7 @@ const LecturesTableTeacher = (props) => {
                       <th>Name</th>
                       <th>Surname</th>
                       <th>Email</th> 
+                      <th>Present</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -108,6 +109,9 @@ const LecturesTableTeacher = (props) => {
                   <td>{student.name}</td>
                   <td>{student.surname}</td>
                   <td>{student.email}</td>
+                  <td><button type="button" className="btn btn-success" onClick={()=>{console.log("Inserire l'API")}}>Present 
+                  </button>
+                  </td>
                   </tr>
                 ))}        
                 </tbody>
