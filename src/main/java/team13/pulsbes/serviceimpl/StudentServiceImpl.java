@@ -112,12 +112,9 @@ public class StudentServiceImpl implements StudentService {
                 Integer count = lectureSelected.get().getQueue().values().stream().max((x,y)-> x - y).get();
                 lectureSelected.get().getQueue().put(studentId,count +1);
                 lectureRepository.save(lectureSelected.get());
-
             }
             return ("The lecture has no more available seats, you will receive a mail if a spot opens up");
         }
-
-
     }
 
     @Override

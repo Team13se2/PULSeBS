@@ -148,6 +148,7 @@ class App extends React.Component {
 
     getAllLecturesBookingManager = () =>{
         API.getAllLecturesBookingManager().then((lecture) =>{
+            console.log(lecture);
             this.setState({bookingManagerLecture: lecture});
         }).catch((err) =>{
             console.log(err);
