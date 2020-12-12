@@ -103,10 +103,9 @@ public class PulsbesApplication {
 //		File fe = new File(csvFileE);
 //		officerService.enrollStudent(fe);
    //
-//			    String csvFileSS = "../Schedule.csv";
-//			    File fss = new File(csvFileSS);
-//			    officerService.addScheduleList(fss);
-//			    officerService.addLectureList(fss);
+	//		String csvFileSS = "../Schedule.csv";
+	//		File fss = new File(csvFileSS);
+	//	    officerService.addScheduleList(fss);
 
 
 

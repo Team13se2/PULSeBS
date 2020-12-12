@@ -5,9 +5,11 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
+import java.util.logging.Logger;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -33,6 +35,10 @@ public class OfficerService {
 	CourseRepository courseRepository;
 	@Autowired
 	ScheduleRepository scheduleRepository;
+
+	Logger log = Logger.getLogger("OfficerService");
+	private static final String DATE_FORMAT_STRING = "yyyy-MM-dd HH:mm";
+
 	
 	public void addTeacher(Teacher t) {
 		teacherRepository.save(t);
@@ -253,25 +259,121 @@ public class OfficerService {
 					s.setStartTime(start);
 					s.setEndTime(end);
 
-					Lecture l= new Lecture();
+					
 					String[] lecture = line.split(cvsSplitBy);
 					String [] time2 = lecture[4].split("-");
 					String start2 = time2[0];
+					String [] splitStart = start2.split(":");
+					String startHour = splitStart[0];
+					String startMin = splitStart[1];
 					String end2= time2[1];
-
-
-					SimpleDateFormat sdf = new SimpleDateFormat("yyyy MMM dd HH:mm:ss");
-					Calendar calendar = new GregorianCalendar(2020, Calendar.OCTOBER,5, 0, 0, 0);
-
-					int i,j;
+					String [] splitEnd = end2.split(":");
+					String endHour = splitEnd[0];
+					String endMin = splitEnd[1];
+					String strDate = "Error";
+					String endDate = "Error";
+					DateFormat dateFormat = new SimpleDateFormat(DATE_FORMAT_STRING);
+					Calendar tmpCal1 = Calendar.getInstance();					
+					Calendar tmpCal2 = Calendar.getInstance();
+					
+					int addDate;
+					int i;
 
 					for (i=0;i<17;i++) {
 
+						Lecture l= new Lecture();
+
 						switch (lecture[2]) {
 
-							case "Mon":
+							case "Mon":							
+							addDate = i*7;							
+							
+							tmpCal1.set(2020, Calendar.OCTOBER, 5, 0, 0, 0);
+							tmpCal2.set(2020, Calendar.OCTOBER, 5, 0, 0, 0);
 
-								break;
+							tmpCal1.add(Calendar.DATE, +addDate);
+							tmpCal1.set(Calendar.HOUR_OF_DAY, Integer.parseInt(startHour));
+							tmpCal1.set(Calendar.MINUTE, Integer.parseInt(startMin));							
+							strDate = dateFormat.format(tmpCal1.getTime());	
+							log.info(strDate);
+
+							tmpCal2.add(Calendar.DATE, +addDate);
+							tmpCal2.set(Calendar.HOUR_OF_DAY, Integer.parseInt(endHour));
+							tmpCal2.set(Calendar.MINUTE, Integer.parseInt(endMin));
+							endDate = dateFormat.format(tmpCal2.getTime());	
+							break;
+
+							case "Tue":
+							addDate = 1 + i*7;
+
+							tmpCal1.set(2020, Calendar.OCTOBER, 5, 0, 0, 0);
+							tmpCal2.set(2020, Calendar.OCTOBER, 5, 0, 0, 0);
+
+							tmpCal1.add(Calendar.DATE, +addDate);
+							tmpCal1.set(Calendar.HOUR_OF_DAY, Integer.parseInt(startHour));
+							tmpCal1.set(Calendar.MINUTE, Integer.parseInt(startMin));							
+							strDate = dateFormat.format(tmpCal1.getTime());	
+
+							tmpCal2.add(Calendar.DATE, +addDate);
+							tmpCal2.set(Calendar.HOUR_OF_DAY, Integer.parseInt(endHour));
+							tmpCal2.set(Calendar.MINUTE, Integer.parseInt(endMin));
+							endDate = dateFormat.format(tmpCal2.getTime());	
+							break;
+
+							case "Wed":
+							addDate = 2 + i*7;
+
+							tmpCal1.set(2020, Calendar.OCTOBER, 5, 0, 0, 0);
+							tmpCal2.set(2020, Calendar.OCTOBER, 5, 0, 0, 0);
+
+							tmpCal1.add(Calendar.DATE, +addDate);
+							tmpCal1.set(Calendar.HOUR_OF_DAY, Integer.parseInt(startHour));
+							tmpCal1.set(Calendar.MINUTE, Integer.parseInt(startMin));							
+							strDate = dateFormat.format(tmpCal1.getTime());	
+
+							tmpCal2.add(Calendar.DATE, +addDate);
+							tmpCal2.set(Calendar.HOUR_OF_DAY, Integer.parseInt(endHour));
+							tmpCal2.set(Calendar.MINUTE, Integer.parseInt(endMin));
+							endDate = dateFormat.format(tmpCal2.getTime());	
+							break;
+							
+							case "Thu":
+							addDate = 3 + i*7;
+
+							tmpCal1.set(2020, Calendar.OCTOBER, 5, 0, 0, 0);
+							tmpCal2.set(2020, Calendar.OCTOBER, 5, 0, 0, 0);
+
+							tmpCal1.add(Calendar.DATE, +addDate);
+							tmpCal1.set(Calendar.HOUR_OF_DAY, Integer.parseInt(startHour));
+							tmpCal1.set(Calendar.MINUTE, Integer.parseInt(startMin));							
+							strDate = dateFormat.format(tmpCal1.getTime());	
+
+							tmpCal2.add(Calendar.DATE, +addDate);
+							tmpCal2.set(Calendar.HOUR_OF_DAY, Integer.parseInt(endHour));
+							tmpCal2.set(Calendar.MINUTE, Integer.parseInt(endMin));
+							endDate = dateFormat.format(tmpCal2.getTime());	
+							break;
+
+							case "Fri":
+							addDate = 4 + i*7;
+
+							tmpCal1.set(2020, Calendar.OCTOBER, 5, 0, 0, 0);
+							tmpCal2.set(2020, Calendar.OCTOBER, 5, 0, 0, 0);
+
+							tmpCal1.add(Calendar.DATE, +addDate);
+							tmpCal1.set(Calendar.HOUR_OF_DAY, Integer.parseInt(startHour));
+							tmpCal1.set(Calendar.MINUTE, Integer.parseInt(startMin));							
+							strDate = dateFormat.format(tmpCal1.getTime());	
+
+							tmpCal2.add(Calendar.DATE, +addDate);
+							tmpCal2.set(Calendar.HOUR_OF_DAY, Integer.parseInt(endHour));
+							tmpCal2.set(Calendar.MINUTE, Integer.parseInt(endMin));
+							endDate = dateFormat.format(tmpCal2.getTime());	
+							break;
+							
+							default:
+							log.info("Wrong format");
+							break;
 
 
 						}
@@ -279,8 +381,9 @@ public class OfficerService {
 						l.setRoomName(lecture[1]);
 						l.setDay(lecture[2]);
 						l.setTotalSeat(Integer.valueOf(lecture[3]));
-						//l.setStartTime(start2);
-						//l.setEndTime(end2);
+						l.setAvailableSeat(Integer.valueOf(lecture[3]));
+						l.setStartTime(strDate);
+						l.setEndTime(endDate);
 						l.setCode(lecture[0]);
 						l.setSubjectName(courseRepository.getOne(lecture[0]).getName());
 						l.setBookable(true);
