@@ -3,6 +3,7 @@ package team13.pulsbes.entities;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.GenericGenerator;
 import team13.pulsbes.exception.InvalidStudentException;
 
 import javax.persistence.*;
@@ -10,10 +11,8 @@ import javax.persistence.*;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -23,18 +22,16 @@ import java.util.List;
 public class Lecture {
 
     @Id
-    private String id;    
-    
-    private String startTime;
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
+    Integer id;
+
+    private String code;
+
+	private String subjectName;
+
+	private String startTime;
     
     private String endTime;
-
-    private String subjectName;
-
-    private String lectureType;
-    //theory or exercitation
-
-    private String surnameString;
 
     private Integer availableSeat;
 
@@ -42,10 +39,28 @@ public class Lecture {
 
 	private String roomName;
 
-	private Integer nrStudents;
+	private Integer nrStudentsBooked;
+
+	private Integer nrStudentsPresent;
+
+	private String day;
 
 	private Boolean bookable;
-	
+
+	public Map<String, Integer> getQueue() {
+		return queue;
+	}
+
+	public void setQueue(Map<String, Integer> queue) {
+		this.queue = queue;
+	}
+
+	@ElementCollection
+	private Map<String,Integer> queue;
+	{
+		queue=new HashMap<>();
+	}
+
 	private static final String DATE_FORMAT_STRING = "yyyy-MM-dd HH:mm";
 
     @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
@@ -55,17 +70,23 @@ public class Lecture {
     private List<Student> students;
     {
         students = new ArrayList<>();
+	}
+	
+	@ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @JoinTable(name="lecture_students_present", joinColumns = @JoinColumn(name="lecture_id"),
+            inverseJoinColumns = @JoinColumn(name="student_id"))
+
+    private List<Student> studentsPresent;
+    {
+        students = new ArrayList<>();
     }
 
-    @ManyToOne(cascade = {CascadeType.ALL}, fetch=FetchType.EAGER)
-    @JoinColumn(name = "course_code")
-    private Course course;
 
     @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn (name = "teacher_number")
     private Teacher teacher;
 
-    
+
 	public void addStudentAttending(Student s) throws InvalidStudentException {
     	if(s==null) {
     		throw new InvalidStudentException("Invalid Student");
@@ -78,6 +99,25 @@ public class Lecture {
     	}
     	students.remove(s);
 	}
+
+	public String getCode() {
+		return code;
+	}
+
+	public void setCode(String code) {
+		this.code = code;
+	}
+
+	public void addStudentPresent(Student s) throws InvalidStudentException {
+    	if(s==null) {
+    		throw new InvalidStudentException("Invalid Student");
+    	}
+    	studentsPresent.add(s);
+    }
+
+
+
+
 	
 //	public Lecture( String Id, Integer AvailableSeat, Integer TotalSeat) {
 //		super();
@@ -123,11 +163,11 @@ public class Lecture {
     }
 
 
-	public String getId() {
+	public Integer getId() {
 		return id;
 	}
 
-	public void setId(String id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 
@@ -153,22 +193,6 @@ public class Lecture {
 
 	public void setSubjectName(String subjectName) {
 		this.subjectName = subjectName;
-	}
-
-	public String getLectureType() {
-		return lectureType;
-	}
-
-	public void setLectureType(String lectureType) {
-		this.lectureType = lectureType;
-	}
-
-	public String getSurnameString() {
-		return surnameString;
-	}
-
-	public void setSurnameString(String surnameString) {
-		this.surnameString = surnameString;
 	}
 
 	public Integer getAvailableSeat() {
@@ -203,14 +227,6 @@ public class Lecture {
 		this.students = students;
 	}
 
-	public Course getCourse() {
-		return course;
-	}
-
-	public void setCourse(Course course) {
-		this.course = course;
-	}
-
 	public Teacher getTeacher() {
 		return teacher;
 	}
@@ -219,11 +235,21 @@ public class Lecture {
 		this.teacher = teacher;
 	}
 
-	public Integer getNrStudents(){
-		return nrStudents;
+	public Integer getNrStudentsBooked(){
+		return nrStudentsBooked;
 	}
-	public void setNrStudents(Integer nrStudents){
-		this.nrStudents = nrStudents;
+	public void setNrStudentsBooked(Integer nrStudentsBooked){
+		this.nrStudentsBooked = nrStudentsBooked;
+	}
+
+	public Integer getNrStudentsPresent(){
+		if(nrStudentsPresent == null) {
+			return 0;
+		}
+		else return nrStudentsPresent;
+	}
+	public void setNrStudentsPresent(Integer nrStudentsPresent){
+		this.nrStudentsPresent = nrStudentsPresent;
 	}
 
 	public Boolean isBookable() {
@@ -233,6 +259,27 @@ public class Lecture {
 	public void setBookable(Boolean bookable) {
 		this.bookable = bookable;
 	}
+
+
+	public List<Student> getStudentsPresent() {
+        return studentsPresent;
+    }
     
     
+
+	public Boolean getBookable() {
+		return bookable;
+	}
+
+
+	public String getDay() {
+		return day;
+	}
+
+	public void setDay(String day) {
+		this.day = day;
+	}
+
+
+
 }

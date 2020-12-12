@@ -46,17 +46,15 @@ class TestEntities {
 		Course c = new Course();
 		Teacher t = new Teacher();
 		Student s = new Student("1",	"name","surname");
-		l.setId("1");
+		l.setId(1);
 		l.setStartTime(null);
 		l.setEndTime(null);
 		l.setSubjectName("test");
-		l.setLectureType("lab");
-		l.setSurnameString("test");
 		l.setAvailableSeat(10);
 		l.setTotalSeat(100);
 		l.setRoomName("aula");
 		l.setStudents(students);
-		l.setCourse(c);
+		//l.setCourse(c);
 		l.setTeacher(t);
 		l.addStartTime(120, 10, 10, 10, 10);
 		l.getStartTime2();
@@ -64,13 +62,11 @@ class TestEntities {
 		
 		
 		assertEquals("1",l.getId());
-		assertEquals("lab",l.getLectureType());
-		assertEquals("test",l.getSurnameString());
 		assertEquals(10,l.getAvailableSeat());
 		assertEquals(100,l.getTotalSeat());
 		assertEquals("aula",l.getRoomName());
 		assertEquals(l.getStudents(),students);
-		assertEquals(l.getCourse(), c);
+		//assertEquals(l.getCourse(), c);
 		assertEquals(l.getTeacher(), t);
 		assertEquals(l.getStartTime(),l.getStartTime());
 		assertEquals(l.getEndTime(),l.getEndTime());

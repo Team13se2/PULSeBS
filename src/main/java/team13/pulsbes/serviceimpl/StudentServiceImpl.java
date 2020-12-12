@@ -1,10 +1,7 @@
 package team13.pulsbes.serviceimpl;
 
-import java.util.ArrayList;
-import java.util.Optional;
-import java.util.List;
+import java.util.*;
 import java.util.logging.Logger;
-import java.util.Calendar;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -59,7 +56,7 @@ public class StudentServiceImpl implements StudentService {
     private static final String STUDENT_NOT_FOUND = "Student not found";
 
     @Override
-    public String bookLecture(String lectureId, String studentId) throws InvalidLectureException, InvalidStudentException {
+    public String bookLecture(Integer lectureId, String studentId) throws InvalidLectureException, InvalidStudentException {
 
         log.info("entrato");
 
@@ -78,7 +75,6 @@ public class StudentServiceImpl implements StudentService {
             return ("Lecture was canceled");
         }
 
-
         Integer availableSeats = lectureSelected.get().getAvailableSeat();
 
         if (availableSeats > 0) {
@@ -94,15 +90,30 @@ public class StudentServiceImpl implements StudentService {
             currentStudent.addBookLecture(lectureSelected.get());
             studentRepository.save(currentStudent);
             lectureRepository.save(lectureSelected.get());
+            System.out.println(currentStudent.getBookedLectures());
             notificationService.sendMessage(currentStudent.getEmail(),           								
             								"Booking confirmation for "+ lectureSelected.get().getSubjectName(), 
             								"Dear " + currentStudent.getName() + currentStudent.getSurname() + " \n" +
-            								"Booking succeed for " + lectureSelected.get().getSubjectName() + 
+            								"Booking succeed for " + lectureSelected.get().getSubjectName() +
             								". \n The lecture is scheduled at: " + lectureSelected.get().getStartTime() + " and will take place in room: " + lectureSelected.get().getRoomName()+
             								". \n Best regards, \n" + lectureSelected.get().getTeacher().getName() + " " + lectureSelected.get().getTeacher().getSurname());
+            System.out.println(currentStudent.getBookedLectures());
 
             return ("The lecture was correctly booked");
         } else {
+            if
+                (lectureSelected.get().getQueue().isEmpty()){
+                {
+                    lectureSelected.get().getQueue().put(studentId,1);
+                    lectureRepository.save(lectureSelected.get());
+
+                }
+            }else {
+                Integer count = lectureSelected.get().getQueue().values().stream().max((x,y)-> x - y).get();
+                lectureSelected.get().getQueue().put(studentId,count +1);
+                lectureRepository.save(lectureSelected.get());
+
+            }
             return ("The lecture has no more available seats, you will receive a mail if a spot opens up");
         }
 
@@ -122,20 +133,38 @@ public class StudentServiceImpl implements StudentService {
         List<Lecture> listLecture = new ArrayList<>();
         Calendar tmpCal = Calendar.getInstance();
 
+        System.out.println(listCourse);
 
 
         for (Course tmpCourse : listCourse) {
-            listLecture.addAll(tmpCourse.getLectures());
+            lectureRepository.findAll().forEach(l -> {
+                if (l.getCode().equals(tmpCourse.getCode())) {
+                    listLecture.add(l);
+
+                }
+            });
         }
 
-        return listLecture
+          //  listLecture.addAll(tmpCourse.getLectures());
+return listLecture.stream().map(l->modelMapper.map(l,LectureDTO.class)).collect(Collectors.toList());
+
+      /*  return listLecture
                 .stream()
-                .filter(x -> { { try { return x.getStartTime2().after(tmpCal.getTime()) 
+                .filter(x -> {
+                    { try  {
+
+
+                        return x.getStartTime2().after(tmpCal.getTime())
                     && !studentRepository.getOne(id).getBookedLectures().contains(x)
-                    && x.isBookable(); } 
-                    catch (ParseException e) {log.throwing(this.getClass().getName(), "getAllLectures", e); return false;} } })
+                    && x.isBookable(); }
+
+                    catch (ParseException e)
+
+                    {log.throwing(this.getClass().getName(), "getAllLectures", e); return false;}
+
+                    } })
                 .map(l -> modelMapper.map(l, LectureDTO.class))
-                .collect(Collectors.toList());
+                .collect(Collectors.toList());*/
     }
 
     @Override
@@ -148,19 +177,20 @@ public class StudentServiceImpl implements StudentService {
 
         Calendar tmpCal = Calendar.getInstance();
 
+return studentRepository.getOne(id).getBookedLectures().stream().map(l->modelMapper.map(l,LectureDTO.class)).collect(Collectors.toList());
 
-        return studentRepository.getOne(id)
+       /* return studentRepository.getOne(id)
                 .getBookedLectures()
                 .stream()
                 .filter(x -> { try { return x.getStartTime2().after(tmpCal.getTime())
                     && x.isBookable(); } 
                     catch (ParseException e) {log.throwing(this.getClass().getName(), "getAllLectures", e); return false;} })
                 .map(l -> modelMapper.map(l, LectureDTO.class))
-                .collect(Collectors.toList());
+                .collect(Collectors.toList());*/
     }
 
     @Override
-    public String deleteLecture(String lectureId, String studentId) throws InvalidLectureException, InvalidStudentException {
+    public String deleteLecture(Integer lectureId, String studentId) throws InvalidLectureException, InvalidStudentException {
 
         if (!studentRepository.existsById(studentId)) {
             throw new InvalidStudentException(STUDENT_NOT_FOUND);
@@ -179,14 +209,13 @@ public class StudentServiceImpl implements StudentService {
         Student currentStudent = optStudent.get();
 
         //Student currentStudent = studentRepository.findById(studentId).get();
-        Lecture deletingLecture = lectureRepository.getOne(lectureId);
-
+        Lecture deletingLecture = lectureRepository.findById(lectureId).get();
 
         if (currentStudent.getBookedLectures().contains(deletingLecture)) {
             try {
 
-                //System.out.println(currentStudent.getBookedLectures());
                 currentStudent.removeBookedLecture(deletingLecture);
+                updatequeue(lectureId);
                 studentRepository.saveAndFlush(currentStudent);
 
 
@@ -200,5 +229,78 @@ public class StudentServiceImpl implements StudentService {
             return "Student doesn't have this lecture";
         }
     }
+
+    @Override
+    public void updatequeue(Integer lectureId) throws InvalidStudentException, InvalidLectureException {
+
+            Lecture l = lectureRepository.findById(lectureId).get();
+
+            if(!l.getQueue().isEmpty()) {
+
+                Integer value = l.getQueue().values().stream().min((x, y) -> x - y).get();
+
+                String key = l.getQueue().entrySet().stream().filter(entry -> Objects.equals(entry.getValue(), value)).map(Map.Entry::getKey).collect(Collectors.joining());
+
+                l.getQueue().remove(key);
+
+                delayedbookLecture(lectureId, studentRepository.findById(key).get().getId());
+
+                lectureRepository.save(l);
+            }
+
+            else
+                return;
+
+
+
+    }
+
+    @Override
+    public String delayedbookLecture(Integer lectureId, String studentId) throws InvalidLectureException, InvalidStudentException {
+
+        log.info("entrato");
+
+        if (studentId.equals("-1")) {
+            throw new InvalidStudentException(STUDENT_NULL);
+        }
+
+        Student currentStudent = studentRepository.getOne(studentId);
+        Optional<Lecture> lectureSelected = lectureRepository.findById(lectureId);
+
+        if (!lectureSelected.isPresent()) {
+            throw new InvalidLectureException("Lecture can't be null");
+        }
+
+        if (!lectureSelected.get().isBookable()) {
+            return ("Lecture was canceled");
+        }
+
+        Integer availableSeats = lectureSelected.get().getAvailableSeat();
+
+
+            log.info("terzo if");
+            try {
+                lectureSelected.get().addStudentAttending(currentStudent);
+
+            } catch (Exception e) {
+                log.throwing(this.getClass().getName(), "addStudentAttending", e);
+            }
+
+            lectureSelected.get().setAvailableSeat(availableSeats - 1);
+            currentStudent.addBookLecture(lectureSelected.get());
+            studentRepository.save(currentStudent);
+            lectureRepository.save(lectureSelected.get());
+            notificationService.sendMessage(currentStudent.getEmail(),
+                    "Booking confirmation for "+ lectureSelected.get().getSubjectName(),
+                    "Dear " + currentStudent.getName() + currentStudent.getSurname() + " \n" +
+                            "A slot opened up, so you can attend the lecture!" +
+                            "Booking succeed for " + lectureSelected.get().getSubjectName() +
+                            ". \n The lecture is scheduled at: " + lectureSelected.get().getStartTime() + " and will take place in room: " + lectureSelected.get().getRoomName()+
+                            ". \n Best regards, \n" + lectureSelected.get().getTeacher().getName() + " " + lectureSelected.get().getTeacher().getSurname());
+
+            return ("The lecture was correctly booked");
+        }
+
+
 }
 

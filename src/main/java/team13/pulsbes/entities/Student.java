@@ -32,8 +32,8 @@ public class Student {
 
     private String psw;
     @ManyToMany(cascade = {CascadeType.PERSIST,CascadeType.MERGE})
-    @JoinTable(name = "courses_students",joinColumns = @JoinColumn(name = "course_code"),
-    inverseJoinColumns = @JoinColumn(name = "student_id"))
+    @JoinTable(name = "courses_students",joinColumns = @JoinColumn(name = "student_id"),
+    inverseJoinColumns = @JoinColumn(name = "course_code"))
     private List<Course> courses;
     {
         courses = new ArrayList<>();
@@ -43,7 +43,10 @@ public class Student {
     @ManyToMany (mappedBy = "students")
 	List <Lecture> bookedLectures = new ArrayList<>();
 
-	public Student() {};
+	@ManyToMany (mappedBy = "studentsPresent")
+	List <Lecture> attendedLectures = new ArrayList<>();
+
+	public Student() {}
 
 	public Student( String id, String name, String surname) {
 		super();
@@ -69,11 +72,11 @@ public class Student {
 
     public void addBookLecture(Lecture l) {
 		bookedLectures.add(l);
-		if (l.getNrStudents() == null) {
-			l.setNrStudents(1);
+		if (l.getNrStudentsBooked() == null) {
+			l.setNrStudentsBooked(1);
 		}
 		else {
-			l.setNrStudents(l.getNrStudents()+1);
+			l.setNrStudentsBooked(l.getNrStudentsBooked()+1);
 		}		
     }
     
@@ -81,8 +84,18 @@ public class Student {
 
     	this.bookedLectures.remove(l);
 		l.getStudents().remove(this);
-		l.setNrStudents(l.getNrStudents()-1);
+		l.setNrStudentsBooked(l.getNrStudentsBooked()-1);
 		l.setAvailableSeat(l.getAvailableSeat()+1);
+	}
+	
+	public void addLecturePresence(Lecture l) {
+		attendedLectures.add(l);
+		if (l.getNrStudentsPresent() == null) {
+			l.setNrStudentsPresent(1);
+		}
+		else {
+			l.setNrStudentsPresent(l.getNrStudentsPresent()+1);
+		}		
     }
     
 	public String getId() {
@@ -147,6 +160,14 @@ public class Student {
 
 	public void setBookedLectures(List<Lecture> bookedLectures) {
 		this.bookedLectures = bookedLectures;
+	}
+
+	public List<Lecture> getAttendedLectures() {
+		return attendedLectures;
+	}
+
+	public void setAttendedLectures(List<Lecture> attendedLectures) {
+		this.attendedLectures = attendedLectures;
 	}
 
 	public String getCity() {

@@ -27,21 +27,12 @@ public class Course {
 
     private String name;
 
-    private Integer cancelledLectures;
-
     @ManyToOne
     @JoinColumn (name = "teacher_number")
     private Teacher teacher;
 
     @ManyToMany(mappedBy = "courses")
     private List<Student> students = new ArrayList<>();
-
-    @OneToMany (mappedBy = "course")
-
-    List<Lecture> lectures;
-    {
-        lectures = new ArrayList<>();
-    }
 
 
     public void newStudentEnrolled(Student s) throws InvalidStudentException {
@@ -68,12 +59,6 @@ public class Course {
     public void setName(String name) {
         this.name = name;
     }
-    public Integer getCancelledLectures() {
-        return cancelledLectures;
-    }
-    public void setCancelledLectures(Integer cancelledLectures) {
-        this.cancelledLectures = cancelledLectures;
-    }
     public Teacher getTeacher() {
         return teacher;
     }
@@ -86,22 +71,13 @@ public class Course {
     public void setStudents(List<Student> students) {
         this.students = students;
     }
+  /*  public void cancelLecture(Lecture lecture) throws InvalidLectureException{
 
-    public List<Lecture> getLectures() {
-        return lectures;
-    }
-
-    public void setLectures(List<Lecture> lectures) {
-        this.lectures = lectures;
-    }
-
-    public void cancelLecture(Lecture lecture) throws InvalidLectureException{
         if(lecture==null) {
             throw new InvalidLectureException("Invalid lecture");
         }
         lectures.remove(lecture);
-        setCancelledLectures(getCancelledLectures() + 1);
-    }
+    }*/
 	public String getYear() {
 		return year;
 	}

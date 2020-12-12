@@ -10,9 +10,11 @@ import team13.pulsbes.entities.Teacher;
 import team13.pulsbes.entities.Student;
 import team13.pulsbes.exception.InvalidLectureException;
 import team13.pulsbes.exception.InvalidTeacherException;
+import team13.pulsbes.exception.InvalidStudentException;
 import team13.pulsbes.exception.InvalidCourseException;
 import java.text.ParseException;
 import team13.pulsbes.repositories.LectureRepository;
+import team13.pulsbes.repositories.StudentRepository;
 import team13.pulsbes.repositories.CourseRepository;
 import team13.pulsbes.repositories.TeacherRepository;
 import team13.pulsbes.services.TeacherService;
@@ -36,6 +38,8 @@ public class TeacherServiceImpl implements TeacherService{
 	@Autowired
 	CourseRepository courseRepository;
 	@Autowired
+	StudentRepository studentRepository;
+	@Autowired
     NotificationServiceImpl notificationService;	
 	
 	public void addRepo (TeacherRepository tr) {
@@ -55,9 +59,10 @@ public class TeacherServiceImpl implements TeacherService{
 
 	private static final String LECTURE_NULL = "Lecture can't be null";
 	private static final String TEACHER_NULL = "Teacher can't be null";
+	private static final String STUDENT_NULL = "Student can't be null";
 
 	@Override
-	public Integer getNumberStudentsAttending(String id) throws InvalidLectureException{
+	public Integer getNumberStudentsAttending(Integer id) throws InvalidLectureException{
 		if (id.equals("-1")) {
 			throw new InvalidLectureException(LECTURE_NULL);
 		}
@@ -65,6 +70,16 @@ public class TeacherServiceImpl implements TeacherService{
 			throw new InvalidLectureException(LECTURE_NULL);
 		}
 		return lectureRepository.getOne(id).getStudents().size();
+	}
+	@Override
+	public Integer getNumberStudentsPresent(Integer id) throws InvalidLectureException{
+		if (id.equals("-1")) {
+			throw new InvalidLectureException(LECTURE_NULL);
+		}
+		if(!lectureRepository.existsById(id)) {
+			throw new InvalidLectureException(LECTURE_NULL);
+		}
+		return lectureRepository.getOne(id).getNrStudentsPresent();
 	}
 
 	@Override
@@ -88,13 +103,11 @@ public class TeacherServiceImpl implements TeacherService{
 	}
 
 	@Override
-	public List<StudentDTO> getStudentList(String id) throws InvalidLectureException, InvalidTeacherException {
+	public List<StudentDTO> getStudentList(Integer id) throws InvalidLectureException, InvalidTeacherException {
 		if(id.equals("-1")) {
 			throw new InvalidLectureException(LECTURE_NULL);
 		}
-		if(!teacherRepository.existsById(id)) {
-			throw new InvalidTeacherException(TEACHER_NULL);
-		}
+
 		return  lectureRepository.getOne(id)
 				.getStudents()
 				.stream()
@@ -104,7 +117,7 @@ public class TeacherServiceImpl implements TeacherService{
 	}
 
 	@Override
-	public String cancelLecture(String lectureId, String teacherId) throws InvalidLectureException, InvalidCourseException, InvalidTeacherException{
+	public String cancelLecture(Integer lectureId, String teacherId) throws InvalidLectureException, InvalidCourseException, InvalidTeacherException{
 		if(lectureId.equals("-1")) {
 			throw new InvalidLectureException(LECTURE_NULL);
 		}
@@ -169,7 +182,7 @@ public class TeacherServiceImpl implements TeacherService{
 }
 
 	@Override
-	public String cancelPresenceLecture(String lectureId, String teacherId) throws InvalidLectureException, InvalidCourseException, InvalidTeacherException{
+	public String cancelPresenceLecture(Integer lectureId, String teacherId) throws InvalidLectureException, InvalidCourseException, InvalidTeacherException{
 		if(lectureId.equals("-1")) {
 			throw new InvalidLectureException(LECTURE_NULL);
 		}
@@ -251,5 +264,28 @@ public class TeacherServiceImpl implements TeacherService{
 					catch (ParseException e) {log.throwing(this.getClass().getName(), "getPastLectures", e); return false;} })
 				.map(l -> modelMapper.map(l,LectureDTO.class))
 				.collect(Collectors.toList());
+	}
+
+	@Override
+	public String addPresence(Integer lectureId, String studentId)throws InvalidLectureException, InvalidStudentException{
+		Optional<Lecture> optLecture = lectureRepository.findById(lectureId);
+		if(!optLecture.isPresent()) {
+			throw new InvalidLectureException(LECTURE_NULL);
+		}
+		
+		Optional<Student> optStudent = studentRepository.findById(studentId);
+
+        if (!optStudent.isPresent()) {
+            throw new InvalidStudentException(STUDENT_NULL);
+		}
+
+		Student student = optStudent.get();
+		Lecture lecture = optLecture.get();
+
+		student.addLecturePresence(lecture);
+		lecture.addStudentPresent(student);
+
+		return ("Presence added");
+
 	}
 }

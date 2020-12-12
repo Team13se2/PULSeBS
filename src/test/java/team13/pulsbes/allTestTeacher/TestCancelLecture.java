@@ -49,7 +49,7 @@ class TestCancelLecture {
 	
 	@Test
 	void testCancelLecture() {
-		assertThrows(InvalidLectureException.class, ()->teacherService.cancelLecture("-1", "-1") );
+		assertThrows(InvalidLectureException.class, ()->teacherService.cancelLecture(-1, "-1") );
 	}
 	
 	@Test
@@ -60,8 +60,8 @@ class TestCancelLecture {
 		Course c = new Course();
 		t.setName("test");
 		t.setSurname("testsur");
-		c.getLectures().add(l);
-		l.setCourse(c);
+		//c.getLectures().add(l);
+		//l.setCourse(c);
 		s.setEmail("student1team13@gmail.com");
 		l.addStudentAttending(s);
 		l.setSubjectName("testsub");
@@ -76,7 +76,7 @@ class TestCancelLecture {
 		when(teacherRepository.save(any())).thenReturn(t);
 		doNothing().when(teacherRepository).flush();
 		doNothing().when(notificationService).sendMessage(isA(String.class), isA(String.class), isA(String.class));
-		assertEquals("Lecture cancelled",teacherService.cancelLecture("1", "1"));		
+		assertEquals("Lecture cancelled",teacherService.cancelLecture(1, "1"));
 	}
 	@Test
 	void testCancelLecture3() throws InvalidStudentException, InvalidLectureException, InvalidCourseException, ParseException, InvalidTeacherException {
@@ -84,8 +84,8 @@ class TestCancelLecture {
 		Lecture l = new Lecture();
 		Student s = new Student("1","test","testsur");
 		Course c = new Course();
-		c.getLectures().add(l);
-		l.setCourse(c);
+		//c.getLectures().add(l);
+		//l.setCourse(c);
 		s.setEmail("student1team13@gmail.com");
 		l.addStudentAttending(s);
 		l.setSubjectName("testsub");
@@ -96,6 +96,6 @@ class TestCancelLecture {
 		Optional<Teacher> teacher = Optional.of(t);
 		when(teacherRepository.findById(any())).thenReturn(teacher);
 		when(lectureRepository.getOne(any())).thenReturn(l);
-		assertEquals("Lecture is too late to be cancelled",teacherService.cancelLecture("1", "1"));		
+		assertEquals("Lecture is too late to be cancelled",teacherService.cancelLecture(1, "1"));
 	}
 }
