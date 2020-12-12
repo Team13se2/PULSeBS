@@ -206,10 +206,34 @@ async function getAllLecturesBookingManager(){
 }
 
 
+async function uploadStudentCSV(file,type) {
+    return new Promise((resolve, reject) => {
+        fetch(baseURL + '/support_officer/'+type,{
+            method: 'POST',
+            /*headers: {
+                'Content-Type': 'text/csv',
+            },*/
+            body: file
+        }).then((response) => {
+            if (response.ok) {
+                resolve(null);
+            } else {
+                // analyze the cause of error
+                response.json()
+                    .then((obj) => { reject(obj); }) // error msg in the response body
+                    .catch((err) => { reject({ errors: [{ param: "Application", msg: "Cannot parse server response" }] }) }); // something else
+            }
+        });
+    });
+}
+
+
+
 
 const API = {isAuthenticated,userLogin,userLogout,getAllLectures,
     getNumberStudentsAttending,getStudentList,
     getNoBookedLectures,getBookedLectures,
     bookLecture,removeStudentLecture,removeTeacherLecture,
-    getPastLectures,getAllLecturesBookingManager} ;
+    getPastLectures,getAllLecturesBookingManager,
+    uploadStudentCSV} ;
 export default API;

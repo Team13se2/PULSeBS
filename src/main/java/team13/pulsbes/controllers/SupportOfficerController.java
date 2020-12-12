@@ -1,15 +1,15 @@
 package team13.pulsbes.controllers;
 
 import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.logging.Logger;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CookieValue;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.*;
 
+import org.springframework.web.multipart.MultipartFile;
 import team13.pulsbes.exception.InvalidCourseException;
 import team13.pulsbes.exception.InvalidStudentException;
 import team13.pulsbes.exception.InvalidUserException;
@@ -25,40 +25,68 @@ public class SupportOfficerController {
 	
 	Logger log = Logger.getLogger("SupportOfficerController");
 	private static final String TYPE_SUPPORT = "support_officer";
-	
-	@GetMapping(value = Constants.ADD_STUDENTS)
-	public void addStudents(@RequestBody File f,@CookieValue(value = "username") String username,@CookieValue(value = "type") String type) throws InvalidUserException {
-		if(type == TYPE_SUPPORT) {
+
+	@PostMapping(value = Constants.ADD_STUDENTS, consumes = "text/csv")
+	public void addStudents(@RequestBody String file,@CookieValue(value = "username") String username,@CookieValue(value = "type") String type) throws InvalidUserException, IOException {
+		File f = new File("Students.csv");
+		FileWriter myWriter = new FileWriter(f);
+		myWriter.write(file);
+		myWriter.close();
+		if(type.equals(TYPE_SUPPORT)) {
 			officerService.addStudentList(f);
+			f.delete();
 		}
 		else {
+			myWriter.close();
+			f.delete();
 			throw new InvalidUserException("Invalid User");
 		}
 	}
-	@GetMapping(value = Constants.ADD_TEACHERS)
-	public void addTeachers(@RequestBody File f,@CookieValue(value = "username") String username,@CookieValue(value = "type")String type) throws InvalidUserException {
-		if(type == TYPE_SUPPORT) {
+	@PostMapping(value = Constants.ADD_TEACHERS)
+	public void addTeachers(@RequestBody String file,@CookieValue(value = "username") String username,@CookieValue(value = "type")String type) throws InvalidUserException, IOException {
+		File f = new File("Teachers.csv");
+		FileWriter myWriter = new FileWriter(f);
+		myWriter.write(file);
+		myWriter.close();
+		if(type.equals(TYPE_SUPPORT)) {
 			officerService.addTeacherList(f);
+			f.delete();
 		}
 		else {
+			myWriter.close();
+			f.delete();
 			throw new InvalidUserException("Invalid User");
 		}
 	}
-	@GetMapping(value = Constants.ADD_COURSES)
-	public void addCourses(@RequestBody File f,@CookieValue(value = "username") String username,@CookieValue(value = "type")String type) throws InvalidUserException {
-		if(type == TYPE_SUPPORT) {
+	@PostMapping(value = Constants.ADD_COURSES)
+	public void addCourses(@RequestBody String file,@CookieValue(value = "username") String username,@CookieValue(value = "type")String type) throws InvalidUserException, IOException {
+		File f = new File("Courses.csv");
+		FileWriter myWriter = new FileWriter(f);
+		myWriter.write(file);
+		myWriter.close();
+		if(type.equals(TYPE_SUPPORT)) {
 			officerService.addCourseList(f);
+			f.delete();
 		}
 		else {
+			myWriter.close();
+			f.delete();
 			throw new InvalidUserException("Invalid User");
 		}
 	}
-	@GetMapping(value = Constants.ENROLL_STUDENTS)
-	public void enrollStudents(@RequestBody File f,@CookieValue(value = "username") String username,@CookieValue(value = "type")String type) throws InvalidCourseException, InvalidStudentException, InvalidUserException {
-		if(type == TYPE_SUPPORT) {
+	@PostMapping(value = Constants.ENROLL_STUDENTS)
+	public void enrollStudents(@RequestBody String file,@CookieValue(value = "username") String username,@CookieValue(value = "type")String type) throws InvalidCourseException, InvalidStudentException, InvalidUserException, IOException {
+		File f = new File("Enroll_students.csv");
+		FileWriter myWriter = new FileWriter(f);
+		myWriter.write(file);
+		myWriter.close();
+		if(type.equals(TYPE_SUPPORT)) {
 			officerService.enrollStudent(f);
+			f.delete();
 		}
 		else {
+			myWriter.close();
+			f.delete();
 			throw new InvalidUserException("Invalid User");
 		}
 	}
