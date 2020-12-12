@@ -4,18 +4,20 @@ import javax.persistence.Id;
 
 public class LectureDTO {
 
-    @Id
-    private String id;
+
+
+
+
+	@Id
+    Integer id;
+
+	private String code;
 
     private String startTime;
 
     private String endTime;
     
     private String subjectName;
-
-    private String lectureType;
-
-    private String surnameString;
 
     private Integer availableSeat;
 
@@ -31,10 +33,20 @@ public class LectureDTO {
 
     
 	public LectureDTO(){}
-	public String getId() {
+	public Integer getId() {
 		return id;
 	}
-	public void setId(String id) {
+	public String getCode() {
+		return code;
+	}
+
+	public void setCode(String code) {
+		this.code = code;
+	}
+	public Boolean getBookable() {
+		return bookable;
+	}
+	public void setId(Integer id) {
 		this.id = id;
 	}
 	public String getStartTime() {
@@ -48,18 +60,6 @@ public class LectureDTO {
 	}
 	public void setEndTime(String endTime) {
 		this.endTime = endTime;
-	}
-	public String getLectureType() {
-		return lectureType;
-	}
-	public void setLectureType(String lectureType) {
-		this.lectureType = lectureType;
-	}
-	public String getSurnameString() {
-		return surnameString;
-	}
-	public void setSurnameString(String surnameString) {
-		this.surnameString = surnameString;
 	}
 	public Integer getAvailableSeat() {
 		return availableSeat;

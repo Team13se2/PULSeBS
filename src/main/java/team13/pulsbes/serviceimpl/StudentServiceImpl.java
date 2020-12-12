@@ -56,7 +56,7 @@ public class StudentServiceImpl implements StudentService {
     private static final String STUDENT_NOT_FOUND = "Student not found";
 
     @Override
-    public String bookLecture(String lectureId, String studentId) throws InvalidLectureException, InvalidStudentException {
+    public String bookLecture(Integer lectureId, String studentId) throws InvalidLectureException, InvalidStudentException {
 
         log.info("entrato");
 
@@ -133,20 +133,38 @@ public class StudentServiceImpl implements StudentService {
         List<Lecture> listLecture = new ArrayList<>();
         Calendar tmpCal = Calendar.getInstance();
 
+        System.out.println(listCourse);
 
 
         for (Course tmpCourse : listCourse) {
-            listLecture.addAll(tmpCourse.getLectures());
+            lectureRepository.findAll().forEach(l -> {
+                if (l.getCode().equals(tmpCourse.getCode())) {
+                    listLecture.add(l);
+
+                }
+            });
         }
 
-        return listLecture
+          //  listLecture.addAll(tmpCourse.getLectures());
+return listLecture.stream().map(l->modelMapper.map(l,LectureDTO.class)).collect(Collectors.toList());
+
+      /*  return listLecture
                 .stream()
-                .filter(x -> { { try { return x.getStartTime2().after(tmpCal.getTime()) 
+                .filter(x -> {
+                    { try  {
+
+
+                        return x.getStartTime2().after(tmpCal.getTime())
                     && !studentRepository.getOne(id).getBookedLectures().contains(x)
-                    && x.isBookable(); } 
-                    catch (ParseException e) {log.throwing(this.getClass().getName(), "getAllLectures", e); return false;} } })
+                    && x.isBookable(); }
+
+                    catch (ParseException e)
+
+                    {log.throwing(this.getClass().getName(), "getAllLectures", e); return false;}
+
+                    } })
                 .map(l -> modelMapper.map(l, LectureDTO.class))
-                .collect(Collectors.toList());
+                .collect(Collectors.toList());*/
     }
 
     @Override
@@ -159,19 +177,20 @@ public class StudentServiceImpl implements StudentService {
 
         Calendar tmpCal = Calendar.getInstance();
 
+return studentRepository.getOne(id).getBookedLectures().stream().map(l->modelMapper.map(l,LectureDTO.class)).collect(Collectors.toList());
 
-        return studentRepository.getOne(id)
+       /* return studentRepository.getOne(id)
                 .getBookedLectures()
                 .stream()
                 .filter(x -> { try { return x.getStartTime2().after(tmpCal.getTime())
                     && x.isBookable(); } 
                     catch (ParseException e) {log.throwing(this.getClass().getName(), "getAllLectures", e); return false;} })
                 .map(l -> modelMapper.map(l, LectureDTO.class))
-                .collect(Collectors.toList());
+                .collect(Collectors.toList());*/
     }
 
     @Override
-    public String deleteLecture(String lectureId, String studentId) throws InvalidLectureException, InvalidStudentException {
+    public String deleteLecture(Integer lectureId, String studentId) throws InvalidLectureException, InvalidStudentException {
 
         if (!studentRepository.existsById(studentId)) {
             throw new InvalidStudentException(STUDENT_NOT_FOUND);
@@ -212,7 +231,7 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
-    public void updatequeue(String lectureId) throws InvalidStudentException, InvalidLectureException {
+    public void updatequeue(Integer lectureId) throws InvalidStudentException, InvalidLectureException {
 
             Lecture l = lectureRepository.findById(lectureId).get();
 
@@ -237,7 +256,7 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
-    public String delayedbookLecture(String lectureId, String studentId) throws InvalidLectureException, InvalidStudentException {
+    public String delayedbookLecture(Integer lectureId, String studentId) throws InvalidLectureException, InvalidStudentException {
 
         log.info("entrato");
 

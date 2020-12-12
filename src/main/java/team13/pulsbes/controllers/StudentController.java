@@ -40,7 +40,7 @@ public class StudentController {
 	}
 
 	@GetMapping(value = Constants.BOOK_LECTURE)
-	public String bookLecture(@RequestParam("lecture_id") String l_id, @CookieValue(value = "username") String username, @CookieValue(value = "id") String s_id,@CookieValue(value = "type") String type) throws InvalidLectureException, InvalidStudentException {
+	public String bookLecture(@RequestParam("lecture_id") Integer l_id, @CookieValue(value = "username") String username, @CookieValue(value = "id") String s_id,@CookieValue(value = "type") String type) throws InvalidLectureException, InvalidStudentException {
 		try {
 			if(type.equals(TYPE_STUDENT))
 				return studentService.bookLecture(l_id, s_id);
@@ -66,7 +66,7 @@ public class StudentController {
 	}
 
 	@DeleteMapping(value = Constants.CANCEL_LECTURE)
-	public String deleteLecture(@RequestParam("lecture_id") String l_id, @CookieValue(value = "username") String username, @CookieValue(value = "id") String s_id,@CookieValue(value = "type") String type) {
+	public String deleteLecture(@RequestParam("lecture_id")Integer l_id, @CookieValue(value = "username") String username, @CookieValue(value = "id") String s_id,@CookieValue(value = "type") String type) {
 		try {
 			if(type.equals(TYPE_STUDENT))
 				return studentService.deleteLecture(l_id, s_id);

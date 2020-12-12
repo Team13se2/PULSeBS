@@ -28,7 +28,7 @@ public class TeacherController {
 	private static final String TYPE_TEACHER = "teacher";
 
 	@GetMapping(value = Constants.GET_NUMBER_STUDENTS_ATTENDING)
-	public Integer getNumberStudentsAttending(@RequestParam("lecture_id") String id, @CookieValue(value = "type") String type) throws InvalidLectureException {
+	public Integer getNumberStudentsAttending(@RequestParam("lecture_id") Integer id, @CookieValue(value = "type") String type) throws InvalidLectureException {
 		try {
 			if (type.equals(TYPE_TEACHER)) {
 				return teacherService.getNumberStudentsAttending(id);
@@ -42,7 +42,7 @@ public class TeacherController {
 		}
 	}
 	@GetMapping(value = Constants.GET_NUMBER_STUDENTS_PRESENT)
-	public Integer getNumberStudentsPresent(@RequestParam("lecture_id") String id, @CookieValue(value = "type") String type) throws InvalidLectureException {
+	public Integer getNumberStudentsPresent(@RequestParam("lecture_id") Integer id, @CookieValue(value = "type") String type) throws InvalidLectureException {
 		try {
 			if (type.equals(TYPE_TEACHER)) {
 				return teacherService.getNumberStudentsPresent(id);
@@ -74,7 +74,7 @@ public class TeacherController {
 		}
 	}
 	@GetMapping(value = Constants.GET_STUDENT_LIST)
-	public List<StudentDTO> getStudentList(@RequestParam("lecture_id") String id, @CookieValue(value = "type") String type) throws InvalidLectureException, InvalidTeacherException {
+	public List<StudentDTO> getStudentList(@RequestParam("lecture_id") Integer id, @CookieValue(value = "type") String type) throws InvalidLectureException, InvalidTeacherException {
 		try {
 			if (type.equals(TYPE_TEACHER)) {
 			return teacherService.getStudentList(id);
@@ -87,7 +87,7 @@ public class TeacherController {
 		}
 	}
 	@DeleteMapping(value = Constants.CANCEL_LECTURE)
-	public String cancelLecture(@RequestParam("lecture_id") String lectureId,@CookieValue(value = "id") String id, @CookieValue(value = "type") String type) throws InvalidLectureException, InvalidCourseException, ParseException, InvalidTeacherException {
+	public String cancelLecture(@RequestParam("lecture_id") Integer lectureId,@CookieValue(value = "id") String id, @CookieValue(value = "type") String type) throws InvalidLectureException, InvalidCourseException, ParseException, InvalidTeacherException {
 		try {
 			if (type.equals(TYPE_TEACHER)) {
 			return teacherService.cancelLecture(lectureId,id);
@@ -100,7 +100,7 @@ public class TeacherController {
 		}
 	}
 	@DeleteMapping(value = Constants.CANCEL_PRESENCE_LECTURE)
-	public String cancelPresenceLecture(@RequestParam("lecture_id") String lectureId,@CookieValue(value = "id") String id, @CookieValue(value = "type") String type) throws InvalidLectureException, InvalidCourseException, ParseException,InvalidTeacherException {
+	public String cancelPresenceLecture(@RequestParam("lecture_id") Integer lectureId,@CookieValue(value = "id") String id, @CookieValue(value = "type") String type) throws InvalidLectureException, InvalidCourseException, ParseException,InvalidTeacherException {
 		try {
 			if (type.equals(TYPE_TEACHER)) {
 			return teacherService.cancelLecture(lectureId,id);
@@ -127,7 +127,7 @@ public class TeacherController {
 		}
 	}
 	@PostMapping(value = Constants.ADD_PRESENCE)
-	public String addPresence(String lectureId, String studentId, @CookieValue(value = "type") String type) throws InvalidLectureException, InvalidStudentException{
+	public String addPresence(Integer lectureId, String studentId, @CookieValue(value = "type") String type) throws InvalidLectureException, InvalidStudentException{
 		try {
 			if (type.equals(TYPE_TEACHER)) {			
 			return teacherService.addPresence(lectureId, studentId);

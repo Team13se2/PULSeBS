@@ -38,14 +38,14 @@ class TestDeleteLecture {
 	@Test
 	void testDeleteLecture() {
 		when(studentRepository.existsById(any())).thenReturn(false);
-		assertThrows(InvalidStudentException.class, ()->studentService.deleteLecture("1", "1"));
+		assertThrows(InvalidStudentException.class, ()->studentService.deleteLecture(1, "1"));
 	}
 	
 	@Test
 	void testDeleteLecture2() {
 		when(studentRepository.existsById(any())).thenReturn(true);
 		when(lectureRepository.existsById(any())).thenReturn(false);
-		assertThrows(InvalidLectureException.class, ()->studentService.deleteLecture("1", "1"));
+		assertThrows(InvalidLectureException.class, ()->studentService.deleteLecture(1, "1"));
 	}
 	@Test
 	void testDeleteLecture3() throws InvalidLectureException, InvalidStudentException {
@@ -59,7 +59,7 @@ class TestDeleteLecture {
 		when(lectureRepository.existsById(any())).thenReturn(true);
 		when(studentRepository.findById(any())).thenReturn(s);
 		when(lectureRepository.getOne(any())).thenReturn(l);
-		assertEquals("Student doesn't have this lecture",studentService.deleteLecture("1", "1"));		
+		assertEquals("Student doesn't have this lecture",studentService.deleteLecture(1, "1"));
 	}
 	@Test
 	void testDeleteLecture4() throws InvalidLectureException, InvalidStudentException {
@@ -73,7 +73,7 @@ class TestDeleteLecture {
 		when(lectureRepository.existsById(any())).thenReturn(true);
 		when(studentRepository.findById(any())).thenReturn(s);
 		when(lectureRepository.getOne(any())).thenReturn(l);
-		assertEquals("Lecture deleted",studentService.deleteLecture("1", "1"));
+		assertEquals("Lecture deleted",studentService.deleteLecture(1, "1"));
 		
 	}
 }

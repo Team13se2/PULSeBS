@@ -62,7 +62,7 @@ public class TeacherServiceImpl implements TeacherService{
 	private static final String STUDENT_NULL = "Student can't be null";
 
 	@Override
-	public Integer getNumberStudentsAttending(String id) throws InvalidLectureException{
+	public Integer getNumberStudentsAttending(Integer id) throws InvalidLectureException{
 		if (id.equals("-1")) {
 			throw new InvalidLectureException(LECTURE_NULL);
 		}
@@ -72,7 +72,7 @@ public class TeacherServiceImpl implements TeacherService{
 		return lectureRepository.getOne(id).getStudents().size();
 	}
 	@Override
-	public Integer getNumberStudentsPresent(String id) throws InvalidLectureException{
+	public Integer getNumberStudentsPresent(Integer id) throws InvalidLectureException{
 		if (id.equals("-1")) {
 			throw new InvalidLectureException(LECTURE_NULL);
 		}
@@ -103,13 +103,11 @@ public class TeacherServiceImpl implements TeacherService{
 	}
 
 	@Override
-	public List<StudentDTO> getStudentList(String id) throws InvalidLectureException, InvalidTeacherException {
+	public List<StudentDTO> getStudentList(Integer id) throws InvalidLectureException, InvalidTeacherException {
 		if(id.equals("-1")) {
 			throw new InvalidLectureException(LECTURE_NULL);
 		}
-		if(!teacherRepository.existsById(id)) {
-			throw new InvalidTeacherException(TEACHER_NULL);
-		}
+
 		return  lectureRepository.getOne(id)
 				.getStudents()
 				.stream()
@@ -119,7 +117,7 @@ public class TeacherServiceImpl implements TeacherService{
 	}
 
 	@Override
-	public String cancelLecture(String lectureId, String teacherId) throws InvalidLectureException, InvalidCourseException, InvalidTeacherException{
+	public String cancelLecture(Integer lectureId, String teacherId) throws InvalidLectureException, InvalidCourseException, InvalidTeacherException{
 		if(lectureId.equals("-1")) {
 			throw new InvalidLectureException(LECTURE_NULL);
 		}
@@ -184,7 +182,7 @@ public class TeacherServiceImpl implements TeacherService{
 }
 
 	@Override
-	public String cancelPresenceLecture(String lectureId, String teacherId) throws InvalidLectureException, InvalidCourseException, InvalidTeacherException{
+	public String cancelPresenceLecture(Integer lectureId, String teacherId) throws InvalidLectureException, InvalidCourseException, InvalidTeacherException{
 		if(lectureId.equals("-1")) {
 			throw new InvalidLectureException(LECTURE_NULL);
 		}
@@ -269,7 +267,7 @@ public class TeacherServiceImpl implements TeacherService{
 	}
 
 	@Override
-	public String addPresence(String lectureId, String studentId)throws InvalidLectureException, InvalidStudentException{
+	public String addPresence(Integer lectureId, String studentId)throws InvalidLectureException, InvalidStudentException{
 		Optional<Lecture> optLecture = lectureRepository.findById(lectureId);
 		if(!optLecture.isPresent()) {
 			throw new InvalidLectureException(LECTURE_NULL);
