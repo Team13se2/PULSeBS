@@ -279,6 +279,8 @@ public class OfficerService {
 					int addDate;
 					int i;
 
+					if(courseRepository.findById(lecture[0]).get().getSemester().equals("1")) {					
+
 					for (i=0;i<17;i++) {
 
 						Lecture l= new Lecture();
@@ -395,6 +397,129 @@ public class OfficerService {
 						lectureRepository.save(l);
 						lectureRepository.flush();
 					}
+
+				}
+
+				if(courseRepository.findById(lecture[0]).get().getSemester().equals("2")) {					
+
+					for (i=0;i<17;i++) {
+
+						Lecture l= new Lecture();
+
+						switch (lecture[2]) {
+
+							case "Mon":							
+							addDate = i*7;							
+							
+							tmpCal1.set(2020, Calendar.MARCH, 1, 0, 0, 0);
+							tmpCal2.set(2020, Calendar.MARCH, 1, 0, 0, 0);
+
+							tmpCal1.add(Calendar.DATE, +addDate);
+							tmpCal1.set(Calendar.HOUR_OF_DAY, Integer.parseInt(startHour));
+							tmpCal1.set(Calendar.MINUTE, Integer.parseInt(startMin));							
+							strDate = dateFormat.format(tmpCal1.getTime());	
+							log.info(strDate);
+
+							tmpCal2.add(Calendar.DATE, +addDate);
+							tmpCal2.set(Calendar.HOUR_OF_DAY, Integer.parseInt(endHour));
+							tmpCal2.set(Calendar.MINUTE, Integer.parseInt(endMin));
+							endDate = dateFormat.format(tmpCal2.getTime());	
+							break;
+
+							case "Tue":
+							addDate = 1 + i*7;
+
+							tmpCal1.set(2020, Calendar.MARCH, 1, 0, 0, 0);
+							tmpCal2.set(2020, Calendar.MARCH, 1, 0, 0, 0);
+
+							tmpCal1.add(Calendar.DATE, +addDate);
+							tmpCal1.set(Calendar.HOUR_OF_DAY, Integer.parseInt(startHour));
+							tmpCal1.set(Calendar.MINUTE, Integer.parseInt(startMin));							
+							strDate = dateFormat.format(tmpCal1.getTime());	
+
+							tmpCal2.add(Calendar.DATE, +addDate);
+							tmpCal2.set(Calendar.HOUR_OF_DAY, Integer.parseInt(endHour));
+							tmpCal2.set(Calendar.MINUTE, Integer.parseInt(endMin));
+							endDate = dateFormat.format(tmpCal2.getTime());	
+							break;
+
+							case "Wed":
+							addDate = 2 + i*7;
+
+							tmpCal1.set(2020, Calendar.MARCH, 1, 0, 0, 0);
+							tmpCal2.set(2020, Calendar.MARCH, 1, 0, 0, 0);
+
+							tmpCal1.add(Calendar.DATE, +addDate);
+							tmpCal1.set(Calendar.HOUR_OF_DAY, Integer.parseInt(startHour));
+							tmpCal1.set(Calendar.MINUTE, Integer.parseInt(startMin));							
+							strDate = dateFormat.format(tmpCal1.getTime());	
+
+							tmpCal2.add(Calendar.DATE, +addDate);
+							tmpCal2.set(Calendar.HOUR_OF_DAY, Integer.parseInt(endHour));
+							tmpCal2.set(Calendar.MINUTE, Integer.parseInt(endMin));
+							endDate = dateFormat.format(tmpCal2.getTime());	
+							break;
+							
+							case "Thu":
+							addDate = 3 + i*7;
+
+							tmpCal1.set(2020, Calendar.MARCH, 1, 0, 0, 0);
+							tmpCal2.set(2020, Calendar.MARCH, 1, 0, 0, 0);
+
+							tmpCal1.add(Calendar.DATE, +addDate);
+							tmpCal1.set(Calendar.HOUR_OF_DAY, Integer.parseInt(startHour));
+							tmpCal1.set(Calendar.MINUTE, Integer.parseInt(startMin));							
+							strDate = dateFormat.format(tmpCal1.getTime());	
+
+							tmpCal2.add(Calendar.DATE, +addDate);
+							tmpCal2.set(Calendar.HOUR_OF_DAY, Integer.parseInt(endHour));
+							tmpCal2.set(Calendar.MINUTE, Integer.parseInt(endMin));
+							endDate = dateFormat.format(tmpCal2.getTime());	
+							break;
+
+							case "Fri":
+							addDate = 4 + i*7;
+
+							tmpCal1.set(2020, Calendar.MARCH, 1, 0, 0, 0);
+							tmpCal2.set(2020, Calendar.MARCH, 1, 0, 0, 0);
+
+							tmpCal1.add(Calendar.DATE, +addDate);
+							tmpCal1.set(Calendar.HOUR_OF_DAY, Integer.parseInt(startHour));
+							tmpCal1.set(Calendar.MINUTE, Integer.parseInt(startMin));							
+							strDate = dateFormat.format(tmpCal1.getTime());	
+
+							tmpCal2.add(Calendar.DATE, +addDate);
+							tmpCal2.set(Calendar.HOUR_OF_DAY, Integer.parseInt(endHour));
+							tmpCal2.set(Calendar.MINUTE, Integer.parseInt(endMin));
+							endDate = dateFormat.format(tmpCal2.getTime());	
+							break;
+							
+							default:
+							log.info("Wrong format");
+							break;
+
+
+						}
+
+						l.setRoomName(lecture[1]);
+						l.setDay(lecture[2]);
+						l.setTotalSeat(Integer.valueOf(lecture[3]));
+						l.setAvailableSeat(Integer.valueOf(lecture[3]));
+						l.setStartTime(strDate);
+						l.setEndTime(endDate);
+						l.setCode(lecture[0]);
+						l.setSubjectName(courseRepository.getOne(lecture[0]).getName());
+						l.setBookable(true);
+						l.setNrStudentsBooked(0);
+						l.setNrStudentsPresent(0);
+						l.setTeacher(courseRepository.getOne(lecture[0]).getTeacher());
+
+
+						lectureRepository.save(l);
+						lectureRepository.flush();
+					}
+
+				}
 					scheduleRepository.save(s);
 				}
 				firstline = false;
