@@ -76,7 +76,6 @@ public class OfficerService {
         String line = "";
         String cvsSplitBy = ",";
         try {
-        	
 	            br = new BufferedReader(new FileReader(f));
 	            while ((line = br.readLine()) != null) {
 	            	if(!firstline) {  	

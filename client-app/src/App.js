@@ -21,6 +21,7 @@ import MonthNrStudents from './components/MonthNrStudents';
 import LecturesTableNoBooked from './components/LecturesTableNoBooked';
 import UploadFiles from './components/UploadFiles';
 import MonthChartBookingManager from './components/MonthChartBookingManager';
+import RadioButtonsCSV from './components/RadioButtonsCSV';
 
 class App extends React.Component {
     constructor(props) {
@@ -184,6 +185,35 @@ class App extends React.Component {
         });
         console.log(sum);
         this.setState({nrStudents: sum/(nrLectures == 0 ? 1: nrLectures)});
+    }
+
+    uploadStudentCSV = (file) =>{
+        let type = "";
+        switch (this.state.CSV) {
+            case "students":
+                type = "addStudents";
+                break;
+            case "teachers":
+                type = "addTeachers";
+                break;
+            case "courses":
+                type = "addCourses";
+                break;
+            case "enrollment":
+                type = "enrollStudents";
+                break;
+            default:
+                break;
+        }
+        API.uploadStudentCSV(file,type).then((e) =>{
+            console.log("upload andato a buon fine");
+        }).catch((err) =>{
+            throw err;
+        })
+    }
+
+    selectListForCSV = (value) =>{
+        this.setState({CSV: value});
     }
 
 
@@ -386,11 +416,11 @@ class App extends React.Component {
                     <Switch>
                     <Route exact path="/support_officer">
                             <Row className="">
-                                <Col sm={1}/>
+                                <Col sm={2} className="below-nav"> <RadioButtonsCSV selectListForCSV={this.selectListForCSV}/></Col>
                                 <Col sm={8}
                                     className="below-nav">
                                     <h1>Aggiungere la parte del support_officer</h1>
-                                    {<UploadFiles/>}
+                                    {<UploadFiles uploadStudentCSV={this.uploadStudentCSV}/>}
                                 </Col>
                                 <Col sm={1}/>
                             </Row>
