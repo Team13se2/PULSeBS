@@ -85,25 +85,7 @@ public class PulsbesApplication {
 			
 			@Override
 			public void run(String... args) throws Exception {
-				
-			/*	studentRepository.deleteAll();
-				courseRepository.deleteAll();
-				teacherRepository.deleteAll();
-				String csvFileS = "../Students.csv";
-				File fs = new File(csvFileS);
-				officerService.addStudentList(fs);
-				String csvFileT = "../Professors.csv";
-				File ft = new File(csvFileT);
-				officerService.addTeacherList(ft);
-				String csvFileC = "../Courses.csv";
-				File fc = new File(csvFileC);
-				officerService.addCourseList(fc);
-				String csvFileE = "Enrollment.csv";
-				File fe = new File(csvFileE);
-				officerService.enrollStudent(fe);*/
-			//String csvFileS = "../Schedule.csv";
-			//File fs = new File(csvFileS);
-			//officerService.addLectureList(fs);
+
 				SupportOfficer so = new SupportOfficer();
 				so.setId("1");
 				so.setEmail("support@officer.politu.it");

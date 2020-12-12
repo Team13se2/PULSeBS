@@ -143,9 +143,9 @@ public class StudentServiceImpl implements StudentService {
         }
 
           //  listLecture.addAll(tmpCourse.getLectures());
-return listLecture.stream().map(l->modelMapper.map(l,LectureDTO.class)).collect(Collectors.toList());
+//return listLecture.stream().map(l->modelMapper.map(l,LectureDTO.class)).collect(Collectors.toList());
 
-      /*  return listLecture
+        return listLecture
                 .stream()
                 .filter(x -> {
                     { try  {
@@ -161,7 +161,7 @@ return listLecture.stream().map(l->modelMapper.map(l,LectureDTO.class)).collect(
 
                     } })
                 .map(l -> modelMapper.map(l, LectureDTO.class))
-                .collect(Collectors.toList());*/
+                .collect(Collectors.toList());
     }
 
     @Override
@@ -174,16 +174,16 @@ return listLecture.stream().map(l->modelMapper.map(l,LectureDTO.class)).collect(
 
         Calendar tmpCal = Calendar.getInstance();
 
-return studentRepository.getOne(id).getBookedLectures().stream().map(l->modelMapper.map(l,LectureDTO.class)).collect(Collectors.toList());
+//return studentRepository.getOne(id).getBookedLectures().stream().map(l->modelMapper.map(l,LectureDTO.class)).collect(Collectors.toList());
 
-       /* return studentRepository.getOne(id)
+        return studentRepository.getOne(id)
                 .getBookedLectures()
                 .stream()
                 .filter(x -> { try { return x.getStartTime2().after(tmpCal.getTime())
                     && x.isBookable(); } 
                     catch (ParseException e) {log.throwing(this.getClass().getName(), "getAllLectures", e); return false;} })
                 .map(l -> modelMapper.map(l, LectureDTO.class))
-                .collect(Collectors.toList());*/
+                .collect(Collectors.toList());
     }
 
     @Override
