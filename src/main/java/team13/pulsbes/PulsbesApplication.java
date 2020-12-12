@@ -85,26 +85,27 @@ public class PulsbesApplication {
 			
 			@Override
 			public void run(String... args) throws Exception {
-<<<<<<< HEAD
 				
-			/*	studentRepository.deleteAll();
-				courseRepository.deleteAll();
-				teacherRepository.deleteAll();
-				String csvFileS = "../Students.csv";
-				File fs = new File(csvFileS);
-				officerService.addStudentList(fs);
-				String csvFileT = "../Professors.csv";
-				File ft = new File(csvFileT);
-				officerService.addTeacherList(ft);
-				String csvFileC = "../Courses.csv";
-				File fc = new File(csvFileC);
-				officerService.addCourseList(fc);
-				String csvFileE = "../Enrollment.csv";
-				File fe = new File(csvFileE);
-				officerService.enrollStudent(fe);   */
-			//String csvFileS = "../Schedule.csv";
-			//File fs = new File(csvFileS);
-			//officerService.addLectureList(fs);
+				// studentRepository.deleteAll();
+				// courseRepository.deleteAll();
+				// teacherRepository.deleteAll();
+				lectureRepository.deleteAll();
+				// String csvFileS = "../Students.csv";
+				// File fs = new File(csvFileS);
+				// officerService.addStudentList(fs);
+				// String csvFileT = "../Professors.csv";
+				// File ft = new File(csvFileT);
+				// officerService.addTeacherList(ft);
+				// String csvFileC = "../Courses.csv";
+				// File fc = new File(csvFileC);
+				// officerService.addCourseList(fc);
+				// String csvFileE = "../Enrollment.csv";
+				// File fe = new File(csvFileE);
+				// officerService.enrollStudent(fe);   
+				String csvFileSs = "../Schedule.csv";
+				File fss = new File(csvFileSs);
+				officerService.addScheduleList(fss);
+
 				SupportOfficer so = new SupportOfficer();
 				so.setId("1");
 				so.setEmail("support@officer.politu.it");
@@ -120,35 +121,8 @@ public class PulsbesApplication {
 				b.setSurname("Booking");
 				b.setPsw("psw");
 				bookingRepository.save(b);
-=======
-
-//		studentRepository.deleteAll();
-//		courseRepository.deleteAll();
-//		lectureRepository.deleteAll();
-//		teacherRepository.deleteAll();
-//		String csvFileT = "../Professors.csv";
-//		File ft = new File(csvFileT);
-//		officerService.addTeacherList(ft);
-//		String csvFileC = "../Courses.csv";
-//		File fc = new File(csvFileC);
-//		officerService.addCourseList(fc);
-//		String csvFileS = "../Students.csv";
-//		File fs = new File(csvFileS);
-//		officerService.addStudentList(fs);
-   //
-   //
-//		String csvFileE = "../Enrollment.csv";
-//		File fe = new File(csvFileE);
-//		officerService.enrollStudent(fe);
-   //
-			// String csvFileSS = "../Schedule.csv";
-			// File fss = new File(csvFileSS);
-		    // officerService.addScheduleList(fss);
 
 
-
-
->>>>>>> bd77b095eaedbb91eb38e6c81009107f3d86c701
 			}
 		};
 	}
