@@ -1,15 +1,15 @@
 class LectureDTO{
-    constructor(id,availableSeat,startTime,endTime,lectureType,surnameString,totalSeat,roomName,subjectName,nrStudents,bookable){
+    constructor(id,code,startTime,endTime,subjectName,availableSeat,totalSeat,roomName,nrStudentsBooked,nrStudentsPresent,bookable){
         this.id = id;
+        this.code = code;
         this.availableSeat = availableSeat;
         this.startTime = startTime;
         this.endTime = endTime;
-        this.lectureType = lectureType;
-        this.surnameString = surnameString;
         this.totalSeat = totalSeat;
         this.roomName = roomName;
         this.subjectName = subjectName;
-        this.nrStudents = nrStudents;
+        this.nrStudentsBooked = nrStudentsBooked;
+        this.nrStudentsPresent = nrStudentsPresent;
         this.bookable = bookable;
     }
 }

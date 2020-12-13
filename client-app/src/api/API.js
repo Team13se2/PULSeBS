@@ -67,7 +67,7 @@ async function getPastLectures(){
     const response = await fetch(baseURL + url);
     const lecturesJSON = await response.json();
     if(response.ok){
-        return lecturesJSON.map((l) => new LectureDTO(l.id,l.availableSeat,l.startTime,l.endTime,l.lectureType,l.surnameString,l.totalSeat,l.roomName,l.subjectName,l.nrStudents));
+        return lecturesJSON.map((l) => new LectureDTO(l.id,l.code,l.startTime,l.endTime,l.subjectName,l.availableSeat,l.totalSeat,l.roomName,l.nrStudentsBooked,l.nrStudentsPresent,l.bookable));
     } else {
         let err = {status: response.status, errObj:lecturesJSON};
         throw err;  // An object with the error coming from the server
@@ -80,7 +80,7 @@ async function getAllLectures(){
     const response = await fetch(baseURL + url);
     const lecturesJSON = await response.json();
     if(response.ok){
-        return lecturesJSON.map((l) => new LectureDTO(l.id,l.availableSeat,l.startTime,l.endTime,l.lectureType,l.surnameString,l.totalSeat,l.roomName,l.subjectName,l.nrStudents));
+        return lecturesJSON.map((l) => new LectureDTO(l.id,l.code,l.startTime,l.endTime,l.subjectName,l.availableSeat,l.totalSeat,l.roomName,l.nrStudentsBooked,l.nrStudentsPresent,l.bookable));
     } else {
         let err = {status: response.status, errObj:lecturesJSON};
         throw err;  // An object with the error coming from the server
@@ -107,7 +107,7 @@ async function getNoBookedLectures(){
     const response = await fetch(baseURL + url);
     const lecturesJSON = await response.json();
     if(response.ok){
-        return lecturesJSON.map((l) => new LectureDTO(l.id,l.availableSeat,l.startTime,l.endTime,l.lectureType,l.surnameString,l.totalSeat,l.roomName,l.subjectName,l.nrStudents));
+        return lecturesJSON.map((l) => new LectureDTO(l.id,l.code,l.startTime,l.endTime,l.subjectName,l.availableSeat,l.totalSeat,l.roomName,l.nrStudentsBooked,l.nrStudentsPresent,l.bookable));
     } else {
         let err = {status: response.status, errObj:lecturesJSON};
         throw err;  // An object with the error coming from the server
@@ -126,7 +126,7 @@ async function getBookedLectures(){
             lectures[i].nrStudents = nr;
         });
         return lectures;*/
-        return lecturesJSON.map((l) => new LectureDTO(l.id,l.availableSeat,l.startTime,l.endTime,l.lectureType,l.surnameString,l.totalSeat,l.roomName,l.subjectName,l.nrStudents));
+        return lecturesJSON.map((l) => new LectureDTO(l.id,l.code,l.startTime,l.endTime,l.subjectName,l.availableSeat,l.totalSeat,l.roomName,l.nrStudentsBooked,l.nrStudentsPresent,l.bookable));
     } else {
         let err = {status: response.status, errObj:lecturesJSON};
         throw err;  // An object with the error coming from the server
@@ -198,7 +198,7 @@ async function getAllLecturesBookingManager(){
     const response = await fetch(baseURL + url);
     const lecturesJSON = await response.json();
     if(response.ok){
-        return lecturesJSON.map((l) => new LectureDTO(l.id,l.availableSeat,l.startTime,l.endTime,l.lectureType,l.surnameString,l.totalSeat,l.roomName,l.subjectName,l.nrStudents,l.bookable));
+        return lecturesJSON.map((l) => new LectureDTO(l.id,l.code,l.startTime,l.endTime,l.subjectName,l.availableSeat,l.totalSeat,l.roomName,l.nrStudentsBooked,l.nrStudentsPresent,l.bookable));
     } else {
         let err = {status: response.status, errObj:lecturesJSON};
         throw err;  // An object with the error coming from the server

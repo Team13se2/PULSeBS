@@ -163,12 +163,12 @@ class App extends React.Component {
             const format1 = "YYYY-MM-DD HH:mm:ss";
             let startTime = moment(lecture.startTime).format(format1);
             startTime = moment(startTime,"YYYY-MM-DD HH:mm:ss");
+            console.log(lecture);
             if(startTime.isBetween(start,end)){
-                sum += lecture.nrStudents;
+                sum += lecture.nrStudentsBooked;
                 nrLectures ++;
             }
         });
-        console.log(sum);
         this.setState({nrStudents: sum/(nrLectures == 0 ? 1: nrLectures)});
     }
 
@@ -181,7 +181,7 @@ class App extends React.Component {
             startTime = moment(startTime,"YYYY-MM-DD HH:mm:ss");
             console.log(month);
             if(startTime.month() == month){
-                sum += lecture.nrStudents;
+                sum += lecture.nrStudentsBooked;
                 nrLectures ++;
             }
         });
@@ -279,7 +279,7 @@ class App extends React.Component {
                         <Route exact path="/student/">
                             <Row className="">
                                 <Col sm={1}/>
-                                <Col sm={8}
+                                <Col sm={10}
                                     className="below-nav">
                                     <h1>Booked Lectures</h1>
                                     <LecturesTable lectures={this.state.bookedLectures} getLectures={this.getBookedLectures} remove={true} job={this.removeLecture}/>
@@ -392,7 +392,7 @@ class App extends React.Component {
                         <Route exact path="/teacher">
                             <Row className="">
                                 <Col sm={1}/>
-                                <Col sm={9}
+                                <Col sm={10}
                                     className="below-nav">
                                     <h1>Next Lectures</h1>
                                     <LecturesTableTeacher lectures={this.state.teacherLecture} past={false} getLectures={this.getAllLecturesTeacher} job={(lecture_id) => this.getStudentList(lecture_id)} students={this.state.students} job2={(lecture_id) =>this.removeTeacherLecture(lecture_id)}/>
@@ -406,12 +406,12 @@ class App extends React.Component {
                     <Switch>
                     <Route exact path="/booking_manager">
                             <Row className="">
-                                <Col sm={2} className="overflow">
-                                        <PastLecturesFilter  getAllPastLectures={this.getAllLecturesBookingManager}/>
+                                <Col sm={1} style={{display:"none"}} className="overflow">
+                                        <PastLecturesFilter getAllPastLectures={this.getAllLecturesBookingManager}/>
                                     </Col>
+                                <Col sm={2} className="overflow"></Col>
                                 <Col sm={8}
                                     className="below-nav">
-                                    <h1>Aggiungere la parte del booking manager</h1>
                                     <MonthChartBookingManager lectures={this.state.bookingManagerLecture} getAllPastLectures={this.getAllLecturesBookingManager}/>
                                 </Col>
                                 <Col sm={1}/>

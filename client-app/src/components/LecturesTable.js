@@ -20,14 +20,15 @@ const LecturesTable = (props) => {
             <Table responsive striped bordered hover>
                   <thead>
                     <tr>
-                      <th>Id</th>
-                      <th>Start</th>
-                      <th>End</th>
-                      <th>Subject</th>
-                      <th>Lecture Type</th>
-                      <th>Available Seat</th>
-                      <th>Total Seat</th>
-                      <th>Room Name</th>
+                      <th>Code</th>
+                      <th>Course</th>
+                      <th>Available Seats</th>
+                      <th>Total Seats</th>
+                      <th>№ Booked</th>
+                      <th>№ Present</th>
+                      <th>Start Time</th>
+                      <th>End Time</th>
+                      <th>Location</th>
                       <th> </th> 
                     </tr>
                   </thead>
@@ -36,13 +37,14 @@ const LecturesTable = (props) => {
                   {lectures.length > 0 &&
                       lectures.map((lecture, index) => (
                         <tr key={index}>
-                          <td>{lecture.id}</td>
-                          <td>{lecture.startTime}</td>
-                          <td>{lecture.endTime}</td>                          
+                          <td>{lecture.code}</td>
                           <td>{lecture.subjectName}</td>
-                          <td>{lecture.lectureType}</td>                       
                           <td>{lecture.availableSeat}</td>
                           <td>{lecture.totalSeat}</td>
+                          <td>{lecture.nrStudentsBooked}</td>
+                          <td>{lecture.nrStudentsPresent}</td>
+                          <td>{lecture.startTime}</td>                          
+                          <td>{lecture.endTime}</td>
                           <td>{lecture.roomName}</td>
                           <td>
                           {remove && <button type="button" className="btn btn-outline-danger" onClick={() => job(lecture.id)}> 
