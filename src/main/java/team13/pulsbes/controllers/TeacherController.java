@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 import team13.pulsbes.dtos.LectureDTO;
 import team13.pulsbes.dtos.StudentDTO;
+import team13.pulsbes.dtos.StudentPresence;
 import team13.pulsbes.exception.InvalidLectureException;
 import team13.pulsbes.exception.InvalidCourseException;
 import team13.pulsbes.exception.InvalidTeacherException;
@@ -75,16 +76,16 @@ public class TeacherController {
 		}
 	}
 	@GetMapping(value = Constants.GET_STUDENT_LIST)
-	public Map<StudentDTO, Boolean> getStudentList(@RequestParam("lecture_id") Integer id, @CookieValue(value = "type") String type) throws InvalidLectureException, InvalidTeacherException {
+	public List<StudentPresence> getStudentList(@RequestParam("lecture_id") Integer id, @CookieValue(value = "type") String type) throws InvalidLectureException, InvalidTeacherException {
 		try {
 			if (type.equals(TYPE_TEACHER)) {
 			return teacherService.getStudentList(id);
 			}
-			else return Collections.emptyMap();
+			else return Collections.emptyList();
 		} catch (InvalidLectureException e) {
 
 			log.throwing(this.getClass().getName(), "getStudentList", e);
-			return Collections.emptyMap();
+			return Collections.emptyList();
 		}
 	}
 	@DeleteMapping(value = Constants.CANCEL_LECTURE)
