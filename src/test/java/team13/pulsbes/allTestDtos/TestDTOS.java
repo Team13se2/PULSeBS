@@ -20,14 +20,14 @@ class TestDTOS {
 	@Test
 	void testLectureDTO() {
 		LectureDTO l = new LectureDTO();
-		l.setId(1);
+		l.setCode("1");
 		l.setStartTime(null);
 		l.setEndTime(null);
 		l.setSubjectName("test");
 		l.setAvailableSeat(10);
 		l.setTotalSeat(100);
 		l.setRoomName("aula");
-		assertEquals("1",l.getId());
+		assertEquals("1",l.getCode());
 		assertNull(l.getStartTime());
 		assertNull(l.getEndTime());
 		assertEquals(10,l.getAvailableSeat());

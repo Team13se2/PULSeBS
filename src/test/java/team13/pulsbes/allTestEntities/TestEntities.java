@@ -46,7 +46,7 @@ class TestEntities {
 		Course c = new Course();
 		Teacher t = new Teacher();
 		Student s = new Student("1",	"name","surname");
-		l.setId(1);
+		l.setCode("1");
 		l.setStartTime(null);
 		l.setEndTime(null);
 		l.setSubjectName("test");
@@ -61,7 +61,7 @@ class TestEntities {
 		l.addEndTime(120, 1, 10 , 10, 12);
 		
 		
-		assertEquals("1",l.getId());
+		assertEquals("1",l.getCode());
 		assertEquals(10,l.getAvailableSeat());
 		assertEquals(100,l.getTotalSeat());
 		assertEquals("aula",l.getRoomName());

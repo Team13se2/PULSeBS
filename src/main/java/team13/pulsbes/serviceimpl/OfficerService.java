@@ -36,40 +36,25 @@ public class OfficerService {
 	@Autowired
 	ScheduleRepository scheduleRepository;
 
+	public void addLectureRepository(LectureRepository lectureRepository) {
+		this.lectureRepository = lectureRepository;
+	}
+	public void addStudentRepository(StudentRepository studentRepository) {
+		this.studentRepository = studentRepository;
+	}
+	public void addTeacherRepository(TeacherRepository teacherRepository2) {
+		this.teacherRepository = teacherRepository2;		
+	}
+	public void addCourseRepository(CourseRepository courseRepository) {
+		this.courseRepository = courseRepository;
+	}
+	public void addScheduleRepository (ScheduleRepository scheduleRepository) {
+		this.scheduleRepository = scheduleRepository;
+	}
 	Logger log = Logger.getLogger("OfficerService");
 	private static final String DATE_FORMAT_STRING = "yyyy-MM-dd HH:mm";
 
-	
-	public void addTeacher(Teacher t) {
-		teacherRepository.save(t);
-	}
-	
-	@SuppressWarnings("deprecation")
-	public void addLecture(Lecture l) throws ParseException {
-		lectureRepository.save(l);
-		Timer timer = new Timer();
-		
-		//Date notificationTime =  new Date();
-		
-		Date notificationTime = l.getStartTime2();
-		notificationTime.setDate(notificationTime.getDate() - 1);
-		notificationTime.setHours(23);
-		Calendar now = Calendar.getInstance();
-		
-		if(notificationTime.before(now.getTime())) {
-			timer.schedule(new TimerTask() {
-				@Override
-			    public void run() {
-			        //setEmail(emailContent, subject);
-					
-					notificationService.sendMessage(l.getTeacher().getEmail(), 
-										"Students attending lecture of " + l.getSubjectName(),
-										"Number of students attending the lecture is " + l.getStudents().size() + ".\n The lecture is scheduled at "+ l.getStartTime() + ".");
-			    }
-				}, notificationTime);
-		}
-	}
-	
+
 	public void addStudentList(File f) {
 		boolean firstline = true;
         BufferedReader br = null;
@@ -538,6 +523,7 @@ public class OfficerService {
 			}
 		}
 	}
+
 
 
 	}
