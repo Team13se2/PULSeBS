@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import team13.pulsbes.dtos.LectureDTO;
+import team13.pulsbes.dtos.LectureIdStudentId;
 import team13.pulsbes.dtos.StudentDTO;
 import team13.pulsbes.exception.InvalidLectureException;
 import team13.pulsbes.exception.InvalidCourseException;
@@ -127,10 +128,10 @@ public class TeacherController {
 		}
 	}
 	@PostMapping(value = Constants.ADD_PRESENCE)
-	public String addPresence(Integer lectureId, String studentId, @CookieValue(value = "type") String type) throws InvalidLectureException, InvalidStudentException{
+	public String addPresence(@RequestBody LectureIdStudentId lectureIdStudentId, @CookieValue(value = "type") String type) throws InvalidLectureException, InvalidStudentException{
 		try {
 			if (type.equals(TYPE_TEACHER)) {			
-			return teacherService.addPresence(lectureId, studentId);
+			return teacherService.addPresence(lectureIdStudentId.getLectureId(),lectureIdStudentId.getStudentId());
 		}
 		else return null;
 
