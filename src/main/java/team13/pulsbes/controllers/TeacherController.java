@@ -3,6 +3,7 @@ package team13.pulsbes.controllers;
 import java.text.ParseException;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 import java.util.logging.Logger;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -75,16 +76,16 @@ public class TeacherController {
 		}
 	}
 	@GetMapping(value = Constants.GET_STUDENT_LIST)
-	public List<StudentDTO> getStudentList(@RequestParam("lecture_id") Integer id, @CookieValue(value = "type") String type) throws InvalidLectureException, InvalidTeacherException {
+	public Map<StudentDTO, Boolean> getStudentList(@RequestParam("lecture_id") Integer id, @CookieValue(value = "type") String type) throws InvalidLectureException, InvalidTeacherException {
 		try {
 			if (type.equals(TYPE_TEACHER)) {
 			return teacherService.getStudentList(id);
 			}
-			else return Collections.emptyList();
+			else return Collections.emptyMap();
 		} catch (InvalidLectureException e) {
 
 			log.throwing(this.getClass().getName(), "getStudentList", e);
-			return Collections.emptyList();
+			return Collections.emptyMap();
 		}
 	}
 	@DeleteMapping(value = Constants.CANCEL_LECTURE)
