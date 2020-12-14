@@ -90,4 +90,22 @@ public class SupportOfficerController {
 			throw new InvalidUserException("Invalid User");
 		}
 	}
+	@PostMapping(value = Constants.REMOVE_LECTURES)
+	public void removeLectures(String year, String dateStart, String dateEnd, @CookieValue(value = "username") String username,@CookieValue(value = "type")String type) throws InvalidUserException {
+			if(type.equals(TYPE_SUPPORT)) {
+			officerService.removeLectures(year, dateStart, dateEnd);			
+		}
+		else {
+			throw new InvalidUserException("Invalid User");
+		}
+	}
+	@PostMapping(value = Constants.READD_LECTURES)
+	public void readdLectures(String year, String dateStart, String dateEnd, @CookieValue(value = "username") String username,@CookieValue(value = "type")String type) throws InvalidUserException {
+			if(type.equals(TYPE_SUPPORT)) {
+			officerService.readdLectures(year, dateStart, dateEnd);			
+		}
+		else {
+			throw new InvalidUserException("Invalid User");
+		}
+	}
 }

@@ -22,8 +22,10 @@ import team13.pulsbes.services.TeacherService;
 
 import java.util.logging.Logger;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
@@ -104,17 +106,24 @@ public class TeacherServiceImpl implements TeacherService{
   }
 
   @Override
-  public List<StudentDTO> getStudentList(Integer id) throws InvalidLectureException, InvalidTeacherException {
+  public Map<StudentDTO, Boolean> getStudentList(Integer id) throws InvalidLectureException, InvalidTeacherException {
     if(id.equals(-1)) {
       throw new InvalidLectureException(LECTURE_NULL);
     }
 
-    return  lectureRepository.getOne(id)
-        .getStudents()
-        .stream()
-        .filter(Objects::nonNull)
-        .map(l -> modelMapper.map(l,StudentDTO.class))
-        .collect(Collectors.toList());
+    Map<StudentDTO, Boolean> hm = new HashMap<StudentDTO, Boolean>();
+
+    List<Student> listStudent = lectureRepository.getOne(id)
+    .getStudents()
+    .stream()
+    .filter(Objects::nonNull)    
+    .collect(Collectors.toList());
+
+    for (Student tmpStudent : listStudent) {
+      hm.put(modelMapper.map(tmpStudent,StudentDTO.class), lectureRepository.getOne(id).getStudentsPresent().contains(tmpStudent));
+    }
+
+    return  hm;
   }
 @Override
   public String cancelLecture(Integer lectureId, String teacherId) throws InvalidLectureException, InvalidCourseException, InvalidTeacherException{
@@ -286,5 +295,5 @@ public class TeacherServiceImpl implements TeacherService{
 
     return ("Presence added");
 
-  }
+  }  
 }

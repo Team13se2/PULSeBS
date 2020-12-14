@@ -22,4 +22,6 @@ public final class Constants {
 	public static final String ENROLL_STUDENTS = "/enrollStudents";
 	public static final String ADD_PRESENCE = "/addPresence";
 	public static final String GET_CONTACT_REPORT = "/getContactReport";
+	public static final String REMOVE_LECTURES = "/removeLectures";
+	public static final String READD_LECTURES = "/readdLectures";
 }
