@@ -16,6 +16,7 @@ import team13.pulsbes.entities.Lecture;
 import team13.pulsbes.entities.Student;
 import team13.pulsbes.exception.InvalidCourseException;
 import team13.pulsbes.exception.InvalidStudentException;
+import team13.pulsbes.repositories.LectureRepository;
 import team13.pulsbes.repositories.StudentRepository;
 import team13.pulsbes.serviceimpl.StudentServiceImpl;
 
@@ -23,14 +24,17 @@ class TestGetAllLectures {
 
 	StudentServiceImpl studentService;
 	StudentRepository studentRepository;
+	LectureRepository lectureRepository;
 	ModelMapper modelMapper;
 	
 	@BeforeEach
 	void setUp() {
+		lectureRepository = mock(LectureRepository.class);
 		studentRepository = mock(StudentRepository.class);
 		modelMapper = mock(ModelMapper.class);
 		studentService = new StudentServiceImpl();
 		studentService.addStudentRepo(studentRepository);
+		studentService.addLectureRepo(lectureRepository);
 		studentService.addModelMapper(modelMapper);
 	}
 	
@@ -47,10 +51,12 @@ class TestGetAllLectures {
 	void testGetAllLectures3() throws InvalidStudentException, InvalidCourseException {
 		Student s = new Student("1","name","surname");
 		Course c = new Course();
+		c.setCode("X");
 		Lecture l = new Lecture();
 		l.setBookable(true);
 		l.setId(1);
 		l.addStartTime(2030, 1, 1, 0, 0);
+		l.setCode("X");
 		List<Lecture> lectures = new ArrayList<>();
 		lectures.add(l);
 		//c.setLectures(lectures);
@@ -62,6 +68,7 @@ class TestGetAllLectures {
 		lDto.setId(1);
 		ret.add(lDto);
 		studentService.getAllLectures("1");
+		when(lectureRepository.findAll()).thenReturn(lectures);
 		when(modelMapper.map(any(), any())).thenReturn(lDto);
 		assertEquals(ret.get(0).getId(), studentService.getAllLectures("1").get(0).getId());
 	}
