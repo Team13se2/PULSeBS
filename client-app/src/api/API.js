@@ -227,6 +227,27 @@ async function uploadStudentCSV(file,type) {
     });
 }
 
+async function addPresence(studentId,lecture_id) {
+    return new Promise((resolve, reject) => {
+        fetch(baseURL + '/teacher/addPresence',{
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({studentId: studentId, lectureId: lecture_id})
+        }).then((response) => {
+            if (response.ok) {
+                resolve(null);
+            } else {
+                // analyze the cause of error
+                response.json()
+                    .then((obj) => { reject(obj); }) // error msg in the response body
+                    .catch((err) => { reject({ errors: [{ param: "Application", msg: "Cannot parse server response" }] }) }); // something else
+            }
+        });
+    });
+}
+
 
 
 
@@ -235,5 +256,5 @@ const API = {isAuthenticated,userLogin,userLogout,getAllLectures,
     getNoBookedLectures,getBookedLectures,
     bookLecture,removeStudentLecture,removeTeacherLecture,
     getPastLectures,getAllLecturesBookingManager,
-    uploadStudentCSV} ;
+    uploadStudentCSV,addPresence} ;
 export default API;
