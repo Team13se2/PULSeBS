@@ -41,7 +41,7 @@ class TestAddScheduleList {
 	}
 	
 	@Test
-	void testAddScheduleList() {
+	void testAddScheduleListFirstSemester() {
 		File f = new File("src\\test\\java\\team13\\pulsbes\\allTestOfficer/Schedule.csv");
 		Schedule s = new Schedule();
 		Course c = new Course();
@@ -58,5 +58,22 @@ class TestAddScheduleList {
 		doNothing().when(lectureRepository).flush();
 		officerService.addScheduleList(f);
 	}
-
+	@Test
+	void testAddScheduleListSecondSemester() {
+		File f = new File("src\\test\\java\\team13\\pulsbes\\allTestOfficer/Schedule.csv");
+		Schedule s = new Schedule();
+		Course c = new Course();
+		Teacher t = new Teacher();
+		Lecture l = new Lecture();
+		c.setSemester("2");
+		c.setName("name");
+		c.setTeacher(t);
+		Optional<Course> oc = Optional.of(c);
+		when(courseRepository.findById(any())).thenReturn(oc);
+		when(courseRepository.getOne(any())).thenReturn(c);
+		when(lectureRepository.save(any())).thenReturn(l);
+		when(scheduleRepository.save(any())).thenReturn(s);
+		doNothing().when(lectureRepository).flush();
+		officerService.addScheduleList(f);
+	}
 }
