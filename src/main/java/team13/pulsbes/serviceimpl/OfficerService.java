@@ -10,6 +10,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -55,6 +56,46 @@ public class OfficerService {
 	private static final String DATE_FORMAT_STRING = "yyyy-MM-dd HH:mm";
 
 
+	public void removeLectures(String year, String dateStart, String dateEnd) {
+
+		List<Lecture> listLecture = new ArrayList<>();
+		DateFormat dateFormat = new SimpleDateFormat(DATE_FORMAT_STRING);	
+		Boolean check1 = false;
+		Boolean check2 = false;
+
+		listLecture.addAll(lectureRepository.findAll().stream().collect(Collectors.toList()));
+
+		for (Lecture tmpLecture : listLecture) {
+
+			try {check1 = tmpLecture.getStartTime2().after(dateFormat.parse(dateStart));} catch (ParseException e) {log.throwing(this.getClass().getName(), "removeLectures", e);};
+			try {check2 = tmpLecture.getEndTime2().after(dateFormat.parse(dateEnd));} catch (ParseException e) {log.throwing(this.getClass().getName(), "removeLectures", e);};
+			
+			if(courseRepository.findById(tmpLecture.getCode()).get().getYear() == year && check1 && check2) {
+				tmpLecture.setBookable(false);
+			}
+		}	
+	}
+
+	public void readdLectures(String year, String dateStart, String dateEnd) {
+
+		List<Lecture> listLecture = new ArrayList<>();
+		DateFormat dateFormat = new SimpleDateFormat(DATE_FORMAT_STRING);	
+		Boolean check1 = false;
+		Boolean check2 = false;
+
+		listLecture.addAll(lectureRepository.findAll().stream().collect(Collectors.toList()));
+
+		for (Lecture tmpLecture : listLecture) {
+
+			try {check1 = tmpLecture.getStartTime2().after(dateFormat.parse(dateStart));} catch (ParseException e) {log.throwing(this.getClass().getName(), "removeLectures", e);};
+			try {check2 = tmpLecture.getEndTime2().after(dateFormat.parse(dateEnd));} catch (ParseException e) {log.throwing(this.getClass().getName(), "removeLectures", e);};
+			
+			if(courseRepository.findById(tmpLecture.getCode()).get().getYear() == year && check1 && check2) {
+				tmpLecture.setBookable(true);
+			}
+		}	
+	}
+	
 	public void addStudentList(File f) {
 		boolean firstline = true;
         BufferedReader br = null;
