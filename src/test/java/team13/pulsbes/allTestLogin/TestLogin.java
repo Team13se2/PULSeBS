@@ -35,7 +35,7 @@ class TestLogin {
 	
 	@Test
 	void testLogin1() {
-		IdPw cred = new IdPw("email","psw","student");
+		IdPw cred = new IdPw("email@wrong.it","psw","student");
 		Student s = new Student("1","nope","nope");
 		List<Student> students = new ArrayList<>();
 		s.setEmail("wrong");
@@ -45,7 +45,7 @@ class TestLogin {
 	}
 	@Test
 	void testLogin2() {
-		IdPw cred = new IdPw("email","psw","teacher");
+		IdPw cred = new IdPw("email@wrong.it","psw","teacher");
 		Teacher t = new Teacher();
 		List<Teacher> teachers = new ArrayList<>();
 		t.setEmail("wrong");
@@ -55,11 +55,11 @@ class TestLogin {
 	}
 	@Test
 	void testLogin3() throws WrongCredentialsException {
-		IdPw cred = new IdPw("teacher@email","psw","teacher");
+		IdPw cred = new IdPw("teacher@politu.it","psw","teacher");
 		LoginDTO lDto = new LoginDTO();
 		Teacher t = new Teacher();
 		List<Teacher> teachers = new ArrayList<>();
-		t.setEmail("teacher@email"); 
+		t.setEmail("teacher@politu.it"); 
 		t.setNumber("1");
 		t.setName("name");
 		t.setSurname("surname");
@@ -70,17 +70,17 @@ class TestLogin {
 		assertEquals("name",lDto.getName());
 		assertEquals("surname",lDto.getSurname());
 		assertEquals("1",lDto.getId());
-		assertEquals("teacher@email",lDto.getEmail());
+		assertEquals("teacher@politu.it",lDto.getEmail());
 		assertEquals("teacher",lDto.getRole());
 		assertEquals("token",lDto.getToken());
 	}
 	@Test
 	void testLogin4() throws WrongCredentialsException {
-		IdPw cred = new IdPw("student@email","psw","student");
+		IdPw cred = new IdPw("student@students.politu.it","psw","student");
 		LoginDTO lDto = new LoginDTO();
 		Student s = new Student("1","name","surname");
 		List<Student> students = new ArrayList<>();
-		s.setEmail("student@email");
+		s.setEmail("student@students.politu.it");
 		s.setPsw("psw");
 		s.setId("1");
 		students.add(s);
@@ -89,7 +89,7 @@ class TestLogin {
 		assertEquals("name",lDto.getName());
 		assertEquals("surname",lDto.getSurname());
 		assertEquals("1",lDto.getId());
-		assertEquals("student@email",lDto.getEmail());
+		assertEquals("student@students.politu.it",lDto.getEmail());
 		assertEquals("student",lDto.getRole());
 		assertEquals("token",lDto.getToken());
 	}

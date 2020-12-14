@@ -53,12 +53,13 @@ class TestDeleteLecture {
 		Optional<Student> s = Optional.of(st);
 		
 		Lecture l = new Lecture();
+		Optional <Lecture> ol = Optional.of(l);
 		Lecture lWrong = new Lecture();
 		s.get().addBookLecture(lWrong);
 		when(studentRepository.existsById(any())).thenReturn(true);
 		when(lectureRepository.existsById(any())).thenReturn(true);
 		when(studentRepository.findById(any())).thenReturn(s);
-		when(lectureRepository.getOne(any())).thenReturn(l);
+		when(lectureRepository.findById(any())).thenReturn(ol);
 		assertEquals("Student doesn't have this lecture",studentService.deleteLecture(1, "1"));
 	}
 	@Test
@@ -66,13 +67,14 @@ class TestDeleteLecture {
 		Student st = new Student("1","name" , "surname");
 		Optional<Student> s = Optional.of(st);		
 		Lecture l = new Lecture();
+		Optional <Lecture> ol = Optional.of(l);
 		Lecture lWrong = new Lecture();
 		s.get().addBookLecture(lWrong);
 		s.get().addBookLecture(l);
 		when(studentRepository.existsById(any())).thenReturn(true);
 		when(lectureRepository.existsById(any())).thenReturn(true);
 		when(studentRepository.findById(any())).thenReturn(s);
-		when(lectureRepository.getOne(any())).thenReturn(l);
+		when(lectureRepository.findById(any())).thenReturn(ol);
 		assertEquals("Lecture deleted",studentService.deleteLecture(1, "1"));
 		
 	}
