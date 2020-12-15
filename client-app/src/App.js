@@ -19,11 +19,11 @@ import Day_Picker from './components/Day_Picker';
 import moment from 'moment';
 import MonthNrStudents from './components/MonthNrStudents';
 import LecturesTableNoBooked from './components/LecturesTableNoBooked';
-import UploadFiles from './components/UploadFiles';
 import MonthChartBookingManager from './components/MonthChartBookingManager';
-import RadioButtonsCSV from './components/RadioButtonsCSV';
 import ContactTracing from './components/ContactTracing';
-import DayPickerSupportOfficer from './components/DayPickerSupportOfficer';
+import SupportOfficerMainPage from './components/SupportOfficerMainPage';
+import CurrentLectures from './components/CurrentLectures';
+import SupportOfficerUpdate from './components/SupportOfficerUpdate';
 
 class App extends React.Component {
     constructor(props) {
@@ -190,35 +190,6 @@ class App extends React.Component {
         this.setState({nrStudents: sum/(nrLectures == 0 ? 1: nrLectures)});
     }
 
-    uploadStudentCSV = (file) =>{
-        let type = "";
-        switch (this.state.CSV) {
-            case "students":
-                type = "addStudents";
-                break;
-            case "teachers":
-                type = "addTeachers";
-                break;
-            case "courses":
-                type = "addCourses";
-                break;
-            case "enrollment":
-                type = "enrollStudents";
-                break;
-            default:
-                break;
-        }
-        API.uploadStudentCSV(file,type).then((e) =>{
-            console.log("upload andato a buon fine");
-        }).catch((err) =>{
-            throw err;
-        })
-    }
-
-    selectListForCSV = (value) =>{
-        this.setState({CSV: value});
-    }
-
     addIdContactTracing = (id) =>{
         console.log("call API with "+id);
     }
@@ -233,10 +204,13 @@ class App extends React.Component {
         })
     }
 
-    updateListSupportOfficer = (year,from,to) =>{
-
+    getCurrentLectureTeacher = () =>{
+        API.getCurrentLectureTeacher().then((lecture) =>{
+            this.setState({teacherLecture: lecture});
+        }).catch((err) =>{
+            console.log(err);
+        })
     }
-
 
 
     render() {
@@ -404,6 +378,17 @@ class App extends React.Component {
                                 </Row>
                             </Route>
                         </Route>
+                        <Route exact path="/teacher/current">
+                            <Row>
+                                <Col sm={2}/>
+                                <Col sm={8}
+                                        className="below-nav">
+                                        <h1>Current Lecture</h1>
+                                        <CurrentLectures lectures={this.state.teacherLecture} past={false} getLectures={this.getCurrentLectureTeacher} job={(lecture_id) => this.getStudentList(lecture_id)} students={this.state.students} job2={(lecture_id) =>this.removeTeacherLecture(lecture_id)} setPresence={(studentId,lectureId) =>this.setPresence(studentId,lectureId)}/>
+                                </Col>
+                                <Col sm={1}/>
+                            </Row>
+                        </Route>
                         <Route exact path="/teacher">
                             <Row className="">
                                 <Col sm={1}/>
@@ -448,41 +433,11 @@ class App extends React.Component {
                     <Switch>
                     <Route exact path="/support_officer">
                             <Row className="">
-                                <Col sm={2} className="below-nav"> <RadioButtonsCSV selectListForCSV={this.selectListForCSV}/></Col>
-                                <Col sm={8}
-                                    className="below-nav">
-                                    <h1>Aggiungere la parte del support_officer</h1>
-                                    {<UploadFiles uploadStudentCSV={this.uploadStudentCSV}/>}
-                                </Col>
-                                <Col sm={1}/>
+                                <SupportOfficerMainPage />
                             </Row>
                         </Route>
                         <Route exact path="/support_officer/update/">
-                            <Row className="">
-                                <Col sm={2} className="below-nav"></Col>
-                                <Col sm={5}
-                                    className="below-nav">
-                                    <Row>
-                                        <h1>Select the period</h1>
-                                    </Row>
-                                    <DayPickerSupportOfficer />
-                                    <Row>
-                                        <button type="button"className="btn btn-success" onClick={(year,from,to) =>this.updateListSupportOfficer(year,from,to)}>Submit</button>
-                                    </Row>
-                                </Col>
-                                <Col sm={4} className="below-nav">
-                                    <Row><h1>Select the year</h1>
-                                    </Row>
-                                    <Row>
-                                        <input type="button" className="btn btn-outline-primary" value="1"/>
-                                        <input type="button" className="btn btn-outline-primary"value="2"/>
-                                        <input type="button" className="btn btn-outline-primary" value="3"/>
-                                        <input type="button" className="btn btn-outline-primary"value="4"/>
-                                        <input type="button" className="btn btn-outline-primary"value="5"/>
-                                    </Row>
-                                </Col>
-                                <Col sm={1}/>
-                            </Row>
+                            <SupportOfficerUpdate />
                         </Route>
                     </Switch>
                 </Route>
