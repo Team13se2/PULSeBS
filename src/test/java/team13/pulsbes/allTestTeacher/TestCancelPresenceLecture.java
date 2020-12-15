@@ -76,7 +76,7 @@ class TestCancelPresenceLecture {
 		when(teacherRepository.save(any())).thenReturn(t);
 		doNothing().when(teacherRepository).flush();
 		doNothing().when(notificationService).sendMessage(isA(String.class), isA(String.class), isA(String.class));
-		assertEquals("Lecture was changd from in presence to online",teacherService.cancelPresenceLecture(1, "1"));
+		assertEquals("Lecture is too late to be changed",teacherService.cancelPresenceLecture(1, "1"));
 	}
 	@Test
 	void testCancelPresenceLecture3() throws InvalidStudentException, InvalidLectureException, InvalidCourseException, ParseException, InvalidTeacherException{
@@ -96,7 +96,7 @@ class TestCancelPresenceLecture {
 		Optional<Teacher> teacher = Optional.of(t);
 		when(teacherRepository.findById(any())).thenReturn(teacher);
 		when(lectureRepository.getOne(any())).thenReturn(l);
-		assertEquals("Lecture is too late to be changed",teacherService.cancelPresenceLecture(1, "1"));
+		assertEquals("Lecture was changd from in presence to online",teacherService.cancelPresenceLecture(1, "1"));
 	}
 	@Test
 	void testCancelPresenceLecture4() throws InvalidStudentException, InvalidLectureException, InvalidCourseException, ParseException, InvalidTeacherException{

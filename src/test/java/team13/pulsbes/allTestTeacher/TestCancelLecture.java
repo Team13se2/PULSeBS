@@ -76,7 +76,7 @@ class TestCancelLecture {
 		when(teacherRepository.save(any())).thenReturn(t);
 		doNothing().when(teacherRepository).flush();
 		doNothing().when(notificationService).sendMessage(isA(String.class), isA(String.class), isA(String.class));
-		assertEquals("Lecture cancelled",teacherService.cancelLecture(1, "1"));
+		assertEquals("Lecture is too late to be cancelled",teacherService.cancelLecture(1, "1"));
 	}
 	@Test
 	void testCancelLecture3() throws InvalidStudentException, InvalidLectureException, InvalidCourseException, ParseException, InvalidTeacherException {
@@ -96,6 +96,6 @@ class TestCancelLecture {
 		Optional<Teacher> teacher = Optional.of(t);
 		when(teacherRepository.findById(any())).thenReturn(teacher);
 		when(lectureRepository.getOne(any())).thenReturn(l);
-		assertEquals("Lecture is too late to be cancelled",teacherService.cancelLecture(1, "1"));
+		assertEquals("Lecture cancelled",teacherService.cancelLecture(1, "1"));
 	}
 }
