@@ -23,11 +23,9 @@ import team13.pulsbes.services.TeacherService;
 
 import java.util.logging.Logger;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.HashMap;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
@@ -59,7 +57,10 @@ public class TeacherServiceImpl implements TeacherService{
   public void addNotificationService(NotificationServiceImpl ns) {
         this.notificationService = ns;
     }
-
+  public void addStudentRepository(StudentRepository studentRepository) {
+	  this.studentRepository = studentRepository;
+  }
+  
   Logger log = Logger.getLogger("TeacherServiceImpl");
 
   private static final String LECTURE_NULL = "Lecture can't be null";
@@ -89,7 +90,7 @@ public class TeacherServiceImpl implements TeacherService{
 
   @Override
   public List<LectureDTO> getAllLectures(String id) throws InvalidTeacherException {
-    if(id.equals(-1)) {
+    if(id.equals("-1")) {
       throw new InvalidTeacherException(TEACHER_NULL);
     }
     if(!teacherRepository.existsById(id)) {

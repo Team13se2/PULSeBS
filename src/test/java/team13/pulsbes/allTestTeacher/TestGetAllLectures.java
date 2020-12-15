@@ -68,4 +68,9 @@ public class TestGetAllLectures {
 		//assertEquals(lDtos.get(0).getId(),t.getId());
 		
 	}
+	@Test
+	public void testGetAllLectures3() {
+		when(teacherRepository.existsById(any())).thenReturn(false);
+		assertThrows(InvalidTeacherException.class, () -> teacherService.getAllLectures("s1"));
+	}
 }

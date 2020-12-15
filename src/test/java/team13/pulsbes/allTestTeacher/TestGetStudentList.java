@@ -3,6 +3,8 @@ package team13.pulsbes.allTestTeacher;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
+import java.util.ArrayList;
+import java.util.List;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -42,15 +44,16 @@ class TestGetStudentList {
 	@Test
 	void testGetStudentList1() throws InvalidStudentException, InvalidLectureException, InvalidTeacherException {
 		Lecture l = new Lecture();
-		l.setBookable(true);
-		Student s = new Student("1","test","testsur");
-		l.addStudentAttending(s);
+		Student s = new Student();
+		List<Student> presents = new ArrayList<>();
+		presents.add(s);
+		s.setId("1");
 		StudentDTO sDto = new StudentDTO();
-		sDto.setId("1"); sDto.setName("test"); sDto.setSurname("testsur");
+		sDto.setId("1");
+		l.setStudentsPresent(presents);
+		l.addStudentAttending(s);
 		when(lectureRepository.getOne(any())).thenReturn(l);
-		when(modelMapper.map(any(),any())).thenReturn(sDto);
-		when(teacherRepository.existsById(any())).thenReturn(true);
-		assertEquals(s.getId(),sDto.getId());
-		assertEquals(s.getId(),teacherService.getStudentList(1).get(0).getId());
+		when(modelMapper.map(any(), any())).thenReturn(sDto);
+		assertEquals("1", teacherService.getStudentList(1).get(0).getStudent().getId());
 	}
 }

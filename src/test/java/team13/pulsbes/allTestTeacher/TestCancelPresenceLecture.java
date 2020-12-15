@@ -98,4 +98,11 @@ class TestCancelPresenceLecture {
 		when(lectureRepository.getOne(any())).thenReturn(l);
 		assertEquals("Lecture is too late to be changed",teacherService.cancelPresenceLecture(1, "1"));
 	}
+	@Test
+	void testCancelPresenceLecture4() throws InvalidStudentException, InvalidLectureException, InvalidCourseException, ParseException, InvalidTeacherException{
+		
+		Optional<Teacher> ot=Optional.empty();
+		when(teacherRepository.findById(any())).thenReturn(ot);
+		assertThrows(InvalidTeacherException.class, ()->teacherService.cancelPresenceLecture(1, "1"));
+	}
 }
