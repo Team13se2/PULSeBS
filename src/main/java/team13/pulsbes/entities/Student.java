@@ -179,6 +179,14 @@ public class Student {
 		this.attendedLectures = attendedLectures;
 	}
 
+	public List<Lecture> getWaitingLectures() {
+		return waitingLectures;
+	}
+
+	public void setWaitingLectures(List<Lecture> waitingLectures) {
+		this.waitingLectures = waitingLectures;
+	}
+
 	public String getCity() {
 		return city;
 	}

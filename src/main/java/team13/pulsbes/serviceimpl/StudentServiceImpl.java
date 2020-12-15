@@ -155,6 +155,7 @@ public class StudentServiceImpl implements StudentService {
 
                         return x.getStartTime2().after(tmpCal.getTime())
                     && !studentRepository.getOne(id).getBookedLectures().contains(x)
+                    && !studentRepository.getOne(id).getWaitingLectures().contains(x)
                     && x.isBookable(); }
 
                     catch (ParseException e)
@@ -183,7 +184,7 @@ public class StudentServiceImpl implements StudentService {
                 .stream()
                 .filter(x -> { try { return x.getStartTime2().after(tmpCal.getTime())
                     && x.isBookable(); } 
-                    catch (ParseException e) {log.throwing(this.getClass().getName(), "getAllLectures", e); return false;} })
+                    catch (ParseException e) {log.throwing(this.getClass().getName(), "getBookedLectures", e); return false;} })
                 .map(l -> modelMapper.map(l, LectureDTO.class))
                 .collect(Collectors.toList());
     }
@@ -196,10 +197,14 @@ public class StudentServiceImpl implements StudentService {
         if (!studentRepository.existsById(id))
             throw new InvalidStudentException(STUDENT_NOT_FOUND);
 
+            Calendar tmpCal = Calendar.getInstance();
 
         return studentRepository.getOne(id)
                 .getWaitingLectures()
                 .stream()
+                .filter(x -> { try { return x.getStartTime2().after(tmpCal.getTime())
+                    && x.isBookable(); } 
+                    catch (ParseException e) {log.throwing(this.getClass().getName(), "getWaitingLectures", e); return false;} })
                 .map(l-> modelMapper.map(l,LectureDTO.class))
                 .collect(Collectors.toList());
 
