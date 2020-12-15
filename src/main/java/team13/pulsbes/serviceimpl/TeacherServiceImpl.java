@@ -294,7 +294,7 @@ public class TeacherServiceImpl implements TeacherService{
 
     student.addLecturePresence(lecture);
     lecture.addStudentPresent(student);
-
+    lectureRepository.save(lecture);
     return ("Presence added");
 
   }  
