@@ -23,6 +23,7 @@ import UploadFiles from './components/UploadFiles';
 import MonthChartBookingManager from './components/MonthChartBookingManager';
 import RadioButtonsCSV from './components/RadioButtonsCSV';
 import ContactTracing from './components/ContactTracing';
+import DayPickerSupportOfficer from './components/DayPickerSupportOfficer';
 
 class App extends React.Component {
     constructor(props) {
@@ -226,10 +227,14 @@ class App extends React.Component {
         console.log("call API with studentID");
         API.addPresence(studentId,lectureId).then(() =>{
             console.log("upload andato a buon fine");
+            this.getStudentList(lectureId);
         }).catch((err) =>{
             throw err;
         })
-        //this.getStudentList(lectureId)
+    }
+
+    updateListSupportOfficer = (year,from,to) =>{
+
     }
 
 
@@ -448,6 +453,33 @@ class App extends React.Component {
                                     className="below-nav">
                                     <h1>Aggiungere la parte del support_officer</h1>
                                     {<UploadFiles uploadStudentCSV={this.uploadStudentCSV}/>}
+                                </Col>
+                                <Col sm={1}/>
+                            </Row>
+                        </Route>
+                        <Route exact path="/support_officer/update/">
+                            <Row className="">
+                                <Col sm={2} className="below-nav"></Col>
+                                <Col sm={5}
+                                    className="below-nav">
+                                    <Row>
+                                        <h1>Select the period</h1>
+                                    </Row>
+                                    <DayPickerSupportOfficer />
+                                    <Row>
+                                        <button type="button"className="btn btn-success" onClick={(year,from,to) =>this.updateListSupportOfficer(year,from,to)}>Submit</button>
+                                    </Row>
+                                </Col>
+                                <Col sm={4} className="below-nav">
+                                    <Row><h1>Select the year</h1>
+                                    </Row>
+                                    <Row>
+                                        <input type="button" className="btn btn-outline-primary" value="1"/>
+                                        <input type="button" className="btn btn-outline-primary"value="2"/>
+                                        <input type="button" className="btn btn-outline-primary" value="3"/>
+                                        <input type="button" className="btn btn-outline-primary"value="4"/>
+                                        <input type="button" className="btn btn-outline-primary"value="5"/>
+                                    </Row>
                                 </Col>
                                 <Col sm={1}/>
                             </Row>

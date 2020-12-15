@@ -118,7 +118,7 @@ const LecturesTableTeacher = (props) => {
                   <td>{student.name}</td>
                   <td>{student.surname}</td>
                   <td>{student.email}</td>
-                  <td><button type="button" className="btn btn-success" onClick={()=>setPresence(student.id,lecture_id)}>Present 
+                  <td><button type="button" className="btn btn-success" disabled={student.presence} onClick={()=>setPresence(student.id,lecture_id)}>Present 
                   </button>
                   </td>
                   </tr>

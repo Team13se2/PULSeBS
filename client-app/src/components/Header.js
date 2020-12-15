@@ -44,6 +44,12 @@ const Header = (props) => {
             <Nav.Link as={NavLink} to="/booking_manager/contact_tracing/" > Contact Tracing</Nav.Link> 
             </Nav>
         </Route>
+        <Route path="/support_officer/">
+            <Nav className="mr-auto">
+            <Nav.Link as={NavLink} exact to="/support_officer" >Upload</Nav.Link> 
+            <Nav.Link as={NavLink} to="/support_officer/update/" > Update List</Nav.Link> 
+            </Nav>
+        </Route>
 
         <Nav className="ml-md-auto">
           {context.authUser && 

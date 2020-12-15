@@ -144,8 +144,9 @@ async function getStudentList(lecture_id){
 
     const response = await fetch(baseURL + url);
     const studentJSON = await response.json();
-    if(response.ok){
-        return studentJSON.map((l) => new StudentDTO(l.name,l.id,l.email,l.surname));
+    if(response.ok){;
+        console.log(studentJSON);
+        return studentJSON.map((l) => new StudentDTO(l.student.name,l.student.id,l.student.email,l.student.surname,l.presence));
     } else {
         let err = {status: response.status, errObj:studentJSON};
         throw err;  // An object with the error coming from the server
