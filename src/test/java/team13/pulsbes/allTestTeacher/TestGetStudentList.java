@@ -51,6 +51,9 @@ class TestGetStudentList {
 		when(modelMapper.map(any(),any())).thenReturn(sDto);
 		when(teacherRepository.existsById(any())).thenReturn(true);
 		assertEquals(s.getId(),sDto.getId());
+
 		//assertEquals(s.getId(),teacherService.getStudentList(1).get(0).getId());
+		assertEquals(s.getId(),teacherService.getStudentList(1).get(0));
+
 	}
 }

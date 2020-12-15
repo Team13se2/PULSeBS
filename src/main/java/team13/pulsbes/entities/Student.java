@@ -46,6 +46,9 @@ public class Student {
 	@ManyToMany (mappedBy = "studentsPresent")
 	List <Lecture> attendedLectures = new ArrayList<>();
 
+	@ManyToMany (mappedBy = "studentswaiting")
+	List <Lecture> waitingLectures = new ArrayList<>();
+
 	public Student() {}
 
 	public Student( String id, String name, String surname) {
@@ -86,6 +89,12 @@ public class Student {
 		l.getStudents().remove(this);
 		l.setNrStudentsBooked(l.getNrStudentsBooked()-1);
 		l.setAvailableSeat(l.getAvailableSeat()+1);
+	}
+
+	public void removewaitingLecture (Lecture l)
+	{
+		this.waitingLectures.remove(l);
+		l.removeStudentsWaiting(this);
 	}
 	
 	public void addLecturePresence(Lecture l) {
