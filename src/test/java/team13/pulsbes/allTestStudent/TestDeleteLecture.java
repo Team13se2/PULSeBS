@@ -78,4 +78,27 @@ class TestDeleteLecture {
 		assertEquals("Lecture deleted",studentService.deleteLecture(1, "1"));
 		
 	}
+	
+	@Test
+	void testDeleteLecture5(){
+		Optional<Student> s = Optional.empty();
+		when(studentRepository.existsById(any())).thenReturn(true);
+		when(lectureRepository.existsById(any())).thenReturn(true);
+		when(studentRepository.findById(any())).thenReturn(s);
+		assertThrows(InvalidStudentException.class,()->studentService.deleteLecture(1,"1"));
+	}	
+	@Test
+	void testDeleteLecture6() {
+		Student st = new Student("1","name" , "surname");
+		Lecture l = new Lecture();
+		st.addBookLecture(l);
+		Optional <Lecture> ol = Optional.of(l);
+		Optional<Student> s = Optional.of(st);
+		when(studentRepository.existsById(any())).thenReturn(true);
+		when(lectureRepository.existsById(any())).thenReturn(true);
+		when(studentRepository.findById(any())).thenReturn(s);
+		when(lectureRepository.findById(any())).thenReturn(ol);
+		
+		
+	}
 }
