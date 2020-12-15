@@ -78,4 +78,19 @@ public class StudentController {
 		}
 
 	}
+
+	@GetMapping(value = Constants.GET_WAITING_LECTURES)
+	public List<LectureDTO> getWaitingLectures(@CookieValue(value = "username") String username, @CookieValue(value = "id") String id,@CookieValue(value = "type") String type) {
+		try {
+			if(type.equals(TYPE_STUDENT))
+				return studentService.getWaitingLectures(id);
+			else
+				return Collections.emptyList();
+		} catch (InvalidStudentException e) {
+			log.throwing(this.getClass().getName(), "getWaitingLectures", e);
+			return Collections.emptyList();
+		}
+	}
+
+
 }
