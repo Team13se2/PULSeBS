@@ -81,6 +81,14 @@ public class Lecture {
         students = new ArrayList<>();
     }
 
+	@ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+	@JoinTable(name="waitingstudents", joinColumns = @JoinColumn(name="lecture_id"),
+			inverseJoinColumns = @JoinColumn(name="student_id"))
+    private List<Student> studentswaiting;
+	{
+		studentswaiting = new ArrayList<>();
+	}
+
 
     @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn (name = "teacher_number")
@@ -115,7 +123,10 @@ public class Lecture {
     	studentsPresent.add(s);
     }
 
-
+  public void removeStudentsWaiting(Student s)
+  {
+  	this.studentswaiting.remove(s);
+  }
 
 
 	
@@ -240,6 +251,18 @@ public class Lecture {
 	}
 	public void setNrStudentsBooked(Integer nrStudentsBooked){
 		this.nrStudentsBooked = nrStudentsBooked;
+	}
+
+	public void setStudentsPresent(List<Student> studentsPresent) {
+		this.studentsPresent = studentsPresent;
+	}
+
+	public List<Student> getStudentswaiting() {
+		return studentswaiting;
+	}
+
+	public void setStudentswaiting(List<Student> studentswaiting) {
+		this.studentswaiting = studentswaiting;
 	}
 
 	public Integer getNrStudentsPresent(){

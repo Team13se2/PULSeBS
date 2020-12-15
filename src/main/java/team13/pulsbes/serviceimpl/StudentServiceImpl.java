@@ -105,12 +105,14 @@ public class StudentServiceImpl implements StudentService {
                 (lectureSelected.get().getQueue().isEmpty()){
                 {
                     lectureSelected.get().getQueue().put(studentId,1);
+                    lectureSelected.get().getStudentswaiting().add(studentRepository.findById(studentId).get());
                     lectureRepository.save(lectureSelected.get());
 
                 }
             }else {
                 Integer count = lectureSelected.get().getQueue().values().stream().max((x,y)-> x - y).get();
                 lectureSelected.get().getQueue().put(studentId,count +1);
+                lectureSelected.get().getStudentswaiting().add(studentRepository.findById(studentId).get());
                 lectureRepository.save(lectureSelected.get());
             }
             return ("The lecture has no more available seats, you will receive a mail if a spot opens up");
@@ -153,6 +155,7 @@ public class StudentServiceImpl implements StudentService {
 
                         return x.getStartTime2().after(tmpCal.getTime())
                     && !studentRepository.getOne(id).getBookedLectures().contains(x)
+                    && !studentRepository.getOne(id).getWaitingLectures().contains(x)
                     && x.isBookable(); }
 
                     catch (ParseException e)
@@ -181,9 +184,30 @@ public class StudentServiceImpl implements StudentService {
                 .stream()
                 .filter(x -> { try { return x.getStartTime2().after(tmpCal.getTime())
                     && x.isBookable(); } 
-                    catch (ParseException e) {log.throwing(this.getClass().getName(), "getAllLectures", e); return false;} })
+                    catch (ParseException e) {log.throwing(this.getClass().getName(), "getBookedLectures", e); return false;} })
                 .map(l -> modelMapper.map(l, LectureDTO.class))
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<LectureDTO> getWaitingLectures(String id) throws InvalidStudentException {
+        if (id.equals("-1")) {
+            throw new InvalidStudentException(STUDENT_NULL);
+        }
+        if (!studentRepository.existsById(id))
+            throw new InvalidStudentException(STUDENT_NOT_FOUND);
+
+            Calendar tmpCal = Calendar.getInstance();
+
+        return studentRepository.getOne(id)
+                .getWaitingLectures()
+                .stream()
+                .filter(x -> { try { return x.getStartTime2().after(tmpCal.getTime())
+                    && x.isBookable(); } 
+                    catch (ParseException e) {log.throwing(this.getClass().getName(), "getWaitingLectures", e); return false;} })
+                .map(l-> modelMapper.map(l,LectureDTO.class))
+                .collect(Collectors.toList());
+
     }
 
     @Override
@@ -285,6 +309,8 @@ public class StudentServiceImpl implements StudentService {
 
             lectureSelected.get().setAvailableSeat(availableSeats - 1);
             currentStudent.addBookLecture(lectureSelected.get());
+            currentStudent.getWaitingLectures().remove(lectureSelected.get());
+            lectureSelected.get().getStudentswaiting().remove(currentStudent);
             studentRepository.save(currentStudent);
             lectureRepository.save(lectureSelected.get());
             notificationService.sendMessage(currentStudent.getEmail(),

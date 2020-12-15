@@ -146,11 +146,10 @@ public class TeacherServiceImpl implements TeacherService{
     log.info(teacher.getEmail());
     Lecture tmpLecture = lectureRepository.getOne(lectureId);
     Calendar tmpCal = Calendar.getInstance();    
-    tmpCal.add(Calendar.HOUR_OF_DAY, -1);
-    tmpCal.add(Calendar.MONTH, 1);
+    tmpCal.add(Calendar.HOUR_OF_DAY, 1);
     
     try { 
-      if(tmpLecture.getStartTime2().before(tmpCal.getTime())) {
+      if(tmpLecture.getStartTime2().after(tmpCal.getTime())) {
     
       List<Student> listStudent = tmpLecture.getStudents();
       tmpLecture.setBookable(false);
@@ -211,11 +210,10 @@ public class TeacherServiceImpl implements TeacherService{
     log.info(teacher.getEmail());
     Lecture tmpLecture = lectureRepository.getOne(lectureId);
     Calendar tmpCal = Calendar.getInstance();    
-    tmpCal.add(Calendar.MINUTE, -30);
-    tmpCal.add(Calendar.MONTH, 1);
+    tmpCal.add(Calendar.MINUTE, 30);
 
     
-    try { if(tmpLecture.getStartTime2().before(tmpCal.getTime())) {
+    try { if(tmpLecture.getStartTime2().after(tmpCal.getTime())) {
       
       List<Student> listStudent = tmpLecture.getStudents();
       tmpLecture.setBookable(false);
@@ -295,8 +293,30 @@ public class TeacherServiceImpl implements TeacherService{
 
     student.addLecturePresence(lecture);
     lecture.addStudentPresent(student);
-
+    lectureRepository.save(lecture);
+    lectureRepository.flush();
     return ("Presence added");
 
   }  
+
+  @Override
+  public List<LectureDTO> getCurrentLectures(String id) throws InvalidTeacherException {
+    if(id.equals("-1")) {
+      throw new InvalidTeacherException(TEACHER_NULL);
+    }
+    if(!teacherRepository.existsById(id)) {
+      throw new InvalidTeacherException(TEACHER_NULL);
+    }
+      
+      Calendar tmpCal = Calendar.getInstance();
+
+    return  teacherRepository.getOne(id)
+        .getLectures()
+        .stream()
+        .filter(x -> { try { return x.getEndTime2().after(tmpCal.getTime()) && x.getStartTime2().before(tmpCal.getTime())
+          && x.isBookable(); } 
+          catch (ParseException e) {log.throwing(this.getClass().getName(), "getPastLectures", e); return false;} })
+        .map(l -> modelMapper.map(l,LectureDTO.class))
+        .collect(Collectors.toList());
+  }
 }

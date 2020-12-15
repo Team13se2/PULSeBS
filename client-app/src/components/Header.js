@@ -35,13 +35,19 @@ const Header = (props) => {
             <Nav className="mr-auto">
             <Nav.Link as={NavLink} exact to="/teacher" > Lectures</Nav.Link> 
             <Nav.Link as={NavLink} to="/teacher/pastLectures/" > Past Lectures</Nav.Link> 
-            <Nav.Link as={NavLink} to="/teacher/attendance/" > Attendance</Nav.Link> 
+            <Nav.Link as={NavLink} to="/teacher/current/" > Current Lecture</Nav.Link> 
           </Nav>
         </Route>
         <Route path="/booking_manager/">
             <Nav className="mr-auto">
             <Nav.Link as={NavLink} exact to="/booking_manager" > Graph</Nav.Link> 
             <Nav.Link as={NavLink} to="/booking_manager/contact_tracing/" > Contact Tracing</Nav.Link> 
+            </Nav>
+        </Route>
+        <Route path="/support_officer/">
+            <Nav className="mr-auto">
+            <Nav.Link as={NavLink} exact to="/support_officer" >Upload</Nav.Link> 
+            <Nav.Link as={NavLink} to="/support_officer/update/" > Update List</Nav.Link> 
             </Nav>
         </Route>
 

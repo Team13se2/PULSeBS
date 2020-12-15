@@ -10,9 +10,7 @@ import org.springframework.context.annotation.Primary;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 
-import team13.pulsbes.entities.BookingManager;
-import team13.pulsbes.entities.SupportOfficer;
-import team13.pulsbes.entities.Teacher;
+import team13.pulsbes.entities.*;
 import team13.pulsbes.repositories.BookingManagerRepository;
 import team13.pulsbes.repositories.CourseRepository;
 import team13.pulsbes.repositories.LectureRepository;
@@ -85,7 +83,7 @@ public class PulsbesApplication {
 			
 			@Override
 			public void run(String... args) throws Exception {
-
+/*
 				SupportOfficer so = new SupportOfficer();
 				so.setId("1");
 				so.setEmail("support@officer.politu.it");
@@ -101,7 +99,7 @@ public class PulsbesApplication {
 				b.setSurname("Booking");
 				b.setPsw("psw");
 				bookingRepository.save(b);
-
+*/
 //		studentRepository.deleteAll();
 //		courseRepository.deleteAll();
 //		lectureRepository.deleteAll();
@@ -125,6 +123,17 @@ public class PulsbesApplication {
 			    File fss = new File(csvFileSS);
 			    officerService.addScheduleList(fss);*/
 //			    officerService.addLectureList(fss);
+
+
+
+
+				/*studentRepository.getOne("902799").getWaitingLectures().remove(lectureRepository.getOne(5514));
+				lectureRepository.getOne(5514).getStudentswaiting().remove(studentRepository.getOne("902799"));
+				studentRepository.save(s2);
+				lectureRepository.save(l2);
+*/
+
+
 
 			}
 		};
