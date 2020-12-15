@@ -29,6 +29,7 @@ const Header = (props) => {
           <Nav.Link as={NavLink} exact to="/student/" onClick = {() => console.log("clk Lectures")}> Lectures</Nav.Link> 
           <Nav.Link as={NavLink} exact to="/student/noBookedLectures" onClick = {() => console.log("clk Lectures")}> Prenotation</Nav.Link> 
           <Nav.Link as={NavLink} to="/student/calendar" onClick = {() => console.log("clk calendar")}> Calendar</Nav.Link> 
+          <Nav.Link as={NavLink} to="/student/waitingLectures" onClick = {() => console.log("clk calendar")}> Waiting Lectures</Nav.Link> 
         </Nav>
         </Route>
         <Route path="/teacher/">

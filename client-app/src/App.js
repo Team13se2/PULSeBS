@@ -24,6 +24,7 @@ import ContactTracing from './components/ContactTracing';
 import SupportOfficerMainPage from './components/SupportOfficerMainPage';
 import CurrentLectures from './components/CurrentLectures';
 import SupportOfficerUpdate from './components/SupportOfficerUpdate';
+import LecturesWaitingList from './components/LecturesWaitingList';
 
 class App extends React.Component {
     constructor(props) {
@@ -211,6 +212,13 @@ class App extends React.Component {
             console.log(err);
         })
     }
+    waitingLectures = () =>{
+        API.getWaitingLecture().then((lecture) =>{
+            this.setState({bookedLectures: lecture});
+        }).catch((err) =>{
+            console.log(err);
+        })
+    }
 
 
     render() {
@@ -261,6 +269,17 @@ class App extends React.Component {
                                     className="below-nav">
                                     <h1>No Booked Lectures</h1>
                                     <LecturesTableNoBooked lectures={this.state.noBookedLectures} getLectures={this.getNoBookedLectures} remove={false} job={this.bookLecture} job2={this.addWaitingList}/>
+                                </Col>
+                                <Col sm={1}/>
+                            </Row>
+                        </Route>
+                        <Route exact path="/student/waitingLectures">
+                            <Row className="vheight-0">
+                                <Col sm={1}/>
+                                <Col sm={8}
+                                    className="below-nav">
+                                    <h1>You are in a waiting list for:</h1>
+                                    <LecturesWaitingList lectures={this.state.bookedLectures} getLectures={this.waitingLectures} remove={false} job={this.bookLecture} job2={this.addWaitingList}/>
                                 </Col>
                                 <Col sm={1}/>
                             </Row>

@@ -284,6 +284,19 @@ async function updateListSupportOfficer(year,dateStart,dateEnd,type) {
     });
 }
 
+async function getWaitingLecture(){
+    let url = "/student/getWaitingLectures";
+
+    const response = await fetch(baseURL + url);
+    const lecturesJSON = await response.json();
+    if(response.ok){
+        return lecturesJSON.map((l) => new LectureDTO(l.id,l.code,l.startTime,l.endTime,l.subjectName,l.availableSeat,l.totalSeat,l.roomName,l.nrStudentsBooked,l.nrStudentsPresent,l.bookable));
+    } else {
+        let err = {status: response.status, errObj:lecturesJSON};
+        throw err;  // An object with the error coming from the server
+    }
+}
+
 
 
 const API = {isAuthenticated,userLogin,userLogout,getAllLectures,
@@ -291,5 +304,6 @@ const API = {isAuthenticated,userLogin,userLogout,getAllLectures,
     getNoBookedLectures,getBookedLectures,
     bookLecture,removeStudentLecture,removeTeacherLecture,
     getPastLectures,getAllLecturesBookingManager,
-    uploadStudentCSV,addPresence,getCurrentLectureTeacher,updateListSupportOfficer} ;
+    uploadStudentCSV,addPresence,getCurrentLectureTeacher,updateListSupportOfficer,
+    getWaitingLecture} ;
 export default API;
