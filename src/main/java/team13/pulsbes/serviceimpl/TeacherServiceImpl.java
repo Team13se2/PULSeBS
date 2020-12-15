@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import team13.pulsbes.dtos.LectureDTO;
 import team13.pulsbes.dtos.StudentDTO;
+import team13.pulsbes.dtos.StudentPresence;
 import team13.pulsbes.entities.Lecture;
 import team13.pulsbes.entities.Teacher;
 import team13.pulsbes.entities.Student;
@@ -24,6 +25,7 @@ import java.util.logging.Logger;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Objects;
@@ -106,12 +108,12 @@ public class TeacherServiceImpl implements TeacherService{
   }
 
   @Override
-  public Map<StudentDTO, Boolean> getStudentList(Integer id) throws InvalidLectureException, InvalidTeacherException {
+  public List<StudentPresence> getStudentList(Integer id) throws InvalidLectureException, InvalidTeacherException {
     if(id.equals(-1)) {
       throw new InvalidLectureException(LECTURE_NULL);
     }
 
-    Map<StudentDTO, Boolean> hm = new HashMap<StudentDTO, Boolean>();
+    List<StudentPresence> list = new ArrayList<>();
 
     List<Student> listStudent = lectureRepository.getOne(id)
     .getStudents()
@@ -120,10 +122,10 @@ public class TeacherServiceImpl implements TeacherService{
     .collect(Collectors.toList());
 
     for (Student tmpStudent : listStudent) {
-      hm.put(modelMapper.map(tmpStudent,StudentDTO.class), lectureRepository.getOne(id).getStudentsPresent().contains(tmpStudent));
+      list.add(new StudentPresence(modelMapper.map(tmpStudent,StudentDTO.class), lectureRepository.getOne(id).getStudentsPresent().contains(tmpStudent)) );
     }
 
-    return  hm;
+    return  list;
   }
 @Override
   public String cancelLecture(Integer lectureId, String teacherId) throws InvalidLectureException, InvalidCourseException, InvalidTeacherException{
