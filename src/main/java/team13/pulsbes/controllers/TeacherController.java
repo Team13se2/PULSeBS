@@ -129,6 +129,20 @@ public class TeacherController {
 			return Collections.emptyList();
 		}
 	}
+	@GetMapping(value = Constants.GET_CURRENT_LECTURES)
+	public List<LectureDTO> getCurrentLectures(@CookieValue(value = "username") String username,@CookieValue(value = "id") String id, @CookieValue(value = "type") String type) throws InvalidTeacherException{
+		try {
+			if (type.equals(TYPE_TEACHER)) {
+			//List<LectureDTO> l = teacherService.getPastLectures(id);			
+			return teacherService.getCurrentLectures(id);
+		}
+		else return Collections.emptyList();
+
+		} catch (InvalidTeacherException e) {
+			log.throwing(this.getClass().getName(), "getCurrentLectures", e);
+			return Collections.emptyList();
+		}
+	}
 	@PostMapping(value = Constants.ADD_PRESENCE)
 	public String addPresence(@RequestBody LectureIdStudentId lectureIdStudentId, @CookieValue(value = "type") String type) throws InvalidLectureException, InvalidStudentException{
 		try {
