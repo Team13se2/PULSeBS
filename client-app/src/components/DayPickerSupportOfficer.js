@@ -25,6 +25,7 @@ class DayPickerSupportOfficer extends React.Component {
   handleDayClick(day) {
     const range = DateUtils.addDayToRange(day, this.state);
     this.setState(range);
+    this.props.setRange(range);
   }
 
   handleResetClick() {
