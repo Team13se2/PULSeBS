@@ -53,17 +53,9 @@ class TestGetStudentList {
 		l.setStudentsPresent(presents);
 		l.addStudentAttending(s);
 		when(lectureRepository.getOne(any())).thenReturn(l);
-<<<<<<< HEAD
+
 		when(modelMapper.map(any(), any())).thenReturn(sDto);
 		assertEquals("1", teacherService.getStudentList(1).get(0).getStudent().getId());
-=======
-		when(modelMapper.map(any(),any())).thenReturn(sDto);
-		when(teacherRepository.existsById(any())).thenReturn(true);
-		assertEquals(s.getId(),sDto.getId());
 
-		//assertEquals(s.getId(),teacherService.getStudentList(1).get(0).getId());
-		assertEquals(s.getId(),teacherService.getStudentList(1).get(0));
-
->>>>>>> 0dbd7ddfb8764ec3c47b423d4cbe18175e630fb7
 	}
 }

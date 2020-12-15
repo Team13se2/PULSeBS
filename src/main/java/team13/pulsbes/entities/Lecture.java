@@ -303,10 +303,6 @@ public class Lecture {
 		this.day = day;
 	}
 
-	public void setStudentsPresent(List<Student> studentsPresent) {
-		this.studentsPresent = studentsPresent;
-	}
-
 
 
 }
