@@ -25,11 +25,12 @@ import SupportOfficerMainPage from './components/SupportOfficerMainPage';
 import CurrentLectures from './components/CurrentLectures';
 import SupportOfficerUpdate from './components/SupportOfficerUpdate';
 import LecturesWaitingList from './components/LecturesWaitingList';
+import ListCovid from './components/ListCovid';
 
 class App extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {noBookedLectures: [],bookedLectures: [],teacherLecture:[],bookingManagerLecture: []};
+        this.state = {noBookedLectures: [],bookedLectures: [],teacherLecture:[],bookingManagerLecture: [],listCOVID:[]};
     }
 
     componentDidMount() { // check if the user is authenticated
@@ -191,10 +192,6 @@ class App extends React.Component {
         this.setState({nrStudents: sum/(nrLectures == 0 ? 1: nrLectures)});
     }
 
-    addIdContactTracing = (id) =>{
-        console.log("call API with "+id);
-    }
-
     setPresence = (studentId,lectureId) =>{
         console.log("call API with studentID");
         API.addPresence(studentId,lectureId).then(() =>{
@@ -217,6 +214,14 @@ class App extends React.Component {
             this.setState({bookedLectures: lecture});
         }).catch((err) =>{
             console.log(err);
+        })
+    }
+
+    addIdContactTracing = (id) =>{
+        API.getContactReport(id).then((list) =>{
+            this.setState({listCOVID: list});
+        }).catch((err) =>{
+            //throw err;
         })
     }
 
@@ -439,11 +444,15 @@ class App extends React.Component {
                     <Route exact path="/booking_manager/contact_tracing/">
                             <Row className="">
                                 <Col sm={4}/>
-                                <Col sm={4}
+                                <Col sm={2}
                                     className="below-nav">
                                     <ContactTracing addIdContactTracing={this.addIdContactTracing}/>
                                 </Col>
-                                <Col sm={4}/>
+                                <Col sm={4}
+                                    className="below-nav">
+                                    <ListCovid listCOVID={this.state.listCOVID}/>
+                                </Col>
+                                <Col sm={2}/>
                             </Row>
                     </Route>
                     </Switch>
