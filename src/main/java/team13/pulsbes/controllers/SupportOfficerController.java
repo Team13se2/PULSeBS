@@ -91,7 +91,7 @@ public class SupportOfficerController {
 		}
 	}
 	@PostMapping(value = Constants.REMOVE_LECTURES)
-	public void removeLectures(@RequestParam("year ") String year, @RequestParam("dateStart") String dateStart, @RequestParam("dateEnd") String dateEnd, @CookieValue(value = "username") String username,@CookieValue(value = "type")String type) throws InvalidUserException {
+	public void removeLectures(@RequestParam("year") String year, @RequestParam("dateStart") String dateStart, @RequestParam("dateEnd") String dateEnd, @CookieValue(value = "username") String username,@CookieValue(value = "type")String type) throws InvalidUserException {
 			if(type.equals(TYPE_SUPPORT)) {
 			officerService.removeLectures(year, dateStart, dateEnd);			
 		}
@@ -100,7 +100,7 @@ public class SupportOfficerController {
 		}
 	}
 	@PostMapping(value = Constants.READD_LECTURES)
-	public void readdLectures(@RequestParam("year ") String year, @RequestParam("dateStart") String dateStart, @RequestParam("dateEnd") String dateEnd, @CookieValue(value = "username") String username,@CookieValue(value = "type")String type) throws InvalidUserException {
+	public void readdLectures(@RequestParam("year") String year, @RequestParam("dateStart") String dateStart, @RequestParam("dateEnd") String dateEnd, @CookieValue(value = "username") String username,@CookieValue(value = "type")String type) throws InvalidUserException {
 			if(type.equals(TYPE_SUPPORT)) {
 			officerService.readdLectures(year, dateStart, dateEnd);			
 		}
