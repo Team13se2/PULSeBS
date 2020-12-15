@@ -297,6 +297,19 @@ async function getWaitingLecture(){
     }
 }
 
+async function getContactReport(studentId){
+    let url = "/booking_manager/getContactReport?studentId="+studentId;
+
+    const response = await fetch(baseURL + url);
+    const responseJSON = await response.json();
+    if(response.ok){
+        return responseJSON.map((l) => new StudentDTO(l.student.name,l.student.id,l.student.email,l.student.surname));
+    } else {
+        let err = {status: response.status, errObj:responseJSON};
+        throw err;  // An object with the error coming from the server
+    }
+}
+
 
 
 const API = {isAuthenticated,userLogin,userLogout,getAllLectures,
@@ -305,5 +318,5 @@ const API = {isAuthenticated,userLogin,userLogout,getAllLectures,
     bookLecture,removeStudentLecture,removeTeacherLecture,
     getPastLectures,getAllLecturesBookingManager,
     uploadStudentCSV,addPresence,getCurrentLectureTeacher,updateListSupportOfficer,
-    getWaitingLecture} ;
+    getWaitingLecture,getContactReport} ;
 export default API;

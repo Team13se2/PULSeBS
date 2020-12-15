@@ -5,10 +5,7 @@ import java.util.List;
 import java.util.logging.Logger;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CookieValue;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import team13.pulsbes.dtos.LectureDTO;
 import team13.pulsbes.dtos.StudentDTO;
@@ -34,7 +31,7 @@ public class BookingManagerController {
 			return Collections.emptyList();
 	}
 	@GetMapping(value = Constants.GET_CONTACT_REPORT)
-	public List<StudentDTO> getContactReport(String studentId,@CookieValue(value = "type") String type) throws InvalidStudentException {
+	public List<StudentDTO> getContactReport(@RequestParam("studentId") String studentId, @CookieValue(value = "type") String type) throws InvalidStudentException {
 		if(type.equals(TYPE_BOOKING_MANAGER))
 			return bookingService.getContactReport(studentId);
 		else
