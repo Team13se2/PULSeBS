@@ -70,7 +70,7 @@ const CurrentLectures = (props) => {
                           <td>{lecture.startTime}</td>                          
                           <td>{lecture.endTime}</td>
                           <td>{lecture.roomName}</td>
-                          <td><button type="button" className="btn btn-success" onClick={()=>openModal(lecture.code)}>Presence </button></td>
+                          <td><button type="button" className="btn btn-success" onClick={()=>openModal(lecture.id)}>Presence </button></td>
                           
                         </tr>
                     ))}
