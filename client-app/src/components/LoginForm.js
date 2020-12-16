@@ -69,7 +69,11 @@ class LoginForm extends React.Component {
                                 </Form.Group>
                                 
                             <div style={{display: 'flex', justifyContent: 'center'}}>
-                                <Button variant="primary" type="submit">Login</Button>
+                                <Button 
+                                variant="primary" 
+                                type="submit"
+                                size="lg"
+                                >Login</Button>
                             </div>
                                 
 
