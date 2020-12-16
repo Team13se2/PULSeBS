@@ -68,7 +68,7 @@ public class BookingManagerServiceImpl implements BookingManagerService{
 
 		for (Course tmpCourse : listCourse) {
 			lectureRepository.findAll().forEach(l -> {
-				if (l.getCode().equals(tmpCourse.getName())) {
+				if (l.getCode().equals(tmpCourse.getCode())) {
 					listLecture.add(l);
 				}
 			});
