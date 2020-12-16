@@ -37,7 +37,10 @@ public class BookingManagerServiceImpl implements BookingManagerService{
 	public void addModelMapper(ModelMapper mm) {
 		this.modelMapper = mm;
 	}
-
+	public void addStudentRepository(StudentRepository studentRepository) {
+		this.studentRepository = studentRepository;
+	}
+	
 	Logger log = Logger.getLogger("StudentServiceImpl");
 
     private static final String STUDENT_NULL = "Student can't be null";
