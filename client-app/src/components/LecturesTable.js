@@ -46,7 +46,7 @@ const LecturesTable = (props) => {
                           <td>{lecture.startTime}</td>                          
                           <td>{lecture.endTime}</td>
                           <td>{lecture.roomName}</td>
-                          <td>
+                          <td style={{display: 'flex', justifyContent: 'center'}}>
                           {remove && <button type="button" className="btn btn-outline-danger" onClick={() => job(lecture.id)}> 
                               Remove
                           </button> }

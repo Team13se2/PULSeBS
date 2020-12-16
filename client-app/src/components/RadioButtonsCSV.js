@@ -13,8 +13,8 @@ const RadioButtonsCSV = (props) => {
     }
    return(
        <>
-        <p>Please select the list which has to be updated:</p>
-        <div onChange={onChangeValue}>
+        <h3 ><b> Please select the list which has to be updated:</b></h3><br></br>
+        <div onChange={onChangeValue} >
             <div><label><input type="radio" id="students" name="list" value="students" checked={CSV === "students" ? 1 : 0}/>Students</label></div>
             <div><label><input type="radio" id="teachers" name="list" value="teachers" />Teachers</label></div>
             <div><label><input type="radio" id="courses" name="list" value="courses" />Courses</label></div>

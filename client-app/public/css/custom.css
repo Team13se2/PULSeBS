@@ -78,9 +78,16 @@ body{
 }
 .loginColumn > div{
     border-style: groove;
-    border-color: #007bff;
+  
     box-shadow: 5px 10px #007bff;
-    border-width: 2px;
+    
+    border-style: groove;
+    border-color: #007bff;
+    
+    border-width: 3px;
+    border-radius: 15px;
+    padding: 5%;
+    margin: 2%;
 }
 a.nav-link.active{
     font-weight: bold;
