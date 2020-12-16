@@ -419,8 +419,7 @@ class App extends React.Component {
                                 <Col sm={10}
                                     className="below-nav">
                                     <h1>Next Lectures</h1>
-                                    <LecturesTableTeacher lectures={this.state.teacherLecture} past={false} getLectures={this.getAllLecturesTeacher} job={(lecture_id) => this.getStudentList(lecture_id)} students={this.state.students} job2={(lecture_id) =>this.removeTeacherLecture(lecture_id)} setPresence={(studentId,lectureId) =>this.setPresence(studentId,lectureId)}/>
-                                </Col>
+                                    <LecturesTableTeacher lectures={this.state.teacherLecture} past={false} getLectures={this.getAllLecturesTeacher} job={(lecture_id) => this.getStudentList(lecture_id)} students={this.state.students} job2={(lecture_id) =>this.removeTeacherLecture(lecture_id)} />                                </Col>
                                 <Col sm={1}/>
                             </Row>
                         </Route>

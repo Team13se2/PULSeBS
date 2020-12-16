@@ -18,7 +18,7 @@ const customStyles = {
 
 const LecturesTableTeacher = (props) => {
 
-    let {lectures,getLectures,job,students,job2,setPresence,past} = props;
+    let {lectures,getLectures,job,students,job2,past} = props;
     // same as componentDidMount()
     useEffect(() => {
       getLectures();
@@ -108,7 +108,6 @@ const LecturesTableTeacher = (props) => {
                       <th>Name</th>
                       <th>Surname</th>
                       <th>Email</th> 
-                      <th>Present</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -118,9 +117,6 @@ const LecturesTableTeacher = (props) => {
                   <td>{student.name}</td>
                   <td>{student.surname}</td>
                   <td>{student.email}</td>
-                  <td><button type="button" className="btn btn-success" disabled={student.presence} onClick={()=>setPresence(student.id,lecture_id)}>Present 
-                  </button>
-                  </td>
                   </tr>
                 ))}        
                 </tbody>
