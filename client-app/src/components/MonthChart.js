@@ -15,7 +15,7 @@ const MonthChart = (props) => {
     const [option,setOption] = React.useState("");
 
     function getLecturesPerMonth(){
-        let onlyMonthAndPeople = lectures.map(l => {return {startTime: l.startTime, nrStudentsPresent: l.nrStudents,nrStudentsBooked:l.nrStudentsBooked }});
+        let onlyMonthAndPeople = lectures.map(l => {return {startTime: l.startTime, nrStudentsPresent: l.nrStudentsPresent,nrStudentsBooked:l.nrStudentsBooked }});
         let months = [];
         let monthsBooked = [];
         months.push({numMonth: 0,month: "jan",sum: 0});months.push({numMonth: 1,month: "feb",sum: 0});months.push({numMonth: 2,month: "mar",sum: 0});
