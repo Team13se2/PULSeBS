@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -55,7 +56,9 @@ class TestGetAllLectures {
 		Lecture l = new Lecture();
 		l.setBookable(true);
 		l.setId(1);
-		l.addStartTime(2030, 1, 1, 0, 0);
+		Calendar tmp = Calendar.getInstance();
+		tmp.add(Calendar.DAY_OF_MONTH, 1);
+		l.addStartTime(tmp.get(Calendar.YEAR), tmp.get(Calendar.MONTH), tmp.get(Calendar.DATE), 0, 0);
 		l.setCode("X");
 		List<Lecture> lectures = new ArrayList<>();
 		lectures.add(l);
