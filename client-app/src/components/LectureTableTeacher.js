@@ -45,14 +45,14 @@ const LecturesTableTeacher = (props) => {
       dateTime2 = moment(dateTime2,"YYYY-MM-DD HH:mm:ss");
       if(dateTime2.diff(dateTime1, 'minutes') > 60){
         return (<><button type="button"className="btn btn-outline-danger" onClick={() =>job2(lecture_id)}>Remove</button><br></br><br></br>
-        <button type="button"className="btn btn-outline-warning" onClick={() =>job2(lecture_id)}>Move Online</button></>);
+        <button type="button"className="btn btn-outline-primary" onClick={() =>job2(lecture_id)}>Move Online</button></>);
       }else{
         if(dateTime2.diff(dateTime1, 'minutes') > 30){
           return (<><button type="button" disabled className="btn btn-outline-danger" onClick={() =>job2(lecture_id)}>Remove</button><br></br><br></br>
-          <button type="button"className="btn btn-outline-warning" onClick={() =>job2(lecture_id)}>Move Online</button></>);
+          <button type="button"className="btn btn-outline-primary" onClick={() =>job2(lecture_id)}>Move Online</button></>);
         }else{
           return (<><button type="button" disabled className="btn btn-outline-danger" onClick={() =>job2(lecture_id)}>Remove</button><br></br><br></br>
-          <button type="button" disabled className="btn btn-outline-warning" onClick={() =>job2(lecture_id)}>Move Online</button></>);
+          <button type="button" disabled className="btn btn-outline-primary" onClick={() =>job2(lecture_id)}>Move Online</button></>);
         }
       }
     }
