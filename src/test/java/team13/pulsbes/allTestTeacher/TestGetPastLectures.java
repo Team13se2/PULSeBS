@@ -54,4 +54,9 @@ class TestGetPastLectures {
 		when(teacherRepository.existsById(any())).thenReturn(true);
 		assertEquals(l.getSubjectName(),teacherService.getPastLectures("1").get(0).getSubjectName());
 	}
+	@Test
+	void testGetPastLectures3() {
+		when(teacherRepository.existsById(any())).thenReturn(false);
+		assertThrows(InvalidTeacherException.class,()->teacherService.getPastLectures("1"));
+	}
 }

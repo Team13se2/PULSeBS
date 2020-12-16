@@ -47,5 +47,10 @@ class TestGetNumberStudentsAttending {
 	void testGetNumberStudentsAttending2() throws InvalidTeacherException, InvalidStudentException, InvalidLectureException {
 		assertThrows(InvalidLectureException.class, () -> teacherService.getNumberStudentsAttending(-1));
 	}
-
+	
+	@Test
+	void testGetNumberStudentsAttending3() throws InvalidTeacherException, InvalidStudentException, InvalidLectureException {
+		when(lectureRepository.existsById(any())).thenReturn(false);
+		assertThrows(InvalidLectureException.class, () -> teacherService.getNumberStudentsAttending(1));
+	}
 }

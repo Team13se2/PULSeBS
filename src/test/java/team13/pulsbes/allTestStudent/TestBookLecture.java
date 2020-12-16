@@ -46,9 +46,13 @@ class TestBookLecture {
 	@Test
 	void testBookLecture2() throws InvalidLectureException,InvalidStudentException {
 		Lecture l = new Lecture();
+		Student s = new Student();
+		l.getStudentswaiting().add(s);
 		l.setBookable(true);
 		l.setAvailableSeat(0);
 		Optional<Lecture> ol = Optional.of(l);
+		Optional<Student> os = Optional.of(s);
+		when(sr.findById(any())).thenReturn(os );
 		when(lr.findById(any())).thenReturn(ol);
 		assertEquals(bookingFailure,studentService.bookLecture(1, "2"));
 	}
@@ -72,5 +76,40 @@ class TestBookLecture {
 		doNothing().when(notificationService).sendMessage(isA(String.class), isA(String.class), isA(String.class));
 		assertEquals(bookingSuccess,studentService.bookLecture(1, "2"));
 	}
-	
+	@Test
+	void testBookLecture4() {
+		assertThrows(InvalidStudentException.class, ()->studentService.bookLecture(1, "-1"));
+	}
+	@Test
+	void testBookLecture5() throws InvalidLectureException, InvalidStudentException {
+		Student s = new Student();
+		Lecture l = new Lecture();
+		l.setBookable(false);
+		Optional<Lecture> ol = Optional.of(l);
+		when(sr.getOne(any())).thenReturn(s);
+		when(lr.findById(any())).thenReturn(ol);
+		assertEquals("Lecture was canceled", studentService.bookLecture(1, "2"));
+	}
+//	@Test
+//	void testBookLecture6() throws InvalidLectureException,InvalidStudentException {
+//		Lecture l = new Lecture();
+//		Teacher t = new Teacher();
+//		Student s2 = new Student();
+//		l.setBookable(true);
+//		t.setName("giovanni");
+//		t.setSurname("muchacha");
+//		l.setAvailableSeat(1);
+//		l.setStartTime("1010");
+//		l.setTeacher(t);
+//		l.setRoomName("aula");
+//		l.getQueue().put(s2.getId(),1);
+//		Student s = new Student("1","test","test");
+//		s.setEmail("fake@gmail.com");
+//		l.setSubjectName("test");		
+//		Optional<Lecture> ol = Optional.of(l);
+//		when(lr.findById(any())).thenReturn(ol);
+//		when(sr.getOne(any())).thenReturn(s);
+//		doNothing().when(notificationService).sendMessage(isA(String.class), isA(String.class), isA(String.class));
+//		assertEquals(bookingSuccess,studentService.bookLecture(1, "2"));
+//	}
 }
