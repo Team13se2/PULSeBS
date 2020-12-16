@@ -90,6 +90,22 @@ public class SupportOfficerController {
 			throw new InvalidUserException("Invalid User");
 		}
 	}
+	@PostMapping(value = Constants.ADD_LECTURES)
+	public void addLectures(@RequestBody String file,@CookieValue(value = "username") String username,@CookieValue(value = "type")String type) throws InvalidCourseException, InvalidStudentException, InvalidUserException, IOException {
+		File f = new File("Add_lectures.csv");
+		FileWriter myWriter = new FileWriter(f);
+		myWriter.write(file);
+		myWriter.close();
+		if(type.equals(TYPE_SUPPORT)) {
+			officerService.addScheduleList(f);
+			f.delete();
+		}
+		else {
+			myWriter.close();
+			f.delete();
+			throw new InvalidUserException("Invalid User");
+		}
+	}
 	@PostMapping(value = Constants.REMOVE_LECTURES)
 	public void removeLectures(@RequestParam("year") String year, @RequestParam("dateStart") String dateStart, @RequestParam("dateEnd") String dateEnd, @CookieValue(value = "username") String username,@CookieValue(value = "type")String type) throws InvalidUserException {
 			if(type.equals(TYPE_SUPPORT)) {

@@ -74,10 +74,11 @@ public class BookingManagerServiceImpl implements BookingManagerService{
 			});
 		}
 		List<Lecture> listAttendedLecture = listLecture.stream()
-                .filter(x -> { { try { return x.getStartTime2().before(tmpCal.getTime()) 
+                .filter(x -> { { try { return x.getStartTime2().after(tmpCal.getTime()) 
                     && studentRepository.getOne(studentId).getAttendedLectures().contains(x); } 
 					catch (ParseException e) {log.throwing(this.getClass().getName(), "getContactReport", e); return false;} } })
 				.collect(Collectors.toList());
+				
 
 		for (Lecture tmpLecture : listAttendedLecture) {
 			listStudent.addAll(tmpLecture.getStudentsPresent());

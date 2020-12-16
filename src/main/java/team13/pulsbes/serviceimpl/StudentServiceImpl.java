@@ -313,7 +313,7 @@ public class StudentServiceImpl implements StudentService {
             lectureSelected.get().getStudentswaiting().remove(currentStudent);
             studentRepository.save(currentStudent);
             lectureRepository.save(lectureSelected.get());
-            notificationService.sendMessage(currentStudent.getEmail(),
+            notificationService.sendMessage("student1team13@gmail.com",
                     "Booking confirmation for "+ lectureSelected.get().getSubjectName(),
                     "Dear " + currentStudent.getName() + currentStudent.getSurname() + " \n" +
                             "A slot opened up, so you can attend the lecture!" +

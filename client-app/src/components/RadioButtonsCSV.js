@@ -8,8 +8,7 @@ const RadioButtonsCSV = (props) => {
         selectListForCSV("students");
     }, []);
 
-    function onChangeValue(event) {
-        console.log(event.target.value);
+    function onChangeValue(event) {        
         selectListForCSV(event.target.value);
     }
    return(
