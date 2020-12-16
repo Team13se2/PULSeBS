@@ -70,7 +70,9 @@ public class OfficerService {
 			try {check1 = tmpLecture.getStartTime2().after(dateFormat.parse(dateStart));} catch (ParseException e) {log.throwing(this.getClass().getName(), "removeLectures", e);};
 			try {check2 = tmpLecture.getEndTime2().before(dateFormat.parse(dateEnd));} catch (ParseException e) {log.throwing(this.getClass().getName(), "removeLectures", e);};	
 			
-			if(courseRepository.findById(tmpLecture.getCode()).get().getYear().equals(year) && check1 && check2) {				
+			
+			if(courseRepository.findById(tmpLecture.getCode()).get().getYear().equals(year) && check1 && check2) {			
+				
 				tmpLecture.setBookable(false);
 				lectureRepository.save(tmpLecture);
 				lectureRepository.flush();
