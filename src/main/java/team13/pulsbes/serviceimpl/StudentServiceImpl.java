@@ -130,10 +130,9 @@ public class StudentServiceImpl implements StudentService {
 
         List<Course> listCourse = studentRepository.getOne(id).getCourses();
         List<Lecture> listLecture = new ArrayList<>();
-        Calendar tmpCal = Calendar.getInstance();
-
-        System.out.println(listCourse);
-
+        Calendar tmpCal1 = Calendar.getInstance();
+        Calendar tmpCal2 = Calendar.getInstance();
+        tmpCal2.add(Calendar.DAY_OF_MONTH, 7);    
 
         for (Course tmpCourse : listCourse) {
             lectureRepository.findAll().forEach(l -> {
@@ -153,10 +152,11 @@ public class StudentServiceImpl implements StudentService {
                     { try  {
 
 
-                        return x.getStartTime2().after(tmpCal.getTime())
-                    && !studentRepository.getOne(id).getBookedLectures().contains(x)
-                    && !studentRepository.getOne(id).getWaitingLectures().contains(x)
-                    && x.isBookable(); }
+                        return x.getStartTime2().after(tmpCal1.getTime())
+                        && x.getStartTime2().before(tmpCal2.getTime())
+                        && !studentRepository.getOne(id).getBookedLectures().contains(x)
+                        && !studentRepository.getOne(id).getWaitingLectures().contains(x)
+                        && x.isBookable(); }
 
                     catch (ParseException e)
 
@@ -182,7 +182,7 @@ public class StudentServiceImpl implements StudentService {
         return studentRepository.getOne(id)
                 .getBookedLectures()
                 .stream()
-                .filter(x -> { try { return x.getStartTime2().after(tmpCal.getTime())
+                .filter(x -> { try { return x.getEndTime2().after(tmpCal.getTime())
                     && x.isBookable(); } 
                     catch (ParseException e) {log.throwing(this.getClass().getName(), "getBookedLectures", e); return false;} })
                 .map(l -> modelMapper.map(l, LectureDTO.class))
