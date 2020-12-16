@@ -48,7 +48,7 @@ public class PulsbesApplication {
 		mailSender.setPort(587);
 
 		mailSender.setUsername("team13se2@gmail.com");
-		mailSender.setPassword("luyxcxvvvpzpmwrd");
+		mailSender.setPassword("tczczjpgxbcauilb");
 
 		Properties props = mailSender.getJavaMailProperties();
 		props.put("mail.transport.protocol", "smtp");

@@ -219,9 +219,10 @@ class App extends React.Component {
 
     addIdContactTracing = (id) =>{
         API.getContactReport(id).then((list) =>{
+            console.log(list);
             this.setState({listCOVID: list});
         }).catch((err) =>{
-            //throw err;
+            throw err;
         })
     }
 
