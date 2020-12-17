@@ -65,16 +65,18 @@ class SupportOfficerMainPage extends React.Component {
             <AuthContext.Consumer>
             {(context) => (
                 <>
-                {this.state.loading && <><Col sm={2} className="below-nav" /><Loader /></>}
-                {!this.state.loading && <><Col sm={2} className="below-nav"> <RadioButtonsCSV selectListForCSV={(e) =>{this.selectListForCSV(e)}} CSV={this.state.csv}/></Col>
-                    <Col sm={8}
-                        className="below-nav">
-                        <h1>Upload a file</h1>
-                        {<UploadFiles uploadStudentCSV={this.uploadStudentCSV}/>}
-                        <Row>
-                            {this.state.response !== "" && <h3 style={{color: "red"}}>{this.state.response}</h3>}
-                        </Row>
-                    </Col>
+                <Col sm={1}/>
+                {this.state.loading && <><Col sm={3} className="below-nav" /><Loader /></>}
+                {!this.state.loading && <><Col sm={3} className="below-nav"> <RadioButtonsCSV selectListForCSV={(e) =>{this.selectListForCSV(e)}} CSV={this.state.csv}/></Col>
+                <Col sm={1}/>
+                <Col sm={6}
+                    className="below-nav">
+                    <h2 style={{display: 'flex', justifyContent: 'center'}}><b> Upload a file</b></h2>
+                    {<UploadFiles uploadStudentCSV={this.uploadStudentCSV}/>}
+                    <Row>
+                        {this.state.response !== "" && <h3 style={{color: "red"}}>{this.state.response}</h3>}
+                    </Row>
+                </Col>
                 <Col sm={1}/></>}
 
                 </>

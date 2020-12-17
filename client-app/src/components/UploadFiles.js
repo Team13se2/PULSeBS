@@ -1,6 +1,7 @@
 import React, {useMemo,useCallback,useEffect} from 'react'
 import {useDropzone} from 'react-dropzone'
 import Col from 'react-bootstrap/Col';
+import Row from 'react-bootstrap/Row';
 
 const baseStyle = {
     flex: 1,
@@ -82,21 +83,31 @@ const UploadFiles = (props) => {
     ]);
   
     return (
-      <>
-        <Col sm={8}>
-          <div className="container">
+      <><Row>
+        <Col sm={12}><br></br>
+          <div className="container" style={{display: 'flex', justifyContent: 'center'}}>
             <div {...getRootProps({style})}>
               <input {...getInputProps()} />
               <p>Drag 'n' drop some files here, or click to select files</p>
             </div>
-            <aside>
-            <h4>Accepted files</h4>
+            
+          </div>
+        </Col>
+      </Row>
+      <Row>
+      <Col sm={12}><br></br>
+          <div className="container" style={{display: 'flex', justifyContent: 'center'}}>
+            
+            <aside style={{display: 'flex', justifyContent: 'center'}}><br></br><br></br>
+            <h4><br></br>Accepted files</h4>
             <ul>{acceptedFileItems}</ul>
-            <h4>Rejected files</h4>
+            <h4><br></br>Rejected files</h4>
             <ul>{fileRejectionItems}</ul>
           </aside>
           </div>
         </Col>
+      </Row>
+        
       </>
     );
   }

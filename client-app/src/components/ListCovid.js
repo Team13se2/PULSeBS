@@ -17,7 +17,7 @@ const ListCovid = (props) => {
           {(context) => (
               <>
            <Table responsive striped bordered hover>
-                <thead>
+                <thead >
                     <tr>
                       <th>Id</th>
                       <th>Name</th>

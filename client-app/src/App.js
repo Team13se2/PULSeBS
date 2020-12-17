@@ -254,7 +254,7 @@ class App extends React.Component {
                         <Route exact path="/student/calendar">
                             <Row className="vheight-0">
                                 <Col sm={1}/>
-                                <Col sm={8}className="below-nav">
+                                <Col sm={10}className="below-nav">
                                     <MyCalendar lectures={this.state.bookedLectures.map(function(elem) {
                                         const format = "YYYY-MM-DD HH:mm:ss";
                                         return {
@@ -271,9 +271,9 @@ class App extends React.Component {
                         <Route exact path="/student/noBookedLectures">
                             <Row className="vheight-0">
                                 <Col sm={1}/>
-                                <Col sm={8}
+                                <Col sm={10}
                                     className="below-nav">
-                                    <h1>No Booked Lectures</h1>
+                                    <h1>No Booked Lectures</h1><br></br>
                                     <LecturesTableNoBooked lectures={this.state.noBookedLectures} getLectures={this.getNoBookedLectures} remove={false} job={this.bookLecture} job2={this.addWaitingList}/>
                                 </Col>
                                 <Col sm={1}/>
@@ -282,9 +282,9 @@ class App extends React.Component {
                         <Route exact path="/student/waitingLectures">
                             <Row className="vheight-0">
                                 <Col sm={1}/>
-                                <Col sm={8}
+                                <Col sm={10}
                                     className="below-nav">
-                                    <h1>You are in a waiting list for:</h1>
+                                    <h1>You are in a waiting list for:</h1><br></br>
                                     <LecturesWaitingList lectures={this.state.bookedLectures} getLectures={this.waitingLectures} remove={false} job={this.bookLecture} job2={this.addWaitingList}/>
                                 </Col>
                                 <Col sm={1}/>
@@ -295,7 +295,7 @@ class App extends React.Component {
                                 <Col sm={1}/>
                                 <Col sm={10}
                                     className="below-nav">
-                                    <h1>Booked Lectures</h1>
+                                    <h1>Booked Lectures</h1><br></br>
                                     <LecturesTable lectures={this.state.bookedLectures} getLectures={this.getBookedLectures} remove={true} job={this.removeLecture}/>
                                 </Col>
                                 <Col sm={1}/>
@@ -313,84 +313,88 @@ class App extends React.Component {
                                     </Col>
                                     <Switch>
                                         <Route exact path="/teacher/pastLectures/all">
-                                            <Col sm={8}
+                                            <Col sm={10}
                                                 className="below-nav">
-                                                <h1>Past Lectures</h1>
+                                                <h1>Past Lectures</h1><br></br>
                                                 <LecturesTableTeacher lectures={this.state.teacherLecture} past={true} getLectures={this.getPastLecturesTeacher}/>
                                             </Col>
-                                            <Col sm={1}/>
+                                            
                                         </Route>
                                         <Route exact path="/teacher/pastLectures/week">
+                                            <Col sm={2}/>
                                             <Col sm={3}
                                                 className="below-nav">
                                                 <h1>Week</h1>
                                                 <Day_Picker selectWeek={this.selectWeek}/>
                                                 
                                             </Col>
-                                            <Col sm={3} className="below-nav">
+                                            <Col sm={1}/>
+                                            <Col sm={3} className="below-nav"><br></br><br></br><br></br><br></br><br></br>
                                                 {this.state.nrStudents !== undefined && <h1>There are {this.state.nrStudents.toFixed(1)} booked per lecture</h1>}
                                             </Col>
                                             <Col sm={1}/>
                                         </Route>
                                         <Route path="/teacher/pastLectures/month">
+                                            <Col sm={2}/>
                                             <Col sm={8}
                                                 className="below-nav">
                                                     <Switch>
                                                         <Route exact path="/teacher/pastLectures/month/January">
                                                             <MonthNrStudents selectMonth={this.selectMonth} month={0}/>
-                                                            <h1>January</h1>
+                                                            <h1><b>January</b></h1>
                                                         </Route>
                                                         <Route exact path="/teacher/pastLectures/month/February">
                                                             <MonthNrStudents selectMonth={this.selectMonth} month={1}/>
-                                                            <h1>February</h1>
+                                                            <h1><b>February</b></h1>
                                                         </Route>
                                                         <Route exact path="/teacher/pastLectures/month/March">
                                                             <MonthNrStudents selectMonth={this.selectMonth} month={2}/>
-                                                            <h1>March</h1>
+                                                            <h1><b>March</b></h1>
                                                         </Route>
                                                         <Route exact path="/teacher/pastLectures/month/April">
                                                             <MonthNrStudents selectMonth={this.selectMonth} month={3}/>
-                                                            <h1>April</h1>
+                                                            <h1><b>April</b></h1>
                                                         </Route>
                                                         <Route exact path="/teacher/pastLectures/month/May">
                                                             <MonthNrStudents selectMonth={this.selectMonth} month={4}/>
-                                                            <h1>May</h1>
+                                                            <h1><b>May</b></h1>
                                                         </Route>
                                                         <Route exact path="/teacher/pastLectures/month/June">
                                                             <MonthNrStudents selectMonth={this.selectMonth} month={5}/>
-                                                            <h1>June</h1>
+                                                            <h1><b>June</b></h1>
                                                         </Route>
                                                         <Route exact path="/teacher/pastLectures/month/July">
                                                             <MonthNrStudents selectMonth={this.selectMonth} month={6}/>
-                                                            <h1>July</h1>
+                                                            <h1><b>July</b></h1>
                                                         </Route>
                                                         <Route exact path="/teacher/pastLectures/month/August">
                                                             <MonthNrStudents selectMonth={this.selectMonth} month={7}/>
-                                                            <h1>August</h1>
+                                                            <h1><b>August</b></h1>
                                                         </Route>
                                                         <Route exact path="/teacher/pastLectures/month/September">
                                                             <MonthNrStudents selectMonth={this.selectMonth} month={8}/>
-                                                            <h1>September</h1>
+                                                            <h1><b>September</b></h1>
                                                         </Route>
                                                         <Route exact path="/teacher/pastLectures/month/October">
                                                             <MonthNrStudents selectMonth={this.selectMonth} month={9}/>
-                                                            <h1>October</h1>
+                                                            <h1><b>October</b></h1>
                                                         </Route>
                                                         <Route exact path="/teacher/pastLectures/month/November">
                                                             <MonthNrStudents selectMonth={this.selectMonth} month={10}/>
-                                                            <h1>November</h1>
+                                                            <h1><b>November</b></h1>
                                                         </Route>   
                                                         <Route exact path="/teacher/pastLectures/month/December">
                                                             <MonthNrStudents selectMonth={this.selectMonth} month={11}/>
-                                                            <h1>December</h1>
+                                                            <h1><b>December</b></h1>
                                                         </Route>                                             
                                                     </Switch>
-                                                    {this.state.nrStudents !== undefined && <h1>There are {this.state.nrStudents.toFixed(1)} booked per lecture</h1>}
+                                                    {this.state.nrStudents !== undefined && <h2>There are {this.state.nrStudents.toFixed(1)} booked per lecture</h2>}
                                             </Col>
                                             <Col sm={1}/>
                                         </Route>
                                         <Route exact path="/teacher/pastLectures/graph">
-                                            <Col sm={10}
+                                            <Col sm={1}/>
+                                            <Col sm={8}
                                                 className="below-nav">
                                                 <MonthChart lectures={this.state.teacherLecture} getAllPastLectures={this.getPastLecturesTeacher}/>
                                             </Col>
@@ -405,10 +409,10 @@ class App extends React.Component {
                         </Route>
                         <Route exact path="/teacher/current">
                             <Row>
-                                <Col sm={2}/>
-                                <Col sm={8}
+                                <Col sm={1}/>
+                                <Col sm={10}
                                         className="below-nav">
-                                        <h1>Current Lecture</h1>
+                                        <h1>Current Lecture</h1><br></br>
                                         <CurrentLectures lectures={this.state.teacherLecture} past={false} getLectures={this.getCurrentLectureTeacher} job={(lecture_id) => this.getStudentList(lecture_id)} students={this.state.students} job2={(lecture_id) =>this.removeTeacherLecture(lecture_id)} setPresence={(studentId,lectureId) =>this.setPresence(studentId,lectureId)}/>
                                 </Col>
                                 <Col sm={1}/>
@@ -419,7 +423,7 @@ class App extends React.Component {
                                 <Col sm={1}/>
                                 <Col sm={10}
                                     className="below-nav">
-                                    <h1>Next Lectures</h1>
+                                    <h1>Next Lectures</h1><br></br>
                                     <LecturesTableTeacher lectures={this.state.teacherLecture} past={false} getLectures={this.getAllLecturesTeacher} job={(lecture_id) => this.getStudentList(lecture_id)} students={this.state.students} job2={(lecture_id) =>this.removeTeacherLecture(lecture_id)} />                                </Col>
                                 <Col sm={1}/>
                             </Row>
@@ -444,15 +448,15 @@ class App extends React.Component {
                     <Route exact path="/booking_manager/contact_tracing/">
                             <Row className="">
                                 <Col sm={4}/>
-                                <Col sm={2}
-                                    className="below-nav">
-                                    <ContactTracing addIdContactTracing={this.addIdContactTracing}/>
-                                </Col>
                                 <Col sm={4}
                                     className="below-nav">
+                                    <h1 style={{display: 'flex', justifyContent: 'center'}}> Insert student id: </h1><br></br><br></br>
+                                    <ContactTracing addIdContactTracing={this.addIdContactTracing}/>
+                                    <br></br>
+                                    <br></br>
                                     <ListCovid listCOVID={this.state.listCOVID}/>
                                 </Col>
-                                <Col sm={2}/>
+                                <Col sm={4}/>
                             </Row>
                     </Route>
                     </Switch>
@@ -461,7 +465,9 @@ class App extends React.Component {
                     <Switch>
                     <Route exact path="/support_officer">
                             <Row className="">
-                                <SupportOfficerMainPage />
+                               
+                                    <SupportOfficerMainPage />
+                              
                             </Row>
                         </Route>
                         <Route exact path="/support_officer/update/">
