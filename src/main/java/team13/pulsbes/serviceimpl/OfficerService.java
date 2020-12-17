@@ -103,7 +103,7 @@ public class OfficerService {
 				throw new InvalidCourseException("Invalid Course");
 			}
 				
-			if(courseRepository.findById(tmpLecture.getCode()).get().getYear().equals(year) && check1 && check2) {
+			if(course.get().getYear().equals(year) && check1 && check2) {
 				tmpLecture.setBookable(true);
 				lectureRepository.save(tmpLecture);
 				lectureRepository.flush();
