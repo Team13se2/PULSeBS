@@ -59,15 +59,19 @@ public class SupportOfficerController {
 	@PostMapping(value = Constants.ADD_TEACHERS)
 	public void addTeachers(@RequestBody String file,@CookieValue(value = "username") String username,@CookieValue(value = "type")String type) throws InvalidUserException, IOException {
 		File f = new File("Teachers.csv");
-		FileWriter myWriter;
+		FileWriter myWriter = null;
 		try {
 			myWriter = new FileWriter(f);
 			myWriter.write(file);
-			myWriter.close();
 			
 		}catch(IOException e){
 			 e.printStackTrace();
 			return;
+		}
+		finally {
+			if(myWriter != null)
+				myWriter.close();
+			
 		}
 		if(type.equals(TYPE_SUPPORT)) {
 			officerService.addTeacherList(f);
@@ -86,15 +90,19 @@ public class SupportOfficerController {
 	@PostMapping(value = Constants.ADD_COURSES)
 	public void addCourses(@RequestBody String file,@CookieValue(value = "username") String username,@CookieValue(value = "type")String type) throws InvalidUserException, IOException {
 		File f = new File("Courses.csv");
-		FileWriter myWriter;
+		FileWriter myWriter = null;
 		try {
 			myWriter = new FileWriter(f);
 			myWriter.write(file);
-			myWriter.close();
 			
 		}catch(IOException e){
 			 e.printStackTrace();
 			return;
+		}
+		finally {
+			if(myWriter != null)
+				myWriter.close();
+			
 		}
 		if(type.equals(TYPE_SUPPORT)) {
 			officerService.addCourseList(f);
@@ -113,15 +121,19 @@ public class SupportOfficerController {
 	@PostMapping(value = Constants.ENROLL_STUDENTS)
 	public void enrollStudents(@RequestBody String file,@CookieValue(value = "username") String username,@CookieValue(value = "type")String type) throws InvalidCourseException, InvalidStudentException, InvalidUserException, IOException {
 		File f = new File("Enroll_students.csv");
-		FileWriter myWriter;
+		FileWriter myWriter = null;
 		try {
 			myWriter = new FileWriter(f);
 			myWriter.write(file);
-			myWriter.close();
 			
 		}catch(IOException e){
 			 e.printStackTrace();
 			return;
+		}
+		finally {
+			if(myWriter != null)
+				myWriter.close();
+			
 		}
 		if(type.equals(TYPE_SUPPORT)) {
 			officerService.enrollStudent(f);
@@ -140,15 +152,19 @@ public class SupportOfficerController {
 	@PostMapping(value = Constants.ADD_LECTURES)
 	public void addLectures(@RequestBody String file,@CookieValue(value = "username") String username,@CookieValue(value = "type")String type) throws InvalidCourseException, InvalidStudentException, InvalidUserException, IOException {
 		File f = new File("Add_lectures.csv");
-		FileWriter myWriter;
+		FileWriter myWriter = null;
 		try {
 			myWriter = new FileWriter(f);
 			myWriter.write(file);
-			myWriter.close();
 			
 		}catch(IOException e){
 			 e.printStackTrace();
 			return;
+		}
+		finally {
+			if(myWriter != null)
+				myWriter.close();
+			
 		}
 		if(type.equals(TYPE_SUPPORT)) {
 			officerService.addScheduleList(f);
