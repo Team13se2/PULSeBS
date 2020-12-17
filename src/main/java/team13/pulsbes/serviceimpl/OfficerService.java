@@ -97,10 +97,12 @@ public class OfficerService {
 			try {check1 = tmpLecture.getStartTime2().after(dateFormat.parse(dateStart));} catch (ParseException e) {log.throwing(this.getClass().getName(), "removeLectures", e);};
 			try {check2 = tmpLecture.getEndTime2().before(dateFormat.parse(dateEnd));} catch (ParseException e) {log.throwing(this.getClass().getName(), "removeLectures", e);};
 			
-			if(!courseRepository.findById(tmpLecture.getCode()).isPresent()) {
-				throw new InvalidCourseException("Course Exception");
-			}
+			Optional<Course> course = courseRepository.findById(tmpLecture.getCode());
 			
+			if(!course.isPresent()) {
+				throw new InvalidCourseException("Invalid Course");
+			}
+				
 			if(courseRepository.findById(tmpLecture.getCode()).get().getYear().equals(year) && check1 && check2) {
 				tmpLecture.setBookable(true);
 				lectureRepository.save(tmpLecture);
