@@ -36,7 +36,8 @@ public class SupportOfficerController {
 			return;
 		}
 		finally {
-			myWriter.close();
+			if(myWriter != null)
+				myWriter.close();
 			
 		}
 
