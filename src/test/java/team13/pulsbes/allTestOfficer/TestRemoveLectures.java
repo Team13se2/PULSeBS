@@ -7,6 +7,7 @@ import org.junit.jupiter.api.Test;
 
 import team13.pulsbes.entities.Course;
 import team13.pulsbes.entities.Lecture;
+import team13.pulsbes.exception.InvalidCourseException;
 import team13.pulsbes.repositories.CourseRepository;
 import team13.pulsbes.repositories.LectureRepository;
 import team13.pulsbes.serviceimpl.OfficerService;
@@ -31,7 +32,7 @@ class TestRemoveLectures {
 	}
 
 	@Test
-	void testRemoveLectures() {
+	void testRemoveLectures() throws InvalidCourseException {
 		Lecture l = new Lecture();
 		l.setCode("test");
 		Course c = new Course();

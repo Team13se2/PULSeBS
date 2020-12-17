@@ -14,6 +14,7 @@ import team13.pulsbes.entities.Course;
 import team13.pulsbes.entities.Lecture;
 import team13.pulsbes.entities.Schedule;
 import team13.pulsbes.entities.Teacher;
+import team13.pulsbes.exception.InvalidCourseException;
 import team13.pulsbes.repositories.CourseRepository;
 import team13.pulsbes.repositories.LectureRepository;
 import team13.pulsbes.repositories.ScheduleRepository;
@@ -41,7 +42,7 @@ class TestAddScheduleList {
 	}
 	
 	@Test
-	void testAddScheduleListFirstSemester() {
+	void testAddScheduleListFirstSemester() throws InvalidCourseException {
 		File f = new File("src\\test\\java\\team13\\pulsbes\\allTestOfficer/Schedule.csv");
 		Schedule s = new Schedule();
 		Course c = new Course();
@@ -59,7 +60,7 @@ class TestAddScheduleList {
 		officerService.addScheduleList(f);
 	}
 	@Test
-	void testAddScheduleListSecondSemester() {
+	void testAddScheduleListSecondSemester() throws InvalidCourseException {
 		File f = new File("src\\test\\java\\team13\\pulsbes\\allTestOfficer/Schedule.csv");
 		Schedule s = new Schedule();
 		Course c = new Course();
