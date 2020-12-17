@@ -76,8 +76,10 @@ public class LoginService {
 			break;
 		case TYPE_SUPPORT_OFFICER:
 			for(SupportOfficer so : supportRepository.findAll()) {
-				login = loginConverter(null,null,null,so);
-				break;
+				if(so.getEmail().equals(idpw.getEmail()) && so.getPsw().equals(idpw.getPsw())) {
+					login = loginConverter(null,null,null,so);
+					break;
+				}
 			}
 			break;
 		default:

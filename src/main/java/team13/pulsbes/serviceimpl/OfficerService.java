@@ -56,7 +56,7 @@ public class OfficerService {
 	private static final String DATE_FORMAT_STRING = "yyyy-MM-dd HH:mm";
 
 
-	public void removeLectures(String year, String dateStart, String dateEnd) {
+	public void removeLectures(String year, String dateStart, String dateEnd) throws InvalidCourseException {
 
 		List<Lecture> listLecture = new ArrayList<>();
 		DateFormat dateFormat = new SimpleDateFormat(DATE_FORMAT_STRING);	
@@ -70,6 +70,9 @@ public class OfficerService {
 			try {check1 = tmpLecture.getStartTime2().after(dateFormat.parse(dateStart));} catch (ParseException e) {log.throwing(this.getClass().getName(), "removeLectures", e);};
 			try {check2 = tmpLecture.getEndTime2().before(dateFormat.parse(dateEnd));} catch (ParseException e) {log.throwing(this.getClass().getName(), "removeLectures", e);};	
 			
+			if(!courseRepository.findById(tmpLecture.getCode()).isPresent()) {
+				throw new InvalidCourseException("Course Exception");
+			}
 			
 			if(courseRepository.findById(tmpLecture.getCode()).get().getYear().equals(year) && check1 && check2) {			
 				
@@ -80,7 +83,7 @@ public class OfficerService {
 		}	
 	}
 
-	public void readdLectures(String year, String dateStart, String dateEnd) {
+	public void readdLectures(String year, String dateStart, String dateEnd) throws InvalidCourseException {
 
 		List<Lecture> listLecture = new ArrayList<>();
 		DateFormat dateFormat = new SimpleDateFormat(DATE_FORMAT_STRING);	
@@ -93,6 +96,10 @@ public class OfficerService {
 
 			try {check1 = tmpLecture.getStartTime2().after(dateFormat.parse(dateStart));} catch (ParseException e) {log.throwing(this.getClass().getName(), "removeLectures", e);};
 			try {check2 = tmpLecture.getEndTime2().before(dateFormat.parse(dateEnd));} catch (ParseException e) {log.throwing(this.getClass().getName(), "removeLectures", e);};
+			
+			if(!courseRepository.findById(tmpLecture.getCode()).isPresent()) {
+				throw new InvalidCourseException("Course Exception");
+			}
 			
 			if(courseRepository.findById(tmpLecture.getCode()).get().getYear().equals(year) && check1 && check2) {
 				tmpLecture.setBookable(true);
@@ -266,7 +273,7 @@ public class OfficerService {
 		}
 	}
 
-	public void addScheduleList(File f) {
+	public void addScheduleList(File f) throws InvalidCourseException {
 		boolean firstline = true;
 		BufferedReader br = null;
 		String line = "";
@@ -309,7 +316,9 @@ public class OfficerService {
 					
 					int addDate;
 					int i;
-
+					if(!courseRepository.findById(lecture[0]).isPresent()) {
+						throw new InvalidCourseException("Course Exception");
+					}
 					if(courseRepository.findById(lecture[0]).get().getSemester().equals("1")) {					
 
 					for (i=0;i<17;i++) {
@@ -430,7 +439,7 @@ public class OfficerService {
 					}
 
 				}
-
+					
 				if(courseRepository.findById(lecture[0]).get().getSemester().equals("2")) {					
 
 					for (i=0;i<17;i++) {
