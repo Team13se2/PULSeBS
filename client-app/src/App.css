@@ -2,6 +2,9 @@
   text-align: center;
 }
 
+body{
+  font-size: 110%;
+}
 .App-logo {
   height: 40vmin;
   pointer-events: none;
@@ -108,7 +111,6 @@ button {
   min-width: 0px;
   width: 100%;
 }
-
 #header{
   font-size: 150%;
 }

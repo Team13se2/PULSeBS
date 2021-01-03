@@ -13,12 +13,13 @@ const MyCalendar = (props) => {
     getBookedLectures();
   }, []);
   return(
-    <div>
+    <div style={{fontSize:'150%'}}>
       <Calendar style={{height: "800px"}}
         localizer={localizer}
         events={lectures}
         startAccessor="start"
         endAccessor="end"
+        font-size="50px"
       />
     </div>
   );

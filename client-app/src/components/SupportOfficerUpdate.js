@@ -74,33 +74,35 @@ const SupportOfficerUpdate = (props) => {
           {(context) => (
             <>
                 <Row className="">
-                    <Col sm={2} className="below-nav"></Col>
+                    <Col sm={1} className="below-nav"></Col>
                     <Col sm={4}
                         className="below-nav">
                         <Row>
-                            <h1>Select the period</h1>
+                            <h2  style={{display: 'flex', justifyContent: 'center'}}>Select the period</h2>
                         </Row>
+                        
                         <DayPickerSupportOfficer setRange={(range) => setInterval(range)}/>
+
                         <Row>
-                            <button type="button"className="btn btn-success" onClick={() =>updateListSupportOfficer()}>Submit</button>
+                            <button style={{display: 'flex', justifyContent: 'center'}} type="button"className="btn btn-success btn-lg" onClick={() =>updateListSupportOfficer()}>Submit</button>
+                        </Row><br></br><br></br>
+                    </Col>
+                    <Col sm={3} className="below-nav">
+                        <Row><h2  style={{display: 'flex', justifyContent: 'center'}}>Select the year</h2>
+                        </Row>
+                        <Row>&nbsp;&nbsp;
+                            <input type="button" className={year === 1? "btn btn-primary" : "btn btn-outline-primary"} onClick={() => setYear(1)}value="1"/>&nbsp;&nbsp;
+                            <input type="button" className={year === 2? "btn btn-primary" : "btn btn-outline-primary"} onClick={() => setYear(2)}value="2"/>&nbsp;&nbsp;
+                            <input type="button" className={year === 3? "btn btn-primary" : "btn btn-outline-primary"} onClick={() => setYear(3)}value="3"/>&nbsp;&nbsp;
+                            <input type="button" className={year === 4? "btn btn-primary" : "btn btn-outline-primary"} onClick={() => setYear(4)}value="4"/>&nbsp;&nbsp;
+                            <input type="button" className={year === 5? "btn btn-primary" : "btn btn-outline-primary"} onClick={() => setYear(5)}value="5"/>&nbsp;
                         </Row>
                     </Col>
-                    <Col sm={2} className="below-nav">
-                        <Row><h1>Select the year</h1>
+                    <Col sm={3} className="below-nav">
+                        <Row><h2  style={{display: 'flex', justifyContent: 'center'}}>Add or Remove</h2>
                         </Row>
-                        <Row>
-                            <input type="button" className={year === 1? "btn btn-primary" : "btn btn-outline-primary"} onClick={() => setYear(1)}value="1"/>
-                            <input type="button" className={year === 2? "btn btn-primary" : "btn btn-outline-primary"} onClick={() => setYear(2)}value="2"/>
-                            <input type="button" className={year === 3? "btn btn-primary" : "btn btn-outline-primary"} onClick={() => setYear(3)}value="3"/>
-                            <input type="button" className={year === 4? "btn btn-primary" : "btn btn-outline-primary"} onClick={() => setYear(4)}value="4"/>
-                            <input type="button" className={year === 5? "btn btn-primary" : "btn btn-outline-primary"} onClick={() => setYear(5)}value="5"/>
-                        </Row>
-                    </Col>
-                    <Col sm={2} className="below-nav">
-                        <Row><h1>Add or Remove</h1>
-                        </Row>
-                        <Row>
-                            <input type="button" className={type === "add"? "btn btn-primary" : "btn btn-outline-primary"} onClick={() => setType("add")}value="Add"/>
+                        <Row>&nbsp;&nbsp;
+                            <input type="button" className={type === "add"? "btn btn-primary" : "btn btn-outline-primary"} onClick={() => setType("add")}value="Add"/>&nbsp;&nbsp;
                             <input type="button" className={type === "remove"? "btn btn-primary" : "btn btn-outline-primary"} onClick={() => setType("remove")}value="Remove"/>
                         </Row>
                     </Col>

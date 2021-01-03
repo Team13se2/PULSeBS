@@ -56,6 +56,7 @@ class DayPickerSupportOfficer extends React.Component {
           selectedDays={[from, { from, to }]}
           modifiers={modifiers}
           onDayClick={this.handleDayClick}
+                    
         />
         <Helmet>
           <style>{`

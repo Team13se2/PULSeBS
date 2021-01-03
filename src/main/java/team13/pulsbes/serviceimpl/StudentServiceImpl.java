@@ -104,15 +104,28 @@ public class StudentServiceImpl implements StudentService {
             if
                 (lectureSelected.get().getQueue().isEmpty()){
                 {
+                	
+                	Optional<Student> student = studentRepository.findById(studentId);
+                	
+                	if(!student.isPresent())
+                		throw new InvalidStudentException("InvalidStudent");
+                	
                     lectureSelected.get().getQueue().put(studentId,1);
-                    lectureSelected.get().getStudentswaiting().add(studentRepository.findById(studentId).get());
+                    lectureSelected.get().getStudentswaiting().add(student.get());
                     lectureRepository.save(lectureSelected.get());
 
                 }
             }else {
+            	if(!lectureSelected.isPresent())
+            			throw new InvalidLectureException("Invalid Lecture");
+            	
                 Integer count = lectureSelected.get().getQueue().values().stream().max((x,y)-> x - y).get();
                 lectureSelected.get().getQueue().put(studentId,count +1);
-                lectureSelected.get().getStudentswaiting().add(studentRepository.findById(studentId).get());
+                Optional<Student> student = studentRepository.findById(studentId);
+            	
+            	if(!student.isPresent())
+            		throw new InvalidStudentException("InvalidStudent");
+                lectureSelected.get().getStudentswaiting().add(student.get());
                 lectureRepository.save(lectureSelected.get());
             }
             return ("The lecture has no more available seats, you will receive a mail if a spot opens up");
@@ -313,7 +326,7 @@ public class StudentServiceImpl implements StudentService {
             lectureSelected.get().getStudentswaiting().remove(currentStudent);
             studentRepository.save(currentStudent);
             lectureRepository.save(lectureSelected.get());
-            notificationService.sendMessage(currentStudent.getEmail(),
+            notificationService.sendMessage("student1team13@gmail.com",
                     "Booking confirmation for "+ lectureSelected.get().getSubjectName(),
                     "Dear " + currentStudent.getName() + currentStudent.getSurname() + " \n" +
                             "A slot opened up, so you can attend the lecture!" +

@@ -211,9 +211,9 @@ async function uploadStudentCSV(file,type) {
     return new Promise((resolve, reject) => {
         fetch(baseURL + '/support_officer/'+type,{
             method: 'POST',
-            /*headers: {
+            headers: {
                 'Content-Type': 'text/csv',
-            },*/
+            },
             body: file
         }).then((response) => {
             if (response.ok) {
@@ -314,9 +314,9 @@ async function getContactReport(studentId){
     let url = "/booking_manager/getContactReport?studentId="+studentId;
 
     const response = await fetch(baseURL + url);
-    const responseJSON = await response.json();
-    if(response.ok){
-        return responseJSON.map((l) => new StudentDTO(l.student.name,l.student.id,l.student.email,l.student.surname));
+    const responseJSON = await response.json();    
+    if(response.ok){ 
+        return responseJSON.map((l) => new StudentDTO(l.name,l.id,l.email,l.surname,true));
     } else {
         let err = {status: response.status, errObj:responseJSON};
         throw err;  // An object with the error coming from the server
