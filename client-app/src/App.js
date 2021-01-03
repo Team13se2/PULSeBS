@@ -26,6 +26,7 @@ import CurrentLectures from './components/CurrentLectures';
 import SupportOfficerUpdate from './components/SupportOfficerUpdate';
 import LecturesWaitingList from './components/LecturesWaitingList';
 import ListCovid from './components/ListCovid';
+import LecturesOfTheDay from './components/LecturesOfTheDay';
 
 class App extends React.Component {
     constructor(props) {
@@ -209,6 +210,15 @@ class App extends React.Component {
             console.log(err);
         })
     }
+
+    getLecturesOfTheDay = () =>{
+        API.getLecturesOfTheDay().then((lecture) =>{
+            this.setState({teacherLecture: lecture});
+        }).catch((err) =>{
+            console.log(err);
+        })
+    }
+
     waitingLectures = () =>{
         API.getWaitingLecture().then((lecture) =>{
             this.setState({bookedLectures: lecture});
@@ -411,9 +421,21 @@ class App extends React.Component {
                             <Row>
                                 <Col sm={1}/>
                                 <Col sm={10}
+                                <Col sm={9}
                                         className="below-nav">
                                         <h1>Current Lecture</h1><br></br>
                                         <CurrentLectures lectures={this.state.teacherLecture} past={false} getLectures={this.getCurrentLectureTeacher} job={(lecture_id) => this.getStudentList(lecture_id)} students={this.state.students} job2={(lecture_id) =>this.removeTeacherLecture(lecture_id)} setPresence={(studentId,lectureId) =>this.setPresence(studentId,lectureId)}/>
+                                </Col>
+                                <Col sm={1}/>
+                            </Row>
+                        </Route>
+                        <Route exact path="/teacher/lectureDay">
+                            <Row>
+                                <Col sm={1}/>
+                                <Col sm={9}
+                                        className="below-nav">
+                                        <h1>Lectures of the day</h1>
+                                        <LecturesOfTheDay lectures={this.state.teacherLecture} past={false} getLectures={this.getLecturesOfTheDay} job={(lecture_id) => this.getStudentList(lecture_id)} students={this.state.students} job2={(lecture_id) =>this.removeTeacherLecture(lecture_id)} setPresence={(studentId,lectureId) =>this.setPresence(studentId,lectureId)}/>
                                 </Col>
                                 <Col sm={1}/>
                             </Row>
