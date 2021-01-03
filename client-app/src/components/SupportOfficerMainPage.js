@@ -6,6 +6,8 @@ import RadioButtonsCSV from './RadioButtonsCSV';
 import Row from 'react-bootstrap/Row';
 import API from '../api/API';
 import Loader from './Loader';
+import SelectInput from '@material-ui/core/Select/SelectInput';
+import { render } from '@testing-library/react';
 
 const customStyles = {
   content : {
@@ -18,20 +20,16 @@ const customStyles = {
   }
 };
 
-const SupportOfficerMainPage = (props) => {
+class SupportOfficerMainPage extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {csv: "students",response:"",loading:false};
+    }
 
-    let {} = props;
-    const [CSV,setCSV] = React.useState("students");
-    const [response,setResponse] = React.useState("");
-    const [loading,setLoading] = React.useState(false);
-    // same as componentDidMount()
-    useEffect(() => {
-    }, []);
-
-    function uploadStudentCSV(file){
-        setLoading(true);
+    uploadStudentCSV = (file) => {
         let type = "";
-        switch (CSV) {
+        this.setState({loading:true});
+        switch (this.state.csv) {
             case "students":
                 type = "addStudents";
                 break;
@@ -47,39 +45,40 @@ const SupportOfficerMainPage = (props) => {
             default:
                 break;
         }
-
+        console.log(type);
         API.uploadStudentCSV(file,type).then((e) =>{
-            setResponse("Upload successful");
-            setLoading(false);
+            this.setState({loading:false,response:"Upload successful"});
         }).catch((err) =>{
             throw err;
         })
+        
     }
 
-    function selectListForCSV(value){
-        setCSV(value);
+    selectListForCSV = (value) =>{
+        this.setState({csv:value});
     }
+    render(){   
+        return(
+            <AuthContext.Consumer>
+            {(context) => (
+                <>
+                {this.state.loading && <><Col sm={2} className="below-nav" /><Loader /></>}
+                {!this.state.loading && <><Col sm={2} className="below-nav"> <RadioButtonsCSV selectListForCSV={(e) =>{this.selectListForCSV(e)}} CSV={this.state.csv}/></Col>
+                    <Col sm={8}
+                        className="below-nav">
+                        <h1>Upload a file</h1>
+                        {<UploadFiles uploadStudentCSV={this.uploadStudentCSV}/>}
+                        <Row>
+                            {this.state.response !== "" && <h3 style={{color: "red"}}>{this.state.response}</h3>}
+                        </Row>
+                    </Col>
+                <Col sm={1}/></>}
 
-    return(
-        <AuthContext.Consumer>
-          {(context) => (
-            <>
-            {loading && <><Col sm={2} className="below-nav" /><Loader /></>}
-            {!loading && <><Col sm={2} className="below-nav"> <RadioButtonsCSV selectListForCSV={selectListForCSV} CSV={CSV}/></Col>
-                <Col sm={8}
-                    className="below-nav">
-                    <h1>Upload a file</h1>
-                    {<UploadFiles uploadStudentCSV={uploadStudentCSV}/>}
-                    <Row>
-                        {response !== "" && <h3 style={{color: "red"}}>{response}</h3>}
-                    </Row>
-                </Col>
-            <Col sm={1}/></>}
-
-            </>
-          )}
-        </AuthContext.Consumer>
-      );
+                </>
+            )}
+            </AuthContext.Consumer>
+        );
+    }
 }
 
 export default SupportOfficerMainPage;

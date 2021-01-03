@@ -5,7 +5,7 @@ const RadioButtonsCSV = (props) => {
     let {selectListForCSV,CSV} = props;
     // same as componentDidMount()
     useEffect(() => {
-        selectListForCSV("students");
+        //selectListForCSV("");
     }, []);
 
     function onChangeValue(event) {

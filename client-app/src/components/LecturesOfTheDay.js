@@ -17,7 +17,7 @@ const customStyles = {
   }
 };
 
-const CurrentLectures = (props) => {
+const LecturesOfTheDay = (props) => {
 
     let {lectures, getLectures, setPresence, job,students} = props;
 
@@ -142,4 +142,4 @@ const CurrentLectures = (props) => {
       );
 }
 
-export default CurrentLectures;
+export default LecturesOfTheDay;

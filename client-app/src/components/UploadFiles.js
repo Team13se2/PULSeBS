@@ -40,7 +40,7 @@ const UploadFiles = (props) => {
 
     const onDrop = useCallback(acceptedFiles => {
         // Do something with the files
-        console.log(acceptedFiles[0]);
+
         uploadStudentCSV(acceptedFiles[0]);
       }, [])
     const {
