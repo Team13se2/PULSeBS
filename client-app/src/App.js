@@ -420,7 +420,7 @@ class App extends React.Component {
                         <Route exact path="/teacher/current">
                             <Row>
                                 <Col sm={1}/>
-                                <Col sm={10}
+                                <Col sm={10}/>
                                 <Col sm={9}
                                         className="below-nav">
                                         <h1>Current Lecture</h1><br></br>
