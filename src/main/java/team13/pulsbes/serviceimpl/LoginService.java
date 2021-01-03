@@ -31,13 +31,20 @@ public class LoginService {
 	@Autowired
 	SupportOfficerRepository supportRepository;
 	
-	 public void addStudentRepo (StudentRepository sr) {
-			this.studentRepository = sr;
-		}
-		public void addTeacherRepo(TeacherRepository lr) {
-			this.teacherRepository = lr;
-		}
-
+	public void addStudentRepo (StudentRepository sr) {
+		this.studentRepository = sr;
+	}
+	public void addTeacherRepo(TeacherRepository lr) {
+		this.teacherRepository = lr;
+	}
+	public void addManagerRepo(BookingManagerRepository br) {
+		this.bookingRepository = br;
+	}
+	public void addSupportRepo(SupportOfficerRepository sr) {
+		this.supportRepository = sr;
+	}	
+		
+		
 	private static final String TYPE_TEACHER = "teacher";
 	private static final String TYPE_STUDENT = "student";
 	private static final String TYPE_BOOKING_MANAGER = "booking_manager";

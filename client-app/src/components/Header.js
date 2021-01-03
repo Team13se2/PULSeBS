@@ -13,7 +13,7 @@ const Header = (props) => {
     <AuthContext.Consumer>
       {(context) => (
         
-      <Navbar bg="primary" variant="dark" expand="sm" fixed="top">
+      <Navbar bg="primary" variant="dark" expand="sm" fixed="top" id="header">
         <Navbar.Toggle aria-controls="left-sidebar" aria-expanded="false" aria-label="Toggle sidebar" onClick={props.showSidebar}/>
 
         <Navbar.Brand href="index.html"><h4>
@@ -37,6 +37,7 @@ const Header = (props) => {
             <Nav.Link as={NavLink} exact to="/teacher" > Lectures</Nav.Link> 
             <Nav.Link as={NavLink} to="/teacher/pastLectures/" > Past Lectures</Nav.Link> 
             <Nav.Link as={NavLink} to="/teacher/current/" > Current Lecture</Nav.Link> 
+            <Nav.Link as={NavLink} to="/teacher/lectureDay" onClick = {() => console.log("clk calendar")}> Lectures of the day</Nav.Link> 
           </Nav>
         </Route>
         <Route path="/booking_manager/">
@@ -55,7 +56,6 @@ const Header = (props) => {
         <Nav className="ml-md-auto">
           {context.authUser && 
             <>
-              <Navbar.Brand>Welcome!</Navbar.Brand> 
               <Nav.Link onClick = {() => {context.logoutUser()}}>Logout</Nav.Link>
             </>}
           {!context.authUser && <Nav.Link as = {NavLink} to = "/login">Login</Nav.Link>}

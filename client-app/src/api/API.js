@@ -262,6 +262,19 @@ async function getCurrentLectureTeacher(){
     }
 }
 
+async function getLecturesOfTheDay(){
+    let url = "/teacher/getLecturesOfTheDay";
+
+    const response = await fetch(baseURL + url);
+    const lecturesJSON = await response.json();
+    if(response.ok){
+        return lecturesJSON.map((l) => new LectureDTO(l.id,l.code,l.startTime,l.endTime,l.subjectName,l.availableSeat,l.totalSeat,l.roomName,l.nrStudentsBooked,l.nrStudentsPresent,l.bookable));
+    } else {
+        let err = {status: response.status, errObj:lecturesJSON};
+        throw err;  // An object with the error coming from the server
+    }
+}
+
 async function updateListSupportOfficer(year,dateStart,dateEnd,type) {
     return new Promise((resolve, reject) => {
         const url= "/support_officer/"+(type === "add" ? "readdLectures" : "removeLectures")+"?year="+year+"&dateStart="+dateStart+"&dateEnd="+dateEnd;
@@ -318,5 +331,5 @@ const API = {isAuthenticated,userLogin,userLogout,getAllLectures,
     bookLecture,removeStudentLecture,removeTeacherLecture,
     getPastLectures,getAllLecturesBookingManager,
     uploadStudentCSV,addPresence,getCurrentLectureTeacher,updateListSupportOfficer,
-    getWaitingLecture,getContactReport} ;
+    getWaitingLecture,getContactReport,getLecturesOfTheDay} ;
 export default API;
