@@ -12,6 +12,7 @@ public final class Constants {
 	public static final String GET_ALL_LECTURES = "/getAllLectures";
 	public static final String GET_PAST_LECTURES = "/getPastLectures";
 	public static final String GET_CURRENT_LECTURES = "/getCurrentLectures";
+	public static final String GET_DAILY_LECTURES = "/getLecturesOfTheDay";
 	public static final String GET_BOOKED_LECTURES = "/getBookedLectures";
 	public static final String GET_WAITING_LECTURES = "/getWaitingLectures";
 	public static final String BOOK_LECTURE = "/bookLecture";
