@@ -1,11 +1,19 @@
 package team13.pulsbes.controllers;
 
+import java.awt.PageAttributes.MediaType;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.Collections;
 import java.util.List;
 import java.util.logging.Logger;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.method.annotation.StreamingResponseBody;
 
 import team13.pulsbes.dtos.LectureDTO;
 import team13.pulsbes.exception.InvalidLectureException;
@@ -92,5 +100,20 @@ public class StudentController {
 		}
 	}
 
-
+	@GetMapping(value = Constants.STUDENT_TUTORIAL)
+	public StreamingResponseBody studentTutorial() throws FileNotFoundException {
+		File video = new File("videos\\tutorial.mp4");		
+		final InputStream videoFileStream = new FileInputStream(video);
+		
+		return (os)->readAndWrite(videoFileStream, os);		
+		
+	}
+	private void readAndWrite(final InputStream is, OutputStream os) throws IOException {
+	    byte[] data = new byte[2048];
+	    int read = 0;
+	    while ((read = is.read(data)) > 0) {
+	        os.write(data, 0, read);
+	    }
+	    os.flush();
+	}
 }
