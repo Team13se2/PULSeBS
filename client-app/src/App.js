@@ -334,7 +334,7 @@ class App extends React.Component {
                                             <Col sm={2}/>
                                             <Col sm={3}
                                                 className="below-nav">
-                                                <h1>Week</h1>
+                                                <h1>Select Week</h1>
                                                 <Day_Picker selectWeek={this.selectWeek}/>
                                                 
                                             </Col>
@@ -420,8 +420,8 @@ class App extends React.Component {
                         <Route exact path="/teacher/current">
                             <Row>
                                 <Col sm={1}/>
-                                <Col sm={10}/>
-                                <Col sm={9}
+                                
+                                <Col sm={10}
                                         className="below-nav">
                                         <h1>Current Lecture</h1><br></br>
                                         <CurrentLectures lectures={this.state.teacherLecture} past={false} getLectures={this.getCurrentLectureTeacher} job={(lecture_id) => this.getStudentList(lecture_id)} students={this.state.students} job2={(lecture_id) =>this.removeTeacherLecture(lecture_id)} setPresence={(studentId,lectureId) =>this.setPresence(studentId,lectureId)}/>
@@ -432,9 +432,10 @@ class App extends React.Component {
                         <Route exact path="/teacher/lectureDay">
                             <Row>
                                 <Col sm={1}/>
-                                <Col sm={9}
+                                
+                                <Col sm={10}
                                         className="below-nav">
-                                        <h1>Lectures of the day</h1>
+                                        <h1>Lectures of the day</h1><br></br>
                                         <LecturesOfTheDay lectures={this.state.teacherLecture} past={false} getLectures={this.getLecturesOfTheDay} job={(lecture_id) => this.getStudentList(lecture_id)} students={this.state.students} job2={(lecture_id) =>this.removeTeacherLecture(lecture_id)} setPresence={(studentId,lectureId) =>this.setPresence(studentId,lectureId)}/>
                                 </Col>
                                 <Col sm={1}/>
