@@ -13,6 +13,8 @@ import team13.pulsbes.entities.Lecture;
 import team13.pulsbes.entities.Student;
 import team13.pulsbes.exception.InvalidLectureException;
 import team13.pulsbes.exception.InvalidStudentException;
+
+import java.io.File;
 import java.text.ParseException;
 import java.util.stream.Collectors;
 
