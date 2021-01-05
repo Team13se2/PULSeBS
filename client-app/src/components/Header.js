@@ -2,7 +2,7 @@ import React, {useEffect,useContext} from 'react';
 import Navbar from 'react-bootstrap/Navbar';
 import Nav from 'react-bootstrap/Nav';
 import {AuthContext} from '../auth/AuthContext'
-import {NavLink} from 'react-router-dom';
+import {NavLink, Redirect} from 'react-router-dom';
 import {Route} from 'react-router-dom';
 
 const Header = (props) => {
@@ -56,6 +56,12 @@ const Header = (props) => {
         <Nav className="ml-md-auto">
           {context.authUser && 
             <>
+              <Route path="/student/">
+                <Nav.Link as={NavLink} to="/student/tutorial" > Tutorial</Nav.Link> 
+              </Route>
+              <Route path="/teacher/">
+                <Nav.Link as={NavLink} to="/teacher/tutorial" > Tutorial</Nav.Link> 
+              </Route>
               <Nav.Link onClick = {() => {context.logoutUser()}}>Logout</Nav.Link>
             </>}
           {!context.authUser && <Nav.Link as = {NavLink} to = "/login">Login</Nav.Link>}
