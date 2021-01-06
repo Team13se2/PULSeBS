@@ -112,6 +112,32 @@ public class OfficerService {
 			}
 		}	
 	}
+
+	public void removeHolidays(String dateStart, String dateEnd) throws InvalidCourseException {
+		List<Lecture> listLecture = new ArrayList<>();
+		DateFormat dateFormat = new SimpleDateFormat(DATE_FORMAT_STRING);	
+		Boolean check1 = false;
+		Boolean check2 = false;
+
+		listLecture.addAll(lectureRepository.findAll().stream().collect(Collectors.toList()));
+
+		for (Lecture tmpLecture : listLecture) {
+
+			try {check1 = tmpLecture.getStartTime2().after(dateFormat.parse(dateStart));} catch (ParseException e) {log.throwing(this.getClass().getName(), "removeLectures", e);};
+			try {check2 = tmpLecture.getEndTime2().before(dateFormat.parse(dateEnd));} catch (ParseException e) {log.throwing(this.getClass().getName(), "removeLectures", e);};
+			
+			Optional<Course> course = courseRepository.findById(tmpLecture.getCode());
+			
+			if(!course.isPresent()) {
+				throw new InvalidCourseException("Invalid Course");
+			}
+				
+			if(check1 && check2) {
+				lectureRepository.delete(tmpLecture);
+				lectureRepository.flush();
+			}
+		}	
+	}
 	
 	public void addStudentList(File f) {
 		boolean firstline = true;

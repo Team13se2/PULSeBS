@@ -10,7 +10,6 @@ const MonthChartBookingManager = (props) => {
     useEffect(() => {
         let option = getLecturesPerMonth();
         setOption(option);
-        console.log(lectures);
     },[lectures]);
     const [option,setOption] = React.useState("");
 
