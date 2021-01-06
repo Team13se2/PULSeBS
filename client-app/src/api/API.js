@@ -323,6 +323,28 @@ async function getContactReport(studentId){
     }
 }
 
+async function removeHolidaysSupportOfficer(dateStart,dateEnd) {
+    return new Promise((resolve, reject) => {
+        const url= "/support_officer/"+"removeHolidays"+"?&dateStart="+dateStart+"&dateEnd="+dateEnd;
+        console.log(url);
+        fetch(url,{
+            method: 'POST',
+            /*headers: {
+                'Content-Type': 'text/csv',
+            },*/
+        }).then((response) => {
+            if (response.ok) {
+                resolve(null);
+            } else {
+                // analyze the cause of error
+                response.json()
+                    .then((obj) => { reject(obj); }) // error msg in the response body
+                    .catch((err) => { reject({ errors: [{ param: "Application", msg: "Cannot parse server response" }] }) }); // something else
+            }
+        });
+    });
+}
+
 
 const API = {isAuthenticated,userLogin,userLogout,getAllLectures,
     getNumberStudentsAttending,getStudentList,
@@ -330,5 +352,6 @@ const API = {isAuthenticated,userLogin,userLogout,getAllLectures,
     bookLecture,removeStudentLecture,removeTeacherLecture,
     getPastLectures,getAllLecturesBookingManager,
     uploadStudentCSV,addPresence,getCurrentLectureTeacher,updateListSupportOfficer,
-    getWaitingLecture,getContactReport,getLecturesOfTheDay} ;
+    getWaitingLecture,getContactReport,getLecturesOfTheDay,
+    removeHolidaysSupportOfficer} ;
 export default API;
