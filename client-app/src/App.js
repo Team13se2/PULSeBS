@@ -229,11 +229,15 @@ class App extends React.Component {
     }
 
     addIdContactTracing = (id) =>{
-        API.getContactReport(id).then((list) =>{
-            console.log(list);
-            this.setState({listCOVID: list});
+        API.getContactReportPDF(id).then((resp) =>{
+            //this.setState({listCOVID: list});
+            const response = {
+                file:'http://localhost:8081/booking_manager/getContactReportStudentPDF?studentId='+id,
+              };
+            window.open(response.file);
         }).catch((err) =>{
-            throw err;
+            //throw err;
+            alert("Student not found");
         })
     }
 
@@ -501,7 +505,7 @@ class App extends React.Component {
                                     <ContactTracing addIdContactTracing={this.addIdContactTracing}/>
                                     <br></br>
                                     <br></br>
-                                    <ListCovid listCOVID={this.state.listCOVID}/>
+                                    {/*<ListCovid listCOVID={this.state.listCOVID}/>*/}
                                 </Col>
                                 <Col sm={4}/>
                             </Row>
