@@ -25,10 +25,14 @@ public final class Constants {
 	public static final String ENROLL_STUDENTS = "/enrollStudents";
 	public static final String ADD_LECTURES = "/addLectures";
 	public static final String ADD_PRESENCE = "/addPresence";
-	public static final String GET_CONTACT_REPORT = "/getContactReport";
 	public static final String GET_CONTACT_REPORT_STUDENT = "/getContactReportStudent";
+	public static final String GET_CONTACT_REPORT_STUDENT_CSV = "/getContactReportStudentCSV";
+	public static final String GET_CONTACT_REPORT_STUDENT_PDF = "/getContactReportStudentPDF";	
+	public static final String GET_CONTACT_REPORT_TEACHER_CSV = "/getContactReportTeacherCSV";
+	public static final String GET_CONTACT_REPORT_TEACHER_PDF = "/getContactReportTeacherPDF";
 	public static final String REMOVE_LECTURES = "/removeLectures";
 	public static final String READD_LECTURES = "/readdLectures";
 	public static final String STUDENT_TUTORIAL= "/studentTutorial";
 	public static final String TEACHER_TUTORIAL= "/teacherTutorial";
+	public static final String REMOVE_HOLIDAYS= "/removeHolidays";
 }
