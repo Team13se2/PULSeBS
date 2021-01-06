@@ -48,6 +48,21 @@ const SupportOfficerUpdate = (props) => {
             openModal();
         }
     }
+
+    function removeHolidaysSupportOfficer() {
+        if(range.from !== undefined && range.to !== undefined && type !== undefined){
+            API.removeHolidaysSupportOfficer(range.from._i,range.to._i,type).then((e) =>{
+
+            }).catch((e) =>{
+                throw e;
+            })
+            setMsg("the list of bookable lectures has been update");
+            openModal();
+        }else{
+            setMsg("Please, select all fields!!!");
+            openModal();
+        }
+    }
     function setInterval(range){
         const from = returnMoment(range.from);
         const to = range.to ? returnMoment(range.to) : undefined;
@@ -65,9 +80,9 @@ const SupportOfficerUpdate = (props) => {
         // references are now sync'd and can be accessed.
       }
      
-      function closeModal(){
-        setIsOpen(false);
-      }
+    function closeModal(){
+    setIsOpen(false);
+    }
 
     return(
         <AuthContext.Consumer>
@@ -84,28 +99,31 @@ const SupportOfficerUpdate = (props) => {
                         <DayPickerSupportOfficer setRange={(range) => setInterval(range)}/>
 
                         <Row>
-                            <button style={{display: 'flex', justifyContent: 'center'}} type="button"className="btn btn-success btn-lg" onClick={() =>updateListSupportOfficer()}>Submit</button>
+                            <button style={{display: 'flex', justifyContent: 'center'}} type="button"className="btn btn-success btn-lg" onClick={() =>{type=="holidays" ? removeHolidaysSupportOfficer():updateListSupportOfficer()}}>Submit</button>
                         </Row><br></br><br></br>
-                    </Col>
-                    <Col sm={3} className="below-nav">
-                        <Row><h2  style={{display: 'flex', justifyContent: 'center'}}>Select the year</h2>
-                        </Row>
-                        <Row>&nbsp;&nbsp;
-                            <input type="button" className={year === 1? "btn btn-primary" : "btn btn-outline-primary"} onClick={() => setYear(1)}value="1"/>&nbsp;&nbsp;
-                            <input type="button" className={year === 2? "btn btn-primary" : "btn btn-outline-primary"} onClick={() => setYear(2)}value="2"/>&nbsp;&nbsp;
-                            <input type="button" className={year === 3? "btn btn-primary" : "btn btn-outline-primary"} onClick={() => setYear(3)}value="3"/>&nbsp;&nbsp;
-                            <input type="button" className={year === 4? "btn btn-primary" : "btn btn-outline-primary"} onClick={() => setYear(4)}value="4"/>&nbsp;&nbsp;
-                            <input type="button" className={year === 5? "btn btn-primary" : "btn btn-outline-primary"} onClick={() => setYear(5)}value="5"/>&nbsp;
-                        </Row>
                     </Col>
                     <Col sm={3} className="below-nav">
                         <Row><h2  style={{display: 'flex', justifyContent: 'center'}}>Add or Remove</h2>
                         </Row>
-                        <Row>&nbsp;&nbsp;
-                            <input type="button" className={type === "add"? "btn btn-primary" : "btn btn-outline-primary"} onClick={() => setType("add")}value="Add"/>&nbsp;&nbsp;
+                        <Row className="button-group">
+                            <input type="button" className={type === "add"? "btn btn-primary" : "btn btn-outline-primary"} onClick={() => setType("add")}value="Add"/>
                             <input type="button" className={type === "remove"? "btn btn-primary" : "btn btn-outline-primary"} onClick={() => setType("remove")}value="Remove"/>
+                            <input type="button" className={type === "holidays"? "btn btn-primary" : "btn btn-outline-primary"} onClick={() => {setType("holidays");setYear(undefined);}}value="Holidays"/>
                         </Row>
                     </Col>
+                    {type && type !== "holidays" &&
+                        <Col sm={3} className="below-nav">
+                            <Row><h2  style={{display: 'flex', justifyContent: 'center'}}>Select the year</h2>
+                            </Row>
+                            <Row className="button-group">
+                                <input type="button" className={year === 1? "btn btn-primary" : "btn btn-outline-primary"} onClick={() => setYear(1)}value="1"/>
+                                <input type="button" className={year === 2? "btn btn-primary" : "btn btn-outline-primary"} onClick={() => setYear(2)}value="2"/>
+                                <input type="button" className={year === 3? "btn btn-primary" : "btn btn-outline-primary"} onClick={() => setYear(3)}value="3"/>
+                                <input type="button" className={year === 4? "btn btn-primary" : "btn btn-outline-primary"} onClick={() => setYear(4)}value="4"/>
+                                <input type="button" className={year === 5? "btn btn-primary" : "btn btn-outline-primary"} onClick={() => setYear(5)}value="5"/>
+                            </Row>
+                        </Col> 
+                    }
                     <Col sm={1}/>
                 </Row>
                 <div>
