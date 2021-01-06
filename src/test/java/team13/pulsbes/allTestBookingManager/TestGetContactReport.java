@@ -40,12 +40,12 @@ class TestGetContactReport {
 	}	
 	@Test
 	void testGetContactReport() throws InvalidStudentException{
-		assertThrows(InvalidStudentException.class, ()->bookingService.getContactReport("-1"));
+		assertThrows(InvalidStudentException.class, ()->bookingService.getContactReportStudent("-1"));
 	}	
 	@Test
 	void testGetContactReport2() throws InvalidStudentException{
 		when(studentRepository.existsById(any())).thenReturn(false);
-		assertThrows(InvalidStudentException.class, ()->bookingService.getContactReport("-1"));
+		assertThrows(InvalidStudentException.class, ()->bookingService.getContactReportStudent("-1"));
 	}
 	@Test
 	void testGetContactReport3() throws InvalidStudentException, InvalidCourseException{
@@ -71,6 +71,6 @@ class TestGetContactReport {
 		when(lectureRepository.findAll()).thenReturn(lectures);
 		when(modelMapper.map(any(), any())).thenReturn(sDto);
 		//assertEquals(sDto,bookingService.getContactReport("1").get(0));
-		assertEquals(Collections.EMPTY_LIST,bookingService.getContactReport("1"));
+		assertEquals(Collections.EMPTY_LIST,bookingService.getContactReportStudent("1"));
 	}
 }
