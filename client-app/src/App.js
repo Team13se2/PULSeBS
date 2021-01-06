@@ -27,6 +27,7 @@ import SupportOfficerUpdate from './components/SupportOfficerUpdate';
 import LecturesWaitingList from './components/LecturesWaitingList';
 import ListCovid from './components/ListCovid';
 import LecturesOfTheDay from './components/LecturesOfTheDay';
+import ReactPlayer from 'react-player'
 
 class App extends React.Component {
     constructor(props) {
@@ -259,6 +260,7 @@ class App extends React.Component {
                         </Col>
                     </Row>
                 </Route>
+                {value.authUser && value.authUser.type === "student" &&
                 <Route path="/student">
                     <Switch>
                         <Route exact path="/student/calendar">
@@ -300,6 +302,15 @@ class App extends React.Component {
                                 <Col sm={1}/>
                             </Row>
                         </Route>
+                        <Route exact path="/student/tutorial">
+                            <Row className="vheight-0">
+                            <Col sm={2}/>
+                                <Col sm={7} className="below-nav">
+                                <ReactPlayer url='http://localhost:8081/student/studentTutorial' controls="true" width="100%" height="100%" />
+                                </Col>
+                            <Col sm={2}/>
+                            </Row>
+                        </Route>
                         <Route exact path="/student/">
                             <Row className="">
                                 <Col sm={1}/>
@@ -313,6 +324,8 @@ class App extends React.Component {
                         </Route>
                     </Switch>
                 </Route>
+                }
+                {value.authUser && value.authUser.type === "teacher" &&
                 <Route path="/teacher">
                     <Switch>
                         <Route path="/teacher/pastLectures">
@@ -334,7 +347,7 @@ class App extends React.Component {
                                             <Col sm={2}/>
                                             <Col sm={3}
                                                 className="below-nav">
-                                                <h1>Week</h1>
+                                                <h1>Select Week</h1>
                                                 <Day_Picker selectWeek={this.selectWeek}/>
                                                 
                                             </Col>
@@ -420,8 +433,8 @@ class App extends React.Component {
                         <Route exact path="/teacher/current">
                             <Row>
                                 <Col sm={1}/>
-                                <Col sm={10}/>
-                                <Col sm={9}
+                                
+                                <Col sm={10}
                                         className="below-nav">
                                         <h1>Current Lecture</h1><br></br>
                                         <CurrentLectures lectures={this.state.teacherLecture} past={false} getLectures={this.getCurrentLectureTeacher} job={(lecture_id) => this.getStudentList(lecture_id)} students={this.state.students} job2={(lecture_id) =>this.removeTeacherLecture(lecture_id)} setPresence={(studentId,lectureId) =>this.setPresence(studentId,lectureId)}/>
@@ -432,12 +445,22 @@ class App extends React.Component {
                         <Route exact path="/teacher/lectureDay">
                             <Row>
                                 <Col sm={1}/>
-                                <Col sm={9}
+                                
+                                <Col sm={10}
                                         className="below-nav">
-                                        <h1>Lectures of the day</h1>
+                                        <h1>Lectures of the day</h1><br></br>
                                         <LecturesOfTheDay lectures={this.state.teacherLecture} past={false} getLectures={this.getLecturesOfTheDay} job={(lecture_id) => this.getStudentList(lecture_id)} students={this.state.students} job2={(lecture_id) =>this.removeTeacherLecture(lecture_id)} setPresence={(studentId,lectureId) =>this.setPresence(studentId,lectureId)}/>
                                 </Col>
                                 <Col sm={1}/>
+                            </Row>
+                        </Route>
+                        <Route exact path="/teacher/tutorial">
+                            <Row className="vheight-0">
+                            <Col sm={2}/>
+                                <Col sm={7} className="below-nav">
+                                <ReactPlayer url='http://localhost:8081/teacher/teacherTutorial' controls="true" width="100%" height="100%" />
+                                </Col>
+                            <Col sm={2}/>
                             </Row>
                         </Route>
                         <Route exact path="/teacher">
@@ -452,6 +475,8 @@ class App extends React.Component {
                         </Route>
                     </Switch>
                 </Route>
+                }
+                {value.authUser && value.authUser.type === "booking_manager" &&
                 <Route path="/booking_manager">
                     <Switch>
                     <Route exact path="/booking_manager">
@@ -483,6 +508,8 @@ class App extends React.Component {
                     </Route>
                     </Switch>
                 </Route>
+                }
+                {value.authUser && value.authUser.type === "support_officer" &&
                 <Route path="/support_officer">
                     <Switch>
                     <Route exact path="/support_officer">
@@ -497,6 +524,7 @@ class App extends React.Component {
                         </Route>
                     </Switch>
                 </Route>
+                }
                 <Route>
                     <Redirect to='/login'/>
                 </Route>

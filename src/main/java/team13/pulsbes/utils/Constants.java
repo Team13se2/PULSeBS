@@ -29,4 +29,6 @@ public final class Constants {
 	public static final String GET_CONTACT_REPORT_STUDENT = "/getContactReportStudent";
 	public static final String REMOVE_LECTURES = "/removeLectures";
 	public static final String READD_LECTURES = "/readdLectures";
+	public static final String STUDENT_TUTORIAL= "/studentTutorial";
+	public static final String TEACHER_TUTORIAL= "/teacherTutorial";
 }

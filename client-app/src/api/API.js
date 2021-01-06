@@ -324,7 +324,6 @@ async function getContactReport(studentId){
 }
 
 
-
 const API = {isAuthenticated,userLogin,userLogout,getAllLectures,
     getNumberStudentsAttending,getStudentList,
     getNoBookedLectures,getBookedLectures,

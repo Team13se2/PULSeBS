@@ -14,6 +14,8 @@ import team13.pulsbes.exception.InvalidLectureException;
 import team13.pulsbes.exception.InvalidTeacherException;
 import team13.pulsbes.exception.InvalidStudentException;
 import team13.pulsbes.exception.InvalidCourseException;
+
+import java.io.File;
 import java.text.ParseException;
 import team13.pulsbes.repositories.LectureRepository;
 import team13.pulsbes.repositories.StudentRepository;
@@ -343,4 +345,5 @@ public class TeacherServiceImpl implements TeacherService{
         .map(l -> modelMapper.map(l,LectureDTO.class))
         .collect(Collectors.toList());
   }
+
 }
