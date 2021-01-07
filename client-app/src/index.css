@@ -19,3 +19,6 @@ code {
   width: 50%;
   margin: 1px;
 }
+.contact-radio div input{
+margin-right: 10px;
+}
