@@ -310,8 +310,41 @@ async function getWaitingLecture(){
     }
 }
 
-async function getContactReportPDF(studentId){
+async function getContactReportStudentPDF(studentId){
     let url = "/booking_manager/getContactReportStudentPDF?studentId="+studentId;
+
+    const response = await fetch(baseURL + url);
+    if(response.ok){ 
+        return response;
+    } else {
+        let err = {status: response.status, errObj:-1};
+        throw err;  // An object with the error coming from the server
+    }
+}
+async function getContactReportStudentCSV(studentId){
+    let url = "/booking_manager/getContactReportStudentCSV?studentId="+studentId;
+
+    const response = await fetch(baseURL + url);
+    if(response.ok){ 
+        return response;
+    } else {
+        let err = {status: response.status, errObj:-1};
+        throw err;  // An object with the error coming from the server
+    }
+}
+async function getContactReportTeacherCSV(teacherId){
+    let url = "/booking_manager/getContactReportTeacherCSV?teacherId="+teacherId;
+
+    const response = await fetch(baseURL + url);
+    if(response.ok){ 
+        return response;
+    } else {
+        let err = {status: response.status, errObj:-1};
+        throw err;  // An object with the error coming from the server
+    }
+}
+async function getContactReportTeacherPDF(teacherId){
+    let url = "/booking_manager/getContactReportTeacherPDF?teacherId="+teacherId
 
     const response = await fetch(baseURL + url);
     if(response.ok){ 
@@ -351,6 +384,6 @@ const API = {isAuthenticated,userLogin,userLogout,getAllLectures,
     bookLecture,removeStudentLecture,removeTeacherLecture,
     getPastLectures,getAllLecturesBookingManager,
     uploadStudentCSV,addPresence,getCurrentLectureTeacher,updateListSupportOfficer,
-    getWaitingLecture,getContactReportPDF,getLecturesOfTheDay,
+    getWaitingLecture,getContactReportStudentPDF,getContactReportStudentCSV,getContactReportTeacherPDF,getContactReportTeacherCSV,getLecturesOfTheDay,
     removeHolidaysSupportOfficer} ;
 export default API;

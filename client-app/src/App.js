@@ -154,7 +154,6 @@ class App extends React.Component {
 
     getAllLecturesBookingManager = () =>{
         API.getAllLecturesBookingManager().then((lecture) =>{
-            console.log(lecture);
             this.setState({bookingManagerLecture: lecture});
         }).catch((err) =>{
             console.log(err);
@@ -228,17 +227,51 @@ class App extends React.Component {
         })
     }
 
-    addIdContactTracing = (id) =>{
-        API.getContactReportPDF(id).then((resp) =>{
-            //this.setState({listCOVID: list});
-            const response = {
-                file:'http://localhost:8081/booking_manager/getContactReportStudentPDF?studentId='+id,
-              };
-            window.open(response.file);
-        }).catch((err) =>{
-            //throw err;
-            alert("Student not found");
-        })
+    addIdContactTracing = (id,type) =>{
+        console.log(type);
+        if(type === "student"){
+            API.getContactReportStudentPDF(id).then((resp) =>{
+                //this.setState({listCOVID: list});
+                const response = {
+                    file:'http://localhost:8081/booking_manager/getContactReportStudentPDF?studentId='+id,
+                };
+                window.open(response.file);
+            }).catch((err) =>{
+                //throw err;
+                alert("Student not found");
+            })
+            API.getContactReportStudentCSV(id).then((resp) =>{
+                //this.setState({listCOVID: list});
+                const response = {
+                    file:'http://localhost:8081/booking_manager/getContactReportStudentCSV?studentId='+id,
+                };
+                window.open(response.file);
+            }).catch((err) =>{
+                //throw err;
+                alert("Student not found");
+            })
+        }else{
+            API.getContactReportTeacherPDF(id).then((resp) =>{
+                //this.setState({listCOVID: list});
+                const response = {
+                    file:'http://localhost:8081/booking_manager/getContactReportTeacherPDF?teacherId='+id,
+                };
+                window.open(response.file);
+            }).catch((err) =>{
+                //throw err;
+                alert("Teacher not found");
+            })
+            API.getContactReportTeacherCSV(id).then((resp) =>{
+                //this.setState({listCOVID: list});
+                const response = {
+                    file:'http://localhost:8081/booking_manager/getContactReportTeacherCSV?teacherId='+id,
+                };
+                window.open(response.file);
+            }).catch((err) =>{
+                //throw err;
+                alert("Student not found");
+            })
+        }
     }
 
 
@@ -501,10 +534,8 @@ class App extends React.Component {
                                 <Col sm={4}/>
                                 <Col sm={4}
                                     className="below-nav">
-                                    <h1 style={{display: 'flex', justifyContent: 'center'}}> Insert student id: </h1><br></br><br></br>
+                                    <h1 style={{display: 'flex', justifyContent: 'center'}}> Insert id: </h1><br></br><br></br>
                                     <ContactTracing addIdContactTracing={this.addIdContactTracing}/>
-                                    <br></br>
-                                    <br></br>
                                     {/*<ListCovid listCOVID={this.state.listCOVID}/>*/}
                                 </Col>
                                 <Col sm={4}/>
