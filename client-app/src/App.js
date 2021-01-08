@@ -26,6 +26,8 @@ import CurrentLectures from './components/CurrentLectures';
 import SupportOfficerUpdate from './components/SupportOfficerUpdate';
 import LecturesWaitingList from './components/LecturesWaitingList';
 import ListCovid from './components/ListCovid';
+import LecturesOfTheDay from './components/LecturesOfTheDay';
+import ReactPlayer from 'react-player'
 
 class App extends React.Component {
     constructor(props) {
@@ -152,7 +154,6 @@ class App extends React.Component {
 
     getAllLecturesBookingManager = () =>{
         API.getAllLecturesBookingManager().then((lecture) =>{
-            console.log(lecture);
             this.setState({bookingManagerLecture: lecture});
         }).catch((err) =>{
             console.log(err);
@@ -209,6 +210,15 @@ class App extends React.Component {
             console.log(err);
         })
     }
+
+    getLecturesOfTheDay = () =>{
+        API.getLecturesOfTheDay().then((lecture) =>{
+            this.setState({teacherLecture: lecture});
+        }).catch((err) =>{
+            console.log(err);
+        })
+    }
+
     waitingLectures = () =>{
         API.getWaitingLecture().then((lecture) =>{
             this.setState({bookedLectures: lecture});
@@ -217,13 +227,51 @@ class App extends React.Component {
         })
     }
 
-    addIdContactTracing = (id) =>{
-        API.getContactReport(id).then((list) =>{
-            console.log(list);
-            this.setState({listCOVID: list});
-        }).catch((err) =>{
-            throw err;
-        })
+    addIdContactTracing = (id,type) =>{
+        console.log(type);
+        if(type === "student"){
+            API.getContactReportStudentPDF(id).then((resp) =>{
+                //this.setState({listCOVID: list});
+                const response = {
+                    file:'http://localhost:8081/booking_manager/getContactReportStudentPDF?studentId='+id,
+                };
+                window.open(response.file);
+            }).catch((err) =>{
+                //throw err;
+                alert("Student not found");
+            })
+            API.getContactReportStudentCSV(id).then((resp) =>{
+                //this.setState({listCOVID: list});
+                const response = {
+                    file:'http://localhost:8081/booking_manager/getContactReportStudentCSV?studentId='+id,
+                };
+                window.open(response.file);
+            }).catch((err) =>{
+                //throw err;
+                alert("Student not found");
+            })
+        }else{
+            API.getContactReportTeacherPDF(id).then((resp) =>{
+                //this.setState({listCOVID: list});
+                const response = {
+                    file:'http://localhost:8081/booking_manager/getContactReportTeacherPDF?teacherId='+id,
+                };
+                window.open(response.file);
+            }).catch((err) =>{
+                //throw err;
+                alert("Teacher not found");
+            })
+            API.getContactReportTeacherCSV(id).then((resp) =>{
+                //this.setState({listCOVID: list});
+                const response = {
+                    file:'http://localhost:8081/booking_manager/getContactReportTeacherCSV?teacherId='+id,
+                };
+                window.open(response.file);
+            }).catch((err) =>{
+                //throw err;
+                alert("Student not found");
+            })
+        }
     }
 
 
@@ -249,6 +297,7 @@ class App extends React.Component {
                         </Col>
                     </Row>
                 </Route>
+                {value.authUser && value.authUser.type === "student" &&
                 <Route path="/student">
                     <Switch>
                         <Route exact path="/student/calendar">
@@ -290,6 +339,15 @@ class App extends React.Component {
                                 <Col sm={1}/>
                             </Row>
                         </Route>
+                        <Route exact path="/student/tutorial">
+                            <Row className="vheight-0">
+                            <Col sm={2}/>
+                                <Col sm={7} className="below-nav">
+                                <ReactPlayer url='http://localhost:8081/student/studentTutorial' controls="true" width="100%" height="100%" />
+                                </Col>
+                            <Col sm={2}/>
+                            </Row>
+                        </Route>
                         <Route exact path="/student/">
                             <Row className="">
                                 <Col sm={1}/>
@@ -303,6 +361,8 @@ class App extends React.Component {
                         </Route>
                     </Switch>
                 </Route>
+                }
+                {value.authUser && value.authUser.type === "teacher" &&
                 <Route path="/teacher">
                     <Switch>
                         <Route path="/teacher/pastLectures">
@@ -324,7 +384,7 @@ class App extends React.Component {
                                             <Col sm={2}/>
                                             <Col sm={3}
                                                 className="below-nav">
-                                                <h1>Week</h1>
+                                                <h1>Select Week</h1>
                                                 <Day_Picker selectWeek={this.selectWeek}/>
                                                 
                                             </Col>
@@ -410,12 +470,34 @@ class App extends React.Component {
                         <Route exact path="/teacher/current">
                             <Row>
                                 <Col sm={1}/>
+                                
                                 <Col sm={10}
                                         className="below-nav">
                                         <h1>Current Lecture</h1><br></br>
                                         <CurrentLectures lectures={this.state.teacherLecture} past={false} getLectures={this.getCurrentLectureTeacher} job={(lecture_id) => this.getStudentList(lecture_id)} students={this.state.students} job2={(lecture_id) =>this.removeTeacherLecture(lecture_id)} setPresence={(studentId,lectureId) =>this.setPresence(studentId,lectureId)}/>
                                 </Col>
                                 <Col sm={1}/>
+                            </Row>
+                        </Route>
+                        <Route exact path="/teacher/lectureDay">
+                            <Row>
+                                <Col sm={1}/>
+                                
+                                <Col sm={10}
+                                        className="below-nav">
+                                        <h1>Lectures of the day</h1><br></br>
+                                        <LecturesOfTheDay lectures={this.state.teacherLecture} past={false} getLectures={this.getLecturesOfTheDay} job={(lecture_id) => this.getStudentList(lecture_id)} students={this.state.students} job2={(lecture_id) =>this.removeTeacherLecture(lecture_id)} setPresence={(studentId,lectureId) =>this.setPresence(studentId,lectureId)}/>
+                                </Col>
+                                <Col sm={1}/>
+                            </Row>
+                        </Route>
+                        <Route exact path="/teacher/tutorial">
+                            <Row className="vheight-0">
+                            <Col sm={2}/>
+                                <Col sm={7} className="below-nav">
+                                <ReactPlayer url='http://localhost:8081/teacher/teacherTutorial' controls="true" width="100%" height="100%" />
+                                </Col>
+                            <Col sm={2}/>
                             </Row>
                         </Route>
                         <Route exact path="/teacher">
@@ -430,6 +512,8 @@ class App extends React.Component {
                         </Route>
                     </Switch>
                 </Route>
+                }
+                {value.authUser && value.authUser.type === "booking_manager" &&
                 <Route path="/booking_manager">
                     <Switch>
                     <Route exact path="/booking_manager">
@@ -450,17 +534,17 @@ class App extends React.Component {
                                 <Col sm={4}/>
                                 <Col sm={4}
                                     className="below-nav">
-                                    <h1 style={{display: 'flex', justifyContent: 'center'}}> Insert student id: </h1><br></br><br></br>
+                                    <h1 style={{display: 'flex', justifyContent: 'center'}}> Insert id: </h1><br></br><br></br>
                                     <ContactTracing addIdContactTracing={this.addIdContactTracing}/>
-                                    <br></br>
-                                    <br></br>
-                                    <ListCovid listCOVID={this.state.listCOVID}/>
+                                    {/*<ListCovid listCOVID={this.state.listCOVID}/>*/}
                                 </Col>
                                 <Col sm={4}/>
                             </Row>
                     </Route>
                     </Switch>
                 </Route>
+                }
+                {value.authUser && value.authUser.type === "support_officer" &&
                 <Route path="/support_officer">
                     <Switch>
                     <Route exact path="/support_officer">
@@ -475,6 +559,7 @@ class App extends React.Component {
                         </Route>
                     </Switch>
                 </Route>
+                }
                 <Route>
                     <Redirect to='/login'/>
                 </Route>

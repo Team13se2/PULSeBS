@@ -36,7 +36,9 @@ public class OfficerService {
 	CourseRepository courseRepository;
 	@Autowired
 	ScheduleRepository scheduleRepository;
-
+	@Autowired
+	HolidayRepository holidayRepository;
+	
 	public void addLectureRepository(LectureRepository lectureRepository) {
 		this.lectureRepository = lectureRepository;
 	}
@@ -108,6 +110,46 @@ public class OfficerService {
 			if(course.get().getYear().equals(year) && check1 && check2) {
 				tmpLecture.setBookable(true);
 				lectureRepository.save(tmpLecture);
+				lectureRepository.flush();
+			}
+		}	
+	}
+
+	@SuppressWarnings("deprecation")
+	public void removeHolidays(String dateStart, String dateEnd) throws InvalidCourseException, ParseException {
+		List<Lecture> listLecture = new ArrayList<>();
+		DateFormat dateFormat = new SimpleDateFormat(DATE_FORMAT_STRING);	
+		Date start = dateFormat.parse(dateStart);
+		Date end = dateFormat.parse(dateEnd);
+		Boolean check1 = false;
+		Boolean check2 = false;
+			
+		Holiday h = new Holiday();
+		
+		while(start.before(end)) {
+			h.setDate(start.toString());
+			start.setDate(start.getDate()+1);
+			holidayRepository.save(h);
+		}
+		
+		h.setDate(end.toString());
+		holidayRepository.save(h);
+		
+		listLecture.addAll(lectureRepository.findAll().stream().collect(Collectors.toList()));
+
+		for (Lecture tmpLecture : listLecture) {
+
+			try {check1 = tmpLecture.getStartTime2().after(dateFormat.parse(dateStart));} catch (ParseException e) {log.throwing(this.getClass().getName(), "removeLectures", e);};
+			try {check2 = tmpLecture.getEndTime2().before(dateFormat.parse(dateEnd));} catch (ParseException e) {log.throwing(this.getClass().getName(), "removeLectures", e);};
+			
+			Optional<Course> course = courseRepository.findById(tmpLecture.getCode());
+			
+			if(!course.isPresent()) {
+				throw new InvalidCourseException("Invalid Course");
+			}
+				
+			if(check1 && check2) {
+				lectureRepository.delete(tmpLecture);
 				lectureRepository.flush();
 			}
 		}	
@@ -585,11 +627,10 @@ public class OfficerService {
 				}
 			}
 		}
-	}
+	}	
+	
 
-
-
-	}
+}
 
 
 

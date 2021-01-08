@@ -11,3 +11,14 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.button-group{
+  display: inline-grid;
+}
+.button-group input{
+  width: 50%;
+  margin: 1px;
+}
+.contact-radio div input{
+margin-right: 10px;
+}

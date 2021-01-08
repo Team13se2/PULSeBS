@@ -14,6 +14,8 @@ import team13.pulsbes.exception.InvalidLectureException;
 import team13.pulsbes.exception.InvalidTeacherException;
 import team13.pulsbes.exception.InvalidStudentException;
 import team13.pulsbes.exception.InvalidCourseException;
+
+import java.io.File;
 import java.text.ParseException;
 import team13.pulsbes.repositories.LectureRepository;
 import team13.pulsbes.repositories.StudentRepository;
@@ -319,4 +321,29 @@ public class TeacherServiceImpl implements TeacherService{
         .map(l -> modelMapper.map(l,LectureDTO.class))
         .collect(Collectors.toList());
   }
+
+  @Override
+  public List<LectureDTO> getDailyLectures(String id) throws InvalidTeacherException {
+    if(id.equals("-1")) {
+      throw new InvalidTeacherException(TEACHER_NULL);
+    }
+    if(!teacherRepository.existsById(id)) {
+      throw new InvalidTeacherException(TEACHER_NULL);
+    }
+      
+      Calendar tmpCal = Calendar.getInstance();
+      Calendar endCal = Calendar.getInstance();      
+
+    return  teacherRepository.getOne(id)
+        .getLectures()
+        .stream()
+        .filter(x -> { try {endCal.setTime(x.getEndTime2()); return (endCal.get(Calendar.DAY_OF_MONTH) == tmpCal.get(Calendar.DAY_OF_MONTH)) 
+          && (endCal.get(Calendar.MONTH) == tmpCal.get(Calendar.MONTH)) 
+          && x.getStartTime2().before(tmpCal.getTime())
+          && x.isBookable(); } 
+          catch (ParseException e) {log.throwing(this.getClass().getName(), "getPastLectures", e); return false;} })
+        .map(l -> modelMapper.map(l,LectureDTO.class))
+        .collect(Collectors.toList());
+  }
+
 }

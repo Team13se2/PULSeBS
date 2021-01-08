@@ -262,6 +262,19 @@ async function getCurrentLectureTeacher(){
     }
 }
 
+async function getLecturesOfTheDay(){
+    let url = "/teacher/getLecturesOfTheDay";
+
+    const response = await fetch(baseURL + url);
+    const lecturesJSON = await response.json();
+    if(response.ok){
+        return lecturesJSON.map((l) => new LectureDTO(l.id,l.code,l.startTime,l.endTime,l.subjectName,l.availableSeat,l.totalSeat,l.roomName,l.nrStudentsBooked,l.nrStudentsPresent,l.bookable));
+    } else {
+        let err = {status: response.status, errObj:lecturesJSON};
+        throw err;  // An object with the error coming from the server
+    }
+}
+
 async function updateListSupportOfficer(year,dateStart,dateEnd,type) {
     return new Promise((resolve, reject) => {
         const url= "/support_officer/"+(type === "add" ? "readdLectures" : "removeLectures")+"?year="+year+"&dateStart="+dateStart+"&dateEnd="+dateEnd;
@@ -297,19 +310,72 @@ async function getWaitingLecture(){
     }
 }
 
-async function getContactReport(studentId){
-    let url = "/booking_manager/getContactReport?studentId="+studentId;
+async function getContactReportStudentPDF(studentId){
+    let url = "/booking_manager/getContactReportStudentPDF?studentId="+studentId;
 
     const response = await fetch(baseURL + url);
-    const responseJSON = await response.json();    
     if(response.ok){ 
-        return responseJSON.map((l) => new StudentDTO(l.name,l.id,l.email,l.surname,true));
+        return response;
     } else {
-        let err = {status: response.status, errObj:responseJSON};
+        let err = {status: response.status, errObj:-1};
+        throw err;  // An object with the error coming from the server
+    }
+}
+async function getContactReportStudentCSV(studentId){
+    let url = "/booking_manager/getContactReportStudentCSV?studentId="+studentId;
+
+    const response = await fetch(baseURL + url);
+    if(response.ok){ 
+        return response;
+    } else {
+        let err = {status: response.status, errObj:-1};
+        throw err;  // An object with the error coming from the server
+    }
+}
+async function getContactReportTeacherCSV(teacherId){
+    let url = "/booking_manager/getContactReportTeacherCSV?teacherId="+teacherId;
+
+    const response = await fetch(baseURL + url);
+    if(response.ok){ 
+        return response;
+    } else {
+        let err = {status: response.status, errObj:-1};
+        throw err;  // An object with the error coming from the server
+    }
+}
+async function getContactReportTeacherPDF(teacherId){
+    let url = "/booking_manager/getContactReportTeacherPDF?teacherId="+teacherId
+
+    const response = await fetch(baseURL + url);
+    if(response.ok){ 
+        return response;
+    } else {
+        let err = {status: response.status, errObj:-1};
         throw err;  // An object with the error coming from the server
     }
 }
 
+async function removeHolidaysSupportOfficer(dateStart,dateEnd) {
+    return new Promise((resolve, reject) => {
+        const url= "/support_officer/"+"removeHolidays"+"?&dateStart="+dateStart+"&dateEnd="+dateEnd;
+        console.log(url);
+        fetch(url,{
+            method: 'POST',
+            /*headers: {
+                'Content-Type': 'text/csv',
+            },*/
+        }).then((response) => {
+            if (response.ok) {
+                resolve(null);
+            } else {
+                // analyze the cause of error
+                response.json()
+                    .then((obj) => { reject(obj); }) // error msg in the response body
+                    .catch((err) => { reject({ errors: [{ param: "Application", msg: "Cannot parse server response" }] }) }); // something else
+            }
+        });
+    });
+}
 
 
 const API = {isAuthenticated,userLogin,userLogout,getAllLectures,
@@ -318,5 +384,6 @@ const API = {isAuthenticated,userLogin,userLogout,getAllLectures,
     bookLecture,removeStudentLecture,removeTeacherLecture,
     getPastLectures,getAllLecturesBookingManager,
     uploadStudentCSV,addPresence,getCurrentLectureTeacher,updateListSupportOfficer,
-    getWaitingLecture,getContactReport} ;
+    getWaitingLecture,getContactReportStudentPDF,getContactReportStudentCSV,getContactReportTeacherPDF,getContactReportTeacherCSV,getLecturesOfTheDay,
+    removeHolidaysSupportOfficer} ;
 export default API;

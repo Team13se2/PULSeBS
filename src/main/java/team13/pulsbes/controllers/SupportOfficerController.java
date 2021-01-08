@@ -3,6 +3,7 @@ package team13.pulsbes.controllers;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.text.ParseException;
 import java.util.logging.Logger;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -193,6 +194,15 @@ public class SupportOfficerController {
 	public void readdLectures(@RequestParam("year") String year, @RequestParam("dateStart") String dateStart, @RequestParam("dateEnd") String dateEnd, @CookieValue(value = "username") String username,@CookieValue(value = "type")String type) throws InvalidUserException, InvalidCourseException {
 			if(type.equals(TYPE_SUPPORT)) {
 			officerService.readdLectures(year, dateStart, dateEnd);			
+		}
+		else {
+			throw new InvalidUserException("Invalid User");
+		}
+	}
+	@PostMapping(value = Constants.REMOVE_HOLIDAYS)
+	public void removeHolidays(@RequestParam("dateStart") String dateStart, @RequestParam("dateEnd") String dateEnd, @CookieValue(value = "username") String username,@CookieValue(value = "type")String type) throws InvalidUserException, InvalidCourseException, ParseException {
+			if(type.equals(TYPE_SUPPORT)) {
+			officerService.removeHolidays(dateStart, dateEnd);			
 		}
 		else {
 			throw new InvalidUserException("Invalid User");
