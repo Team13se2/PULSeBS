@@ -36,4 +36,5 @@ public final class Constants {
 	public static final String TEACHER_TUTORIAL= "/teacherTutorial";
 	public static final String REMOVE_HOLIDAYS= "/removeHolidays";
 	public static final String MODIFY_SCHEDULE= "/modifySchedule";
+	public static final String GET_SCHEDULE= "/getSchedule";
 }

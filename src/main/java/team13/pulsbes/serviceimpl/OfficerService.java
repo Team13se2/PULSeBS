@@ -12,9 +12,13 @@ import java.util.*;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.interceptor.SimpleCacheErrorHandler;
 import org.springframework.stereotype.Service;
 
+import team13.pulsbes.dtos.CourseDTO;
+import team13.pulsbes.dtos.ScheduleDTO;
 import team13.pulsbes.entities.*;
 import team13.pulsbes.exception.InvalidCourseException;
 import team13.pulsbes.exception.InvalidStudentException;
@@ -23,7 +27,10 @@ import team13.pulsbes.services.NotificationService;
 
 @Service
 public class OfficerService {
-	
+
+	@Autowired
+	ModelMapper modelMapper;
+
 	@Autowired
 	NotificationService notificationService;
 	@Autowired
@@ -57,6 +64,14 @@ public class OfficerService {
 	}
 	Logger log = Logger.getLogger("OfficerService");
 	private static final String DATE_FORMAT_STRING = "yyyy-MM-dd HH:mm";
+
+
+	public List<ScheduleDTO> getSchedule()
+	{
+		return scheduleRepository.findAll().stream().map(s-> modelMapper.map(s,ScheduleDTO.class)).collect(Collectors.toList());
+
+	}
+
 
 
 	public void removeLectures(String year, String dateStart, String dateEnd) throws InvalidCourseException {
@@ -117,7 +132,7 @@ public class OfficerService {
 	}
 
 
-	public void modifySchedule(String code, String dateStart, String startTime, String endTime, Integer seats, String Room, String Day) throws ParseException, InvalidCourseException {
+	public void modifySchedule(Integer id,String code, String dateStart, String startTime, String endTime, Integer seats, String Room, String Day) throws ParseException, InvalidCourseException {
 		Calendar tmpCal1 = Calendar.getInstance();
 		Calendar tmpCal2 = Calendar.getInstance();
 		DateFormat dateFormat = new SimpleDateFormat(DATE_FORMAT_STRING);
@@ -139,20 +154,41 @@ public class OfficerService {
 		dd = dateSplit2 [2];
 		int year = Integer.parseInt(yyyy);
 		int month = Integer.parseInt(mm);
+		List <Student> studentsbooked = new ArrayList<>();
 
 
 
 
 
+		for (Lecture l : lectureRepository.findAll()) {
 
-		lectureRepository.findAll().forEach(l -> {
-			if (l.getCode().equals(code)) {
+			if (l.getIdschedule().equals(id)) {
 				try {
-					System.out.println("CONFRONTO" + l.getStartTime2() + " " + start);
-					if (l.getStartTime2().after(start)) {
-						System.out.println("entrato");
-						lectureRepository.delete(l);
 
+					if (l.getStartTime2().after(start)) {
+
+						studentsbooked = new ArrayList<>(l.getStudents());
+						System.out.println(studentsbooked);
+
+						lectureRepository.delete(l);
+						lectureRepository.flush();
+
+						for (Student tmpStudent : studentsbooked) {
+
+
+							notificationService.sendMessage(tmpStudent.getEmail(),
+									"Schedule modified ",
+									"Dear "+tmpStudent.getName()+" "+tmpStudent.getSurname()+ ", \n" +
+											"The schedule of one of your booked lectures has been changed. \n" +
+											"Booked lecture: " + l.getSubjectName() + " scheduled for " + l.getStartTime() + "\n" +
+
+											"Starting from " + dateStart + " the lecture will take place at "  + Day + " in room " + Room +
+									" from " +startTime + " to " +endTime + "\n."
+									+ "If you want to conirm your booking you'll need to book the new lecture. Thank you."
+
+							);
+
+						}
 					}
 
 				} catch (ParseException e) {
@@ -160,7 +196,16 @@ public class OfficerService {
 				}
 
 			}
-		});
+
+		}
+
+
+
+
+
+
+
+
 
 		Optional<Course> course = courseRepository.findById(code);
 
@@ -183,6 +228,7 @@ public class OfficerService {
 						.bookable(true)
 						.nrStudentsPresent(0)
 						.nrStudentsBooked(0)
+						.idschedule(id)
 						.build();
 				l2.setSubjectName(courseRepository.getOne(l2.getCode()).getName());
 				l2.setTeacher(courseRepository.getOne(l2.getCode()).getTeacher());
@@ -353,6 +399,7 @@ public class OfficerService {
 						.bookable(true)
 						.nrStudentsPresent(0)
 						.nrStudentsBooked(0)
+						.idschedule(id)
 						.build();
 				l2.setSubjectName(courseRepository.getOne(l2.getCode()).getName());
 				l2.setTeacher(courseRepository.getOne(l2.getCode()).getTeacher());
@@ -462,7 +509,20 @@ public class OfficerService {
 
 		}
 
+      for (Schedule s : scheduleRepository.findAll())
+	  {
+	  	if (s.getId().equals(id))
+		{
+			s.setSeats(seats);
+			s.setDay(Day);
+			s.setStartTime(startTime);
+			s.setEndTime(endTime);
+			s.setRoom(Room);
 
+			scheduleRepository.save(s);
+			scheduleRepository.flush();
+		}
+	  }
 
 	}
 
@@ -835,7 +895,7 @@ public class OfficerService {
 						l.setNrStudentsBooked(0);
 						l.setNrStudentsPresent(0);
 						l.setTeacher(courseRepository.getOne(lecture[0]).getTeacher());
-
+						l.setIdschedule(s.getId());
 
 						lectureRepository.save(l);
 						lectureRepository.flush();
@@ -956,6 +1016,7 @@ public class OfficerService {
 						l.setNrStudentsBooked(0);
 						l.setNrStudentsPresent(0);
 						l.setTeacher(courseRepository.getOne(lecture[0]).getTeacher());
+						l.setId(s.getId());
 
 
 						lectureRepository.save(l);
@@ -981,7 +1042,9 @@ public class OfficerService {
 				}
 			}
 		}
+
 	}
+
 
 
 
