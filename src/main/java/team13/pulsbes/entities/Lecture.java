@@ -47,6 +47,11 @@ public class Lecture {
 
 	private Boolean bookable;
 
+	private Integer idschedule;
+
+
+
+
 	public Map<String, Integer> getQueue() {
 		return queue;
 	}
@@ -147,6 +152,15 @@ public class Lecture {
         
 		startTime = strDate;
     }
+
+    public String getHourminutes()
+	{
+		String date[] = endTime.split(" ");
+		String hourminutes = date[1];
+
+		return hourminutes;
+
+	}
     public Date getStartTime2() throws ParseException{
     	//Date notificationTime = new Date();
     	DateFormat dateFormat = new SimpleDateFormat(DATE_FORMAT_STRING);
@@ -303,6 +317,12 @@ public class Lecture {
 		this.day = day;
 	}
 
+	public Integer getIdschedule() {
+		return idschedule;
+	}
 
+	public void setIdschedule(Integer idschedule) {
+		this.idschedule = idschedule;
+	}
 
 }

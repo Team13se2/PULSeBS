@@ -11,12 +11,7 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 
 import team13.pulsbes.entities.*;
-import team13.pulsbes.repositories.BookingManagerRepository;
-import team13.pulsbes.repositories.CourseRepository;
-import team13.pulsbes.repositories.LectureRepository;
-import team13.pulsbes.repositories.StudentRepository;
-import team13.pulsbes.repositories.SupportOfficerRepository;
-import team13.pulsbes.repositories.TeacherRepository;
+import team13.pulsbes.repositories.*;
 import team13.pulsbes.serviceimpl.OfficerService;
 import team13.pulsbes.services.NotificationService;
 import team13.pulsbes.services.StudentService;
@@ -80,39 +75,39 @@ public class PulsbesApplication {
 			BookingManagerRepository bookingRepository;
 			@Autowired
 			SupportOfficerRepository supportRepository;
+			@Autowired
+			ScheduleRepository scheduleRepository;
 			
 			@Override
 			public void run(String... args) throws Exception {
 
-		// 		SupportOfficer so = new SupportOfficer();
-		// 		so.setId("1");
-		// 		so.setEmail("support@officer.politu.it");
-		// 		so.setName("Signor");
-		// 		so.setSurname("Officer");
-		// 		so.setPsw("psw");
-		// 		supportRepository.save(so);
+		 	//	SupportOfficer so = new SupportOfficer();
+		 	//	so.setId("1");
+		 	//	so.setEmail("support@officer.politu.it");
+		 	//	so.setName("Signor");
+		 	//	so.setSurname("Officer");
+		 	//	so.setPsw("psw");
+		 	//	supportRepository.save(so);
 				
-		// 		BookingManager b = new BookingManager();
-		// 		b.setId("1");
-		// 		b.setEmail("manager@booking.politu.it");
-		// 		b.setName("Signor");
-		// 		b.setSurname("Booking");
-		// 		b.setPsw("psw");
-		// 		bookingRepository.save(b);
+		 	//	BookingManager b = new BookingManager();
+		 	//	b.setId("1");
+		 	//	b.setEmail("manager@booking.politu.it");
+		 	//	b.setName("Signor");
+		 	//	 		b.setSurname("Booking");
+		 	//	b.setPsw("psw");
+		 	//	bookingRepository.save(b);
 
-		// studentRepository.deleteAll();
+		 //studentRepository.deleteAll();
 		// courseRepository.deleteAll();
 		// lectureRepository.deleteAll();
 		// teacherRepository.deleteAll();
 		// String csvFileT = "../Professors.csv";
-		// File ft = new File(csvFileT);
 		// officerService.addTeacherList(ft);
 		// String csvFileC = "../Courses.csv";
 		// File fc = new File(csvFileC);
 		// officerService.addCourseList(fc);
-		// String csvFileS = "../Students.csv";
 		// File fs = new File(csvFileS);
-		// officerService.addStudentList(fs);
+				//officerService.addStudentList(fs);
    
    
 		// String csvFileE = "../Enrollment.csv";
@@ -121,10 +116,7 @@ public class PulsbesApplication {
    
 		// String csvFileSS = "../Schedule.csv";
 		// File fss = new File(csvFileSS);
-		// officerService.addScheduleList(fss);
-
-				
-
+		//		 officerService.addScheduleList(fss);
 
 
 			}
