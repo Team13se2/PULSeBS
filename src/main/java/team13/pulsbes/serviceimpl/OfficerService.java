@@ -68,8 +68,15 @@ public class OfficerService {
 
 	public List<ScheduleDTO> getSchedule()
 	{
-		return scheduleRepository.findAll().stream().map(s-> modelMapper.map(s,ScheduleDTO.class)).collect(Collectors.toList());
+		List <ScheduleDTO> scheduleDTOS = scheduleRepository.findAll().stream().map(s-> modelMapper.map(s,ScheduleDTO.class)).collect(Collectors.toList());
+        List <ScheduleDTO> scheduleDTOS1 = new ArrayList<>();
+		for (ScheduleDTO scheduleDTO : scheduleDTOS)
+        {
+            scheduleDTO.setCoursename(courseRepository.findById(scheduleDTO.getCode()).get().getName());
+            scheduleDTOS1.add(scheduleDTO);
+        }
 
+		return scheduleDTOS1;
 	}
 
 
