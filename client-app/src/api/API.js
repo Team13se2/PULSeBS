@@ -355,6 +355,18 @@ async function getContactReportTeacherPDF(teacherId){
     }
 }
 
+async function getSchedule(){
+    let url = "/support_officer/getSchedule";
+
+    const response = await fetch(baseURL + url);
+    if(response.ok){ 
+        return response.json();
+    } else {
+        let err = {status: response.status, errObj:-1};
+        throw err;  // An object with the error coming from the server
+    }
+}
+
 async function removeHolidaysSupportOfficer(dateStart,dateEnd) {
     return new Promise((resolve, reject) => {
         const url= "/support_officer/"+"removeHolidays"+"?&dateStart="+dateStart+"&dateEnd="+dateEnd;
@@ -377,6 +389,23 @@ async function removeHolidaysSupportOfficer(dateStart,dateEnd) {
     });
 }
 
+async function modifySchedule(id,dateStart,code,startTime,endTime,seats,room,day) {
+    return new Promise((resolve, reject) => {
+        const url= "/support_officer/"+"modifySchedule"+"?id="+id+"&dateStart="+dateStart.concat(" 00:00:00")+"&startTime="+startTime+"&endTime="+endTime+"&seats="+seats+"&code="+code+"&Room="+room+"&Day="+day;
+        fetch(url,{
+            method: 'POST',
+        }).then((response) => {
+            if (response.ok) {
+                resolve(null);
+            } else {
+                // analyze the cause of error
+                response.json()
+                    .then((obj) => { reject(obj); }) // error msg in the response body
+                    .catch((err) => { reject({ errors: [{ param: "Application", msg: "Cannot parse server response" }] }) }); // something else
+            }
+        });
+    });
+}
 
 const API = {isAuthenticated,userLogin,userLogout,getAllLectures,
     getNumberStudentsAttending,getStudentList,
@@ -385,5 +414,5 @@ const API = {isAuthenticated,userLogin,userLogout,getAllLectures,
     getPastLectures,getAllLecturesBookingManager,
     uploadStudentCSV,addPresence,getCurrentLectureTeacher,updateListSupportOfficer,
     getWaitingLecture,getContactReportStudentPDF,getContactReportStudentCSV,getContactReportTeacherPDF,getContactReportTeacherCSV,getLecturesOfTheDay,
-    removeHolidaysSupportOfficer} ;
+    removeHolidaysSupportOfficer,getSchedule,modifySchedule} ;
 export default API;

@@ -3,7 +3,7 @@ import PastLecturesFilter from './components/PastLecturesFilter'
 import React from 'react';
 import {AuthContext} from './auth/AuthContext';
 // import "react-big-calendar/lib/css/react-big-calendar.css";
-import {Redirect, Route, Link} from 'react-router-dom';
+import {Redirect, Route} from 'react-router-dom';
 import {Switch} from 'react-router';
 import {withRouter} from 'react-router-dom';
 import Header from './components/Header';
@@ -25,7 +25,7 @@ import SupportOfficerMainPage from './components/SupportOfficerMainPage';
 import CurrentLectures from './components/CurrentLectures';
 import SupportOfficerUpdate from './components/SupportOfficerUpdate';
 import LecturesWaitingList from './components/LecturesWaitingList';
-import ListCovid from './components/ListCovid';
+import SupportOfficerSchedule from './components/SupportOfficerSchedule';
 import LecturesOfTheDay from './components/LecturesOfTheDay';
 import ReactPlayer from 'react-player'
 
@@ -67,12 +67,12 @@ class App extends React.Component {
         API.userLogin(username, password).then((user) => {
             let usr;
             console.log(user);
-            if(user.id != -1){
+            if(user.id !== -1){
                 usr = {id: user.id, password: user.password, type: user.role};
             }
             console.log(usr);
             this.setState({authUser: usr});
-            if (user.id == -1) {
+            if (user.id === -1) {
                 this.setState({authErr: "Login Error"});
             }
         }).catch((errorObj) => {
@@ -305,7 +305,7 @@ class App extends React.Component {
                                 <Col sm={1}/>
                                 <Col sm={10}className="below-nav">
                                     <MyCalendar lectures={this.state.bookedLectures.map(function(elem) {
-                                        const format = "YYYY-MM-DD HH:mm:ss";
+                                        //const format = "YYYY-MM-DD HH:mm:ss";
                                         return {
                                           start: new Date (elem.startTime),
                                           end: new Date(elem.endTime),
@@ -556,6 +556,9 @@ class App extends React.Component {
                         </Route>
                         <Route exact path="/support_officer/update/">
                             <SupportOfficerUpdate />
+                        </Route>
+                        <Route exact path="/support_officer/schedule/">
+                            <SupportOfficerSchedule />
                         </Route>
                     </Switch>
                 </Route>
