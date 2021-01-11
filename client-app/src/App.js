@@ -3,7 +3,7 @@ import PastLecturesFilter from './components/PastLecturesFilter'
 import React from 'react';
 import {AuthContext} from './auth/AuthContext';
 // import "react-big-calendar/lib/css/react-big-calendar.css";
-import {Redirect, Route, Link} from 'react-router-dom';
+import {Redirect, Route} from 'react-router-dom';
 import {Switch} from 'react-router';
 import {withRouter} from 'react-router-dom';
 import Header from './components/Header';
@@ -25,7 +25,7 @@ import SupportOfficerMainPage from './components/SupportOfficerMainPage';
 import CurrentLectures from './components/CurrentLectures';
 import SupportOfficerUpdate from './components/SupportOfficerUpdate';
 import LecturesWaitingList from './components/LecturesWaitingList';
-import ListCovid from './components/ListCovid';
+import SupportOfficerSchedule from './components/SupportOfficerSchedule';
 import LecturesOfTheDay from './components/LecturesOfTheDay';
 import ReactPlayer from 'react-player'
 
@@ -67,12 +67,12 @@ class App extends React.Component {
         API.userLogin(username, password).then((user) => {
             let usr;
             console.log(user);
-            if(user.id != -1){
+            if(user.id !== -1){
                 usr = {id: user.id, password: user.password, type: user.role};
             }
             console.log(usr);
             this.setState({authUser: usr});
-            if (user.id == -1) {
+            if (user.id === -1) {
                 this.setState({authErr: "Login Error"});
             }
         }).catch((errorObj) => {
@@ -154,7 +154,6 @@ class App extends React.Component {
 
     getAllLecturesBookingManager = () =>{
         API.getAllLecturesBookingManager().then((lecture) =>{
-            console.log(lecture);
             this.setState({bookingManagerLecture: lecture});
         }).catch((err) =>{
             console.log(err);
@@ -228,17 +227,51 @@ class App extends React.Component {
         })
     }
 
-    addIdContactTracing = (id) =>{
-        API.getContactReportPDF(id).then((resp) =>{
-            //this.setState({listCOVID: list});
-            const response = {
-                file:'http://localhost:8081/booking_manager/getContactReportStudentPDF?studentId='+id,
-              };
-            window.open(response.file);
-        }).catch((err) =>{
-            //throw err;
-            alert("Student not found");
-        })
+    addIdContactTracing = (id,type) =>{
+        console.log(type);
+        if(type === "student"){
+            API.getContactReportStudentPDF(id).then((resp) =>{
+                //this.setState({listCOVID: list});
+                const response = {
+                    file:'http://localhost:8081/booking_manager/getContactReportStudentPDF?studentId='+id,
+                };
+                window.open(response.file);
+            }).catch((err) =>{
+                //throw err;
+                alert("Student not found");
+            })
+            API.getContactReportStudentCSV(id).then((resp) =>{
+                //this.setState({listCOVID: list});
+                const response = {
+                    file:'http://localhost:8081/booking_manager/getContactReportStudentCSV?studentId='+id,
+                };
+                window.open(response.file);
+            }).catch((err) =>{
+                //throw err;
+                alert("Student not found");
+            })
+        }else{
+            API.getContactReportTeacherPDF(id).then((resp) =>{
+                //this.setState({listCOVID: list});
+                const response = {
+                    file:'http://localhost:8081/booking_manager/getContactReportTeacherPDF?teacherId='+id,
+                };
+                window.open(response.file);
+            }).catch((err) =>{
+                //throw err;
+                alert("Teacher not found");
+            })
+            API.getContactReportTeacherCSV(id).then((resp) =>{
+                //this.setState({listCOVID: list});
+                const response = {
+                    file:'http://localhost:8081/booking_manager/getContactReportTeacherCSV?teacherId='+id,
+                };
+                window.open(response.file);
+            }).catch((err) =>{
+                //throw err;
+                alert("Student not found");
+            })
+        }
     }
 
 
@@ -272,7 +305,7 @@ class App extends React.Component {
                                 <Col sm={1}/>
                                 <Col sm={10}className="below-nav">
                                     <MyCalendar lectures={this.state.bookedLectures.map(function(elem) {
-                                        const format = "YYYY-MM-DD HH:mm:ss";
+                                        //const format = "YYYY-MM-DD HH:mm:ss";
                                         return {
                                           start: new Date (elem.startTime),
                                           end: new Date(elem.endTime),
@@ -501,10 +534,8 @@ class App extends React.Component {
                                 <Col sm={4}/>
                                 <Col sm={4}
                                     className="below-nav">
-                                    <h1 style={{display: 'flex', justifyContent: 'center'}}> Insert student id: </h1><br></br><br></br>
+                                    <h1 style={{display: 'flex', justifyContent: 'center'}}> Insert id: </h1><br></br><br></br>
                                     <ContactTracing addIdContactTracing={this.addIdContactTracing}/>
-                                    <br></br>
-                                    <br></br>
                                     {/*<ListCovid listCOVID={this.state.listCOVID}/>*/}
                                 </Col>
                                 <Col sm={4}/>
@@ -525,6 +556,9 @@ class App extends React.Component {
                         </Route>
                         <Route exact path="/support_officer/update/">
                             <SupportOfficerUpdate />
+                        </Route>
+                        <Route exact path="/support_officer/schedule/">
+                            <SupportOfficerSchedule />
                         </Route>
                     </Switch>
                 </Route>

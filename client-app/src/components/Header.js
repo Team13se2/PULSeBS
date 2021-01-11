@@ -50,6 +50,7 @@ const Header = (props) => {
             <Nav className="mr-auto">
             <Nav.Link as={NavLink} exact to="/support_officer" >Upload</Nav.Link> 
             <Nav.Link as={NavLink} to="/support_officer/update/" > Update List</Nav.Link> 
+            <Nav.Link as={NavLink} to="/support_officer/schedule/" > Schedule</Nav.Link> 
             </Nav>
         </Route>
 

@@ -52,7 +52,9 @@ class SupportOfficerMainPage extends React.Component {
         API.uploadStudentCSV(file,type).then((e) =>{
             this.setState({loading:false,response:"Upload successful"});
         }).catch((err) =>{
-            throw err;
+            //throw err;
+            alert("ERROR");
+            this.setState({loading:false,response:"ERROR"});
         })
         
     }

@@ -1,6 +1,5 @@
 package team13.pulsbes.allTestOfficer;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
@@ -73,7 +72,7 @@ class TestAddScheduleList {
 		when(courseRepository.findById(any())).thenReturn(oc);
 		when(courseRepository.getOne(any())).thenReturn(c);
 		when(lectureRepository.save(any())).thenReturn(l);
-		when(scheduleRepository.save(any())).thenReturn(s);
+	    when(scheduleRepository.save(any())).thenReturn(s);
 		doNothing().when(lectureRepository).flush();
 		officerService.addScheduleList(f);
 	}

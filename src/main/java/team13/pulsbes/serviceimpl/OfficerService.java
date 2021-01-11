@@ -12,9 +12,13 @@ import java.util.*;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.interceptor.SimpleCacheErrorHandler;
 import org.springframework.stereotype.Service;
 
+import team13.pulsbes.dtos.CourseDTO;
+import team13.pulsbes.dtos.ScheduleDTO;
 import team13.pulsbes.entities.*;
 import team13.pulsbes.exception.InvalidCourseException;
 import team13.pulsbes.exception.InvalidStudentException;
@@ -23,7 +27,10 @@ import team13.pulsbes.services.NotificationService;
 
 @Service
 public class OfficerService {
-	
+
+	@Autowired
+	ModelMapper modelMapper;
+
 	@Autowired
 	NotificationService notificationService;
 	@Autowired
@@ -36,7 +43,10 @@ public class OfficerService {
 	CourseRepository courseRepository;
 	@Autowired
 	ScheduleRepository scheduleRepository;
+	@Autowired
+	HolidayRepository holidayRepository;
 
+	
 	public void addLectureRepository(LectureRepository lectureRepository) {
 		this.lectureRepository = lectureRepository;
 	}
@@ -54,6 +64,21 @@ public class OfficerService {
 	}
 	Logger log = Logger.getLogger("OfficerService");
 	private static final String DATE_FORMAT_STRING = "yyyy-MM-dd HH:mm";
+
+
+	public List<ScheduleDTO> getSchedule()
+	{
+		List <ScheduleDTO> scheduleDTOS = scheduleRepository.findAll().stream().map(s-> modelMapper.map(s,ScheduleDTO.class)).collect(Collectors.toList());
+        List <ScheduleDTO> scheduleDTOS1 = new ArrayList<>();
+		for (ScheduleDTO scheduleDTO : scheduleDTOS)
+        {
+            scheduleDTO.setCoursename(courseRepository.findById(scheduleDTO.getCode()).get().getName());
+            scheduleDTOS1.add(scheduleDTO);
+        }
+
+		return scheduleDTOS1;
+	}
+
 
 
 	public void removeLectures(String year, String dateStart, String dateEnd) throws InvalidCourseException {
@@ -113,12 +138,424 @@ public class OfficerService {
 		}	
 	}
 
-	public void removeHolidays(String dateStart, String dateEnd) throws InvalidCourseException {
+
+	public void modifySchedule(Integer id,String code, String dateStart, String startTime, String endTime, Integer seats, String Room, String Day) throws ParseException, InvalidCourseException {
+		Calendar tmpCal1 = Calendar.getInstance();
+		Calendar tmpCal2 = Calendar.getInstance();
+		DateFormat dateFormat = new SimpleDateFormat(DATE_FORMAT_STRING);
+		Date start = dateFormat.parse(dateStart);
+		int addDate;
+		int i;	String strDate = "Error";
+		String endDate = "Error";
+		String startMin,startHour,endHour,endMin,yyyy,mm,dd;
+		String[] Start = startTime.split(":");
+		String[] End = endTime.split(":");
+		startHour = Start[0];
+		startMin = Start[1];
+		endHour = End[0];
+		endMin = End[1];
+		String[] dateSplit = dateStart.split(" ");
+		String[] dateSplit2 = dateSplit[0].split("-");
+		yyyy = dateSplit2[0];
+		mm = dateSplit2[1];
+		dd = dateSplit2 [2];
+		int year = Integer.parseInt(yyyy);
+		int month = Integer.parseInt(mm);
+		List <Student> studentsbooked = new ArrayList<>();
+
+
+
+
+
+		for (Lecture l : lectureRepository.findAll()) {
+
+			if (l.getIdschedule().equals(id)) {
+				try {
+
+					if (l.getStartTime2().after(start)) {
+
+						studentsbooked = new ArrayList<>(l.getStudents());
+						System.out.println(studentsbooked);
+
+						lectureRepository.delete(l);
+						lectureRepository.flush();
+
+						for (Student tmpStudent : studentsbooked) {
+
+
+							notificationService.sendMessage(tmpStudent.getEmail(),
+									"Schedule modified ",
+									"Dear "+tmpStudent.getName()+" "+tmpStudent.getSurname()+ ", \n" +
+											"The schedule of one of your booked lectures has been changed. \n" +
+											"Booked lecture: " + l.getSubjectName() + " scheduled for " + l.getStartTime() + "\n" +
+
+											"Starting from " + dateStart + " the lecture will take place at "  + Day + " in room " + Room +
+									" from " +startTime + " to " +endTime + "\n."
+									+ "If you want to conirm your booking you'll need to book the new lecture. Thank you."
+
+							);
+
+						}
+					}
+
+				} catch (ParseException e) {
+					e.printStackTrace();
+				}
+
+			}
+
+		}
+
+
+
+
+
+
+
+
+
+		Optional<Course> course = courseRepository.findById(code);
+
+		if(!course.isPresent()) {
+			throw new InvalidCourseException("Invalid Course");
+		}
+
+		if(course.get().getSemester().equals("1")) {
+
+			for (i = 0; i < 17; i++) {
+
+				Lecture l2 = Lecture.builder()
+						.code(code)
+						.day(Day)
+						.totalSeat(seats)
+						.roomName(Room)
+						.startTime(startTime)
+						.endTime(endTime)
+						.availableSeat(seats)
+						.bookable(true)
+						.nrStudentsPresent(0)
+						.nrStudentsBooked(0)
+						.idschedule(id)
+						.build();
+				l2.setSubjectName(courseRepository.getOne(l2.getCode()).getName());
+				l2.setTeacher(courseRepository.getOne(l2.getCode()).getTeacher());
+
+				switch (l2.getDay()) {
+
+					case "Mon":
+						addDate = i * 7;
+
+						tmpCal1.set(year, month, Integer.parseInt(dd), 0, 0, 0);
+						tmpCal2.set(year, month, Integer.parseInt(dd), 0, 0, 0);
+
+						tmpCal1.add(Calendar.DATE, +addDate);
+						tmpCal1.set(Calendar.HOUR_OF_DAY, Integer.parseInt(startHour));
+						tmpCal1.set(Calendar.MINUTE, Integer.parseInt(startMin));
+						strDate = dateFormat.format(tmpCal1.getTime());
+						log.info(strDate);
+
+						tmpCal2.add(Calendar.DATE, +addDate);
+						tmpCal2.set(Calendar.HOUR_OF_DAY, Integer.parseInt(endHour));
+						tmpCal2.set(Calendar.MINUTE, Integer.parseInt(endMin));
+						endDate = dateFormat.format(tmpCal2.getTime());
+						break;
+
+					case "Tue":
+						addDate = 1 + i * 7;
+
+						tmpCal1.set(year, month, Integer.parseInt(dd), 0, 0, 0);
+						tmpCal2.set(year, month, Integer.parseInt(dd), 0, 0, 0);
+
+						tmpCal1.add(Calendar.DATE, +addDate);
+						tmpCal1.set(Calendar.HOUR_OF_DAY, Integer.parseInt(startHour));
+						tmpCal1.set(Calendar.MINUTE, Integer.parseInt(startMin));
+						strDate = dateFormat.format(tmpCal1.getTime());
+
+						tmpCal2.add(Calendar.DATE, +addDate);
+						tmpCal2.set(Calendar.HOUR_OF_DAY, Integer.parseInt(endHour));
+						tmpCal2.set(Calendar.MINUTE, Integer.parseInt(endMin));
+						endDate = dateFormat.format(tmpCal2.getTime());
+						break;
+
+					case "Wed":
+						addDate = 2 + i * 7;
+
+						tmpCal1.set(year, month, Integer.parseInt(dd), 0, 0, 0);
+						tmpCal2.set(year, month, Integer.parseInt(dd), 0, 0, 0);
+
+						tmpCal1.add(Calendar.DATE, +addDate);
+						tmpCal1.set(Calendar.HOUR_OF_DAY, Integer.parseInt(startHour));
+						tmpCal1.set(Calendar.MINUTE, Integer.parseInt(startMin));
+						strDate = dateFormat.format(tmpCal1.getTime());
+
+						tmpCal2.add(Calendar.DATE, +addDate);
+						tmpCal2.set(Calendar.HOUR_OF_DAY, Integer.parseInt(endHour));
+						tmpCal2.set(Calendar.MINUTE, Integer.parseInt(endMin));
+						endDate = dateFormat.format(tmpCal2.getTime());
+						break;
+
+					case "Thu":
+						addDate = 3 + i * 7;
+
+						tmpCal1.set(year, month, Integer.parseInt(dd), 0, 0, 0);
+						tmpCal2.set(year, month, Integer.parseInt(dd), 0, 0, 0);
+
+						tmpCal1.add(Calendar.DATE, +addDate);
+						tmpCal1.set(Calendar.HOUR_OF_DAY, Integer.parseInt(startHour));
+						tmpCal1.set(Calendar.MINUTE, Integer.parseInt(startMin));
+						strDate = dateFormat.format(tmpCal1.getTime());
+
+						tmpCal2.add(Calendar.DATE, +addDate);
+						tmpCal2.set(Calendar.HOUR_OF_DAY, Integer.parseInt(endHour));
+						tmpCal2.set(Calendar.MINUTE, Integer.parseInt(endMin));
+						endDate = dateFormat.format(tmpCal2.getTime());
+						break;
+
+					case "Fri":
+						addDate = 4 + i * 7;
+
+						tmpCal1.set(year, month, Integer.parseInt(dd), 0, 0, 0);
+						tmpCal2.set(year, month, Integer.parseInt(dd), 0, 0, 0);
+
+						tmpCal1.add(Calendar.DATE, +addDate);
+						tmpCal1.set(Calendar.HOUR_OF_DAY, Integer.parseInt(startHour));
+						tmpCal1.set(Calendar.MINUTE, Integer.parseInt(startMin));
+						strDate = dateFormat.format(tmpCal1.getTime());
+
+						tmpCal2.add(Calendar.DATE, +addDate);
+						tmpCal2.set(Calendar.HOUR_OF_DAY, Integer.parseInt(endHour));
+						tmpCal2.set(Calendar.MINUTE, Integer.parseInt(endMin));
+						endDate = dateFormat.format(tmpCal2.getTime());
+						break;
+
+					default:
+						log.info("Wrong format");
+						break;
+
+
+				}
+
+				l2.setStartTime(strDate);
+				l2.setEndTime(endDate);
+
+
+
+
+			/*	holidayRepository.findAll().forEach(h->{
+
+				String [] dateh,datel2;
+				boolean flag;
+				dateh = h.getDate().split(" ");
+				String dayh = dateh[0].concat(dateh[1] + dateh[2] + dateh[4] + dateh[5]);
+
+					try {
+						datel2 = l2.getStartTime2().toString().split(" ");
+						String dayl2 = datel2[0].concat(datel2[1] + datel2[2] + datel2[4] + datel2[5]);
+						if(dayh.equals(dayl2))
+
+							flag = false;
+
+					} catch (ParseException e) {
+						e.printStackTrace();
+					}
+
+				});
+            */
+				boolean flag = true;
+
+				for (Holiday h : holidayRepository.findAll()) {
+					String[] dateh, datel2;
+
+					dateh = h.getDate().split(" ");
+					String dayh = dateh[0].concat(dateh[1] + dateh[2] + dateh[4] + dateh[5]);
+
+					try {
+						datel2 = l2.getStartTime2().toString().split(" ");
+						String dayl2 = datel2[0].concat(datel2[1] + datel2[2] + datel2[4] + datel2[5]);
+						System.out.println(dayh + dayl2);
+						if (dayh.equals(dayl2))
+
+							flag = false;
+
+					} catch (ParseException e) {
+						e.printStackTrace();
+					}
+				}
+
+				if (flag) {
+
+					lectureRepository.save(l2);
+					lectureRepository.flush();
+				}
+
+			}
+		}
+
+		if(course.get().getSemester().equals("2")) {
+
+			for (i=0;i<17;i++) {
+
+				Lecture l2 = Lecture.builder()
+						.code(code)
+						.day(Day)
+						.totalSeat(seats)
+						.roomName(Room)
+						.startTime(startTime)
+						.endTime(endTime)
+						.availableSeat(seats)
+						.bookable(true)
+						.nrStudentsPresent(0)
+						.nrStudentsBooked(0)
+						.idschedule(id)
+						.build();
+				l2.setSubjectName(courseRepository.getOne(l2.getCode()).getName());
+				l2.setTeacher(courseRepository.getOne(l2.getCode()).getTeacher());
+
+				switch (l2.getDay()) {
+
+					case "Mon":
+						addDate = i*7;
+
+						tmpCal1.set(2020, Calendar.MARCH, 1, 0, 0, 0);
+						tmpCal2.set(2020, Calendar.MARCH, 1, 0, 0, 0);
+
+						tmpCal1.add(Calendar.DATE, +addDate);
+						tmpCal1.set(Calendar.HOUR_OF_DAY, Integer.parseInt(startHour));
+						tmpCal1.set(Calendar.MINUTE, Integer.parseInt(startMin));
+						strDate = dateFormat.format(tmpCal1.getTime());
+						log.info(strDate);
+
+						tmpCal2.add(Calendar.DATE, +addDate);
+						tmpCal2.set(Calendar.HOUR_OF_DAY, Integer.parseInt(endHour));
+						tmpCal2.set(Calendar.MINUTE, Integer.parseInt(endMin));
+						endDate = dateFormat.format(tmpCal2.getTime());
+						break;
+
+					case "Tue":
+						addDate = 1 + i*7;
+
+						tmpCal1.set(2020, Calendar.MARCH, 1, 0, 0, 0);
+						tmpCal2.set(2020, Calendar.MARCH, 1, 0, 0, 0);
+
+						tmpCal1.add(Calendar.DATE, +addDate);
+						tmpCal1.set(Calendar.HOUR_OF_DAY, Integer.parseInt(startHour));
+						tmpCal1.set(Calendar.MINUTE, Integer.parseInt(startMin));
+						strDate = dateFormat.format(tmpCal1.getTime());
+
+						tmpCal2.add(Calendar.DATE, +addDate);
+						tmpCal2.set(Calendar.HOUR_OF_DAY, Integer.parseInt(endHour));
+						tmpCal2.set(Calendar.MINUTE, Integer.parseInt(endMin));
+						endDate = dateFormat.format(tmpCal2.getTime());
+						break;
+
+					case "Wed":
+						addDate = 2 + i*7;
+
+						tmpCal1.set(2020, Calendar.MARCH, 1, 0, 0, 0);
+						tmpCal2.set(2020, Calendar.MARCH, 1, 0, 0, 0);
+
+						tmpCal1.add(Calendar.DATE, +addDate);
+						tmpCal1.set(Calendar.HOUR_OF_DAY, Integer.parseInt(startHour));
+						tmpCal1.set(Calendar.MINUTE, Integer.parseInt(startMin));
+						strDate = dateFormat.format(tmpCal1.getTime());
+
+						tmpCal2.add(Calendar.DATE, +addDate);
+						tmpCal2.set(Calendar.HOUR_OF_DAY, Integer.parseInt(endHour));
+						tmpCal2.set(Calendar.MINUTE, Integer.parseInt(endMin));
+						endDate = dateFormat.format(tmpCal2.getTime());
+						break;
+
+					case "Thu":
+						addDate = 3 + i*7;
+
+						tmpCal1.set(2020, Calendar.MARCH, 1, 0, 0, 0);
+						tmpCal2.set(2020, Calendar.MARCH, 1, 0, 0, 0);
+
+						tmpCal1.add(Calendar.DATE, +addDate);
+						tmpCal1.set(Calendar.HOUR_OF_DAY, Integer.parseInt(startHour));
+						tmpCal1.set(Calendar.MINUTE, Integer.parseInt(startMin));
+						strDate = dateFormat.format(tmpCal1.getTime());
+
+						tmpCal2.add(Calendar.DATE, +addDate);
+						tmpCal2.set(Calendar.HOUR_OF_DAY, Integer.parseInt(endHour));
+						tmpCal2.set(Calendar.MINUTE, Integer.parseInt(endMin));
+						endDate = dateFormat.format(tmpCal2.getTime());
+						break;
+
+					case "Fri":
+						addDate = 4 + i*7;
+
+						tmpCal1.set(2020, Calendar.MARCH, 1, 0, 0, 0);
+						tmpCal2.set(2020, Calendar.MARCH, 1, 0, 0, 0);
+
+						tmpCal1.add(Calendar.DATE, +addDate);
+						tmpCal1.set(Calendar.HOUR_OF_DAY, Integer.parseInt(startHour));
+						tmpCal1.set(Calendar.MINUTE, Integer.parseInt(startMin));
+						strDate = dateFormat.format(tmpCal1.getTime());
+
+						tmpCal2.add(Calendar.DATE, +addDate);
+						tmpCal2.set(Calendar.HOUR_OF_DAY, Integer.parseInt(endHour));
+						tmpCal2.set(Calendar.MINUTE, Integer.parseInt(endMin));
+						endDate = dateFormat.format(tmpCal2.getTime());
+						break;
+
+					default:
+						log.info("Wrong format");
+						break;
+
+
+				}
+
+				l2.setStartTime(strDate);
+				l2.setEndTime(endDate);
+
+
+				lectureRepository.save(l2);
+				lectureRepository.flush();
+			}
+
+		}
+
+      for (Schedule s : scheduleRepository.findAll())
+	  {
+	  	if (s.getId().equals(id))
+		{
+			s.setSeats(seats);
+			s.setDay(Day);
+			s.setStartTime(startTime);
+			s.setEndTime(endTime);
+			s.setRoom(Room);
+
+			scheduleRepository.save(s);
+			scheduleRepository.flush();
+		}
+	  }
+
+	}
+
+
+
+	@SuppressWarnings("deprecation")
+	public void removeHolidays(String dateStart, String dateEnd) throws InvalidCourseException, ParseException {
 		List<Lecture> listLecture = new ArrayList<>();
 		DateFormat dateFormat = new SimpleDateFormat(DATE_FORMAT_STRING);	
+		Date start = dateFormat.parse(dateStart);
+		Date end = dateFormat.parse(dateEnd);
 		Boolean check1 = false;
 		Boolean check2 = false;
+			
 
+		
+		while(start.before(end)) {
+			Holiday h = new Holiday();
+		    h.setDate(start.toString());
+			start.setDate(start.getDate()+1);
+			holidayRepository.save(h);
+		}
+		Holiday h = new Holiday();
+		h.setDate(end.toString());
+		holidayRepository.save(h);
+		
 		listLecture.addAll(lectureRepository.findAll().stream().collect(Collectors.toList()));
 
 		for (Lecture tmpLecture : listLecture) {
@@ -362,7 +799,7 @@ public class OfficerService {
 
 							case "Mon":							
 							addDate = i*7;							
-							
+
 							tmpCal1.set(2020, Calendar.OCTOBER, 5, 0, 0, 0);
 							tmpCal2.set(2020, Calendar.OCTOBER, 5, 0, 0, 0);
 
@@ -465,7 +902,7 @@ public class OfficerService {
 						l.setNrStudentsBooked(0);
 						l.setNrStudentsPresent(0);
 						l.setTeacher(courseRepository.getOne(lecture[0]).getTeacher());
-
+						l.setIdschedule(s.getId());
 
 						lectureRepository.save(l);
 						lectureRepository.flush();
@@ -586,6 +1023,7 @@ public class OfficerService {
 						l.setNrStudentsBooked(0);
 						l.setNrStudentsPresent(0);
 						l.setTeacher(courseRepository.getOne(lecture[0]).getTeacher());
+						l.setId(s.getId());
 
 
 						lectureRepository.save(l);
@@ -611,8 +1049,12 @@ public class OfficerService {
 				}
 			}
 		}
-	}	
-	
+
+	}
+
+
+
+
 
 }
 

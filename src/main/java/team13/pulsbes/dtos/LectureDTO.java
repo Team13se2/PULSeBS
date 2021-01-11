@@ -31,6 +31,10 @@ public class LectureDTO {
 	
 	private Boolean bookable;
 
+
+
+	private Integer idschedule;
+
     
 	public LectureDTO(){}
 	public Integer getId() {
@@ -101,7 +105,8 @@ public class LectureDTO {
 	public Boolean isBookable() {
 		return bookable;
 	}
-
+	public Integer getIdschedule() {return idschedule; }
+	public void setIdschedule(Integer idschedule) { this.idschedule = idschedule;}
 	public void setBookable(Boolean bookable) {
 		this.bookable = bookable;
 	}
