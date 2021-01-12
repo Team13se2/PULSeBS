@@ -46,7 +46,9 @@ class TestEntities {
 		Course c = new Course();
 		Teacher t = new Teacher();
 		Student s = new Student("1",	"name","surname");
+		
 		l.setCode("1");
+		l.setId(1);
 		l.setStartTime(null);
 		l.setEndTime(null);
 		l.setSubjectName("test");
@@ -59,7 +61,11 @@ class TestEntities {
 		l.addStartTime(120, 10, 10, 10, 10);
 		l.getStartTime2();
 		l.addEndTime(120, 1, 10 , 10, 12);
-		
+		l.setStudentsPresent(students);
+		l.addStudentPresent(s);
+		l.setBookable(true);
+		l.setDay("Mon");
+		l.setIdschedule(1);
 		
 		assertEquals("1",l.getCode());
 		assertEquals(10,l.getAvailableSeat());
@@ -70,9 +76,18 @@ class TestEntities {
 		assertEquals(l.getTeacher(), t);
 		assertEquals(l.getStartTime(),l.getStartTime());
 		assertEquals(l.getEndTime(),l.getEndTime());
+		assertEquals("test", l.getSubjectName());
+		assertEquals(1, l.getStudentsPresent().size());
+		assertEquals(0, l.getNrStudentsPresent());
+		assertEquals(1, l.getId());
+		assertEquals(true, l.getBookable());
+		assertEquals("Mon", l.getDay());
+		assertEquals(1, l.getIdschedule());
+		assertEquals(1, l.getStudentsPresent().size());
+		
 		l.addStudentAttending(s);
 		l.removeStudentAttending(s);
-		assertEquals(0, l.getStudents().size());
+		assertEquals(1, l.getStudents().size());
 	}
 	@Test
 	void testLectureExceptions() {
@@ -82,15 +97,41 @@ class TestEntities {
 	}
 	@Test
 	void testStudent() throws InvalidCourseException {
+		Student s1 = new Student();
 		Student s = new Student("1","test","testsur");
+		Lecture lecture = new Lecture();
+		lecture.setAvailableSeat(10);
+		Lecture lecture2 = new Lecture();
+		Lecture lecture3 = new Lecture();
 		List<Course> courses = new ArrayList<>(); 
+		List<Lecture>lectures = new ArrayList<Lecture>();
+		lectures.add(lecture);
 		s.setEmail("email");
 		s.setCourses(courses);
+		s.addBookLecture(lecture); s.addBookLecture(lecture2);
+		s.removeBookedLecture(lecture);
+		s.addLecturePresence(lecture3);
+		s.addLecturePresence(lecture2);
+		s.setId("1");
+		s.setName("test");
+		s.setSurname("testsur");
+		s.setPsw("psw");
+		s.setCity("testcity");
+		s.setSSN("ssn");
+		s.setBirthday("birth");
+		s.setWaitingLectures(lectures);
 		assertEquals("1", s.getId());
 		assertEquals("test", s.getName());
 		assertEquals("testsur", s.getSurname());
 		assertEquals("email", s.getEmail());
+		assertEquals("psw", s.getPsw());
 		assertEquals(s.getCourses(), courses);
+		assertEquals(1, s.getBookedLectures().size());
+		assertEquals(2, s.getAttendedLectures().size());
+		assertEquals("testcity", s.getCity());
+		assertEquals("ssn", s.getSSN());
+		assertEquals("birth", s.getBirthday());
+		assertEquals(lectures, s.getWaitingLectures());
 		Course c = new Course();
 		s.addCourse(c);
 		s.removeCourse(c);
