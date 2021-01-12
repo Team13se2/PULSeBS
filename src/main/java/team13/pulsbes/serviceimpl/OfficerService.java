@@ -62,6 +62,13 @@ public class OfficerService {
 	public void addScheduleRepository (ScheduleRepository scheduleRepository) {
 		this.scheduleRepository = scheduleRepository;
 	}
+	public void addNotificationService (NotificationService notificationService) {
+		this.notificationService = notificationService;
+	}
+	public void addHolidayRepository (HolidayRepository holidayRepository) {
+		this.holidayRepository = holidayRepository;
+	}
+	
 	Logger log = Logger.getLogger("OfficerService");
 	private static final String DATE_FORMAT_STRING = "yyyy-MM-dd HH:mm";
 
@@ -197,7 +204,7 @@ public class OfficerService {
 
 						}
 					}
-
+ 
 				} catch (ParseException e) {
 					e.printStackTrace();
 				}
@@ -237,8 +244,8 @@ public class OfficerService {
 						.nrStudentsBooked(0)
 						.idschedule(id)
 						.build();
-				l2.setSubjectName(courseRepository.getOne(l2.getCode()).getName());
-				l2.setTeacher(courseRepository.getOne(l2.getCode()).getTeacher());
+				l2.setSubjectName(course.get().getName());
+				l2.setTeacher(course.get().getTeacher());
 
 				switch (l2.getDay()) {
 
@@ -408,8 +415,8 @@ public class OfficerService {
 						.nrStudentsBooked(0)
 						.idschedule(id)
 						.build();
-				l2.setSubjectName(courseRepository.getOne(l2.getCode()).getName());
-				l2.setTeacher(courseRepository.getOne(l2.getCode()).getTeacher());
+				l2.setSubjectName(course.get().getName());
+				l2.setTeacher(course.get().getTeacher());
 
 				switch (l2.getDay()) {
 
