@@ -70,8 +70,9 @@ public class BookingManagerServiceImpl implements BookingManagerService{
             throw new InvalidStudentException(STUDENT_NULL);
         }
         
-        if (!studentRepository.existsById(studentId))
+        if (!studentRepository.existsById(studentId)) {
 			throw new InvalidStudentException(STUDENT_NOT_FOUND);
+		}
 			
 		List<Course> listCourse = studentRepository.getOne(studentId).getCourses();
 		List<Lecture> listLecture = new ArrayList<>();
@@ -111,8 +112,9 @@ public class BookingManagerServiceImpl implements BookingManagerService{
             throw new InvalidStudentException(STUDENT_NULL);
         }
         
-        if (!studentRepository.existsById(studentId))
+        if (!studentRepository.existsById(studentId)) {
 			throw new InvalidStudentException(STUDENT_NOT_FOUND);
+		}
 			
 		List<Course> listCourse = studentRepository.getOne(studentId).getCourses();
 		List<Lecture> listLecture = new ArrayList<>();
@@ -194,8 +196,9 @@ public class BookingManagerServiceImpl implements BookingManagerService{
             throw new InvalidTeacherException(TEACHER_NULL);
         }
         
-        if (!teacherRepository.existsById(teacherId))
+        if (!teacherRepository.existsById(teacherId)) {
 			throw new InvalidTeacherException(TEACHER_NOT_FOUND);
+		}
 			
 		List<Course> listCourse = teacherRepository.getOne(teacherId).getCourses();
 		List<Lecture> listLecture = new ArrayList<>();
@@ -234,8 +237,9 @@ public class BookingManagerServiceImpl implements BookingManagerService{
             throw new InvalidTeacherException(TEACHER_NULL);
         }
         
-        if (!teacherRepository.existsById(teacherId))
+        if (!teacherRepository.existsById(teacherId)) {
 			throw new InvalidTeacherException(TEACHER_NOT_FOUND);
+		}
 			
 		List<Course> listCourse = teacherRepository.getOne(teacherId).getCourses();
 		List<Lecture> listLecture = new ArrayList<>();
