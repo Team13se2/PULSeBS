@@ -8,10 +8,13 @@ import java.io.IOException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.*;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
+import org.apache.commons.lang3.time.DateUtils;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.interceptor.SimpleCacheErrorHandler;
@@ -158,6 +161,7 @@ public class OfficerService {
 		Calendar tmpCal2 = Calendar.getInstance();
 		DateFormat dateFormat = new SimpleDateFormat(DATE_FORMAT_STRING);
 		Date start = dateFormat.parse(dateStart);
+		Date stDate = DateUtils.addMonths(start,-3);
 		int addDate;
 		int i;	String strDate = "Error";
 		String endDate = "Error";
@@ -174,7 +178,7 @@ public class OfficerService {
 		mm = dateSplit2[1];
 		dd = dateSplit2 [2];
 		int year = Integer.parseInt(yyyy);
-		int month = Integer.parseInt(mm);
+		int month = Integer.parseInt(mm) - 1;
 		List <Student> studentsbooked = new ArrayList<>();
 
 
@@ -186,7 +190,7 @@ public class OfficerService {
 			if (l.getIdschedule().equals(id)) {
 				try {
 
-					if (l.getStartTime2().after(start)) {
+					if (l.getStartTime2().after(stDate)) {
 
 						studentsbooked = new ArrayList<>(l.getStudents());
 						System.out.println(studentsbooked);
@@ -757,8 +761,7 @@ public class OfficerService {
 					br.close();
 					
 				} catch (IOException e) {
-					log.throwing(this.getClass().getName(), "addCourseList", e);
-					return false;
+					log.throwing(this.getClass().getName(), "addCourseList", e);					
 
 				}
 			}

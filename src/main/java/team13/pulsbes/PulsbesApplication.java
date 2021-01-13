@@ -125,6 +125,6 @@ public class PulsbesApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(PulsbesApplication.class, args);
-	}
+	}	
 	
 }
