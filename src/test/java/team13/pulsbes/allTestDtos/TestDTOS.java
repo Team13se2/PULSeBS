@@ -45,8 +45,8 @@ class TestDTOS {
 		assertEquals(100,l.getTotalSeat());
 		assertEquals("aula",l.getRoomName());
 		assertEquals(true, l.getBookable());
-		assertEquals(l.getNrStudentsBooked(), 10);
-		assertEquals(l.getNrStudentsPresent(), 10);
+		assertEquals(10, l.getNrStudentsBooked());
+		assertEquals(10, l.getNrStudentsPresent());
 		assertEquals(true, l.isBookable());
 		}
 		

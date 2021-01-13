@@ -214,7 +214,7 @@ public class SupportOfficerController {
 
 	@PostMapping(value = Constants.MODIFY_SCHEDULE)
 	public void modifySchedule(@RequestParam("id") Integer id, @RequestParam("dateStart") String dateStart, @RequestParam("code") String code, @RequestParam("startTime") String startTime, @RequestParam("endTime") String endTime, @RequestParam("seats") Integer seats, @RequestParam("Room") String Room, @RequestParam("Day") String Day, @CookieValue(value = "type") String type) throws InvalidUserException, InvalidCourseException, ParseException {
-		System.out.println(dateStart);
+		
 		if (type.equals(TYPE_SUPPORT)) {
 			officerService.modifySchedule(id, code, dateStart, startTime, endTime, seats, Room, Day);
 		} else {

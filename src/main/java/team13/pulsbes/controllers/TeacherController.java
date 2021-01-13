@@ -9,7 +9,6 @@ import java.io.OutputStream;
 import java.text.ParseException;
 import java.util.Collections;
 import java.util.List;
-import java.util.Map;
 import java.util.logging.Logger;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +17,6 @@ import org.springframework.web.servlet.mvc.method.annotation.StreamingResponseBo
 
 import team13.pulsbes.dtos.LectureDTO;
 import team13.pulsbes.dtos.LectureIdStudentId;
-import team13.pulsbes.dtos.StudentDTO;
 import team13.pulsbes.dtos.StudentPresence;
 import team13.pulsbes.exception.InvalidLectureException;
 import team13.pulsbes.exception.InvalidCourseException;
