@@ -103,10 +103,8 @@ public class StudentController {
 	@GetMapping(value = Constants.STUDENT_TUTORIAL)
 	public StreamingResponseBody studentTutorial() throws FileNotFoundException {
 		File video = new File("videos/student_tutorial.mp4");
-		try {
-			final InputStream videoFileStream = new FileInputStream(video);
-			return (os)->readAndWrite(videoFileStream, os);		
-			
+		try (final InputStream videoFileStream = new FileInputStream(video)){		
+			return (os)->readAndWrite(videoFileStream, os);					
 		} catch (Exception e) {
 			// TODO: handle exception
 			return null;
