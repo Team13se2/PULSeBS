@@ -63,7 +63,7 @@ class TestUpdateQueue {
 		Optional<Student> os = Optional.of(s);
 		when(sr.findById(any())).thenReturn(os);
 		when(sr.getOne(any())).thenReturn(s);
-		studentService.updatequeue(1);
+		assertTrue(studentService.updatequeue(1));
 		doNothing().when(notificationService).sendMessage(any(), any(), any());
 	}
 	

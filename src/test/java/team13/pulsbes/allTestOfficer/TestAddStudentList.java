@@ -30,7 +30,8 @@ class TestAddStudentList {
 		File f = new File("src\\test\\java\\team13\\pulsbes\\allTestOfficer/Students.csv");
 		Student s = new Student();
 		when(studentRepository.save(any())).thenReturn(s);
-		officerService.addStudentList(f);
+		assertTrue(	officerService.addStudentList(f));
+	
 	}
 
 }

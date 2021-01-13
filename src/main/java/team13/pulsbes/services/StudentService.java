@@ -16,5 +16,5 @@ public interface StudentService {
 	List<LectureDTO> getBookedLectures(String id)throws InvalidStudentException;
     List<LectureDTO> getWaitingLectures(String id)throws InvalidStudentException;
 	String deleteLecture (Integer lectureId,String studentId) throws InvalidLectureException,InvalidStudentException;
-    void updatequeue(Integer lectureId) throws InvalidStudentException, InvalidLectureException;
+    boolean updatequeue(Integer lectureId) throws InvalidStudentException, InvalidLectureException;
 }

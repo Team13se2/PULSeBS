@@ -30,7 +30,7 @@ class TestAddTeacherList {
 		File f = new File("src\\test\\java\\team13\\pulsbes\\allTestOfficer/Professors.csv");
 		Teacher t = new Teacher();
 		when(teacherRepository.save(any())).thenReturn(t);
-		officerService.addTeacherList(f);
+		assertTrue(officerService.addTeacherList(f));
 	}
 
 }

@@ -93,7 +93,7 @@ public class OfficerService {
 
 
 
-	public void removeLectures(String year, String dateStart, String dateEnd) throws InvalidCourseException {
+	public boolean removeLectures(String year, String dateStart, String dateEnd) throws InvalidCourseException {
 
 		List<Lecture> listLecture = new ArrayList<>();
 		DateFormat dateFormat = new SimpleDateFormat(DATE_FORMAT_STRING);	
@@ -104,8 +104,8 @@ public class OfficerService {
 
 		for (Lecture tmpLecture : listLecture) {
 
-			try {check1 = tmpLecture.getStartTime2().after(dateFormat.parse(dateStart));} catch (ParseException e) {log.throwing(this.getClass().getName(), "removeLectures", e);};
-			try {check2 = tmpLecture.getEndTime2().before(dateFormat.parse(dateEnd));} catch (ParseException e) {log.throwing(this.getClass().getName(), "removeLectures", e);};	
+			try {check1 = tmpLecture.getStartTime2().after(dateFormat.parse(dateStart));} catch (ParseException e) {log.throwing(this.getClass().getName(), "removeLectures", e); return false;};
+			try {check2 = tmpLecture.getEndTime2().before(dateFormat.parse(dateEnd));} catch (ParseException e) {log.throwing(this.getClass().getName(), "removeLectures", e);return false;};	
 			
 			Optional<Course> course = courseRepository.findById(tmpLecture.getCode());
 			
@@ -119,10 +119,11 @@ public class OfficerService {
 				lectureRepository.save(tmpLecture);
 				lectureRepository.flush();
 			}
-		}	
+		}
+		return true;	
 	}
 
-	public void readdLectures(String year, String dateStart, String dateEnd) throws InvalidCourseException {
+	public boolean readdLectures(String year, String dateStart, String dateEnd) throws InvalidCourseException {
 
 		List<Lecture> listLecture = new ArrayList<>();
 		DateFormat dateFormat = new SimpleDateFormat(DATE_FORMAT_STRING);	
@@ -133,8 +134,8 @@ public class OfficerService {
 
 		for (Lecture tmpLecture : listLecture) {
 
-			try {check1 = tmpLecture.getStartTime2().after(dateFormat.parse(dateStart));} catch (ParseException e) {log.throwing(this.getClass().getName(), "removeLectures", e);};
-			try {check2 = tmpLecture.getEndTime2().before(dateFormat.parse(dateEnd));} catch (ParseException e) {log.throwing(this.getClass().getName(), "removeLectures", e);};
+			try {check1 = tmpLecture.getStartTime2().after(dateFormat.parse(dateStart));} catch (ParseException e) {log.throwing(this.getClass().getName(), "removeLectures", e); return false;};
+			try {check2 = tmpLecture.getEndTime2().before(dateFormat.parse(dateEnd));} catch (ParseException e) {log.throwing(this.getClass().getName(), "removeLectures", e);return false;};
 			
 			Optional<Course> course = courseRepository.findById(tmpLecture.getCode());
 			
@@ -147,11 +148,12 @@ public class OfficerService {
 				lectureRepository.save(tmpLecture);
 				lectureRepository.flush();
 			}
-		}	
+		}
+		return true;	
 	}
 
 
-	public void modifySchedule(Integer id,String code, String dateStart, String startTime, String endTime, Integer seats, String Room, String Day) throws ParseException, InvalidCourseException {
+	public boolean modifySchedule(Integer id,String code, String dateStart, String startTime, String endTime, Integer seats, String Room, String Day) throws ParseException, InvalidCourseException {
 		Calendar tmpCal1 = Calendar.getInstance();
 		Calendar tmpCal2 = Calendar.getInstance();
 		DateFormat dateFormat = new SimpleDateFormat(DATE_FORMAT_STRING);
@@ -542,13 +544,14 @@ public class OfficerService {
 			scheduleRepository.flush();
 		}
 	  }
+      return true;
 
 	}
 
 
 
 	@SuppressWarnings("deprecation")
-	public void removeHolidays(String dateStart, String dateEnd) throws InvalidCourseException, ParseException {
+	public boolean removeHolidays(String dateStart, String dateEnd) throws InvalidCourseException, ParseException {
 		List<Lecture> listLecture = new ArrayList<>();
 		DateFormat dateFormat = new SimpleDateFormat(DATE_FORMAT_STRING);	
 		Date start = dateFormat.parse(dateStart);
@@ -585,10 +588,11 @@ public class OfficerService {
 				lectureRepository.delete(tmpLecture);
 				lectureRepository.flush();
 			}
-		}	
+		}
+		return true;	
 	}
 	
-	public void addStudentList(File f) {
+	public boolean addStudentList(File f) {
 		boolean firstline = true;
         BufferedReader br = null;
         String line = "";
@@ -625,10 +629,11 @@ public class OfficerService {
                 }
             }
         }
+		return true;
 
     }
 	
-	public void addTeacherList(File f) {
+	public boolean addTeacherList(File f) {
 		boolean firstline = true;
 
         BufferedReader br = null;
@@ -666,9 +671,10 @@ public class OfficerService {
                 }
             }
         }
+		return true;
 	}
 	
-	public void enrollStudent(File f) throws InvalidCourseException, InvalidStudentException {
+	public boolean enrollStudent(File f) throws InvalidCourseException, InvalidStudentException {
 		boolean firstline = true;
         BufferedReader br = null;
         String line = "";
@@ -703,9 +709,10 @@ public class OfficerService {
                 }
             }
         }
+		return true;
 	}
 
-	public void addCourseList(File f) {
+	public boolean addCourseList(File f) {
 		boolean firstline = true;
 		BufferedReader br = null;
 		String line = "";
@@ -739,20 +746,25 @@ public class OfficerService {
 
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
+			return false;
 		} catch (IOException e) {
 			e.printStackTrace();
+			return false;
 		} finally {
 			if (br != null) {
 				try {
 					br.close();
+					
 				} catch (IOException e) {
 					e.printStackTrace();
+					return false;
 				}
 			}
 		}
+		return true;
 	}
 
-	public void addScheduleList(File f) throws InvalidCourseException {
+	public boolean addScheduleList(File f) throws InvalidCourseException {
 		boolean firstline = true;
 		BufferedReader br = null;
 		String line = "";
@@ -1061,6 +1073,7 @@ public class OfficerService {
 				}
 			}
 		}
+		return true;
 
 	}
 

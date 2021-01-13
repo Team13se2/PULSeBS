@@ -40,7 +40,7 @@ class TestEnrollStudent {
 		when(courseRepository.getOne(any())).thenReturn(c);
 		when(studentRepository.getOne(any())).thenReturn(s);
 		when(studentRepository.save(any())).thenReturn(s);
-		officerService.enrollStudent(f);
+		assertTrue(officerService.enrollStudent(f));
 	}
 
 }

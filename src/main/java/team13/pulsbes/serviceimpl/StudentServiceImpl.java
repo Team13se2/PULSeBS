@@ -279,7 +279,7 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
-    public void updatequeue(Integer lectureId) throws InvalidStudentException, InvalidLectureException {
+    public boolean updatequeue(Integer lectureId) throws InvalidStudentException, InvalidLectureException {
 
         Optional<Lecture> optL = lectureRepository.findById(lectureId);
         if (!optL.isPresent()) 
@@ -294,7 +294,7 @@ public class StudentServiceImpl implements StudentService {
                 Integer value = l.getQueue().values().stream().min((x, y) -> x - y).orElse(-1);
 
                 if (value == -1){
-                    return;
+                    return false;
                 }
 
                 String key = l.getQueue().entrySet().stream().filter(entry -> Objects.equals(entry.getValue(), value)).map(Map.Entry::getKey).collect(Collectors.joining());
@@ -311,10 +311,11 @@ public class StudentServiceImpl implements StudentService {
                 delayedbookLecture(lectureId, student.getId());
 
                 lectureRepository.save(l);
+             return true;
             }
 
             else
-                return;
+                return false;
 
 
 

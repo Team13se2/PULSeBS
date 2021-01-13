@@ -2,7 +2,7 @@ package team13.pulsbes.allTestOfficer;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
-
+import static org.junit.jupiter.api.Assertions.*;
 import java.io.File;
 import java.util.Optional;
 
@@ -56,7 +56,7 @@ class TestAddScheduleList {
 		when(lectureRepository.save(any())).thenReturn(l);
 		when(scheduleRepository.save(any())).thenReturn(s);
 		doNothing().when(lectureRepository).flush();
-		officerService.addScheduleList(f);
+		assertTrue(officerService.addScheduleList(f));		
 	}
 	@Test
 	void testAddScheduleListSecondSemester() throws InvalidCourseException {
@@ -74,6 +74,6 @@ class TestAddScheduleList {
 		when(lectureRepository.save(any())).thenReturn(l);
 	    when(scheduleRepository.save(any())).thenReturn(s);
 		doNothing().when(lectureRepository).flush();
-		officerService.addScheduleList(f);
+		assertTrue(officerService.addScheduleList(f));
 	}
 }

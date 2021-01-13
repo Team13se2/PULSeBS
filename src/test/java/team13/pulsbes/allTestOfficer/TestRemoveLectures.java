@@ -46,6 +46,6 @@ class TestRemoveLectures {
 		when(lectureRepository.findAll()).thenReturn(lectures);
 		when(lectureRepository.save(any())).thenReturn(l);
 		doNothing().when(lectureRepository).flush();
-		officerService.removeLectures("2020","2020-01-01 00:00", "2020-12-01 00:00");
+		assertTrue(officerService.removeLectures("2020","2020-01-01 00:00", "2020-12-01 00:00"));
 	}
 }

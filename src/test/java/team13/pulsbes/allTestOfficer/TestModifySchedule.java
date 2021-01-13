@@ -81,7 +81,8 @@ class TestModifySchedule {
 		when(holidayRepository.findAll()).thenReturn(holidays);
 		when(courseRepository.findById(any())).thenReturn(oc);
 		when(scheduleRepository.findAll()).thenReturn(schedules);
-		officerService.modifySchedule(1, "1", "2021-10-10 08:30", "8:30", "10:00", 50,"Aula1" , "Mon");
+		assertTrue(officerService.modifySchedule(1, "1", "2021-10-10 08:30", "8:30", "10:00", 50,"Aula1" , "Mon"));
+		
 	}
 	@Test
 	void testModifySchedule2() throws InvalidStudentException, ParseException, InvalidCourseException {
@@ -112,7 +113,7 @@ class TestModifySchedule {
 		when(holidayRepository.findAll()).thenReturn(holidays);
 		when(courseRepository.findById(any())).thenReturn(oc);
 		when(scheduleRepository.findAll()).thenReturn(schedules);
-		officerService.modifySchedule(1, "1", "2021-10-10 08:30", "8:30", "10:00", 50,"Aula1" , "Tue");
+		assertTrue(	officerService.modifySchedule(1, "1", "2021-10-10 08:30", "8:30", "10:00", 50,"Aula1" , "Tue"));
 	}
 	@Test
 	void testModifySchedule3() throws InvalidStudentException, ParseException, InvalidCourseException {
@@ -143,7 +144,8 @@ class TestModifySchedule {
 		when(holidayRepository.findAll()).thenReturn(holidays);
 		when(courseRepository.findById(any())).thenReturn(oc);
 		when(scheduleRepository.findAll()).thenReturn(schedules);
-		officerService.modifySchedule(1, "1", "2021-10-10 08:30", "8:30", "10:00", 50,"Aula1" , "Wed");
+		assertTrue(officerService.modifySchedule(1, "1", "2021-10-10 08:30", "8:30", "10:00", 50,"Aula1" , "Wed"));
+		
 	}
 	@Test
 	void testModifySchedule4() throws InvalidStudentException, ParseException, InvalidCourseException {
@@ -174,7 +176,8 @@ class TestModifySchedule {
 		when(holidayRepository.findAll()).thenReturn(holidays);
 		when(courseRepository.findById(any())).thenReturn(oc);
 		when(scheduleRepository.findAll()).thenReturn(schedules);
-		officerService.modifySchedule(1, "1", "2021-10-10 08:30", "8:30", "10:00", 50,"Aula1" , "Thu");
+		assertTrue(officerService.modifySchedule(1, "1", "2021-10-10 08:30", "8:30", "10:00", 50,"Aula1" , "Thu"));
+		
 	}
 	@Test
 	void testModifySchedule5() throws InvalidStudentException, ParseException, InvalidCourseException {
@@ -205,7 +208,8 @@ class TestModifySchedule {
 		when(holidayRepository.findAll()).thenReturn(holidays);
 		when(courseRepository.findById(any())).thenReturn(oc);
 		when(scheduleRepository.findAll()).thenReturn(schedules);
-		officerService.modifySchedule(1, "1", "2021-10-10 08:30", "8:30", "10:00", 50,"Aula1" , "Fri");
+		assertTrue(officerService.modifySchedule(1, "1", "2021-10-10 08:30", "8:30", "10:00", 50,"Aula1" , "Fri"));
+		
 	} 
 	@Test
 	void testModifySchedule6() throws InvalidStudentException, ParseException, InvalidCourseException {
@@ -236,7 +240,8 @@ class TestModifySchedule {
 		when(holidayRepository.findAll()).thenReturn(holidays);
 		when(courseRepository.findById(any())).thenReturn(oc);
 		when(scheduleRepository.findAll()).thenReturn(schedules);
-		officerService.modifySchedule(1, "1", "2021-10-10 08:30", "8:30", "10:00", 50,"Aula1" , "Mon");
+		assertTrue(officerService.modifySchedule(1, "1", "2021-10-10 08:30", "8:30", "10:00", 50,"Aula1" , "Mon"));
+		
 	}
 	@Test
 	void testModifySchedule7() throws InvalidStudentException, ParseException, InvalidCourseException {
@@ -267,7 +272,8 @@ class TestModifySchedule {
 		when(holidayRepository.findAll()).thenReturn(holidays);
 		when(courseRepository.findById(any())).thenReturn(oc);
 		when(scheduleRepository.findAll()).thenReturn(schedules);
-		officerService.modifySchedule(1, "1", "2021-10-10 08:30", "8:30", "10:00", 50,"Aula1" , "Tue");
+		assertTrue(officerService.modifySchedule(1, "1", "2021-10-10 08:30", "8:30", "10:00", 50,"Aula1" , "Tue"));
+		
 	}
 	@Test
 	void testModifySchedule8() throws InvalidStudentException, ParseException, InvalidCourseException {
@@ -298,7 +304,8 @@ class TestModifySchedule {
 		when(holidayRepository.findAll()).thenReturn(holidays);
 		when(courseRepository.findById(any())).thenReturn(oc);
 		when(scheduleRepository.findAll()).thenReturn(schedules);
-		officerService.modifySchedule(1, "1", "2021-10-10 08:30", "8:30", "10:00", 50,"Aula1" , "Wed");
+		assertTrue(officerService.modifySchedule(1, "1", "2021-10-10 08:30", "8:30", "10:00", 50,"Aula1" , "Wed"));
+		
 	}
 	@Test
 	void testModifySchedule9() throws InvalidStudentException, ParseException, InvalidCourseException {
@@ -329,7 +336,8 @@ class TestModifySchedule {
 		when(holidayRepository.findAll()).thenReturn(holidays);
 		when(courseRepository.findById(any())).thenReturn(oc);
 		when(scheduleRepository.findAll()).thenReturn(schedules);
-		officerService.modifySchedule(1, "1", "2021-10-10 08:30", "8:30", "10:00", 50,"Aula1" , "Thu");
+		assertTrue(officerService.modifySchedule(1, "1", "2021-10-10 08:30", "8:30", "10:00", 50,"Aula1" , "Thu"));
+		
 	}
 	@Test
 	void testModifySchedule10() throws InvalidStudentException, ParseException, InvalidCourseException {
@@ -360,6 +368,7 @@ class TestModifySchedule {
 		when(holidayRepository.findAll()).thenReturn(holidays);
 		when(courseRepository.findById(any())).thenReturn(oc);
 		when(scheduleRepository.findAll()).thenReturn(schedules);
-		officerService.modifySchedule(1, "1", "2021-10-10 08:30", "8:30", "10:00", 50,"Aula1" , "Fri");
+		assertTrue(officerService.modifySchedule(1, "1", "2021-10-10 08:30", "8:30", "10:00", 50,"Aula1" , "Fri"));
+		
 	} 
 }

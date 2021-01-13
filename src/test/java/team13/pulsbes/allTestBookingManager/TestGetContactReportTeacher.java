@@ -73,6 +73,6 @@ class TestGetContactReportTeacher {
 		when(teacherRepository.existsById(any())).thenReturn(true);
 		when(lectureRepository.findAll()).thenReturn(lectures);
 		when(modelMapper.map(any(), any())).thenReturn(sDto);
-		bookingService.getContactReportTeacher("2");
+		assertNotNull(bookingService.getContactReportTeacher("2"));	
 	}
 }
