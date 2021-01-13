@@ -59,7 +59,7 @@ public class BookingManagerController {
 		if(type.equals(TYPE_BOOKING_MANAGER)) {
 			response.setContentType("application/csv"); 			
 			Calendar tmpCal = Calendar.getInstance();
-			String fileName = "ContactReport_" + String.valueOf(tmpCal.get(Calendar.YEAR)) + "_" + String.valueOf(tmpCal.get(Calendar.MONTH) + 1) + "_" + String.valueOf(tmpCal.get(Calendar.DATE)) + "_" + studentId + ".csv";
+			String fileName = "ContactReport_" + String.valueOf(tmpCal.get(Calendar.YEAR)) + "_" + String.valueOf(tmpCal.get(Calendar.MONTH) + 1) + "_" + String.valueOf(tmpCal.get(Calendar.DATE)) + ".csv";
 			String headerKey = "Content-Disposition";
 			String headerValue = "attachment; filename=" + fileName + ".csv";
 			response.setHeader(headerKey, headerValue);
@@ -74,7 +74,7 @@ public class BookingManagerController {
 		if(type.equals(TYPE_BOOKING_MANAGER)){
 			response.setContentType("application/pdf");
 			Calendar tmpCal = Calendar.getInstance();
-			String fileName = "ContactReport_" + String.valueOf(tmpCal.get(Calendar.YEAR)) + "_" + String.valueOf(tmpCal.get(Calendar.MONTH) + 1) + "_" + String.valueOf(tmpCal.get(Calendar.DATE)) + "_" + studentId + ".csv";
+			String fileName = "ContactReport_" + String.valueOf(tmpCal.get(Calendar.YEAR)) + "_" + String.valueOf(tmpCal.get(Calendar.MONTH) + 1) + "_" + String.valueOf(tmpCal.get(Calendar.DATE)) + ".csv";
 				
 			String headerKey = "Content-Disposition";
 			String headerValue = "attachment; filename=" + fileName + ".pdf";
@@ -94,7 +94,7 @@ public class BookingManagerController {
 		if(type.equals(TYPE_BOOKING_MANAGER)) {
 			response.setContentType("application/csv"); 			
 			Calendar tmpCal = Calendar.getInstance();
-			String fileName = "ContactReport_" + String.valueOf(tmpCal.get(Calendar.YEAR)) + "_" + String.valueOf(tmpCal.get(Calendar.MONTH) + 1) + "_" + String.valueOf(tmpCal.get(Calendar.DATE)) + "_" + teacherId + ".csv";
+			String fileName = "ContactReport_" + String.valueOf(tmpCal.get(Calendar.YEAR)) + "_" + String.valueOf(tmpCal.get(Calendar.MONTH) + 1) + "_" + String.valueOf(tmpCal.get(Calendar.DATE)) + ".csv";
 			String headerKey = "Content-Disposition";
 			String headerValue = "attachment; filename=" + fileName + ".csv";
 			response.setHeader(headerKey, headerValue);
@@ -109,7 +109,7 @@ public class BookingManagerController {
 		if(type.equals(TYPE_BOOKING_MANAGER)){
 			response.setContentType("application/pdf");
 			Calendar tmpCal = Calendar.getInstance();
-			String fileName = "ContactReport_" + String.valueOf(tmpCal.get(Calendar.YEAR)) + "_" + String.valueOf(tmpCal.get(Calendar.MONTH) + 1) + "_" + String.valueOf(tmpCal.get(Calendar.DATE)) + "_" + teacherId + ".csv";
+			String fileName = "ContactReport_" + String.valueOf(tmpCal.get(Calendar.YEAR)) + "_" + String.valueOf(tmpCal.get(Calendar.MONTH) + 1) + "_" + String.valueOf(tmpCal.get(Calendar.DATE)) + ".csv";
 				
 			String headerKey = "Content-Disposition";
 			String headerValue = "attachment; filename=" + fileName + ".pdf";

@@ -149,7 +149,9 @@ public class BookingManagerServiceImpl implements BookingManagerService{
 
 		File file = new File(fileName);
 		if (!file.exists()) {
-			file.createNewFile();
+			if(!file.createNewFile()){
+				throw new IOException("File creation failed");				
+			}
 		 }
 				
 		final char CSV_SEPARATOR = ',';
@@ -269,7 +271,9 @@ public class BookingManagerServiceImpl implements BookingManagerService{
 
 		File file = new File(fileName);
 		if (!file.exists()) {
-			file.createNewFile();
+			if(!file.createNewFile()){
+				throw new IOException("File creation failed");				
+			}
 		 }
 				
 		final char CSV_SEPARATOR = ',';

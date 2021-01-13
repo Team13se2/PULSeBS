@@ -32,7 +32,8 @@ public class SupportOfficerController {
 		FileWriter myWriter = null;
 		try {
 			myWriter = new FileWriter(f);
-			myWriter.write(file);
+			String encodedFile = org.owasp.encoder.Encode.forJava(file);
+			myWriter.write(encodedFile);
 
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -64,7 +65,8 @@ public class SupportOfficerController {
 		FileWriter myWriter = null;
 		try {
 			myWriter = new FileWriter(f);
-			myWriter.write(file);
+			String encodedFile = org.owasp.encoder.Encode.forJava(file);
+			myWriter.write(encodedFile);
 
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -94,7 +96,8 @@ public class SupportOfficerController {
 		FileWriter myWriter = null;
 		try {
 			myWriter = new FileWriter(f);
-			myWriter.write(file);
+			String encodedFile = org.owasp.encoder.Encode.forJava(file);
+			myWriter.write(encodedFile);
 
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -124,7 +127,8 @@ public class SupportOfficerController {
 		FileWriter myWriter = null;
 		try {
 			myWriter = new FileWriter(f);
-			myWriter.write(file);
+			String encodedFile = org.owasp.encoder.Encode.forJava(file);
+			myWriter.write(encodedFile);
 
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -154,7 +158,8 @@ public class SupportOfficerController {
 		FileWriter myWriter = null;
 		try {
 			myWriter = new FileWriter(f);
-			myWriter.write(file);
+			String encodedFile = org.owasp.encoder.Encode.forJava(file);
+			myWriter.write(encodedFile);
 
 		} catch (IOException e) {
 			e.printStackTrace();

@@ -3,6 +3,7 @@ package team13.pulsbes.entities;
 import java.awt.Color;
 import java.io.IOException;
 import java.util.List;
+import java.util.logging.Logger;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -18,6 +19,8 @@ public class PDFExporter {
 	public PDFExporter(List<StudentDTO> listStudents) {
 		this.listStudents = listStudents;
 	}
+
+	Logger log = Logger.getLogger("PDFExporter");
 
 	private void writeTableHeader(PdfPTable table) {
 		PdfPCell cell = new PdfPCell();
@@ -63,7 +66,7 @@ public class PDFExporter {
 	}
 	
 	public void export(HttpServletResponse response) throws DocumentException, IOException {
-		Document document = new Document(PageSize.A4);
+		try (Document document = new Document(PageSize.A4);) {
 		PdfWriter.getInstance(document, response.getOutputStream());
 		
 		document.open();
@@ -87,6 +90,11 @@ public class PDFExporter {
 		document.add(table);
 		
 		document.close();
+
+		}
+		catch (Exception e) {
+			log.throwing(this.getClass().getName(), "export", e);
+		}
 		
 	}
 }
