@@ -74,6 +74,16 @@ public class OfficerService {
 	
 	Logger log = Logger.getLogger("OfficerService");
 	private static final String DATE_FORMAT_STRING = "yyyy-MM-dd HH:mm";
+	private static final String REMOVE_LECTURES = "removeLectures";
+	private static final String ENROLL_STUDENT = "enrollStudent";
+	private static final String ADD_STUDENT_LIST = "addStudentList";
+	private static final String ADD_TEACHER_LIST = "addTeacherList";
+	private static final String ADD_COURSE_LIST = "addCourseList";
+	private static final String ADD_SCHEDULE_LIST = "addScheduleList";
+	private static final String INVALID_COURSE = "Invalid course";
+	private static final String ERROR = "Error";
+	private static final String WRONG_FORMAT = "Wrong formart";
+
 
 
 	public List<ScheduleDTO> getSchedule()
@@ -107,13 +117,13 @@ public class OfficerService {
 
 		for (Lecture tmpLecture : listLecture) {
 
-			try {check1 = tmpLecture.getStartTime2().after(dateFormat.parse(dateStart));} catch (ParseException e) {log.throwing(this.getClass().getName(), "removeLectures", e); return false;};
-			try {check2 = tmpLecture.getEndTime2().before(dateFormat.parse(dateEnd));} catch (ParseException e) {log.throwing(this.getClass().getName(), "removeLectures", e);return false;};	
+			try {check1 = tmpLecture.getStartTime2().after(dateFormat.parse(dateStart));} catch (ParseException e) {log.throwing(this.getClass().getName(), REMOVE_LECTURES, e); return false;};
+			try {check2 = tmpLecture.getEndTime2().before(dateFormat.parse(dateEnd));} catch (ParseException e) {log.throwing(this.getClass().getName(), REMOVE_LECTURES, e);return false;};	
 			
 			Optional<Course> course = courseRepository.findById(tmpLecture.getCode());
 			
 			if(!course.isPresent()) {
-				throw new InvalidCourseException("Invalid Course");
+				throw new InvalidCourseException(INVALID_COURSE);
 			}
 	
 			if(course.get().getYear().equals(year) && check1 && check2) {			
@@ -137,13 +147,13 @@ public class OfficerService {
 
 		for (Lecture tmpLecture : listLecture) {
 
-			try {check1 = tmpLecture.getStartTime2().after(dateFormat.parse(dateStart));} catch (ParseException e) {log.throwing(this.getClass().getName(), "removeLectures", e); return false;};
-			try {check2 = tmpLecture.getEndTime2().before(dateFormat.parse(dateEnd));} catch (ParseException e) {log.throwing(this.getClass().getName(), "removeLectures", e);return false;};
+			try {check1 = tmpLecture.getStartTime2().after(dateFormat.parse(dateStart));} catch (ParseException e) {log.throwing(this.getClass().getName(), REMOVE_LECTURES, e); return false;};
+			try {check2 = tmpLecture.getEndTime2().before(dateFormat.parse(dateEnd));} catch (ParseException e) {log.throwing(this.getClass().getName(), REMOVE_LECTURES, e);return false;};
 			
 			Optional<Course> course = courseRepository.findById(tmpLecture.getCode());
 			
 			if(!course.isPresent()) {
-				throw new InvalidCourseException("Invalid Course");
+				throw new InvalidCourseException(INVALID_COURSE);
 			}
 				
 			if(course.get().getYear().equals(year) && check1 && check2) {
@@ -163,8 +173,8 @@ public class OfficerService {
 		Date start = dateFormat.parse(dateStart);
 		Date stDate = DateUtils.addMonths(start,-3);
 		int addDate;
-		int i;	String strDate = "Error";
-		String endDate = "Error";
+		int i;	String strDate = ERROR;
+		String endDate = ERROR;
 		String startMin,startHour,endHour,endMin,yyyy,mm,dd;
 		String[] Start = startTime.split(":");
 		String[] End = endTime.split(":");
@@ -235,7 +245,7 @@ public class OfficerService {
 		Optional<Course> course = courseRepository.findById(code);
 
 		if(!course.isPresent()) {
-			throw new InvalidCourseException("Invalid Course");
+			throw new InvalidCourseException(INVALID_COURSE);
 		}
 
 		if(course.get().getSemester().equals("1")) {
@@ -347,7 +357,7 @@ public class OfficerService {
 						break;
 
 					default:
-						log.info("Wrong format");
+						log.info(WRONG_FORMAT);
 						break;
 
 
@@ -518,7 +528,7 @@ public class OfficerService {
 						break;
 
 					default:
-						log.info("Wrong format");
+						log.info(WRONG_FORMAT);
 						break;
 
 
@@ -579,13 +589,13 @@ public class OfficerService {
 
 		for (Lecture tmpLecture : listLecture) {
 
-			try {check1 = tmpLecture.getStartTime2().after(dateFormat.parse(dateStart));} catch (ParseException e) {log.throwing(this.getClass().getName(), "removeLectures", e);};
-			try {check2 = tmpLecture.getEndTime2().before(dateFormat.parse(dateEnd));} catch (ParseException e) {log.throwing(this.getClass().getName(), "removeLectures", e);};
+			try {check1 = tmpLecture.getStartTime2().after(dateFormat.parse(dateStart));} catch (ParseException e) {log.throwing(this.getClass().getName(), "removeHolidays", e);};
+			try {check2 = tmpLecture.getEndTime2().before(dateFormat.parse(dateEnd));} catch (ParseException e) {log.throwing(this.getClass().getName(), "removeHolidays", e);};
 			
 			Optional<Course> course = courseRepository.findById(tmpLecture.getCode());
 			
 			if(!course.isPresent()) {
-				throw new InvalidCourseException("Invalid Course");
+				throw new InvalidCourseException(INVALID_COURSE);
 			}
 				
 			if(check1 && check2) {
@@ -621,15 +631,15 @@ public class OfficerService {
             }
 
         } catch (FileNotFoundException e) {
-            log.throwing(this.getClass().getName(), "addStudentList", e);
+            log.throwing(this.getClass().getName(), ADD_STUDENT_LIST, e);
         } catch (IOException e) {
-            log.throwing(this.getClass().getName(), "addStudentList", e);
+            log.throwing(this.getClass().getName(), ADD_STUDENT_LIST, e);
         } finally {
             if (br != null) {
                 try {
                     br.close();
                 } catch (IOException e) {
-                    log.throwing(this.getClass().getName(), "addStudentList", e);
+                    log.throwing(this.getClass().getName(), ADD_STUDENT_LIST, e);
                 }
             }
         }
@@ -663,15 +673,15 @@ public class OfficerService {
             }
 
         } catch (FileNotFoundException e) {
-            log.throwing(this.getClass().getName(), "addTeacherList", e);
+            log.throwing(this.getClass().getName(), ADD_TEACHER_LIST, e);
         } catch (IOException e) {
-            log.throwing(this.getClass().getName(), "addTeacherList", e);
+            log.throwing(this.getClass().getName(), ADD_TEACHER_LIST, e);
         } finally {
             if (br != null) {
                 try {
                     br.close();
                 } catch (IOException e) {
-                    log.throwing(this.getClass().getName(), "addTeacherList", e);
+                    log.throwing(this.getClass().getName(), ADD_TEACHER_LIST, e);
                 }
             }
         }
@@ -701,15 +711,15 @@ public class OfficerService {
             }
 
         } catch (FileNotFoundException e) {
-            log.throwing(this.getClass().getName(), "enrollStudent", e);
+            log.throwing(this.getClass().getName(), ENROLL_STUDENT, e);
         } catch (IOException e) {
-            log.throwing(this.getClass().getName(), "enrollStudent", e);
+            log.throwing(this.getClass().getName(), ENROLL_STUDENT, e);
         } finally {
             if (br != null) {
                 try {
                     br.close();
                 } catch (IOException e) {
-                    log.throwing(this.getClass().getName(), "enrollStudent", e);
+                    log.throwing(this.getClass().getName(), ENROLL_STUDENT, e);
                 }
             }
         }
@@ -749,10 +759,10 @@ public class OfficerService {
 			}
 
 		} catch (FileNotFoundException e) {
-			log.throwing(this.getClass().getName(), "addCourseList", e);
+			log.throwing(this.getClass().getName(), ADD_COURSE_LIST, e);
 			return false;
 		} catch (IOException e) {
-			log.throwing(this.getClass().getName(), "addCourseList", e);
+			log.throwing(this.getClass().getName(), ADD_COURSE_LIST, e);
 			return false;
 
 		} finally {
@@ -761,7 +771,7 @@ public class OfficerService {
 					br.close();
 					
 				} catch (IOException e) {
-					log.throwing(this.getClass().getName(), "addCourseList", e);					
+					log.throwing(this.getClass().getName(), ADD_COURSE_LIST, e);					
 
 				}
 			}
@@ -804,8 +814,8 @@ public class OfficerService {
 					String [] splitEnd = end2.split(":");
 					String endHour = splitEnd[0];
 					String endMin = splitEnd[1];
-					String strDate = "Error";
-					String endDate = "Error";
+					String strDate = ERROR;
+					String endDate = ERROR;
 					DateFormat dateFormat = new SimpleDateFormat(DATE_FORMAT_STRING);
 					Calendar tmpCal1 = Calendar.getInstance();					
 					Calendar tmpCal2 = Calendar.getInstance();
@@ -815,7 +825,7 @@ public class OfficerService {
 					Optional<Course> course = courseRepository.findById(lecture[0]);
 					
 					if(!course.isPresent()) {
-						throw new InvalidCourseException("Invalid Course");
+						throw new InvalidCourseException(INVALID_COURSE);
 					}
 					
 					if(course.get().getSemester().equals("1")) {					
@@ -913,7 +923,7 @@ public class OfficerService {
 							break;
 							
 							default:
-							log.info("Wrong format");
+							log.info(WRONG_FORMAT);
 							break;
 
 
@@ -1034,7 +1044,7 @@ public class OfficerService {
 							break;
 							
 							default:
-							log.info("Wrong format");
+							log.info(WRONG_FORMAT);
 							break;
 
 
@@ -1066,15 +1076,15 @@ public class OfficerService {
 			}
 
 		} catch (FileNotFoundException e) {
-			log.throwing(this.getClass().getName(), "addScheduleList", e);
+			log.throwing(this.getClass().getName(), ADD_SCHEDULE_LIST, e);
 		} catch (IOException e) {
-			log.throwing(this.getClass().getName(), "addScheduleList", e);
+			log.throwing(this.getClass().getName(), ADD_SCHEDULE_LIST, e);
 		} finally {
 			if (br != null) {
 				try {
 					br.close();
 				} catch (IOException e) {
-					log.throwing(this.getClass().getName(), "addScheduleList", e);
+					log.throwing(this.getClass().getName(), ADD_SCHEDULE_LIST, e);
 				}
 			}
 		}
