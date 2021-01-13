@@ -37,7 +37,7 @@ class TestAddCourseList {
 		Course c = new Course();
 		when(teacherRepository.getOne(any())).thenReturn(t);
 		when(courseRepository.save(any())).thenReturn(c);
-		officerService.addCourseList(f);
+		assertTrue(officerService.addCourseList(f));
 	}
 
 }

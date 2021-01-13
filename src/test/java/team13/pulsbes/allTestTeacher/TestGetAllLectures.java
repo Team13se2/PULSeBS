@@ -1,6 +1,6 @@
 package team13.pulsbes.allTestTeacher;
 
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
@@ -65,7 +65,7 @@ public class TestGetAllLectures {
 		when(teacherRepository.getOne(anyString())).thenReturn(t);
 		List<LectureDTO> lDtos = new ArrayList<>();
 		lDtos = teacherService.getAllLectures("1");
-		//assertEquals(lDtos.get(0).getId(),t.getId());
+		assertEquals(lDtos.get(0).getId(),l.getId());
 		
 	}
 	@Test

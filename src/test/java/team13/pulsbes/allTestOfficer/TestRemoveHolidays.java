@@ -56,7 +56,7 @@ class TestRemoveHolidays {
 		when(lectureRepository.findAll()).thenReturn(lectures);
 		when(lectureRepository.save(any())).thenReturn(l);
 		when(holidayRepository.save(any())).thenReturn(h);
-	
-		officerService.removeHolidays("2020-01-01 00:00", "2020-12-01 00:00");
+		assertTrue(officerService.removeHolidays("2020-01-01 00:00", "2020-12-01 00:00"));
+		
 	}
 }
