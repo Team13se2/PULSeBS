@@ -25,12 +25,14 @@ public class SupportOfficerController {
 
 	Logger log = Logger.getLogger("SupportOfficerController");
 	private static final String TYPE_SUPPORT = "support_officer";
+	private static final String ERROR_CLOSING_FILE = "Error closing file";
+	private static final String INVALID_USER = "Invalid user";
 
 	@PostMapping(value = Constants.ADD_STUDENTS, consumes = "text/csv")
 	public void addStudents(@RequestBody String file, @CookieValue(value = "username") String username, @CookieValue(value = "type") String type) throws InvalidUserException, IOException {
 		File f = new File("Students.csv");
 		FileWriter myWriter = null;
-		try {
+		try  {
 			myWriter = new FileWriter(f);
 			String encodedFile = org.owasp.encoder.Encode.forJava(file);
 			myWriter.write(encodedFile);
@@ -47,15 +49,15 @@ public class SupportOfficerController {
 		if (type.equals(TYPE_SUPPORT)) {
 			officerService.addStudentList(f);
 			if (!f.delete()) {
-				throw new IOException("Error closing file");
+				throw new IOException(ERROR_CLOSING_FILE);
 			}
 
 		} else {
 			myWriter.close();
 			if (!f.delete()) {
-				throw new IOException("Error closing file");
+				throw new IOException(ERROR_CLOSING_FILE);
 			}
-			throw new InvalidUserException("Invalid User");
+			throw new InvalidUserException(INVALID_USER);
 		}
 	}
 
@@ -79,14 +81,14 @@ public class SupportOfficerController {
 		if (type.equals(TYPE_SUPPORT)) {
 			officerService.addTeacherList(f);
 			if (!f.delete()) {
-				throw new IOException("Error closing file");
+				throw new IOException(ERROR_CLOSING_FILE);
 			}
 		} else {
 			myWriter.close();
 			if (!f.delete()) {
-				throw new IOException("Error closing file");
+				throw new IOException(ERROR_CLOSING_FILE);
 			}
-			throw new InvalidUserException("Invalid User");
+			throw new InvalidUserException(INVALID_USER);
 		}
 	}
 
@@ -110,14 +112,14 @@ public class SupportOfficerController {
 		if (type.equals(TYPE_SUPPORT)) {
 			officerService.addCourseList(f);
 			if (!f.delete()) {
-				throw new IOException("Error closing file");
+				throw new IOException(ERROR_CLOSING_FILE);
 			}
 		} else {
 			myWriter.close();
 			if (!f.delete()) {
-				throw new IOException("Error closing file");
+				throw new IOException(ERROR_CLOSING_FILE);
 			}
-			throw new InvalidUserException("Invalid User");
+			throw new InvalidUserException(INVALID_USER);
 		}
 	}
 
@@ -141,14 +143,14 @@ public class SupportOfficerController {
 		if (type.equals(TYPE_SUPPORT)) {
 			officerService.enrollStudent(f);
 			if (!f.delete()) {
-				throw new IOException("Error closing file");
+				throw new IOException(ERROR_CLOSING_FILE);
 			}
 		} else {
 			myWriter.close();
 			if (!f.delete()) {
-				throw new IOException("Error closing file");
+				throw new IOException(ERROR_CLOSING_FILE);
 			}
-			throw new InvalidUserException("Invalid User");
+			throw new InvalidUserException(INVALID_USER);
 		}
 	}
 
@@ -172,14 +174,14 @@ public class SupportOfficerController {
 		if (type.equals(TYPE_SUPPORT)) {
 			officerService.addScheduleList(f);
 			if (!f.delete()) {
-				throw new IOException("Error closing file");
+				throw new IOException(ERROR_CLOSING_FILE);
 			}
 		} else {
 			myWriter.close();
 			if (!f.delete()) {
-				throw new IOException("Error closing file");
+				throw new IOException(ERROR_CLOSING_FILE);
 			}
-			throw new InvalidUserException("Invalid User");
+			throw new InvalidUserException(INVALID_USER);
 		}
 	}
 
@@ -188,7 +190,7 @@ public class SupportOfficerController {
 		if (type.equals(TYPE_SUPPORT)) {
 			officerService.removeLectures(year, dateStart, dateEnd);
 		} else {
-			throw new InvalidUserException("Invalid User");
+			throw new InvalidUserException(INVALID_USER);
 		}
 	}
 
@@ -197,7 +199,7 @@ public class SupportOfficerController {
 		if (type.equals(TYPE_SUPPORT)) {
 			officerService.readdLectures(year, dateStart, dateEnd);
 		} else {
-			throw new InvalidUserException("Invalid User");
+			throw new InvalidUserException(INVALID_USER);
 		}
 	}
 
@@ -206,7 +208,7 @@ public class SupportOfficerController {
 		if (type.equals(TYPE_SUPPORT)) {
 			officerService.removeHolidays(dateStart, dateEnd);
 		} else {
-			throw new InvalidUserException("Invalid User");
+			throw new InvalidUserException(INVALID_USER);
 		}
 	}
 
@@ -216,7 +218,7 @@ public class SupportOfficerController {
 		if (type.equals(TYPE_SUPPORT)) {
 			officerService.modifySchedule(id, code, dateStart, startTime, endTime, seats, Room, Day);
 		} else {
-			throw new InvalidUserException("Invalid User");
+			throw new InvalidUserException(INVALID_USER);
 		}
 	}
 
@@ -225,7 +227,7 @@ public class SupportOfficerController {
 		if (type.equals(TYPE_SUPPORT)) {
 			return officerService.getSchedule();
 		} else {
-			throw new InvalidUserException("Invalid User");
+			throw new InvalidUserException(INVALID_USER);
 		}
 	}
 }

@@ -35,6 +35,8 @@ public class BookingManagerController {
 	Logger log = Logger.getLogger("BookingManagerController");
 	private static final String TYPE_BOOKING_MANAGER = "booking_manager";
 	private static final String CONTACT_REPORT = "ContactReport_";
+	private static final String CONTENT_DISPOSITION = "Content-Disposition";
+	private static final String HEADER = "attachment; filename=";
 
 	@GetMapping(value = Constants.GET_ALL_LECTURES)
 	public List<LectureDTO> getAllLectures(@CookieValue(value = "username") String username,
@@ -61,8 +63,8 @@ public class BookingManagerController {
 			response.setContentType("application/csv"); 			
 			Calendar tmpCal = Calendar.getInstance();
 			String fileName = CONTACT_REPORT + String.valueOf(tmpCal.get(Calendar.YEAR)) + "_" + String.valueOf(tmpCal.get(Calendar.MONTH) + 1) + "_" + String.valueOf(tmpCal.get(Calendar.DATE)) + ".csv";
-			String headerKey = "Content-Disposition";
-			String headerValue = "attachment; filename=" + fileName + ".csv";
+			String headerKey = CONTENT_DISPOSITION;
+			String headerValue = HEADER + fileName + ".csv";
 			response.setHeader(headerKey, headerValue);
 			FileUtils.copyFile(bookingService.getContactReportStudentCSV(studentId), response.getOutputStream());
 		}		
@@ -77,8 +79,8 @@ public class BookingManagerController {
 			Calendar tmpCal = Calendar.getInstance();
 			String fileName = CONTACT_REPORT + String.valueOf(tmpCal.get(Calendar.YEAR)) + "_" + String.valueOf(tmpCal.get(Calendar.MONTH) + 1) + "_" + String.valueOf(tmpCal.get(Calendar.DATE)) + ".csv";
 				
-			String headerKey = "Content-Disposition";
-			String headerValue = "attachment; filename=" + fileName + ".pdf";
+			String headerKey = CONTENT_DISPOSITION;
+			String headerValue = HEADER + fileName + ".pdf";
 			response.setHeader(headerKey, headerValue);
 		
 			List<StudentDTO> listStudents = bookingService.getContactReportStudent(studentId);
@@ -96,8 +98,8 @@ public class BookingManagerController {
 			response.setContentType("application/csv"); 			
 			Calendar tmpCal = Calendar.getInstance();
 			String fileName = CONTACT_REPORT + String.valueOf(tmpCal.get(Calendar.YEAR)) + "_" + String.valueOf(tmpCal.get(Calendar.MONTH) + 1) + "_" + String.valueOf(tmpCal.get(Calendar.DATE)) + ".csv";
-			String headerKey = "Content-Disposition";
-			String headerValue = "attachment; filename=" + fileName + ".csv";
+			String headerKey = CONTENT_DISPOSITION;
+			String headerValue = HEADER + fileName + ".csv";
 			response.setHeader(headerKey, headerValue);
 			FileUtils.copyFile(bookingService.getContactReportTeacherCSV(teacherId), response.getOutputStream());			
 		}
@@ -112,8 +114,8 @@ public class BookingManagerController {
 			Calendar tmpCal = Calendar.getInstance();
 			String fileName = CONTACT_REPORT + String.valueOf(tmpCal.get(Calendar.YEAR)) + "_" + String.valueOf(tmpCal.get(Calendar.MONTH) + 1) + "_" + String.valueOf(tmpCal.get(Calendar.DATE)) + ".csv";
 				
-			String headerKey = "Content-Disposition";
-			String headerValue = "attachment; filename=" + fileName + ".pdf";
+			String headerKey = CONTENT_DISPOSITION;
+			String headerValue = HEADER + fileName + ".pdf";
 			response.setHeader(headerKey, headerValue);
 		
 			List<StudentDTO> listStudents = bookingService.getContactReportTeacher(teacherId);

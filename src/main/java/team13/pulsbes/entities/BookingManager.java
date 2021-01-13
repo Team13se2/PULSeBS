@@ -17,7 +17,9 @@ public class BookingManager {
 	
 	private String psw;
 	
-	public BookingManager() { }
+	public BookingManager() { 
+		// Empty because some IDE require it
+	}
 
 	public String getId() {
 		return id;
