@@ -34,7 +34,7 @@ public class SupportOfficerController {
 		FileWriter myWriter = null;
 		try  {
 			myWriter = new FileWriter(f);
-			String encodedFile = org.owasp.encoder.Encode.forJava(file);
+			String encodedFile = org.owasp.encoder.Encode.forHtml(file);
 			myWriter.write(encodedFile);
 
 		} catch (IOException e) {
@@ -45,8 +45,9 @@ public class SupportOfficerController {
 				myWriter.close();
 
 		}
-
+		
 		if (type.equals(TYPE_SUPPORT)) {
+			
 			officerService.addStudentList(f);
 			if (!f.delete()) {
 				throw new IOException(ERROR_CLOSING_FILE);
@@ -67,7 +68,7 @@ public class SupportOfficerController {
 		FileWriter myWriter = null;
 		try {
 			myWriter = new FileWriter(f);
-			String encodedFile = org.owasp.encoder.Encode.forJava(file);
+			String encodedFile = org.owasp.encoder.Encode.forHtml(file);
 			myWriter.write(encodedFile);
 
 		} catch (IOException e) {
@@ -98,7 +99,7 @@ public class SupportOfficerController {
 		FileWriter myWriter = null;
 		try {
 			myWriter = new FileWriter(f);
-			String encodedFile = org.owasp.encoder.Encode.forJava(file);
+			String encodedFile = org.owasp.encoder.Encode.forHtml(file);
 			myWriter.write(encodedFile);
 
 		} catch (IOException e) {
@@ -129,7 +130,7 @@ public class SupportOfficerController {
 		FileWriter myWriter = null;
 		try {
 			myWriter = new FileWriter(f);
-			String encodedFile = org.owasp.encoder.Encode.forJava(file);
+			String encodedFile = org.owasp.encoder.Encode.forHtml(file);
 			myWriter.write(encodedFile);
 
 		} catch (IOException e) {

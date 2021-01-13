@@ -606,11 +606,15 @@ public class OfficerService {
 		boolean firstline = true;
         BufferedReader br = null;
         String line = "";
-        String cvsSplitBy = ",";
+		String cvsSplitBy = ",";
+		
         try {
-	            br = new BufferedReader(new FileReader(f));
+				br = new BufferedReader(new FileReader(f));
+				
 	            while ((line = br.readLine()) != null) {
+					
 	            	if(!firstline) {  	
+						
 	            		Student s = new Student();
 		                String[] student = line.split(cvsSplitBy);
 		                s.setId(student[0]);
@@ -623,7 +627,8 @@ public class OfficerService {
 		                s.setPsw("psw");
 		                studentRepository.save(s);
 	            	}
-	            firstline = false;
+				firstline = false;
+				
             }
 
         } catch (FileNotFoundException e) {

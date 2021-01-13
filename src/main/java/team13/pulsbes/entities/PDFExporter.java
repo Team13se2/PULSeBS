@@ -39,9 +39,6 @@ public class PDFExporter {
         cell.setPhrase(new Phrase("Surname", font));
         table.addCell(cell);
         
-        cell.setPhrase(new Phrase("City", font));
-        table.addCell(cell);
-        
         cell.setPhrase(new Phrase("Birthday", font));
         table.addCell(cell);
         
@@ -58,7 +55,6 @@ public class PDFExporter {
 			table.addCell(student.getId());
 			table.addCell(student.getName());
 			table.addCell(student.getSurname());
-			table.addCell(student.getCity());
             table.addCell(student.getBirthday());
             table.addCell(student.getSSN());
             table.addCell(student.getEmail());
@@ -79,9 +75,9 @@ public class PDFExporter {
 		
 		document.add(p);
 		
-		PdfPTable table = new PdfPTable(5);
+		PdfPTable table = new PdfPTable(6);
 		table.setWidthPercentage(100f);
-		table.setWidths(new float[] {1.5f, 3.5f, 3.0f, 3.0f, 1.5f});
+		table.setWidths(new float[] {1.5f, 1.5f, 1.5f, 1.5f, 2.0f, 3.5f});
 		table.setSpacingBefore(10);
 		
 		writeTableHeader(table);
