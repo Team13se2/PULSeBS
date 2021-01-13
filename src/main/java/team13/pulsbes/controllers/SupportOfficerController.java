@@ -36,7 +36,7 @@ public class SupportOfficerController {
 			myWriter.write(encodedFile);
 
 		} catch (IOException e) {
-			e.printStackTrace();
+			log.throwing(this.getClass().getName(), "addStudents", e);
 			return;
 		} finally {
 			if (myWriter != null)
@@ -69,7 +69,7 @@ public class SupportOfficerController {
 			myWriter.write(encodedFile);
 
 		} catch (IOException e) {
-			e.printStackTrace();
+			log.throwing(this.getClass().getName(), "addTeachers", e);
 			return;
 		} finally {
 			if (myWriter != null)
@@ -100,7 +100,7 @@ public class SupportOfficerController {
 			myWriter.write(encodedFile);
 
 		} catch (IOException e) {
-			e.printStackTrace();
+			log.throwing(this.getClass().getName(), "addCourses", e);
 			return;
 		} finally {
 			if (myWriter != null)
@@ -131,7 +131,7 @@ public class SupportOfficerController {
 			myWriter.write(encodedFile);
 
 		} catch (IOException e) {
-			e.printStackTrace();
+			log.throwing(this.getClass().getName(), "enrollStudents", e);
 			return;
 		} finally {
 			if (myWriter != null)
@@ -162,7 +162,7 @@ public class SupportOfficerController {
 			myWriter.write(encodedFile);
 
 		} catch (IOException e) {
-			e.printStackTrace();
+			log.throwing(this.getClass().getName(), "addLectures", e);
 			return;
 		} finally {
 			if (myWriter != null)
