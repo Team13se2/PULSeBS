@@ -68,6 +68,7 @@ public class TeacherServiceImpl implements TeacherService{
   private static final String LECTURE_NULL = "Lecture can't be null";
   private static final String TEACHER_NULL = "Teacher can't be null";
   private static final String STUDENT_NULL = "Student can't be null";
+  private static final String GET_PAST_LECTURES = "getPastLectures";
 
   @Override
   public Integer getNumberStudentsAttending(Integer id) throws InvalidLectureException{
@@ -272,7 +273,7 @@ public class TeacherServiceImpl implements TeacherService{
         .stream()
         .filter(x -> { try { return x.getEndTime2().before(tmpCal.getTime())
           && x.isBookable(); } 
-          catch (ParseException e) {log.throwing(this.getClass().getName(), "getPastLectures", e); return false;} })
+          catch (ParseException e) {log.throwing(this.getClass().getName(), GET_PAST_LECTURES, e); return false;} })
         .map(l -> modelMapper.map(l,LectureDTO.class))
         .collect(Collectors.toList());
   }
@@ -317,7 +318,7 @@ public class TeacherServiceImpl implements TeacherService{
         .stream()
         .filter(x -> { try { return x.getEndTime2().after(tmpCal.getTime()) && x.getStartTime2().before(tmpCal.getTime())
           && x.isBookable(); } 
-          catch (ParseException e) {log.throwing(this.getClass().getName(), "getPastLectures", e); return false;} })
+          catch (ParseException e) {log.throwing(this.getClass().getName(), GET_PAST_LECTURES, e); return false;} })
         .map(l -> modelMapper.map(l,LectureDTO.class))
         .collect(Collectors.toList());
   }
@@ -341,7 +342,7 @@ public class TeacherServiceImpl implements TeacherService{
           && (endCal.get(Calendar.MONTH) == tmpCal.get(Calendar.MONTH)) 
           && x.getStartTime2().before(tmpCal.getTime())
           && x.isBookable(); } 
-          catch (ParseException e) {log.throwing(this.getClass().getName(), "getPastLectures", e); return false;} })
+          catch (ParseException e) {log.throwing(this.getClass().getName(), GET_PAST_LECTURES, e); return false;} })
         .map(l -> modelMapper.map(l,LectureDTO.class))
         .collect(Collectors.toList());
   }

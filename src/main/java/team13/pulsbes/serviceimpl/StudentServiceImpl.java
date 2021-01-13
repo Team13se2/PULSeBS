@@ -56,6 +56,7 @@ public class StudentServiceImpl implements StudentService {
 
     private static final String STUDENT_NULL = "Student can't be null";
     private static final String STUDENT_NOT_FOUND = "Student not found";
+    private static final String LECTURE_NOT_FOUND = "Lecture not found";
 
     @Override
     public String bookLecture(Integer lectureId, String studentId) throws InvalidLectureException, InvalidStudentException {
@@ -238,7 +239,7 @@ public class StudentServiceImpl implements StudentService {
         }
 
         if (!lectureRepository.existsById(lectureId)) {
-            throw new InvalidLectureException("Lecture not found");
+            throw new InvalidLectureException(LECTURE_NOT_FOUND);
         }
 
         Optional<Student> optStudent = studentRepository.findById(studentId);
@@ -253,7 +254,7 @@ public class StudentServiceImpl implements StudentService {
         Optional<Lecture> optDelLecture = lectureRepository.findById(lectureId);
         if (!optDelLecture.isPresent()) 
         {
-            throw new InvalidLectureException("Lecture not found");
+            throw new InvalidLectureException(LECTURE_NOT_FOUND);
 
         }
         Lecture deletingLecture = optDelLecture.get();
@@ -284,7 +285,7 @@ public class StudentServiceImpl implements StudentService {
         Optional<Lecture> optL = lectureRepository.findById(lectureId);
         if (!optL.isPresent()) 
         {
-            throw new InvalidLectureException("Lecture not found");
+            throw new InvalidLectureException(LECTURE_NOT_FOUND);
 
         }          
         Lecture l = optL.get();
@@ -304,7 +305,7 @@ public class StudentServiceImpl implements StudentService {
                 Optional<Student> optStudent = studentRepository.findById(key);
         if (!optStudent.isPresent()) 
         {
-            throw new InvalidStudentException("Student not found");
+            throw new InvalidStudentException(STUDENT_NOT_FOUND);
 
         }
         Student student = optStudent.get();
