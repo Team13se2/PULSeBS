@@ -79,8 +79,13 @@ public class OfficerService {
         List <ScheduleDTO> scheduleDTOS1 = new ArrayList<>();
 		for (ScheduleDTO scheduleDTO : scheduleDTOS)
         {
-            scheduleDTO.setCoursename(courseRepository.findById(scheduleDTO.getCode()).get().getName());
-            scheduleDTOS1.add(scheduleDTO);
+			Optional<Course> optCourse = courseRepository.findById(scheduleDTO.getCode());
+			if (optCourse.isPresent()) {
+				scheduleDTO.setCoursename(optCourse.get().getName());
+				scheduleDTOS1.add(scheduleDTO);
+			}
+			
+           
         }
 
 		return scheduleDTOS1;

@@ -67,44 +67,46 @@ public class StudentServiceImpl implements StudentService {
         }
 
         Student currentStudent = studentRepository.getOne(studentId);
-        Optional<Lecture> lectureSelected = lectureRepository.findById(lectureId);
+        Optional<Lecture> optLectureSelected = lectureRepository.findById(lectureId);
 
-        if (!lectureSelected.isPresent()) {
+        if (!optLectureSelected.isPresent()) {
             throw new InvalidLectureException("Lecture can't be null");
         }
 
-        if (!lectureSelected.get().isBookable()) {
+        if (!optLectureSelected.get().isBookable()) {
             return ("Lecture was canceled");
         }
 
-        Integer availableSeats = lectureSelected.get().getAvailableSeat();
+        Lecture lectureSelected = optLectureSelected.get();
+
+        Integer availableSeats = lectureSelected.getAvailableSeat();
 
         if (availableSeats > 0) {
             log.info("terzo if");
             try {                
-                lectureSelected.get().addStudentAttending(currentStudent);
+                lectureSelected.addStudentAttending(currentStudent);
 
             } catch (Exception e) {
                 log.throwing(this.getClass().getName(), "addStudentAttending", e);
             }
 
-            lectureSelected.get().setAvailableSeat(availableSeats - 1);
-            currentStudent.addBookLecture(lectureSelected.get());
+            lectureSelected.setAvailableSeat(availableSeats - 1);
+            currentStudent.addBookLecture(lectureSelected);
             studentRepository.save(currentStudent);
-            lectureRepository.save(lectureSelected.get());
+            lectureRepository.save(lectureSelected);
             System.out.println(currentStudent.getBookedLectures());
             notificationService.sendMessage(currentStudent.getEmail(),           								
-            								"Booking confirmation for "+ lectureSelected.get().getSubjectName(), 
+            								"Booking confirmation for "+ lectureSelected.getSubjectName(), 
             								"Dear " + currentStudent.getName() + currentStudent.getSurname() + " \n" +
-            								"Booking succeed for " + lectureSelected.get().getSubjectName() +
-            								". \n The lecture is scheduled at: " + lectureSelected.get().getStartTime() + " and will take place in room: " + lectureSelected.get().getRoomName()+
-            								". \n Best regards, \n" + lectureSelected.get().getTeacher().getName() + " " + lectureSelected.get().getTeacher().getSurname());
+            								"Booking succeed for " + lectureSelected.getSubjectName() +
+            								". \n The lecture is scheduled at: " + lectureSelected.getStartTime() + " and will take place in room: " + lectureSelected.getRoomName()+
+            								". \n Best regards, \n" + lectureSelected.getTeacher().getName() + " " + lectureSelected.getTeacher().getSurname());
             System.out.println(currentStudent.getBookedLectures());
 
             return ("The lecture was correctly booked");
         } else {
             if
-                (lectureSelected.get().getQueue().isEmpty()){
+                (lectureSelected.getQueue().isEmpty()){
                 {
                 	
                 	Optional<Student> student = studentRepository.findById(studentId);
@@ -112,24 +114,27 @@ public class StudentServiceImpl implements StudentService {
                 	if(!student.isPresent())
                 		throw new InvalidStudentException("InvalidStudent");
                 	
-                    lectureSelected.get().getQueue().put(studentId,1);
-                    lectureSelected.get().getStudentswaiting().add(student.get());
-                    lectureRepository.save(lectureSelected.get());
+                    lectureSelected.getQueue().put(studentId,1);
+                    lectureSelected.getStudentswaiting().add(student.get());
+                    lectureRepository.save(lectureSelected);
 
                 }
-            }else {
-            	if(!lectureSelected.isPresent())
-            			throw new InvalidLectureException("Invalid Lecture");
+            }else {            	
             	
-                Integer count = lectureSelected.get().getQueue().values().stream().max((x,y)-> x - y).get();
-                lectureSelected.get().getQueue().put(studentId,count +1);
+                
+                Integer count = lectureSelected.getQueue().values().stream().max((x,y)-> x - y).orElse(-1);
+                if (count == -1) {
+                    throw new InvalidLectureException("Error with queue count");
+                }
+                lectureSelected.getQueue().put(studentId,count +1);
                 Optional<Student> student = studentRepository.findById(studentId);
             	
             	if(!student.isPresent())
             		throw new InvalidStudentException("InvalidStudent");
-                lectureSelected.get().getStudentswaiting().add(student.get());
-                lectureRepository.save(lectureSelected.get());
+                lectureSelected.getStudentswaiting().add(student.get());
+                lectureRepository.save(lectureSelected);
             }
+            
             return ("The lecture has no more available seats, you will receive a mail if a spot opens up");
         }
     }
@@ -245,7 +250,14 @@ public class StudentServiceImpl implements StudentService {
         Student currentStudent = optStudent.get();
 
         //Student currentStudent = studentRepository.findById(studentId).get();
-        Lecture deletingLecture = lectureRepository.findById(lectureId).get();
+        Optional<Lecture> optDelLecture = lectureRepository.findById(lectureId);
+        if (!optDelLecture.isPresent()) 
+        {
+            throw new InvalidLectureException("Lecture not found");
+
+        }
+        Lecture deletingLecture = optDelLecture.get();
+        
 
         if (currentStudent.getBookedLectures().contains(deletingLecture)) {
             try {
@@ -269,17 +281,34 @@ public class StudentServiceImpl implements StudentService {
     @Override
     public void updatequeue(Integer lectureId) throws InvalidStudentException, InvalidLectureException {
 
-            Lecture l = lectureRepository.findById(lectureId).get();
+        Optional<Lecture> optL = lectureRepository.findById(lectureId);
+        if (!optL.isPresent()) 
+        {
+            throw new InvalidLectureException("Lecture not found");
+
+        }          
+        Lecture l = optL.get();
 
             if(!l.getQueue().isEmpty()) {
 
-                Integer value = l.getQueue().values().stream().min((x, y) -> x - y).get();
+                Integer value = l.getQueue().values().stream().min((x, y) -> x - y).orElse(-1);
+
+                if (value == -1){
+                    return;
+                }
 
                 String key = l.getQueue().entrySet().stream().filter(entry -> Objects.equals(entry.getValue(), value)).map(Map.Entry::getKey).collect(Collectors.joining());
 
                 l.getQueue().remove(key);
 
-                delayedbookLecture(lectureId, studentRepository.findById(key).get().getId());
+                Optional<Student> optStudent = studentRepository.findById(key);
+        if (!optStudent.isPresent()) 
+        {
+            throw new InvalidStudentException("Student not found");
+
+        }
+        Student student = optStudent.get();
+                delayedbookLecture(lectureId, student.getId());
 
                 lectureRepository.save(l);
             }
