@@ -45,6 +45,7 @@ public class LoginService {
 	}	
 		
 		
+	private static final String TOKEN = "token";
 	private static final String TYPE_TEACHER = "teacher";
 	private static final String TYPE_STUDENT = "student";
 	private static final String TYPE_BOOKING_MANAGER = "booking_manager";
@@ -131,7 +132,7 @@ public class LoginService {
 			login.setName(s.getName());
 			login.setSurname(s.getSurname());
 			login.setRole(TYPE_STUDENT);
-			login.setToken("token");
+			login.setToken(TOKEN);
 			return login;
 		}else if(s==null && b == null && so == null){
 			login.setEmail(t.getEmail());
@@ -139,21 +140,21 @@ public class LoginService {
 			login.setName(t.getName());
 			login.setSurname(t.getSurname());
 			login.setRole(TYPE_TEACHER);
-			login.setToken("token");		//(LUCA) secondo me setToken deve essere impostato con l'id del teacher:
+			login.setToken(TOKEN);		//(LUCA) secondo me setToken deve essere impostato con l'id del teacher:
 		}else if(s==null && t ==null && so == null) {
 			login.setEmail(b.getEmail());
 			login.setId(b.getId());
 			login.setName(b.getName());
 			login.setSurname(b.getSurname());
 			login.setRole(TYPE_BOOKING_MANAGER);
-			login.setToken("token");
+			login.setToken(TOKEN);
 		}else if(s==null&&t==null&&b==null) {
 			login.setEmail(so.getEmail());
 			login.setId(so.getId());
 			login.setName(so.getName());
 			login.setSurname(so.getSurname());
 			login.setRole(TYPE_SUPPORT_OFFICER);
-			login.setToken("token");
+			login.setToken(TOKEN);
 		}
 		return login;
 	}
