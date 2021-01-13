@@ -126,9 +126,5 @@ public class PulsbesApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(PulsbesApplication.class, args);
 	}
-	@PostConstruct
-	public void setupDbWithData() throws SQLException {
-		Connection conn = DriverManager.getConnection("jdbc:h2:file:./data/team13", "sa", "password");
-		conn.close();
-	}
+	
 }

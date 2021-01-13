@@ -167,7 +167,7 @@ public class BookingManagerServiceImpl implements BookingManagerService{
 					  .append("SSN").append(CSV_SEPARATOR)
 					  .append("Email").append(System.lineSeparator());						
 			} catch (IOException e) {						
-				e.printStackTrace();											
+				log.throwing(this.getClass().getName(), "contactReportStudentCSV", e);											
 		}
 			listStudentDTO.forEach(student -> {
 					try {
@@ -179,7 +179,7 @@ public class BookingManagerServiceImpl implements BookingManagerService{
 							  .append(student.getSSN()).append(CSV_SEPARATOR)
 							  .append(student.getEmail()).append(System.lineSeparator());						
 					} catch (IOException e) {						
-						e.printStackTrace();											
+						log.throwing(this.getClass().getName(), "contactReportStudentCSV", e);											
 				}				
 		});	
 		
@@ -289,7 +289,7 @@ public class BookingManagerServiceImpl implements BookingManagerService{
 					  .append("SSN").append(CSV_SEPARATOR)
 					  .append("Email").append(System.lineSeparator());						
 			} catch (IOException e) {						
-				e.printStackTrace();											
+				log.throwing(this.getClass().getName(), "contactReportTeacherCSV", e);											
 		}
 			listStudentDTO.forEach(student -> {
 					try {
@@ -301,7 +301,7 @@ public class BookingManagerServiceImpl implements BookingManagerService{
 							  .append(student.getSSN()).append(CSV_SEPARATOR)
 							  .append(student.getEmail()).append(System.lineSeparator());						
 					} catch (IOException e) {						
-						e.printStackTrace();											
+						log.throwing(this.getClass().getName(), "contactReportTeacherCSV", e);											
 				}				
 		});	
 		

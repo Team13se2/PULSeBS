@@ -213,7 +213,7 @@ public class OfficerService {
 					}
  
 				} catch (ParseException e) {
-					e.printStackTrace();
+					log.throwing(this.getClass().getName(), "modifySchedule", e);
 				}
 
 			}
@@ -392,7 +392,7 @@ public class OfficerService {
 							flag = false;
 
 					} catch (ParseException e) {
-						e.printStackTrace();
+						log.throwing(this.getClass().getName(), "modifySchedule", e);
 					}
 				}
 
@@ -617,15 +617,15 @@ public class OfficerService {
             }
 
         } catch (FileNotFoundException e) {
-            e.printStackTrace();
+            log.throwing(this.getClass().getName(), "addStudentList", e);
         } catch (IOException e) {
-            e.printStackTrace();
+            log.throwing(this.getClass().getName(), "addStudentList", e);
         } finally {
             if (br != null) {
                 try {
                     br.close();
                 } catch (IOException e) {
-                    e.printStackTrace();
+                    log.throwing(this.getClass().getName(), "addStudentList", e);
                 }
             }
         }
@@ -659,15 +659,15 @@ public class OfficerService {
             }
 
         } catch (FileNotFoundException e) {
-            e.printStackTrace();
+            log.throwing(this.getClass().getName(), "addTeacherList", e);
         } catch (IOException e) {
-            e.printStackTrace();
+            log.throwing(this.getClass().getName(), "addTeacherList", e);
         } finally {
             if (br != null) {
                 try {
                     br.close();
                 } catch (IOException e) {
-                    e.printStackTrace();
+                    log.throwing(this.getClass().getName(), "addTeacherList", e);
                 }
             }
         }
@@ -697,15 +697,15 @@ public class OfficerService {
             }
 
         } catch (FileNotFoundException e) {
-            e.printStackTrace();
+            log.throwing(this.getClass().getName(), "enrollStudent", e);
         } catch (IOException e) {
-            e.printStackTrace();
+            log.throwing(this.getClass().getName(), "enrollStudent", e);
         } finally {
             if (br != null) {
                 try {
                     br.close();
                 } catch (IOException e) {
-                    e.printStackTrace();
+                    log.throwing(this.getClass().getName(), "enrollStudent", e);
                 }
             }
         }
@@ -745,19 +745,21 @@ public class OfficerService {
 			}
 
 		} catch (FileNotFoundException e) {
-			e.printStackTrace();
+			log.throwing(this.getClass().getName(), "addCourseList", e);
 			return false;
 		} catch (IOException e) {
-			e.printStackTrace();
+			log.throwing(this.getClass().getName(), "addCourseList", e);
 			return false;
+
 		} finally {
 			if (br != null) {
 				try {
 					br.close();
 					
 				} catch (IOException e) {
-					e.printStackTrace();
+					log.throwing(this.getClass().getName(), "addCourseList", e);
 					return false;
+
 				}
 			}
 		}
@@ -1061,15 +1063,15 @@ public class OfficerService {
 			}
 
 		} catch (FileNotFoundException e) {
-			e.printStackTrace();
+			log.throwing(this.getClass().getName(), "addScheduleList", e);
 		} catch (IOException e) {
-			e.printStackTrace();
+			log.throwing(this.getClass().getName(), "addScheduleList", e);
 		} finally {
 			if (br != null) {
 				try {
 					br.close();
 				} catch (IOException e) {
-					e.printStackTrace();
+					log.throwing(this.getClass().getName(), "addScheduleList", e);
 				}
 			}
 		}
