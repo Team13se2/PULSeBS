@@ -67,6 +67,7 @@ public class Lecture {
 	}
 
 	private static final String DATE_FORMAT_STRING = "yyyy-MM-dd HH:mm";
+	private static final String INVALID_STUDENT = "Invalid Student";
 
     @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinTable(name="lecture_students", joinColumns = @JoinColumn(name="lecture_id"),
@@ -102,13 +103,13 @@ public class Lecture {
 
 	public void addStudentAttending(Student s) throws InvalidStudentException {
     	if(s==null) {
-    		throw new InvalidStudentException("Invalid Student");
+    		throw new InvalidStudentException(INVALID_STUDENT);
     	}
     	students.add(s);
     }
     public void removeStudentAttending(Student s)throws InvalidStudentException {
     	if(s==null) {
-    		throw new InvalidStudentException("Invalid Student");
+    		throw new InvalidStudentException(INVALID_STUDENT);
     	}
     	students.remove(s);
 	}
@@ -123,7 +124,7 @@ public class Lecture {
 
 	public void addStudentPresent(Student s) throws InvalidStudentException {
     	if(s==null) {
-    		throw new InvalidStudentException("Invalid Student");
+    		throw new InvalidStudentException(INVALID_STUDENT);
     	}
     	studentsPresent.add(s);
     }
