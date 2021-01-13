@@ -75,7 +75,7 @@ public class PDFExporter {
 		font.setColor(Color.BLUE);
 		
 		Paragraph p = new Paragraph("Contact Report", font);
-		p.setAlignment(Paragraph.ALIGN_CENTER);
+		p.setAlignment(Element.ALIGN_CENTER);
 		
 		document.add(p);
 		
