@@ -10,19 +10,14 @@ import org.springframework.context.annotation.Primary;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 
-import team13.pulsbes.entities.*;
+
 import team13.pulsbes.repositories.*;
 import team13.pulsbes.serviceimpl.OfficerService;
 import team13.pulsbes.services.NotificationService;
 import team13.pulsbes.services.StudentService;
 import team13.pulsbes.services.TeacherService;
 
-import javax.annotation.PostConstruct;
 
-import java.io.File;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
 import java.util.Properties;
 
 @SpringBootApplication

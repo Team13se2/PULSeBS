@@ -1,6 +1,5 @@
 package team13.pulsbes.entities;
 
-import java.util.Date;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;

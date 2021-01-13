@@ -8,8 +8,6 @@ import java.io.IOException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.time.ZoneId;
 import java.util.*;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
@@ -17,10 +15,8 @@ import java.util.stream.Collectors;
 import org.apache.commons.lang3.time.DateUtils;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.interceptor.SimpleCacheErrorHandler;
 import org.springframework.stereotype.Service;
 
-import team13.pulsbes.dtos.CourseDTO;
 import team13.pulsbes.dtos.ScheduleDTO;
 import team13.pulsbes.entities.*;
 import team13.pulsbes.exception.InvalidCourseException;
@@ -203,7 +199,7 @@ public class OfficerService {
 					if (l.getStartTime2().after(stDate)) {
 
 						studentsbooked = new ArrayList<>(l.getStudents());
-						System.out.println(studentsbooked);
+						
 
 						lectureRepository.delete(l);
 						lectureRepository.flush();
@@ -400,7 +396,7 @@ public class OfficerService {
 					try {
 						datel2 = l2.getStartTime2().toString().split(" ");
 						String dayl2 = datel2[0].concat(datel2[1] + datel2[2] + datel2[4] + datel2[5]);
-						System.out.println(dayh + dayl2);
+						
 						if (dayh.equals(dayl2))
 
 							flag = false;

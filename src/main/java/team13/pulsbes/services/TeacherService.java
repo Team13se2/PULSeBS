@@ -2,10 +2,9 @@ package team13.pulsbes.services;
 
 import java.text.ParseException;
 import java.util.List;
-import java.util.Map;
+
 
 import team13.pulsbes.dtos.LectureDTO;
-import team13.pulsbes.dtos.StudentDTO;
 import team13.pulsbes.dtos.StudentPresence;
 import team13.pulsbes.exception.InvalidLectureException;
 import team13.pulsbes.exception.InvalidTeacherException;

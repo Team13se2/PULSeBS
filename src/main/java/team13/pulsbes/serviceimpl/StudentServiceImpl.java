@@ -14,7 +14,7 @@ import team13.pulsbes.entities.Student;
 import team13.pulsbes.exception.InvalidLectureException;
 import team13.pulsbes.exception.InvalidStudentException;
 
-import java.io.File;
+
 import java.text.ParseException;
 import java.util.stream.Collectors;
 
@@ -95,14 +95,14 @@ public class StudentServiceImpl implements StudentService {
             currentStudent.addBookLecture(lectureSelected);
             studentRepository.save(currentStudent);
             lectureRepository.save(lectureSelected);
-            System.out.println(currentStudent.getBookedLectures());
+            
             notificationService.sendMessage(currentStudent.getEmail(),           								
             								"Booking confirmation for "+ lectureSelected.getSubjectName(), 
             								"Dear " + currentStudent.getName() + currentStudent.getSurname() + " \n" +
             								"Booking succeed for " + lectureSelected.getSubjectName() +
             								". \n The lecture is scheduled at: " + lectureSelected.getStartTime() + " and will take place in room: " + lectureSelected.getRoomName()+
             								". \n Best regards, \n" + lectureSelected.getTeacher().getName() + " " + lectureSelected.getTeacher().getSurname());
-            System.out.println(currentStudent.getBookedLectures());
+            
 
             return ("The lecture was correctly booked");
         } else {

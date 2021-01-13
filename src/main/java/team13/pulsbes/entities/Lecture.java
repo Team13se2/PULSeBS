@@ -3,7 +3,6 @@ package team13.pulsbes.entities;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.GenericGenerator;
 import team13.pulsbes.exception.InvalidStudentException;
 
 import javax.persistence.*;
@@ -12,7 +11,6 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
-import java.util.stream.Collectors;
 
 @AllArgsConstructor
 @NoArgsConstructor

@@ -4,7 +4,6 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.NoArgsConstructor;
 import team13.pulsbes.exception.InvalidStudentException;
-import team13.pulsbes.exception.InvalidLectureException;
 
 import javax.persistence.*;
 import java.util.ArrayList;
