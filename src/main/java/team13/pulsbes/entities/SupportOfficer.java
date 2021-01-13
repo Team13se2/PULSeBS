@@ -20,7 +20,9 @@ public class SupportOfficer {
 	
 	private String psw;
 		
-	public SupportOfficer() {}
+	public SupportOfficer() {
+		// Empty because some IDE require it
+	}
 
 	public String getId() {
 		return id;

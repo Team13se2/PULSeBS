@@ -36,7 +36,9 @@ public class LectureDTO {
 	private Integer idschedule;
 
     
-	public LectureDTO(){}
+	public LectureDTO(){
+		// Empty because some IDE require it
+	}
 	public Integer getId() {
 		return id;
 	}
