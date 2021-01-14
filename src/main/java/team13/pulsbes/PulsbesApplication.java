@@ -54,10 +54,8 @@ public class PulsbesApplication {
 		return new CommandLineRunner() {
 			@Autowired
 			StudentRepository studentRepository;
-
 			@Autowired
 			LectureRepository lectureRepository;
-
 			@Autowired
 			OfficerService officerService;
 			@Autowired
