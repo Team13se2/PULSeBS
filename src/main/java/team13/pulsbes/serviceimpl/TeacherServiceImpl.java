@@ -145,7 +145,7 @@ public class TeacherServiceImpl implements TeacherService{
 
         Teacher teacher = optTeacher.get();
 
-    
+    //Teacher teacher = teacherRepository.findById(TeacherId).get();
     log.info(teacher.getEmail());
     Lecture tmpLecture = lectureRepository.getOne(lectureId);
     Calendar tmpCal = Calendar.getInstance();    
@@ -158,7 +158,11 @@ public class TeacherServiceImpl implements TeacherService{
       tmpLecture.setBookable(false);
       lectureRepository.save(tmpLecture);
       lectureRepository.flush();
-      
+      /*teacher.removeLecture(tmpLecture);      
+            //System.out.println(teacher.getLectures());
+            lectureRepository.delete(tmpLecture);
+            teacherRepository.save(teacher);
+      teacherRepository.flush();*/
 
       for (Student tmpStudent : listStudent) {
 
@@ -171,7 +175,7 @@ public class TeacherServiceImpl implements TeacherService{
 
       }      
       
-           
+            //lectureRepository.delete(tmpLecture);
 
 
       return ("Lecture cancelled");
@@ -205,6 +209,7 @@ public class TeacherServiceImpl implements TeacherService{
 
         Teacher teacher = optTeacher.get();
 
+    //Teacher teacher = teacherRepository.findById(TeacherId).get();
     log.info(teacher.getEmail());
     Lecture tmpLecture = lectureRepository.getOne(lectureId);
     Calendar tmpCal = Calendar.getInstance();    
@@ -217,6 +222,11 @@ public class TeacherServiceImpl implements TeacherService{
       tmpLecture.setBookable(false);
       lectureRepository.save(tmpLecture);
       lectureRepository.flush();
+      /*teacher.removeLecture(tmpLecture);
+            //System.out.println(teacher.getLectures());
+            lectureRepository.delete(tmpLecture);
+            teacherRepository.save(teacher);
+      teacherRepository.flush();*/
       
       for (Student tmpStudent : listStudent) {
         
@@ -228,6 +238,7 @@ public class TeacherServiceImpl implements TeacherService{
 
       }  
 
+            //lectureRepository.delete(tmpLecture);
 
 
       return ("Lecture was changd from in presence to online");
