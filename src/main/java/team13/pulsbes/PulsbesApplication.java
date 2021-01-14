@@ -54,10 +54,8 @@ public class PulsbesApplication {
 		return new CommandLineRunner() {
 			@Autowired
 			StudentRepository studentRepository;
-
 			@Autowired
 			LectureRepository lectureRepository;
-
 			@Autowired
 			OfficerService officerService;
 			@Autowired
@@ -76,42 +74,9 @@ public class PulsbesApplication {
 			@Override
 			public void run(String... args) throws Exception {
 
-		 	//	SupportOfficer so = new SupportOfficer();
-		 	//	so.setId("1");
-		 	//	so.setEmail("support@officer.politu.it");
-		 	//	so.setName("Signor");
-		 	//	so.setSurname("Officer");
-		 	//	so.setPsw("psw");
-		 	//	supportRepository.save(so);
-				
-		 	//	BookingManager b = new BookingManager();
-		 	//	b.setId("1");
-		 	//	b.setEmail("manager@booking.politu.it");
-		 	//	b.setName("Signor");
-		 	//	 		b.setSurname("Booking");
-		 	//	b.setPsw("psw");
-		 	//	bookingRepository.save(b);
+		 	
 
-		 //studentRepository.deleteAll();
-		// courseRepository.deleteAll();
-		// lectureRepository.deleteAll();
-		// teacherRepository.deleteAll();
-		// String csvFileT = "../Professors.csv";
-		// officerService.addTeacherList(ft);
-		// String csvFileC = "../Courses.csv";
-		// File fc = new File(csvFileC);
-		// officerService.addCourseList(fc);
-		// File fs = new File(csvFileS);
-				//officerService.addStudentList(fs);
-   
-   
-		// String csvFileE = "../Enrollment.csv";
-		// File fe = new File(csvFileE);
-		// officerService.enrollStudent(fe);
-   
-		// String csvFileSS = "../Schedule.csv";
-		// File fss = new File(csvFileSS);
-		//		 officerService.addScheduleList(fss);
+		
 
 
 			}
