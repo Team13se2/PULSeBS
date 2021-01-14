@@ -34,7 +34,7 @@ public class SupportOfficerController {
 		FileWriter myWriter = null;
 		try  {
 			myWriter = new FileWriter(f);
-			String encodedFile = org.owasp.encoder.Encode.forHtml(file);
+			String encodedFile = org.owasp.encoder.Encode.forCDATA(file);
 			myWriter.write(encodedFile);
 
 		} catch (IOException e) {
@@ -68,7 +68,7 @@ public class SupportOfficerController {
 		FileWriter myWriter = null;
 		try {
 			myWriter = new FileWriter(f);
-			String encodedFile = org.owasp.encoder.Encode.forHtml(file);
+			String encodedFile = org.owasp.encoder.Encode.forCDATA(file);
 			myWriter.write(encodedFile);
 
 		} catch (IOException e) {
@@ -99,7 +99,7 @@ public class SupportOfficerController {
 		FileWriter myWriter = null;
 		try {
 			myWriter = new FileWriter(f);
-			String encodedFile = org.owasp.encoder.Encode.forHtml(file);
+			String encodedFile = org.owasp.encoder.Encode.forCDATA(file);
 			myWriter.write(encodedFile);
 
 		} catch (IOException e) {
@@ -130,7 +130,7 @@ public class SupportOfficerController {
 		FileWriter myWriter = null;
 		try {
 			myWriter = new FileWriter(f);
-			String encodedFile = org.owasp.encoder.Encode.forHtml(file);
+			String encodedFile = org.owasp.encoder.Encode.forCDATA(file);
 			myWriter.write(encodedFile);
 
 		} catch (IOException e) {
@@ -161,7 +161,7 @@ public class SupportOfficerController {
 		FileWriter myWriter = null;
 		try {
 			myWriter = new FileWriter(f);
-			String encodedFile = org.owasp.encoder.Encode.forJava(file);
+			String encodedFile = org.owasp.encoder.Encode.forCDATA(file);
 			myWriter.write(encodedFile);
 
 		} catch (IOException e) {
