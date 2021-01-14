@@ -365,7 +365,26 @@ public class OfficerService {
 
 
 
-			
+			/*	holidayRepository.findAll().forEach(h->{
+
+				String [] dateh,datel2;
+				boolean flag;
+				dateh = h.getDate().split(" ");
+				String dayh = dateh[0].concat(dateh[1] + dateh[2] + dateh[4] + dateh[5]);
+
+					try {
+						datel2 = l2.getStartTime2().toString().split(" ");
+						String dayl2 = datel2[0].concat(datel2[1] + datel2[2] + datel2[4] + datel2[5]);
+						if(dayh.equals(dayl2))
+
+							flag = false;
+
+					} catch (ParseException e) {
+						e.printStackTrace();
+					}
+
+				});
+            */
 				boolean flag = true;
 
 				for (Holiday h : holidayRepository.findAll()) {
@@ -684,6 +703,8 @@ public class OfficerService {
 	                Course c = courseRepository.getOne(enroll[0]);
 	                Student s = studentRepository.getOne(enroll[1]);
 	                s.addCourse(c);
+	                //c.newStudentEnrolled(s);
+	                //courseRepository.save(c);
 	                studentRepository.save(s);
             	}
             	firstline = false;
