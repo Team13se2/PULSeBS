@@ -21,7 +21,7 @@ public class LoginDTO {
 
 	public LoginDTO() {
 		this.id = "-1";
-		// TODO Auto-generated constructor stub
+		
 	}
 
 	public String getEmail() {
