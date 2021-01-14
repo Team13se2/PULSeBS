@@ -134,7 +134,12 @@ public class Lecture {
 
 
 	
-
+//	public Lecture( String Id, Integer AvailableSeat, Integer TotalSeat) {
+//		super();
+//		this.Id = Id;
+//		this.AvailableSeat = AvailableSeat;
+//		this.TotalSeat = TotalSeat;
+//	}
     public void addStartTime(Integer year, Integer month, Integer day, Integer hour, Integer minutes) {
 
 		Calendar c = Calendar.getInstance();

@@ -164,7 +164,8 @@ public class StudentServiceImpl implements StudentService {
             });
         }
 
-         
+          //  listLecture.addAll(tmpCourse.getLectures());
+//return listLecture.stream().map(l->modelMapper.map(l,LectureDTO.class)).collect(Collectors.toList());
 
         return listLecture
                 .stream()
@@ -197,6 +198,7 @@ public class StudentServiceImpl implements StudentService {
 
         Calendar tmpCal = Calendar.getInstance();
 
+//return studentRepository.getOne(id).getBookedLectures().stream().map(l->modelMapper.map(l,LectureDTO.class)).collect(Collectors.toList());
 
         return studentRepository.getOne(id)
                 .getBookedLectures()
@@ -248,6 +250,7 @@ public class StudentServiceImpl implements StudentService {
 
         Student currentStudent = optStudent.get();
 
+        //Student currentStudent = studentRepository.findById(studentId).get();
         Optional<Lecture> optDelLecture = lectureRepository.findById(lectureId);
         if (!optDelLecture.isPresent()) 
         {
