@@ -70,13 +70,7 @@ public class Course {
     public void setStudents(List<Student> students) {
         this.students = students;
     }
-  /*  public void cancelLecture(Lecture lecture) throws InvalidLectureException{
-
-        if(lecture==null) {
-            throw new InvalidLectureException("Invalid lecture");
-        }
-        lectures.remove(lecture);
-    }*/
+  
 	public String getYear() {
 		return year;
 	}

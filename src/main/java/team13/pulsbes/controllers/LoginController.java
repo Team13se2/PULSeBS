@@ -43,17 +43,16 @@ public class LoginController {
 				cookieUsername.setMaxAge(3600*7);
 				cookieType.setMaxAge(3600*7);
 				cookieId.setMaxAge(3600*7);
-				//add cookie to response
+				
 				response.addCookie(cookieUsername);
 				response.addCookie(cookieId);
 				response.addCookie(cookieType);
 			}
 			return log;
 		} catch (WrongCredentialsException e) {
-			// TODO Auto-generated catch block
+			
 			loglog.throwing(this.getClass().getName(), "login", e);
-			//e.printStackTrace();
-			//LoginDTO loginDTO = new LoginDTO();
+			
 			return (new LoginDTO());
 		}
 	}
@@ -65,7 +64,7 @@ public class LoginController {
 
 	@PostMapping(value = "/logout")
 	public void logout(HttpServletResponse response){
-		// create a cookie
+		
 		Cookie cookieUsername = new Cookie("username", null);
 		cookieUsername.setSecure(true);
 		cookieUsername.setHttpOnly(true);
@@ -81,7 +80,7 @@ public class LoginController {
 		cookieId.setMaxAge(0);
 		cookieType.setPath("/");
 		cookieType.setMaxAge(0);
-		//add cookie to response
+		
 		response.addCookie(cookieId);
 		response.addCookie(cookieUsername);
 		response.addCookie(cookieType);

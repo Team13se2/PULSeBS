@@ -140,7 +140,7 @@ public class LoginService {
 			login.setName(t.getName());
 			login.setSurname(t.getSurname());
 			login.setRole(TYPE_TEACHER);
-			login.setToken(TOKEN);		//(LUCA) secondo me setToken deve essere impostato con l'id del teacher:
+			login.setToken(TOKEN);		
 		}else if(s==null && t ==null && so == null) {
 			login.setEmail(b.getEmail());
 			login.setId(b.getId());
