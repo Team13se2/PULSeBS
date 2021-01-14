@@ -9,7 +9,7 @@ RUN apt-get install -y openjdk-11-jdk ;\
  cd PULSeBS/client-app ;\
  npm install
 
-#EXPOSE 8081/tcp
+EXPOSE 8081/tcp
 EXPOSE 3000/tcp
 
 WORKDIR /PULSeBS
